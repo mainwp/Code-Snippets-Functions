@@ -1,0 +1,1 @@
+define( 'EMPTY_TRASH_DAYS', 0 ); // Zero days
