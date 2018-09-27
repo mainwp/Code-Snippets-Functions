@@ -1,3 +1,5 @@
+<?php 
+
 class acf_update {
 
 	/*
@@ -352,3 +354,5 @@ class acf_update {
 }
 
 new acf_update();
+
+?>
