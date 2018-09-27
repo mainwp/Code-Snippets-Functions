@@ -1,0 +1,12 @@
+<?php
+add_filter( 'woocommerce_show_addons_page', 'wc_guy_hide_extensions_menu' );
+
+function wc_hide_extensions_menu( $show_addons_page ) {
+	//an array of user ids that can access the extensions menu
+	$users_who_can_acess = array( 4, 8, 15, 16, 23, 42 );
+	if ( ! in_array( get_current_user_id(), $users_who_can_acess ) ) {
+		$show_addons_page = false;
+	}
+	return $show_addons_page;
+}
+?>
