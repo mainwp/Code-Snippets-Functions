@@ -1,8 +1,0 @@
-<?php
-$users = get_users( array( 'fields' => array( 'ID' ), 'number' => 100  ) );
-foreach( $users as $user ) {
-    if ( $user ) {
-        update_user_meta( $user->ID, 'show_try_gutenberg_panel', 0 );
-    }
-}
-?>
