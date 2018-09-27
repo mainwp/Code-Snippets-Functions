@@ -1,0 +1,1 @@
+define( 'WP_MEMORY_LIMIT', '256M' );
