@@ -1,0 +1,11 @@
+<?php
+add_filter( 'woocommerce_payment_complete_order_status', 'growdev_order_payment_complete_order_status', 10, 2 );
+function growdev_order_payment_complete_order_status( $order_status, $order_id ) {
+  $order = wc_get_order( $order_id );
+  if ( 'processing' == $order_status &&
+       ( 'pending' == $order->status ) ) {
+       $order_status = 'completed';
+    }
+  return $order_status;
+}
+?>
