@@ -1,0 +1,3 @@
+<?php
+add_filter( 'woocommerce_include_processing_order_count_in_menu', '__return_false' );
+?>
