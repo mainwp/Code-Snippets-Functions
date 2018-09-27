@@ -1,0 +1,6 @@
+<?php
+function disable_woocommerce_status_remove_dashboard_widgets() {
+	remove_meta_box( 'woocommerce_dashboard_status', 'dashboard', 'normal');
+}
+add_action('wp_dashboard_setup', 'disable_woocommerce_status_remove_dashboard_widgets', 40);
+?>
