@@ -1,0 +1,1 @@
+define( 'IMAGE_EDIT_OVERWRITE', true );
