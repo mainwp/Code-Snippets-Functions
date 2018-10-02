@@ -1,0 +1,2 @@
+define( 'WP_HTTP_BLOCK_EXTERNAL', true );
+define( 'WP_ACCESSIBLE_HOSTS', '*.wordpress.org,*.wordpress.com',*.github.com );
