@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_get_price_html', function( $price ) {
+	if ( ! is_user_logged_in() ) {
+		return '';
+	}
+	return $price; // Return original price
+} );
+add_filter( 'woocommerce_cart_item_price', '__return_false' );
+add_filter( 'woocommerce_cart_item_subtotal', '__return_false' );
