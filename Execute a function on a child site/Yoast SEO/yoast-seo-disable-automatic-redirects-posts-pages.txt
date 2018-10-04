@@ -1,0 +1,1 @@
+add_filter('wpseo_premium_post_redirect_slug_change', '__return_true' );
