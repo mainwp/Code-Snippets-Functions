@@ -1,0 +1,9 @@
+add_filter('woocommerce_billing_fields', 'custom_woocommerce_billing_fields');
+
+function custom_woocommerce_billing_fields( $fields ) {
+
+     $fields['billing_address_1']['class'] = array( 'form-row-wide' );
+     $fields['billing_address_2']['class'] = array( 'form-row-wide' );
+
+     return $fields;
+}
