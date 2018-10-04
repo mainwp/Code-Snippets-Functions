@@ -1,0 +1,7 @@
+function wp_hide_admin_bar( $show ) {
+	if ( ! current_user_can( 'administrator' ) ) {
+		return false;
+	}
+	return $show;
+}
+add_filter( 'show_admin_bar', 'wp_hide_admin_bar' );
