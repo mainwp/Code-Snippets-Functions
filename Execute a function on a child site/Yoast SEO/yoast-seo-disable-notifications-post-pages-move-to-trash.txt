@@ -1,0 +1,1 @@
+add_filter('wpseo_enable_notification_post_trash', '__return_false');
