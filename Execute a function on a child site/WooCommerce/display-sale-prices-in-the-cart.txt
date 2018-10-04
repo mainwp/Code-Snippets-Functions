@@ -1,0 +1,9 @@
+function wc_custom_show_sale_price_at_cart( $old_display, $cart_item, $cart_item_key ) {
+	/** @var WC_Product $product */
+	$product = $cart_item['data'];
+	if ( $product ) {
+		return $product->get_price_html();
+	}
+	return $old_display;
+}
+add_filter( 'woocommerce_cart_item_price', 'wc_custom_show_sale_price_at_cart', 10, 3 );
