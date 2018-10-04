@@ -1,0 +1,8 @@
+function custom_wc_get_sale_price( $sale_price, $product ) {
+// 	return $product->get_regular_price(); // Un-comment this to disable all sale prices
+	return $sale_price;
+}
+add_filter( 'woocommerce_product_get_sale_price', 'custom_wc_get_sale_price', 50, 2 );
+add_filter( 'woocommerce_product_get_price', 'custom_wc_get_sale_price', 50, 2 );
+// add_filter( 'woocommerce_get_sale_price', 'custom_wc_get_sale_price', 50, 2 ); // WC < 3.1.2
+// add_filter( 'woocommerce_get_price', 'custom_wc_get_sale_price', 50, 2 ); // WC < 3.1.2
