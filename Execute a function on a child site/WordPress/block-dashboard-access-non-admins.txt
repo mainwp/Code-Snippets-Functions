@@ -1,0 +1,7 @@
+function wp_block_wp_admin() {
+	if ( is_admin() && ! current_user_can( 'administrator' ) && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		wp_safe_redirect( home_url() );
+		exit;
+	}
+}
+add_action( 'admin_init', 'wp_block_wp_admin' );
