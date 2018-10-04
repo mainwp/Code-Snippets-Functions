@@ -1,0 +1,8 @@
+function wc_custom_show_free_label_with_free_shipping( $label, $method ) {
+//	if ( $method->method_id == 'local_pickup' ) return $label; // Don't apply to local pickup rates
+	if ( $method->cost == 0 ) {
+		$label .= ' (' . __( 'Free', 'woocommerce' ) . ')';
+	}
+	return $label;
+}
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'wc_custom_show_free_label_with_free_shipping', 10, 2 );
