@@ -1,8 +1,8 @@
-## Remove the try Gutenberg nag if using WordPress 4.9.8 and above.
+## Purge SG Optimizer Cache on your Child Sites
 
-Tested version of WordPress 4.9.8.
+Tested version of WordPress 5.0
 
-This file is a code snippet that is used for [WordPress](https://make.wordpress.org/core/2018/08/02/try-gutenberg-callout-in-wordpress-4-9-8/).
+This file is a code snippet that is used for [SG Optimizer](https://wordpress.org/plugins/sg-cachepress/).
 
 ## Things to do
 
