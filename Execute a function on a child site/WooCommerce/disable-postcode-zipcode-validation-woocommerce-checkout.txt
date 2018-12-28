@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_default_address_fields' , 'wc_override_postcode_validation' );
+ 
+function wc_override_postcode_validation( $address_fields ) {
+  $address_fields['postcode']['required'] = false;
+  return $address_fields;
+}
