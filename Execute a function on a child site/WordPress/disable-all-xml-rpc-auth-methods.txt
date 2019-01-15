@@ -1,0 +1,3 @@
+add_filter('xmlrpc_methods', function () {
+    return [];
+}, PHP_INT_MAX);
