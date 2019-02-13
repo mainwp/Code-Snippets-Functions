@@ -1,0 +1,10 @@
+<?php
+function default_strings_callback( $strings ) {
+    // Search nothing found string
+    $strings['string-search-nothing-found-message']	= __( 'Sorry, There is no Search Result found.', 'astra' );
+    // Search input box placeholder
+    $strings['string-search-input-placeholder']	= __( 'Search ...', 'astra' );
+    return $strings;
+}
+add_filter( 'astra_default_strings', 'default_strings_callback', 10 );
+?>
