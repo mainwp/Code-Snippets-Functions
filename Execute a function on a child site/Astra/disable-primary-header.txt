@@ -1,0 +1,3 @@
+<?php
+remove_action( 'astra_masthead', 'astra_masthead_primary_template' );
+?>
