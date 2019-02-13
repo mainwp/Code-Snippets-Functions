@@ -1,0 +1,19 @@
+<?php
+function your_prefix_astra_color_palettes() {
+ 
+  $color_palettes = array(
+	'#ffffff',
+	'#f6f7f8',
+	'#222222',
+	'#666666',
+	'#000000',
+	'#000000',
+	'#000000',
+	'#000000',
+  );
+  
+  return $color_palettes;
+}
+ 
+add_filter( 'astra_color_palettes', 'your_prefix_astra_color_palettes' );
+?>
