@@ -1,0 +1,7 @@
+<?php
+function remove_primary_menu_callback() {
+    remove_action( 'astra_masthead_toggle_buttons', 'astra_masthead_toggle_buttons_primary' );
+    remove_action( 'astra_masthead_content', 'astra_primary_navigation_markup', 10 );
+}
+add_action( 'init', 'remove_primary_menu_callback' );
+?>
