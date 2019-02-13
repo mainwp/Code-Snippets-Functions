@@ -1,0 +1,7 @@
+<?php
+function your_prefix_change_header_breakpoint() {
+	return 1120;
+};
+ 
+add_filter( 'astra_header_break_point', 'your_prefix_change_header_breakpoint' );
+?>
