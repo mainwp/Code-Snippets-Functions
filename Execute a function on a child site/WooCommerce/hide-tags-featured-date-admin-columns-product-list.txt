@@ -1,0 +1,9 @@
+function unset_some_columns_in_product_list( $column_headers ) { 
+        unset($column_headers['product_tag']);
+        unset($column_headers['featured']);
+        unset($column_headers['product_type']);
+        unset($column_headers['date']);
+
+        return $column_headers;
+}
+add_filter( 'manage_edit-product_columns', 'unset_some_columns_in_product_list' );
