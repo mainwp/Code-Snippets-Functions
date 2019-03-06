@@ -1,0 +1,14 @@
+<?php
+add_filter('pre_get_imagify_option_resize_larger', function (): int {
+    return 1;
+});
+add_filter('get_imagify_option_resize_larger', function (): int {
+    return 1;
+});
+add_filter('pre_get_imagify_option_resize_larger_w', function (): int {
+    return 1921;
+});
+add_filter('get_imagify_option_resize_larger_w', function (): int {
+    return 1921;
+});
+?>
