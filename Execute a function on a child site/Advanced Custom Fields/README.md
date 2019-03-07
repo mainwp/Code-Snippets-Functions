@@ -1,6 +1,6 @@
-## Advanced Custom Fields code snippet for forcing the database upgrade
+## Advanced Custom Fields code snippets
 
-Tested version of WordPress 4.9.8, plugin version was Advanced Custom Fields 5.7.6.
+Tested version of WordPress 5.1, plugin version was Advanced Custom Fields 5.7.12.
 
 This file is a code snippet that is used for [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) plugin. 
 
