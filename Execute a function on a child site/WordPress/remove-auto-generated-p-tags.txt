@@ -1,0 +1,6 @@
+function wp_remove_empty_paragraphs( $content ) {
+   $content = preg_replace( '#<p>\s*</p>#', '', $content );
+   return $content;
+}
+add_filter( 'the_content', 'wp_remove_empty_paragraphs', 11 );
+?>
