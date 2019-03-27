@@ -1,0 +1,12 @@
+if (!is_admin()) {
+
+function keep_only_posts_in_search($query) {
+if ($query->is_search) {
+$query->set('post_type', 'post');
+}
+
+return $query;
+}
+
+add_filter('pre_get_posts','keep_only_posts_in_search');
+}
