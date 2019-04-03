@@ -1,0 +1,1 @@
+add_filter( ‘jetpack_show_promotions’, ‘__return_false’, 20 )
