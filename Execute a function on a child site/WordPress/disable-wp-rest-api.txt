@@ -1,0 +1,7 @@
+add_filter('rest_enabled', '__return_false');
+remove_action( 'init', 'rest_api_init' );
+remove_action( 'rest_api_init', 'rest_api_default_filters', 10, 1 );
+remove_action( 'parse_request', 'rest_api_loaded' );
+remove_action( 'rest_api_init', 'wp_oembed_register_route');
+remove_filter( 'rest_pre_serve_request', '_oembed_rest_pre_serve_request', 10, 4 );
+remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
