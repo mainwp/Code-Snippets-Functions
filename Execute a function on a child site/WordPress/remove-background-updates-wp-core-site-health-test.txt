@@ -1,0 +1,5 @@
+function myhost_remove_update_check( $tests ) {
+    unset( $tests['async']['background_updates'] );
+    return $tests;
+}
+add_filter( 'site_status_tests', 'myhost_remove_update_check' );
