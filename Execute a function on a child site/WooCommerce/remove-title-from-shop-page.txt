@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_show_page_title', 'wc_hide_shop_page_title' );
+ 
+function wc_hide_shop_page_title( $title ) {
+   if ( is_shop() ) $title = false;
+   return $title;
+}
