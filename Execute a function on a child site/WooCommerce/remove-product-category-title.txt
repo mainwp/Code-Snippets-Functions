@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_show_page_title', 'wc_hide_cat_page_title' );
+ 
+function wc_hide_cat_page_title( $title ) {
+   if ( is_product_category() ) $title = false;
+   return $title;
+}
