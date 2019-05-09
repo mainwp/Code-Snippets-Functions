@@ -1,0 +1,1 @@
+define( 'RECOVERY_MODE_EMAIL', 'user@sitedomain.com' );
