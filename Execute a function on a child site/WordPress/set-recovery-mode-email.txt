@@ -1,0 +1,4 @@
+add_filter( 'recovery_mode_email', function( $email_data ) {
+    $email_data['to'] = 'user@sitedomain.com';
+    return $email_data;
+});
