@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_localisation_address_formats', 'change_us_address_format' );
+function change_us_address_format( $formats ) {
+	$formats['US'] = "{name}\n{company}\n{address_1}\n{address_2}\n{city}, {state} {postcode}\n{country}";
+
+	return $formats;
+}
