@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_continue_shopping_redirect', 'wc_change_continue_shopping' );
+ 
+function wc_change_continue_shopping() {
+   return wc_get_page_permalink( 'shop' );
+}
