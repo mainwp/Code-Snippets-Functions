@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_defer_transactional_emails', '__return_true' );
