@@ -1,5 +1,5 @@
 add_filter( 'jetpack_implode_frontend_css', '__return_false', 99 ); 
-function sertmedia_remove_all_jp_css() {
+function wp_remove_all_jp_css() {
 wp_deregister_style( 'AtD_style' ); // After the Deadline
 wp_deregister_style( 'jetpack_likes' ); // Likes
 wp_deregister_style( 'jetpack_related-posts' ); //Related Posts
@@ -26,4 +26,4 @@ wp_deregister_style( 'gravatar-profile-widget' ); // Gravatar Widget
 wp_deregister_style( 'widget-grid-and-list' ); // Top Posts widget
 wp_deregister_style( 'jetpack-widgets' ); // Widgets
 }
-add_action('wp_print_styles', 'sertmedia_remove_all_jp_css' )
+add_action('wp_print_styles', 'wp_remove_all_jp_css' )
