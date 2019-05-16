@@ -1,0 +1,15 @@
+function wc_unrequire_billing_fields( $fields ) {
+	$fields['billing_first_name']['required'] = false;
+	$fields['billing_last_name']['required'] = false;
+	$fields['billing_company']['required'] = false;
+	$fields['billing_country']['required'] = false;
+	$fields['billing_address_1']['required'] = false;
+	$fields['billing_city']['required'] = false;
+	$fields['billing_state']['required'] = false;
+	$fields['billing_postcode']['required'] = false;
+	$fields['billing_phone']['required'] = false;
+	$fields['billing_email']['required'] = false;
+    
+	return $fields;
+}
+add_filter( 'woocommerce_billing_fields', 'wc_unrequire_billing_fields' );
