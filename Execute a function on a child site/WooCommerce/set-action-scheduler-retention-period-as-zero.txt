@@ -1,0 +1,1 @@
+add_filter( 'action_scheduler_retention_period', '__return_zero' );
