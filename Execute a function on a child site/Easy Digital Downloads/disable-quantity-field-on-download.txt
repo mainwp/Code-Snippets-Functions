@@ -1,0 +1,1 @@
+remove_action( 'edd_purchase_link_top', 'edd_download_purchase_form_quantity_field', 10 );
