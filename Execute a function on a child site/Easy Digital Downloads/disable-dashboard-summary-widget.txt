@@ -1,0 +1,1 @@
+remove_action( 'wp_dashboard_setup', 'edd_register_dashboard_widgets', 10 );
