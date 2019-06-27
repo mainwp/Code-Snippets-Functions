@@ -1,0 +1,5 @@
+add_action( 'gform_entry_detail_content_before', function ( $form, $entry ) {
+    $use_choice_text = false;
+    $use_admin_label = false;
+    gform_delete_meta( $entry['id'], "gform_product_info_{$use_choice_text}_{$use_admin_label}" );
+}, 10, 2 );
