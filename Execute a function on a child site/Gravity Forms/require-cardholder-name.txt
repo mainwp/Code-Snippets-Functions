@@ -1,0 +1,8 @@
+add_filter( 'gform_field_validation', function ( $result, $value, $form, $field ) {
+    if ( $field->type == 'creditcard' && $result['is_valid'] && rgempty( $field->id . '.5', $value ) ) {
+        $result['is_valid'] = false;
+        $result['message']  = 'Please enter the cardholder first and last name.';
+    }
+ 
+    return $result;
+}, 10, 4 );
