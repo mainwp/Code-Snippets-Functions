@@ -1,0 +1,6 @@
+add_filter( 'gform_countries', 'remove_country' );
+function remove_country( $countries ) {
+    $key = array_search( 'Russia', $countries );
+    unset( $countries[ $key ] );
+    return $countries;
+}
