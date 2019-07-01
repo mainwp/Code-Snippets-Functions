@@ -1,0 +1,5 @@
+add_filter('gform_custom_merge_tags', 'custom_merge_tags', 10, 4);
+function custom_merge_tags( $merge_tags, $form_id, $fields, $element_id ) {
+    $merge_tags[] = array('label' => 'Download Link', 'tag' => '{download_link}');
+    return $merge_tags;
+}
