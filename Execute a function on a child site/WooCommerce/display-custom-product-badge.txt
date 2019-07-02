@@ -1,0 +1,11 @@
+add_action( 'woocommerce_single_product_summary', 'wc_display_badge_if_checkbox', 6 );
+  
+function wc_display_badge_if_checkbox() {
+    global $product;     
+    if ( get_post_meta( $product->get_id(), 'custom_badge', true ) ) {
+        echo '
+<div class="woocommerce-message">CUSTOM BADGE!</div>
+ 
+';
+    }
+}
