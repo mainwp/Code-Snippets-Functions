@@ -1,0 +1,8 @@
+function wc_validate_zipcodes( $fields, $errors ) {
+	// Enter your zip codes in this array
+	$excluded_zips = array( '93301', '93304', '93305' );
+	if( in_array( $fields['shipping_postcode'], $excluded_zips ) ) {
+		$errors->add( 'validation', 'That zipcode is not allowed' );
+	}
+}
+add_action( 'woocommerce_after_checkout_validation', 'wc_validate_zipcodes', 10, 2 );
