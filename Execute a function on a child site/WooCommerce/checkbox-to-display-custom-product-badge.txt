@@ -1,0 +1,20 @@
+add_action( 'woocommerce_product_options_general_product_data', 'wc_add_badge_checkbox_to_products' );        
+  
+function wc_add_badge_checkbox_to_products() {           
+woocommerce_wp_checkbox( array( 
+'id' => 'custom_badge', 
+'class' => '', 
+'label' => 'Show Custom Badge'
+) 
+);      
+}
+
+add_action( 'save_post', 'wc_save_badge_checkbox_to_post_meta' );
+  
+function wc_save_badge_checkbox_to_post_meta( $product_id ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+        return;
+    if ( isset( $_POST['custom_badge'] ) ) {
+            update_post_meta( $product_id, 'custom_badge', $_POST['custom_badge'] );
+    } else delete_post_meta( $product_id, 'custom_badge' );
+}
