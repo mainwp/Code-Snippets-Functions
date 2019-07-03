@@ -1,0 +1,18 @@
+add_filter( 'option_wpseo', 'filter_yst_wpseo_option' );
+
+function filter_yst_wpseo_option( $option ) {
+  // Prevent redirects to the about page
+  $option['seen_about'] = true;
+
+  // Prevent showing the tour popup
+  $option['ignore_tour'] = true;
+
+  // Prevent showing the tracking popup
+  $option['tracking_popup_done'] = true;
+
+  /* Allows our anonymous usage tracking
+   * We'd appreciate this :)
+   */
+  $option['allow_tracking'] = true;
+  return $option;
+}
