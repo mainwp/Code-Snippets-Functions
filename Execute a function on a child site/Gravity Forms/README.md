@@ -1,8 +1,8 @@
-## Yoast SEO code snippets
+## Gravity Forms code snippets
 
-Tested version of WordPress 5.2.2, plugin version was Yoast SEO 11.5.
+Tested version of WordPress 5.2.2, plugin version was Gravity Forms 2.4.10.6.
 
-This file is a code snippet that is used for [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) plugin. 
+This file is a code snippet that is used for [Gravity Forms](https://www.gravityforms.com/) plugin. 
 
 ## Things to do
 

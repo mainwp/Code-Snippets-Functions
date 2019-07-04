@@ -1,0 +1,6 @@
+if (!function_exists('woocommerce_template_single_excerpt')) {
+   function woocommerce_template_single_excerpt( $post ) {
+   	   global $post;
+       if ($post->post_excerpt) echo '<div itemprop="description">' . do_shortcode(wpautop(wptexturize($post->post_excerpt))) . '</div>';
+   }
+}

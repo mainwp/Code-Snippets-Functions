@@ -1,0 +1,14 @@
+add_filter( 'woocommerce_loop_add_to_cart_link', 'wc_add_to_cart_text_1' );
+ 
+function wc_add_to_cart_text_1( $add_to_cart_html ) {
+	return str_replace( 'Add to cart', 'Buy Now', $add_to_cart_html );
+}
+ 
+/*
+ * Change button text on product pages
+ */
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'wc_add_to_cart_text_2' );
+ 
+function wc_add_to_cart_text_2( $product ){
+	return 'Buy Now';
+}

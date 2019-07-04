@@ -1,0 +1,5 @@
+<?php
+add_filter('acf/settings/show_admin', function (bool $shouldShowAdmin): bool {
+    return $shouldShowAdmin && 'development' === WP_ENV;
+});
+?>

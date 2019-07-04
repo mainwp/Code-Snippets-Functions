@@ -1,0 +1,10 @@
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Ignore the X-Accel-Redirect header. Specifically, this fixes issues with files downloading on Pantheon setups.
+ *
+ */
+ function pantheon_ignore_edd_ignore_x_accel_redirect(){
+ 	return true;
+ }
+ add_filter( 'edd_ignore_x_accel_redirect', 'pantheon_ignore_edd_ignore_x_accel_redirect' );

@@ -1,0 +1,3 @@
+if ( ! defined( ‘WCS_FORCE_EMAIL’ ) {
+      define( ‘WCS_FORCE_EMAIL’, true );
+}

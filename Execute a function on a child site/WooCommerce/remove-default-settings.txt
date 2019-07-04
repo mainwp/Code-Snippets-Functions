@@ -1,0 +1,14 @@
+add_filter( 'woocommerce_catalog_settings', 'woo_remove_catalog_options' );
+
+function woo_remove_catalog_options( $catalog ) {
+
+	unset($catalog[23]); //Trim zeros (no) 
+	unset($catalog[22]); //2 decimals 
+	unset($catalog[21]); //decimal sep (.) 
+	unset($catalog[20]); //thousand sep (,) 
+	unset($catalog[19]); //currency position (left)	
+	unset($catalog[18]); //currency position (left)	
+	unset($catalog[5]); // ajax add to cart (no)	
+	
+	return $catalog; 
+}

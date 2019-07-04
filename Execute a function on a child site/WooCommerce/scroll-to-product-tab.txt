@@ -1,0 +1,44 @@
+add_action( 'woocommerce_single_product_summary', 'wc_scroll_to_and_open_product_tab', 21 );
+  
+function wc_scroll_to_and_open_product_tab() {
+    
+   global $post, $product;   
+    
+   // LINK TO SCROLL TO DESC TAB
+   if ( $post->post_content ) {
+      echo '<p><a class="jump-to-tab" href="#tab-description">' . __( 'Read more', 'woocommerce' ) . ' &rarr;</a></p>';
+   }
+    
+   // LINK TO SCROLL TO ADDITIONAL INFO TAB
+   if ( $product && ( $product->has_attributes() || apply_filters( 'wc_product_enable_dimensions_display', $product->has_weight() || $product->has_dimensions() ) ) ) {
+      echo '<p><a class="jump-to-tab" href="#tab-additional_information">' . __( 'Additional information', 'woocommerce' ) . ' &rarr;</a></p>';
+   }
+    
+   // LINK TO SCROLL TO REVIEWS TAB
+   if ( comments_open() ) {
+      echo '<p><a class="jump-to-tab" href="#tab-reviews">' . __( 'Reviews', 'woocommerce' ) . ' &rarr;</a></p>';
+   }
+    
+   ?>
+      <script>
+      jQuery(document).ready(function($){
+         $('a.jump-to-tab').click(function(e){
+            e.preventDefault();
+            var tabhash = $(this).attr("href");
+            var tabli = 'li.' + tabhash.substring(1);
+            var tabpanel = '.panel' + tabhash;
+            $(".wc-tabs li").each(function() {
+               if ( $(this).hasClass("active") ) {
+                  $(this).removeClass("active");
+               }
+            });
+            $(tabli).addClass("active");
+            $(".woocommerce-tabs .panel").css("display","none");
+            $(tabpanel).css("display","block");
+            $('html,body').animate({scrollTop:$(tabpanel).offset().top}, 750);
+         });
+      });
+      </script>
+   <?php
+    
+}

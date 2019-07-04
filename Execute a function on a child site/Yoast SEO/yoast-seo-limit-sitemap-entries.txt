@@ -1,0 +1,5 @@
+function max_entries_per_sitemap() {
+    return 100;
+}
+
+add_filter( 'wpseo_sitemap_entries_per_page', 'max_entries_per_sitemap' );

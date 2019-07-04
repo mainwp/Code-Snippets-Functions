@@ -1,0 +1,5 @@
+add_filter( 'gform_incomplete_submissions_expiration_days', 'gf_days', 1, 10 );
+function gf_days( $expiration_days ) {
+    $expiration_days = 90;
+    return $expiration_days;
+}

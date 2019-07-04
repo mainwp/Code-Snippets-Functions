@@ -1,0 +1,9 @@
+<?php
+add_filter( 'astra_widgets_init', 'widget_title_tag', 10, 1 );
+function widget_title_tag( $atts ) {
+$atts['before_title'] = '<h4 class="widget-title">';
+$atts['after_title'] = '</h4>';
+ 
+return $atts;
+}
+?>

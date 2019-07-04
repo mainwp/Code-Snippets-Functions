@@ -1,8 +1,8 @@
-## Yoast SEO code snippets
+## Astra theme code snippets
 
-Tested version of WordPress 5.2.2, plugin version was Yoast SEO 11.5.
+Tested version of WordPress 5.0.3, theme version was Astra 1.6.8.
 
-This file is a code snippet that is used for [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) plugin. 
+This file is a code snippet that is used for [Astra](https://wordpress.org/themes/astra/) theme. 
 
 ## Things to do
 

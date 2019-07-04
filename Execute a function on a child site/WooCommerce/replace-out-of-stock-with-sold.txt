@@ -1,0 +1,7 @@
+add_filter('woocommerce_get_availability', 'availability_filter_func');
+
+function availability_filter_func($availability)
+{
+	$availability['availability'] = str_ireplace('Out of stock', 'Sold', $availability['availability']);
+	return $availability;
+}

@@ -1,0 +1,18 @@
+add_action( 'template_redirect', 'wc_remove_product_from_cart_programmatically' );
+ 
+function wc_remove_product_from_cart_programmatically() {
+   if ( is_admin() ) return;
+   $product_id = 282; // product id
+   $cart_total = 50; // replace with threshold
+   $in_cart = false;
+   foreach( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+      if ( $cart_item['product_id'] === $product_id ) {
+         $in_cart = true;
+         $key = $cart_item_key;
+         break;
+      }
+   }
+   if( WC()->cart->total > $cart_total ) {
+      if ( $in_cart ) WC()->cart->remove_cart_item( $key );
+   }
+}

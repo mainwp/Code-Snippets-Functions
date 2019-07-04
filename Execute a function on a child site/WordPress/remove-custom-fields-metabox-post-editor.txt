@@ -1,0 +1,6 @@
+function wp_remove_post_custom_fields_metabox() {
+     foreach ( get_post_types( '', 'names' ) as $post_type ) {
+         remove_meta_box( 'postcustom' , $post_type , 'normal' );   
+     }
+}
+add_action( 'admin_menu' , 'wp_remove_post_custom_fields_metabox' );

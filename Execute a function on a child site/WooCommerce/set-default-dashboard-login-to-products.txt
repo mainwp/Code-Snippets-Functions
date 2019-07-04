@@ -1,0 +1,12 @@
+add_action( 'load-index.php', 'wc_direct_access_wp_dashboard_redirect' );
+ 
+function wc_direct_access_wp_dashboard_redirect(){
+    wp_redirect( admin_url( 'edit.php?post_type=product' ) );
+}
+ 
+add_filter( 'login_redirect', 'wc_login_wp_dashboard_redirect', 9999, 3 );
+ 
+function wc_login_wp_dashboard_redirect( $redirect_to, $request, $user ){
+    $redirect_to = admin_url( 'edit.php?post_type=product' );
+    return $redirect_to;
+}

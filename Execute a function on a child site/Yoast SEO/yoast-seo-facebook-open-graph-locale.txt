@@ -1,0 +1,5 @@
+add_filter('wpseo_locale', 'override_og_locale');
+function override_og_locale($locale)
+{
+    return "en_US";
+}

@@ -1,0 +1,16 @@
+add_action( 'woocommerce_payment_complete', 'wc_auto_complete_paid_order', 20, 1 );
+function wc_auto_complete_paid_order( $order_id ) {
+    if ( ! $order_id )
+        return;
+
+    // Get an instance of the WC_Product object
+    $order = wc_get_order( $order_id );
+
+    // No updated status for orders delivered with Bank wire, Cash on delivery and Cheque payment methods.
+    if ( in_array( $order->get_payment_method(), array( 'bacs', 'cod', 'cheque', '' ) ) ) {
+        return;
+    // Updated status to "completed" for paid Orders with all others payment methods
+    } else {
+        $order->update_status( 'completed' );
+    }
+}

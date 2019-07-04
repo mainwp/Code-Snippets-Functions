@@ -1,8 +1,8 @@
-## Yoast SEO code snippets
+## Autoptimize code snippets
 
-Tested version of WordPress 5.2.2, plugin version was Yoast SEO 11.5.
+Tested version of WordPress 5.2, plugin version was Autoptimize 2.5.0.
 
-This file is a code snippet that is used for [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) plugin. 
+This file is a code snippet that is used for [Autoptimize](https://wordpress.org/plugins/autoptimize/) plugin. 
 
 ## Things to do
 

@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_product_subcategories_hide_empty', '__return_false' );

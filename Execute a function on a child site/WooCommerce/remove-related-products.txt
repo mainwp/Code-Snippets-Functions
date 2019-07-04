@@ -1,0 +1,1 @@
+add_filter('woocommerce_product_related_posts_query', '__return_empty_array', 100);

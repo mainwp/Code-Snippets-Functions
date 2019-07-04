@@ -1,0 +1,5 @@
+function jetpackcom_remove_search_hints( $tools ) {
+    unset( $tools[ array_search( 'plugin-search.php', $tools, true ) ] );
+    return $tools;
+}
+add_filter( 'jetpack_tools_to_include', 'jetpackcom_remove_search_hints' );

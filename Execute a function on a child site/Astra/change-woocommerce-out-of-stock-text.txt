@@ -1,0 +1,6 @@
+<?php
+function your_prefix_change_out_stock_string() {
+	return __( 'Your Alternate Text', 'your-text-domain' );
+}
+add_filter( 'astra_woo_shop_out_of_stock_string', 'your_prefix_change_out_stock_string' );
+?>

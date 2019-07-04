@@ -1,0 +1,23 @@
+function wc_add_sku_sorting( $args ) {
+
+	$orderby_value = isset( $_GET['orderby'] ) ? wc_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+
+	if ( 'sku' == $orderby_value ) {
+		$args['orderby'] = 'meta_value';
+    		$args['order'] = 'asc'; 
+    		// ^ lists SKUs alphabetically 0-9, a-z; change to desc for reverse alphabetical
+		$args['meta_key'] = '_sku';
+	}
+
+	return $args;
+}
+add_filter( 'woocommerce_get_catalog_ordering_args', 'wc_add_sku_sorting' );
+
+
+function wc_sku_sorting_orderby( $sortby ) {
+	$sortby['sku'] = 'Sort by SKU';
+	// Change text above as desired; this shows in the sorting dropdown
+	return $sortby;
+}
+add_filter( 'woocommerce_catalog_orderby', 'wc_sku_sorting_orderby' );
+add_filter( 'woocommerce_default_catalog_orderby_options', 'wc_sku_sorting_orderby' );

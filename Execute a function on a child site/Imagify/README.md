@@ -1,8 +1,8 @@
-## Yoast SEO code snippets
+## Imagify Image Optimization code snippet for setting the correct presets by default
 
-Tested version of WordPress 5.2.2, plugin version was Yoast SEO 11.5.
+Tested version of WordPress 5.1, plugin version was Imagify Image Optimizer 1.8.4.1.
 
-This file is a code snippet that is used for [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) plugin. 
+This file is a code snippet that is used for [Imagify Image Optimizer](https://wordpress.org/plugins/imagify/) plugin. 
 
 ## Things to do
 

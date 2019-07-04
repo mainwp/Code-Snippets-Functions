@@ -1,8 +1,8 @@
-## Yoast SEO code snippets
+## SendGrid code snippet for hiding the admin dashboard
 
-Tested version of WordPress 5.2.2, plugin version was Yoast SEO 11.5.
+Tested version of WordPress 5.1, plugin version was SendGrid 1.11.8.
 
-This file is a code snippet that is used for [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) plugin. 
+This file is a code snippet that is used for [SendGrid](https://wordpress.org/plugins/sendgrid-email-delivery-simplified/) plugin. 
 
 ## Things to do
 

@@ -1,0 +1,1 @@
+add_filter( 'gform_akismet_fields_6', 'set_akismet_fields', 10, 3 );

@@ -1,0 +1,16 @@
+<?php
+function your_prefix_post_date( $output ) {
+	$output        = '';
+	$format        = apply_filters( 'astra_post_date_format', '' );
+	$modified_date = esc_html( get_the_modified_date( $format ) );
+	$modified_on   = sprintf(
+		esc_html( '%s' ),
+		$modified_date
+	);
+	$output       .= '<span class="posted-on">';
+	$output       .= '<span class="post-updated"> ' . $modified_on . '</span>';
+	$output       .= '</span>';
+	return $output;
+}
+add_filter( 'astra_post_date', 'your_prefix_post_date' );
+?>

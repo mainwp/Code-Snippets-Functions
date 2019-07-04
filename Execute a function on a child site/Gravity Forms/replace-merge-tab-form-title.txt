@@ -1,0 +1,9 @@
+add_filter( 'gform_pre_replace_merge_tags', function ( $text, $form, $entry, $url_encode, $esc_html, $nl2br, $format ) {
+    $merge_tag = '{form_title}';
+ 
+    if ( strpos( $text, $merge_tag ) === false || empty( $form ) ) {
+        return $text;
+    }
+ 
+    return str_replace( $merge_tag, 'Your Custom Text', $text );
+}, 10, 7 );

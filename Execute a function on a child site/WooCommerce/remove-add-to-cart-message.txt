@@ -1,0 +1,5 @@
+add_filter( 'wc_add_to_cart_message_html', 'wc_remove_add_to_cart_message' );
+ 
+function wc_remove_add_to_cart_message( $message ){
+	return '';
+}

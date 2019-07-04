@@ -1,0 +1,13 @@
+add_shortcode( 'sales', 'wc_sales_by_product_id' );
+   
+function wc_sales_by_product_id( $atts ) {
+        
+   $atts = shortcode_atts( array(
+      'id' => ''
+   ), $atts );
+    
+   $units_sold = get_post_meta( $atts['id'], 'total_sales', true );
+     
+   return $units_sold;
+     
+}

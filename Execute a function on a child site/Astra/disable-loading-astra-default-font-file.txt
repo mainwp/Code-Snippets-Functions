@@ -1,0 +1,3 @@
+<?php
+add_filter( 'astra_enable_default_fonts', '__return_false' );
+?>

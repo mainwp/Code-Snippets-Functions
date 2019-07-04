@@ -1,0 +1,15 @@
+<?php
+function your_prefix_featured_image() {
+	$post_types = array('page');
+ 
+	// bail early if the current post type if not the one we want to customize.
+	if ( ! in_array( get_post_type(), $post_types ) ) {
+		return;
+	}
+	
+	// Disable featured image.
+	add_filter( 'astra_featured_image_enabled', '__return_false' );
+}
+ 
+add_action( 'wp', 'your_prefix_featured_image' );
+?>

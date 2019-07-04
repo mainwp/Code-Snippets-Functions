@@ -1,0 +1,9 @@
+add_action(
+	'admin_menu',
+	function() {
+		if ( class_exists( 'Jetpack' ) && ! current_user_can( 'manage_options' ) ) {
+			remove_menu_page( 'jetpack' );
+		}
+	},
+	999
+);

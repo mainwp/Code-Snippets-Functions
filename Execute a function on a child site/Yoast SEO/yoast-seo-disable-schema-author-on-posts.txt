@@ -1,0 +1,1 @@
+add_filter( 'wpseo_schema_needs_author', '__return_false' );

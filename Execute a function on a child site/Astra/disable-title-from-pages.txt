@@ -1,0 +1,15 @@
+<?php
+function your_prefix_post_title() {
+	$post_types = array('page');
+ 
+	// bail early if the current post type if not the one we want to customize.
+	if ( ! in_array( get_post_type(), $post_types ) ) {
+		return;
+	}
+ 
+	// Disable Post featured image.
+	add_filter( 'astra_the_title_enabled', '__return_false' );
+}
+ 
+add_action( 'wp', 'your_prefix_post_title' );
+?>
