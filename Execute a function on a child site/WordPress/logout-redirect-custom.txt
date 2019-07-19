@@ -1,0 +1,3 @@
+add_filter('wplr_home_url',function($url){
+    return "https://sitedomain.com/store/";
+});
