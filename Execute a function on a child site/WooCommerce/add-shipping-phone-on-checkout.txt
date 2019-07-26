@@ -1,0 +1,17 @@
+add_filter( 'woocommerce_checkout_fields', 'wc_shipping_phone_checkout' );
+ 
+function wc_shipping_phone_checkout( $fields ) {
+   $fields['shipping']['shipping_phone'] = array(
+      'label' => 'Phone',
+      'required' => false,
+      'class' => array( 'form-row-wide' ),
+      'priority' => 25,
+   );
+   return $fields;
+}
+  
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wc_shipping_phone_checkout_display' );
+ 
+function wc_shipping_phone_checkout_display( $order ){
+    echo '<p><b>Shipping Phone:</b> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
+}
