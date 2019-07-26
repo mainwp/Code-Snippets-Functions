@@ -1,0 +1,30 @@
+add_action( 'woocommerce_single_product_summary', 'wc_product_sold_count_1_week', 11 );
+  
+function wc_product_sold_count_1_week() {
+   global $product;
+    
+   // GET LAST WEEK ORDERS
+   $all_orders = wc_get_orders(
+      array(
+         'limit' => -1,
+         'status' => array_map( 'wc_get_order_status_name', wc_get_is_paid_statuses() ),
+         'date_after' => date( 'Y-m-d', strtotime( '-1 week' ) ),
+         'return' => 'ids',
+      )
+   );
+     
+   // LOOP THROUGH ORDERS AND SUM QUANTITIES PURCHASED
+   $count = 0;
+   foreach ( $all_orders as $all_order ) {
+      $order = wc_get_order( $all_order );
+      $items = $order->get_items();
+      foreach ( $items as $item ) {
+         $product_id = $item->get_product_id();
+         if ( $product_id == $product->get_id() ) {
+            $count = $count + absint( $item['qty'] ); 
+         }
+      }
+   }
+    
+   if ( $count > 0 ) echo "<p>Recent sales: $count</p>";
+}
