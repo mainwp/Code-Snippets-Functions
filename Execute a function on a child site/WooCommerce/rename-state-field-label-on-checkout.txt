@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_default_address_fields' , 'wc_rename_state_province', 9999 );
+ 
+function wc_rename_state_province( $fields ) {
+    $fields['state']['label'] = 'Province';
+    return $fields;
+}
