@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_related_products', 'wc_related_products_by_title', 9999, 3 ); 
+ 
+function wc_related_products_by_title( $related_posts, $product_id, $args ) {
+   $product = wc_get_product( $product_id );
+   $title = $product->get_name();
+   $related_posts = get_posts( array(
+      'post_type' => 'product',
+      'post_status' => 'publish',
+      'title' => $title,
+      'fields' => 'ids',
+      'posts_per_page' => -1,
+      'exclude' => array( $product_id ),
+   ));
+   return $related_posts;
+}
