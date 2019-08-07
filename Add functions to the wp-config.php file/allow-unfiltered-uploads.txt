@@ -1,0 +1,1 @@
+define('ALLOW_UNFILTERED_UPLOADS', true);
