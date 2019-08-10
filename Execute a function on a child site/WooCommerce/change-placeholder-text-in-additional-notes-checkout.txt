@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_checkout_fields' , 'wc_custom_additional_info' );
+// Change placeholder text in Additional Notes
+function wc_custom_additional_info( $fields ) {
+     $fields['order']['order_comments']['placeholder'] = 'Add a Shipping address here if different from Billing Address, or any additional notes for delivery';
+     return $fields;
+}
