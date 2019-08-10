@@ -1,0 +1,7 @@
+add_action('pre_get_posts','wc_woocommerce_archive');
+
+function wctt_woocommerce_archive($query) {
+  if (!is_admin() && $query->is_main_query() && is_shop() || is_woocommerce() || is_product_category() || is_product_tag()) {
+        $query->set( 'posts_per_page', '30' );
+  }
+}
