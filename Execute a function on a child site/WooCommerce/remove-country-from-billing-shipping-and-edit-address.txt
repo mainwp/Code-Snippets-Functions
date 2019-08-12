@@ -1,0 +1,19 @@
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+add_filter( 'woocommerce_billing_fields' , 'custom_override_billing_fields' );
+add_filter( 'woocommerce_shipping_fields' , 'custom_override_shipping_fields' );
+
+function custom_override_checkout_fields( $fields ) {
+  unset($fields['billing']['billing_country']);
+  unset($fields['shipping']['shipping_country']);
+  return $fields;
+}
+
+function custom_override_billing_fields( $fields ) {
+  unset($fields['billing_country']);
+  return $fields;
+}
+
+function custom_override_shipping_fields( $fields ) {
+  unset($fields['shipping_country']);
+  return $fields;
+}
