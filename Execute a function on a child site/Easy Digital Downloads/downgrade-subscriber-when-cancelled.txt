@@ -1,0 +1,6 @@
+function edd_downgrade_subcriber( $sub_id, $subscription ) {
+	$u = new WP_User( $subscription->customer->user_id );
+	$u->remove_role( 'edd_subscriber' );
+	$u->add_role( 'subscriber' );
+}
+add_action( 'edd_subscription_cancelled', 'edd_downgrade_subcriber', 10, 2 );
