@@ -1,0 +1,9 @@
+function edd_cancellation_email( $sub_id, $subscription ) {
+	$email_to = 'site@domainname.com';
+	$user_email = $subscription->customer->email;
+	$user_name = $subscription->customer->name;
+	$subject  = 'EDD Cancellation Email Subject';
+	$message  = 'This email confirms that a subsription for ' . $user_name . ' with the email address ' . $user_email . ' has been cancelled.';
+	EDD()->emails->send( $email_to, $subject, $message );
+}
+add_action( 'edd_subscription_cancelled', 'edd_cancellation_email', 10, 4 );
