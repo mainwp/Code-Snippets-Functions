@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_account_menu_items', 'wc_remove_my_account_dashboard' );
+function wc_remove_my_account_dashboard( $menu_links ){
+ 
+	unset( $menu_links['dashboard'] );
+	return $menu_links;
+ 
+}
