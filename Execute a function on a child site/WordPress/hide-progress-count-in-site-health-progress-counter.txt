@@ -1,0 +1,9 @@
+function wp_load_custom_wp_admin_style() {
+	$current_screen = get_current_screen();
+	if ( strpos( $current_screen->base, 'site-health' ) === false ) {
+		return;
+	} else {
+		echo '<style type="text/css">.health-check-title-section .site-health-progress {display:none;}</style>';
+	}
+}
+add_action( 'admin_print_styles', 'wp_load_custom_wp_admin_style' );
