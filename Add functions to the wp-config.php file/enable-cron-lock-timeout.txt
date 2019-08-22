@@ -1,0 +1,1 @@
+define( 'WP_CRON_LOCK_TIMEOUT', 120 );
