@@ -1,0 +1,1 @@
+define( 'ALTERNATE_WP_CRON', true );
