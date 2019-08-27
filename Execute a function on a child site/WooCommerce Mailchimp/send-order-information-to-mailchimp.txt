@@ -1,0 +1,33 @@
+add_filter( 'ss_wc_mailchimp_subscribe_merge_tags', 'woocommerce_mailchimp_extra_data', 10, 3 );
+
+function woocommerce_mailchimp_extra_data( $merge_tags, $order_id, $email ) {
+
+    // Lets grab the order
+    $order = new WC_Order( $order_id );
+    $billing_email = method_exists( $order, 'get_billing_email' ) ? $order->get_billing_email() : $order->billing_email;
+    $billing_total = $order->get_total();
+    $order_number= $order->get_order_number();
+    $product_list = '';
+
+    $order_items = $order->get_items( 'line_item' );
+    $skus = array();
+
+    foreach( $order_items as $order_item ) {
+        $product = $order_item->get_product();
+        $skus[] = $product->get_sku();
+    }
+
+    $product_list = implode( ',\n', $skus );
+
+    $new_merge_tags = array(
+        'BUYDATE' => $order->get_date_paid(),
+        'AMOUNT' => $billing_total,
+        'PRODUCTS' => $product_list,
+        'SOURCE' => $order_number
+    );
+
+    // combine the two arrays
+    $merge_tags = array_merge( $merge_tags, $new_merge_tags );
+
+    return $merge_tags;
+}
