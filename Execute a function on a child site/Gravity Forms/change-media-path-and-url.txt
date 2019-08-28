@@ -1,0 +1,7 @@
+add_filter( 'gform_media_upload_path', 'change_media_upload_path', 10, 3 );
+function change_media_upload_path( $upload_dir, $form_id, $post_id ) {
+   $upload_dir['path'] = '/home/public_html/sitedomain/gf-uploads/';
+   $upload_dir['url'] = 'http://sitedomain.com/gf-uploads/';
+ 
+   return $upload_dir;
+}
