@@ -1,0 +1,15 @@
+add_filter( 'manage_edit-product_columns', 'wc_admin_products_visibility_column' );
+ 
+function bbloomer_admin_products_visibility_column( $columns ){
+   $columns['visibility'] = 'Visibility';
+   return $columns;
+}
+ 
+add_action( 'manage_product_posts_custom_column', 'wc_admin_products_visibility_column_content', 10, 2 );
+ 
+function wc_admin_products_visibility_column_content( $column, $product_id ){
+    if ( $column == 'visibility' ) {
+        $product = wc_get_product( $product_id );
+      echo $product->get_catalog_visibility();
+    }
+}
