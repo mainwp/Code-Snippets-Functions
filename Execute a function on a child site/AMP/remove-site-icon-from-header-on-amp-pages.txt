@@ -1,0 +1,8 @@
+add_action( 'amp_post_template_css', 'wp_amp_css_remove_siteicon' );
+function wp_amp_css_remove_siteicon( $amp_template ) {
+    ?>
+    .amp-wp-header .amp-wp-site-icon {
+        display: none;
+    }
+    <?php
+}
