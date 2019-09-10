@@ -1,0 +1,20 @@
+add_filter( 'woocommerce_enable_order_notes_field', '__return_false' );
+ 
+add_filter( 'woocommerce_checkout_fields' , 'wc_custom_order_notes' );
+ 
+function wc_custom_order_notes( $fields ) {
+   $fields['billing']['new_order_notes'] = array(
+      'type' => 'textarea',
+      'label' => 'New Order Notes',
+      'class' => array('form-row-wide'),
+      'clear' => true,
+      'priority' => 999,
+   );
+   return $fields;
+}
+
+add_action( 'woocommerce_checkout_create_order', 'wc_custom_field_value_to_order_notes', 10, 2 );
+ 
+function wc_custom_field_value_to_order_notes( $order, $data ) {
+   $order->set_customer_note( isset( $data['new_order_notes'] ) ? $data['new_order_notes'] : '' );
+}
