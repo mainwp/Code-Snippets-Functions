@@ -1,0 +1,17 @@
+add_filter( 'authenticate', function( $user ) {
+	if ( is_wp_error( $user ) && 'incorrect_password' === $user->get_error_code() ) {
+		$user = new WP_Error( 'authentication_failed', __( '<strong>ERROR</strong>: Invalid username, email address or incorrect password.' ) );
+	}
+	return $user;
+}, 999, 1 );
+/**
+ * Return a more abstract error message for when invalid passwords, usernames, or emails are entered.
+ *
+ * @param null|WP_User|WP_Error $user WP_User if the user is authenticated, WP_Error or null otherwise.
+ */
+add_filter( 'authenticate', function( $user ) {
+	if ( is_wp_error( $user ) && in_array( $user->get_error_code(), array( 'incorrect_password', 'invalid_email', 'invalid_username' ), true ) ) {
+		$user = new WP_Error( 'authentication_failed', __( '<strong>ERROR</strong>: Invalid username, email address or incorrect password.' ) );
+	}
+	return $user;
+}, 999, 1 );
