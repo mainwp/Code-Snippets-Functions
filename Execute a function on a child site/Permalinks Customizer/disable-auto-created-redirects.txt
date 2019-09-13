@@ -1,0 +1,1 @@
+add_filter( 'permalinks_customizer_auto_created_redirects', '__return_false');
