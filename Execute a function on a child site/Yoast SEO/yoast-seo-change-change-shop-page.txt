@@ -1,0 +1,7 @@
+function yoast_seo_canonical_change_woocom_shop( $canonical ) {
+	if ( !is_shop() ) {
+		return $canonical;
+	}
+    return get_permalink( woocommerce_get_page_id( 'shop' ) );
+}
+add_filter( 'wpseo_canonical', 'yoast_seo_canonical_change_woocom_shop', 10, 1 );
