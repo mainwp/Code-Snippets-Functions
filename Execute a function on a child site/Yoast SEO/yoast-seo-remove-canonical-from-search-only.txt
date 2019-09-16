@@ -1,0 +1,8 @@
+add_filter( 'wpseo_canonical', 'yoast_remove_canonical_search' );
+function yoast_remove_canonical_search( $canonical ) {
+	if( is_search() ) {
+		return false;
+	} else {
+		return $canonical;
+	}
+}
