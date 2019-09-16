@@ -1,0 +1,1 @@
+define('MAILCHIMP_DISABLE_QUEUE', true);
