@@ -1,0 +1,1 @@
+define('CODE_SNIPPETS_SAFE_MODE', false);
