@@ -1,0 +1,15 @@
+// Get downloadable products
+$product_ids = get_posts( array(
+   'post_type' => 'product',
+   'numberposts' => -1,
+   'post_status' => 'publish',
+   'fields' => 'ids',
+   'meta_query' => array( array(
+      'key' => '_downloadable',
+      'value' => 'yes',
+      'compare' => '=',
+   )),
+));
+ 
+// Print array on screen
+print_r( $product_ids );
