@@ -1,0 +1,15 @@
+add_action('admin_head', 'wp_tweak_gutenberg_ui_welcome_tips');
+ 
+/**
+* How To Turn Off Gutenberg Welcome Tips in WordPress
+*/
+public static function wp_tweak_gutenberg_ui_welcome_tips() {
+?>
+<style>
+ */
+.wp-admin .components-popover.nux-dot-tip {
+    display: none !important;
+}
+</style>
+<?php
+}
