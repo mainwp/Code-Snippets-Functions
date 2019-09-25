@@ -1,0 +1,7 @@
+add_action( 'gform_stripe_fulfillment', 'notify_on_checkout_success', 10, 4 );
+function notify_on_checkout_success( $session, $entry, $feed, $form ) {
+ 
+    $admin_email = get_bloginfo( 'admin_email' );
+    wp_mail( $admin_email, 'Payment via Stripe Checkout successful!', 'Message about the successful payment' );
+ 
+}
