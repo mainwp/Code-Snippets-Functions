@@ -1,0 +1,18 @@
+// WC shows a warning about SSL. Let's not scare the user
+add_filter('get_user_metadata', 'wc_suppress_non_ssl', 20, 4);
+ 
+/**
+ * 
+ * @param mixed $val
+ * @param int $object_id
+ * @param string $meta_key
+ * @param bool $single
+ * @return bool
+ */
+function wc_suppress_non_ssl($val, $object_id, $meta_key, $single) {
+    if ($meta_key == 'dismissed_no_secure_connection_notice') {
+        $val = true;
+    }
+ 
+    return $val;
+}
