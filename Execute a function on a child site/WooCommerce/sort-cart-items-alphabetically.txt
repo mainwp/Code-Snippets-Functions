@@ -1,0 +1,21 @@
+add_action( 'woocommerce_cart_loaded_from_session', wc_sort_cart_items_alphabetically' );
+ 
+function wc_sort_cart_items_alphabetically() {
+ 
+// READ CART ITEMS
+$products_in_cart = array();
+foreach ( WC()->cart->get_cart_contents() as $key => $item ) {
+$products_in_cart[ $key ] = $item['data']->get_title();
+}
+ 
+// SORT CART ITEMS
+natsort( $products_in_cart );
+ 
+// ASSIGN SORTED ITEMS TO CART
+$cart_contents = array();
+foreach ( $products_in_cart as $cart_key => $product_title ) {
+$cart_contents[ $cart_key ] = WC()->cart->cart_contents[ $cart_key ];
+}
+WC()->cart->cart_contents = $cart_contents;
+ 
+}
