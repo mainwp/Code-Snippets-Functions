@@ -1,0 +1,5 @@
+function wc_remove_shop_from_breadcrumbs( $trail ) {
+   unset( $trail['shop'] );
+   return $trail;
+}
+add_filter( 'wp_breadcrumbs_trail', 'wc_remove_shop_from_breadcrumbs', 20 );
