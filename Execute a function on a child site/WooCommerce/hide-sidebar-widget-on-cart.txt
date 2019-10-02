@@ -1,0 +1,13 @@
+add_filter( 'sidebars_widgets', 'wc_woocommerce_conditionally_hide_widget' );
+ 
+function wc_woocommerce_conditionally_hide_widget( $sidebars_widgets ) {
+    if( ! is_admin() ) {
+      if ( is_cart() ) {
+            $key = array_search( 'woocommerce_products-2', $sidebars_widgets['sidebar-1'] );
+            if( $key ) {
+               unset( $sidebars_widgets['sidebar-1'][$key] );
+         }
+      }
+    }
+    return $sidebars_widgets;
+}
