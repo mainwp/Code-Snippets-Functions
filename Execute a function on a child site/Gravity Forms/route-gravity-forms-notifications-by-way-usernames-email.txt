@@ -1,0 +1,57 @@
+// Route Gravity Form notifications by way of usernames and email
+// Format your Send to Email field in notifications as {usernames:user1:user2:user3} or {usernames:user1:user2}{emails:account@example.com}
+add_filter( 'gform_notification', function ( $notification, $form, $entry ) {
+
+   if ( strpos( $notification['to'], '{usernames' ) !== false || strpos( $notification['to'], '{emails' ) !== false ) {
+
+      // parse the username and email batches
+      $notification['to'] = str_replace( array( '} {', '},{' ), '}{', $notification['to'] );
+      $batches = explode( '}{', substr( $notification['to'], 1, -1 ) );
+
+      foreach ( $batches as $key => $batch ) {
+
+         if ( strpos( $batch, 'usernames' ) !== false )
+            $usernames = explode( ':', $batch );
+
+         if ( strpos( $batch, 'emails' ) !== false )
+            $emails = explode( ':', $batch );
+
+      }
+
+      $to = array(); // initialize the to array
+
+      // loop through users and grab the email
+      if ( isset( $usernames ) ) {
+
+         unset( $usernames[0] );
+
+         foreach ( $usernames as $username ) {
+
+            $user = get_user_by( 'login', $username );
+
+            if ( $user !== false )
+               $to[] = $user->user_email;
+
+         }
+
+      }
+
+      // loop through the email addresses
+      if ( isset( $emails ) ) {
+
+         unset( $emails[0] );
+
+         foreach ( $emails as $email ) {
+            $to[] = $email;
+         }
+
+      }
+
+      // add all addresses to the notification
+      $notification['to'] = implode( ',', $to );
+
+   }
+
+   return $notification;
+
+}, 10, 3 );
