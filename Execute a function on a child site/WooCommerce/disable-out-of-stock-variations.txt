@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_variation_is_active', 'wc_grey_out_variations_out_of_stock', 10, 2 );
+ 
+function wc_grey_out_variations_out_of_stock( $is_active, $variation ) {
+    if ( ! $variation->is_in_stock() ) return false;
+    return $is_active;
+}
