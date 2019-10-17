@@ -1,0 +1,4 @@
+function wp_admin_email_check_interval( $interval ) {
+    return 9 * MONTH_IN_SECONDS;
+}
+add_filter( 'admin_email_check_interval', 'wp_admin_email_check_interval' );
