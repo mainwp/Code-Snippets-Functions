@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_product_is_visible', 'wc_hide_product_if_country', 999, 2 );
+ 
+function wc_hide_product_if_country( $visible, $product_id ){
+   $location = WC_Geolocation::geolocate_ip();
+   $country = $location['country'];
+   if ( $country == "IT" && $product_id === 344 ) {
+      $visible = false;
+   }
+   return $visible;
+}
