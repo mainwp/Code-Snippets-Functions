@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_add_to_cart_validation', function( $passed, $product_id, $quantity ) {
+	if( ! WC()->cart->is_empty()) {
+		WC()->cart->empty_cart();
+	}
+	return $passed;
+}, 20, 3 );
