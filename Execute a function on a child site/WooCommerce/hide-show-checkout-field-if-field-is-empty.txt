@@ -1,0 +1,16 @@
+add_action( 'wp_footer', 'wc_conditionally_hide_show_checkout_field', 9999 );
+ 
+function wc_conditionally_hide_show_checkout_field() {
+   if ( ! is_checkout() ) return;
+   ?>
+      <script type="text/javascript">
+         jQuery('#billing_company').keyup(function() {
+            if (jQuery(this).val().length == 0) {
+               jQuery('#billing_phone_test_field').hide();
+            } else {
+               jQuery('#billing_phone_test_field').show();
+            }
+         }).keyup();
+      </script>
+   <?php
+}
