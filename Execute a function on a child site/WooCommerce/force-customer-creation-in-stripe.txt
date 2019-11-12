@@ -1,0 +1,1 @@
+add_filter( 'wc_stripe_force_save_source', '__return_true' );
