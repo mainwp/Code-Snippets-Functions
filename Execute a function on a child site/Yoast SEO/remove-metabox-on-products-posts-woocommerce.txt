@@ -1,0 +1,4 @@
+function remove_yoast_metabox_product(){
+    remove_meta_box('wpseo_meta', 'product', 'normal');
+}
+add_action( 'add_meta_boxes', 'remove_yoast_metabox_product',11 );
