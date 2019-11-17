@@ -1,0 +1,4 @@
+add_filter('autoptimize_filter_imgopt_noptimize','imgopt_excl');
+function imgopt_excl() {
+return 'some-image.png, another-image.jpg';
+}
