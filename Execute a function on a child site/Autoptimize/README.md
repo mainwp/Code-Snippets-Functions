@@ -1,6 +1,6 @@
 ## Autoptimize code snippets
 
-Tested version of WordPress 5.2, plugin version was Autoptimize 2.5.0.
+Tested version of WordPress 5.3, plugin version was Autoptimize 2.5.1.
 
 This file is a code snippet that is used for [Autoptimize](https://wordpress.org/plugins/autoptimize/) plugin. 
 
