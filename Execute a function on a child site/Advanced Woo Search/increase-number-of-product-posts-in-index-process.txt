@@ -1,0 +1,4 @@
+add_filter( 'aws_index_posts_per_page', 'wp_aws_index_posts_per_page' );
+function wp_aws_index_posts_per_page( $number ) {
+    return 50;
+}
