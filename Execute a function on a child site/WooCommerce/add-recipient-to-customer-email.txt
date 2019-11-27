@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_email_recipient_customer_completed_order', 'wc_order_completed_email_add_to', 9999, 3 );
+ 
+function wc_order_completed_email_add_to( $email_recipient, $email_object, $email ) {
+   $email_recipient .= ', your@email.com';
+   return $email_recipient;
+}
