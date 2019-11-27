@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_email_headers', 'wc_order_completed_email_add_cc_bcc', 9999, 3 );
+ 
+function wc_order_completed_email_add_cc_bcc( $headers, $email_id, $order ) {
+    if ( 'customer_completed_order' == $email_id ) {
+        $headers .= "Cc: Name <your@email.com>" . "\r\n"; // del if not needed
+        $headers .= "Bcc: Name <your@email.com>" . "\r\n"; // del if not needed
+    }
+    return $headers;
+}
