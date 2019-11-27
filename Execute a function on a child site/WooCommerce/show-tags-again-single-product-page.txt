@@ -1,0 +1,10 @@
+add_action( 'woocommerce_single_product_summary', 'wc_show_tags_again_single_product', 40 );
+ 
+function wcer_show_tags_again_single_product() {
+   global $product;
+   ?>
+   <div class="product_meta">
+   <?php echo wc_get_product_tag_list( $product->get_id(), ', ', '<span class="tagged_as">' . _n( 'Tag:', 'Tags:', count( $product->get_tag_ids() ), 'woocommerce' ) . ' ', '</span>' ); ?> 
+   </div>
+   <?php
+}
