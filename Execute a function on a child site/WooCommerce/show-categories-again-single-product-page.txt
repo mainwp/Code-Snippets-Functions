@@ -1,0 +1,10 @@
+add_action( 'woocommerce_single_product_summary', 'wc_show_cats_again_single_product', 40 );
+ 
+function wc_show_cats_again_single_product() {
+   global $product;
+   ?>
+   <div class="product_meta">
+   <?php echo wc_get_product_category_list( $product->get_id(), ', ', '<span class="posted_in">' . _n( 'Category:', 'Categories:', count( $product->get_category_ids() ), 'woocommerce' ) . ' ', '</span>' ); ?> 
+   </div>
+   <?php
+}
