@@ -1,0 +1,1 @@
+add_filter( 'rank_math_clear_data_on_uninstall', '__return_true' );
