@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_single_product_image_thumbnail_html', 'wc_image_link_external_url', 100, 2 );
+ 
+function wc_image_link_external_url( $html, $post_thumbnail_id ) {
+   global $product;
+   if ( ! $product->is_type( 'external' ) ) return $html;
+   $url = $product->add_to_cart_url();
+   $pattern = "/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
+   $html = preg_replace( $pattern, $url, $html );  
+   return $html;
+}
