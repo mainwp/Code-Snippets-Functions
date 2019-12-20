@@ -1,0 +1,10 @@
+add_filter('upload_mimes','restict_image_type'); 
+
+function restict_image_type($mimes) { 
+    $mimes = array( 
+                'jpg|jpeg|jpe' => 'image/jpeg', 
+                'gif' => 'image/gif', 
+                'png' => 'image/png', 
+    ); 
+    return $mimes;
+}
