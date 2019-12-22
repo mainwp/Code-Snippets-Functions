@@ -1,0 +1,4 @@
+add_action( 'wp_enqueue_scripts', 'remove_default_stylesheet', 20 ); 
+function remove_default_stylesheet() { 
+	wp_deregister_style( 'elementor-icons' ); 
+}
