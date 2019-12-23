@@ -1,0 +1,10 @@
+add_action( 'wp_enqueue_scripts', function() {
+	if ( ! class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+		return;
+	}
+
+	$template_id = 123456;
+
+	$css_file = new \Elementor\Core\Files\CSS\Post( $template_id );
+	$css_file->enqueue();
+}, 500 );
