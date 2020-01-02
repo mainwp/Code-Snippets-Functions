@@ -1,0 +1,1 @@
+define(“RSSSL_SAFE_MODE”, true);
