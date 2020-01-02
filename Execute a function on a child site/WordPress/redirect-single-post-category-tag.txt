@@ -1,0 +1,14 @@
+function wp_redirect_to_post(){
+    global $wp_query;
+ 
+    // If there is one post on archive page
+    if( is_archive() && $wp_query->post_count == 1 ){
+        // Setup post data
+        the_post();
+        // Get permalink
+        $post_url = get_permalink();
+        // Redirect to post page
+        wp_redirect( $post_url );
+    }  
+ 
+} add_action('template_redirect', 'wp_redirect_to_post');
