@@ -1,6 +1,6 @@
-## Imagify Image Optimization code snippet for setting the correct presets by default
+## Imagify Image Optimization code snippets
 
-Tested version of WordPress 5.1, plugin version was Imagify Image Optimizer 1.8.4.1.
+Tested version of WordPress 5.3.2, plugin version was Imagify Image Optimizer 1.9.8.1.
 
 This file is a code snippet that is used for [Imagify Image Optimizer](https://wordpress.org/plugins/imagify/) plugin. 
 
