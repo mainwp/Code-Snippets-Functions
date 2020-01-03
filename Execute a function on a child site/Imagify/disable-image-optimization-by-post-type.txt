@@ -1,0 +1,6 @@
+add_action( 'wp', 'disable_image_optimization' );
+function disable_image_optimization() {
+    if ( is_singular('my_post_type') ) {
+        add_filter( 'imagify_allow_picture_tags_for_webp', '__return_false' ); 
+    }
+}
