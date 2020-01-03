@@ -1,0 +1,5 @@
+add_action( 'imagify_loaded', function () {
+	if ( 0 !== get_imagify_option( 'admin_bar_menu' ) ) {
+		update_imagify_option( 'admin_bar_menu', 0 );
+	}
+} );
