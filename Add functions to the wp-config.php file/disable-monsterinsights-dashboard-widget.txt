@@ -1,1 +1,0 @@
-add_filter( 'monsterinsights_show_dashboard_widget', '__return_false');
