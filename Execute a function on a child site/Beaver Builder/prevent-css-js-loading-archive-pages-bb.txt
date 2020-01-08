@@ -1,0 +1,3 @@
+if ( is_archive() ) {
+    remove_action( 'wp_enqueue_scripts', 'FLBuilder::layout_styles_scripts' );
+}
