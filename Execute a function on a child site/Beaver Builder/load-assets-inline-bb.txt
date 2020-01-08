@@ -1,0 +1,1 @@
+add_filter( 'fl_builder_render_assets_inline', '__return_true' );
