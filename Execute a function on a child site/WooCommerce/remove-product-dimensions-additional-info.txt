@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_product_get_dimensions', '__return_false' );
