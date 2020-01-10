@@ -1,0 +1,1 @@
+remove_action( 'woocommerce_product_additional_information', 'wc_display_product_attributes', 10 );
