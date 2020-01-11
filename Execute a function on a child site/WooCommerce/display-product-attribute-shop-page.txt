@@ -1,0 +1,9 @@
+add_action( 'woocommerce_after_shop_loop_item_title', 'display_size_attribute', 5 );
+function display_size_attribute() {
+    global $product;
+
+    if ( $product->is_type('variable') ) {
+        $taxonomy = 'pa_size';
+        echo '<span class="attribute-size">' . $product->get_attribute($taxonomy) . '</span>';
+    }
+}
