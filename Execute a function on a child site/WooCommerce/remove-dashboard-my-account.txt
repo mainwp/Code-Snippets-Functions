@@ -1,0 +1,18 @@
+// Remove the first menu item (the dashboard)
+add_filter( 'woocommerce_account_menu_items', 'account_menu_items_callback' );
+function account_menu_items_callback( $items ) {
+    foreach( $items as $key => $item ) {
+        unset($items[$key]);
+        break;
+    }
+    return $items;
+}
+
+// Redirect default my account dashboard to the first my account enpoint (after dashboard)
+add_action( 'template_redirect', 'template_redirect_callback' );
+function template_redirect_callback() {
+    if( is_account_page() && is_user_logged_in() && ! is_wc_endpoint_url() ){
+        $first_myaccount_endpoint = 'orders';
+        wp_redirect( wc_get_account_endpoint_url( $first_myaccount_endpoint ) );
+    }
+}
