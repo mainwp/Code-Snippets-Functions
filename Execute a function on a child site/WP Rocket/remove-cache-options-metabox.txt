@@ -1,0 +1,3 @@
+add_action( 'admin_menu', function() {
+	remove_action( 'add_meta_boxes', 'rocket_cache_options_meta_boxes' );
+});
