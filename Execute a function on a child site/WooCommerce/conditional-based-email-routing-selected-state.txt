@@ -1,0 +1,20 @@
+add_filter( 'woocommerce_email_recipient_new_order', 'different_email_recipients', 10, 2 );
+function different_email_recipients( $recipient, $order ) {
+    if ( ! is_a( $order, 'WC_Order' ) ) 
+        return $recipient;
+
+    $city = $order->get_shipping_state();
+    $city = empty( $state ) ? $order->get_billing_city() : $tate;
+
+    // Conditionaly send additional email based on customer state
+    if ( 'Florida' == $state ) 
+    {
+        $recipient .= ',someemail@gmail.com';
+    } 
+    elseif ( 'Texas' == $state ) 
+    {
+        $recipient .= ',differentemail@gmail.com';
+    }
+
+    return $recipient;
+}
