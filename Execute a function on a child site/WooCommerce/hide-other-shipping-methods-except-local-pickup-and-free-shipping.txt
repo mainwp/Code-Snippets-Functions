@@ -1,0 +1,25 @@
+add_filter( 'woocommerce_package_rates', 'show_hide_shipping_methods', 100 );
+function show_hide_shipping_methods( $rates ) {
+    $free_rate_id    = '';
+    $other_rates_ids = [];
+
+    // Loop through available shipping rates
+    foreach ( $rates as $rate_id => $rate ) {
+        if ( 'free_shipping' === $rate->method_id ) {
+            $free_rate_id = $rate_id; // grab "Free shipping" rate ID
+        }
+
+        // Get all other rates Ids (excluding "Free shipping" and "Local pickup" methods)
+        if ( ! in_array( $rate->method_id, ['free_shipping', 'local_pickup'] ) ) {
+            $other_rates_ids[] = $rate_id; 
+        }
+    }
+
+    // Disable All other rates Ids when "Free shipping" is available (excl. "Local pickup")
+    if ( ! empty($free_rate_id) && isset($rates[$free_rate_id]) && sizeof($other_rates_ids) > 0 ) {
+        foreach ( $other_rates_ids as $rate_id ) {
+            unset($rates[$rate_id]);
+        }
+    }
+    return $rates;
+}
