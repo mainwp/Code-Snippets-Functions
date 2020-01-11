@@ -1,0 +1,23 @@
+add_action( 'wp_footer', 'checkout_field_name_validator_script');
+function checkout_field_name_validator_script() {
+    // Only on checkout page
+    if( ! ( is_checkout() && ! is_wc_endpoint_url() ) ) return;
+    ?>
+    <script>
+    jQuery(function($){
+        var b = '#billing_',    s = '#shipping_',   f = 'first_',   l = 'last_',
+            n = 'name',         p = 'postcode',     c = ',';
+
+        // Postcode fields
+        $(b+p+c+s+p).bind('keyup blur',function(){
+            $(this).val($(this).val().replace(/[^0-9]+/,''));
+        });
+
+        // First and Last name fields
+        $(b+f+n+c+b+l+n+c+s+f+n+c+s+l+n).bind('keyup blur',function(){
+            $(this).val($(this).val().replace(/[0-9.,;:?!]+/,''));
+        });
+    });
+    </script>
+    <?php
+}
