@@ -1,0 +1,5 @@
+function wc_my_account_menu_items( $items ) {
+    unset($items['downloads']);
+    return $items;
+}
+add_filter( 'woocommerce_account_menu_items', 'wc_my_account_menu_items' );
