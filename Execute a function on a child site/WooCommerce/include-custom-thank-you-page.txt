@@ -1,0 +1,9 @@
+add_action( 'woocommerce_thankyou', 'wc_custom_thank_you_page', 5 );
+  
+function wc_custom_thank_you_page() {
+    
+   $page_id = 540;
+   $page_object = get_page( $page_id );
+   echo $page_object->post_content;
+ 
+}
