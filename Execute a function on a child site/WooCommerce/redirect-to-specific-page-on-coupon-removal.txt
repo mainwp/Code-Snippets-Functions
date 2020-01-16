@@ -1,0 +1,7 @@
+function action_woocommerce_removed_coupon( $coupon_code ) { 
+    // Redirection...
+    wp_redirect( $url ); // Replace $url by your page URL.
+    exit; 
+}; 
+// add the action 
+add_action( 'woocommerce_removed_coupon', 'action_woocommerce_removed_coupon', 10, 1 );
