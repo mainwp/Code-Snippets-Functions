@@ -1,0 +1,24 @@
+add_filter( 'woocommerce_product_add_to_cart_text', 'customizing_add_to_cart_button_text', 10, 2 );
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'customizing_add_to_cart_button_text', 10, 2 );
+/**
+* Replace read more buttons for out of stock items
+*
+* @param button  $button_text comment.
+* @param product $product comment.
+* @return return $button_text.
+*/
+function customizing_add_to_cart_button_text( $button_text, $product ) {
+        global $product;
+        $sold_out = __( 'Add to Cart', 'woocommerce' );
+        $availability = $product->get_availability();
+        $stock_status = $availability['class'];
+// For all other cases (not a variable product on single product pages).
+if ( ! $product->is_type( 'variable' ) && ! is_product() ) {
+    if ( 'out-of-stock' === $stock_status ) {
+        $button_text = $sold_out;
+    }
+} else {
+        $button_text;
+}
+return $button_text;
+}
