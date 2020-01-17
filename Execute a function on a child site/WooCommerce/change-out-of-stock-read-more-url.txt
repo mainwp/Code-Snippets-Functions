@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_product_add_to_cart_url', 'out_of_stock_read_more_url', 50, 2 );
+function out_of_stock_read_more_url( $link, $product  ) {
+    // Only for "Out of stock" products
+    if( $product->get_stock_status() == 'outofstock' ){
+
+        // Here below we change the link
+        $link = home_url("/");
+    }
+    return $link;
+}
