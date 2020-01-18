@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
+    if ( 'Read more' == $text ) {
+        $text = __( 'More Info', 'woocommerce' );
+    }
+
+    return $text;
+} );
