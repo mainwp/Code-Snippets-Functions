@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_ajax_add_order_item_validation', 'wc_woocommerce_ajax_add_order_item_validation', 10, 2 );
+function wc_woocommerce_ajax_add_order_item_validation( $validation_error, $product ) {
+    if ( $validation_error && !$product->is_in_stock() ) {
+        $validation_error->add( 'product-out-of-stock', __('Product Out of Stock', 'woocommerce') );
+    }
+    return $validation_error;
+}
