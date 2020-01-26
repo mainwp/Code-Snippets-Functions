@@ -1,0 +1,8 @@
+function jetpackme_exclude_jetpack_related_from_products( $options ) {
+    if ( is_product() ) {
+        $options['enabled'] = false;
+    }
+ 
+    return $options;
+}
+add_filter( 'jetpack_relatedposts_filter_options', 'jetpackme_exclude_jetpack_related_from_products' );
