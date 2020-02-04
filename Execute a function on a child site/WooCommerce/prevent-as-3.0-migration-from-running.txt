@@ -1,0 +1,1 @@
+add_filter( 'action_scheduler_migration_dependencies_met', '__return_false' );
