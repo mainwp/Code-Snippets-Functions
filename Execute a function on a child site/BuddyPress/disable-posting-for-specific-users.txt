@@ -1,0 +1,11 @@
+function bp_disable_activity_for_specific_users() {
+
+    $forbidden_users_ids  = array( 10, 33, 40 );
+
+    if ( in_array( bp_loggedin_user_id(), $forbidden_users_ids ) ) {
+        add_filter( 'bp_is_wall_posting_form_active', '__return_false' );
+    }
+
+}
+
+add_action( 'bp_init', 'bp_disable_activity_for_specific_users' );
