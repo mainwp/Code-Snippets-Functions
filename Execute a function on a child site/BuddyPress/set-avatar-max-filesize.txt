@@ -1,0 +1,1 @@
+define ( 'BP_AVATAR_ORIGINAL_MAX_FILESIZE', 200 );
