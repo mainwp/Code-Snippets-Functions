@@ -1,0 +1,10 @@
+function bp_disable_bp_registration() {
+
+    if ( is_user_logged_in() ) {
+        return false;
+    }
+	remove_action( 'bp_init',    'bp_core_wpsignup_redirect' );
+	remove_action( 'bp_screens', 'bp_core_screen_signup' );
+}
+
+add_action( 'bp_loaded', 'bp_disable_bp_registration' );
