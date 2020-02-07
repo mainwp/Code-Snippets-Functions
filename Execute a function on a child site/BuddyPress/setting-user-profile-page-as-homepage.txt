@@ -1,0 +1,10 @@
+function bp_set_profile_page_as_homepage() {
+    if ( is_user_logged_in() && is_front_page() ) {
+        global $bp;
+        wp_redirect( $bp->loggedin_user->domain );
+        exit;
+    }
+
+}
+
+add_action( 'template_redirect', 'bp_set_profile_page_as_homepage' );
