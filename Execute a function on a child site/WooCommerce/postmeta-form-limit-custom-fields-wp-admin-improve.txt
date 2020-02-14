@@ -1,0 +1,26 @@
+add_filter( 'postmeta_form_limit', 'limit_postmeta_keys_to_zero', 10, 1 );
+function limit_postmeta_keys_to_zero( $limit ) {
+    global $post;
+    // Only for these post types
+    $valid_post_types = array(
+        // WooCommerce Subscriptions
+        'shop_subscription',
+        // WooCommerce
+        'shop_order',
+        'shop_coupon',
+        // Sensei
+        'course',
+        'lesson',
+        // WordPress
+        'page',
+        'post'
+    );
+ 
+    if( is_admin() ):
+        if( in_array( $post->post_type, $valid_post_types ) ) {
+            return 0;
+        }
+    endif;
+ 
+    return $limit;
+}
