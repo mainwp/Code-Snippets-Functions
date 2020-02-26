@@ -1,0 +1,13 @@
+add_filter( 'woocommerce_get_breadcrumb', 'wc_single_product_edit_prod_name_breadcrumbs', 9999, 2 );
+ 
+function wc_single_product_edit_prod_name_breadcrumbs( $crumbs, $breadcrumb ) {
+    
+   if ( is_product() ) {
+      global $product;
+      $index = count( $crumbs ) - 1; // product name is always last item
+      $value = $crumbs[$index];
+      $crumbs[$index][0] = $product->get_sku();
+   }
+    
+   return $crumbs;
+}
