@@ -1,0 +1,12 @@
+add_filter( 'woocommerce_get_breadcrumb', 'wc_single_product_edit_cat_breadcrumbs', 9999, 2 );
+ 
+function wc_single_product_edit_cat_breadcrumbs( $crumbs, $breadcrumb ) {
+    
+   if ( is_product() ) {
+      $index = count( $crumbs ) - 2; // cat is always second last item
+      $value = $crumbs[$index];
+      $crumbs[$index][0] = 'Category: ' . $crumbs[$index][0];
+   }
+    
+   return $crumbs;
+}
