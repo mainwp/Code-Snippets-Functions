@@ -1,0 +1,9 @@
+add_action( 'woocommerce_check_cart_items', 'required_chosen_shipping_methods' );
+function required_chosen_shipping_methods() {
+    $chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods' );
+
+    if( is_array( $chosen_shipping_methods ) && count( $chosen_shipping_methods ) > 0 ) {
+        // Display an error message
+        wc_add_notice( __("A shipping method is required in order to proceed to checkout."), 'error' );
+    }
+}
