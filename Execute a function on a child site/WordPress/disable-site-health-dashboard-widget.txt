@@ -1,0 +1,5 @@
+add_action('wp_dashboard_setup', 'remove_site_health_dashboard_widget');
+function remove_site_health_dashboard_widget()
+{
+    remove_meta_box('dashboard_site_health', 'dashboard', 'normal');
+}
