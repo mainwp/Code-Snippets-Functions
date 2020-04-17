@@ -1,0 +1,5 @@
+function wc_disable_marketing_hub( $marketing_pages ) {
+	return array();
+}
+
+add_filter( 'woocommerce_marketing_menu_items', 'wc_disable_marketing_hub' );
