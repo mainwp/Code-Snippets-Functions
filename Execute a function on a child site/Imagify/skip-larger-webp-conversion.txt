@@ -1,0 +1,1 @@
+add_filter( 'imagify_keep_large_webp', '__return_false' );
