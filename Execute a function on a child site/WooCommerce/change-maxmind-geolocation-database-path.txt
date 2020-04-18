@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_maxmind_geolocation_database_path', 'woocommerce_new_maxmind_geolocation_database_path' );
+function woocommerce_new_maxmind_geolocation_database_path( $database_path ) {
+    $upload_dir = wp_upload_dir();
+	$database_path = trailingslashit( $upload_dir['basedir'] ) . 'my-new-folder/dbfile.ext'; 
+    return $database_path;
+}
