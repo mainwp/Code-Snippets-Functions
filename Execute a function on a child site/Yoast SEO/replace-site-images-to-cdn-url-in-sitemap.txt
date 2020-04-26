@@ -1,0 +1,4 @@
+function wpseo_cdn_filter( $uri ) {
+  return str_replace( 'http://example.com', 'http://cdn.example.com', $uri );
+}
+add_filter( 'wpseo_xml_sitemap_img_src', 'wpseo_cdn_filter' );
