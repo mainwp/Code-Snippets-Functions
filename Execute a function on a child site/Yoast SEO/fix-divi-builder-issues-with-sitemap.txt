@@ -1,0 +1,1 @@
+add_filter( 'wpseo_sitemap_content_before_parse_html_images', '__return_empty_string', 9 );
