@@ -1,0 +1,4 @@
+add_filter( 'option_et_divi', function( $option ){
+	$option['divi_woocommerce_archive_num_posts'] = 6;
+	return $option;
+} );
