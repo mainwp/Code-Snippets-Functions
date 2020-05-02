@@ -1,0 +1,115 @@
+//WooCommerce Purchased Total Shortcode
+add_shortcode( 'cd-purchased-total', 'cd_shortcode_purchased_totals' );
+function cd_shortcode_purchased_totals( $atts ){ 
+        STATIC $cd_shortcode_count;
+        $cd_shortcode_count++;
+        
+        $total_value = 0; 
+         
+		$_atts = shortcode_atts( array(
+	        'product_ids' => '',	       
+	        'product_cats' => '',
+	        'product_tags' => '',
+	        'product_status' => 'any',
+	        'order_status' => 'wc-completed',
+	        'round' => '2',
+	        'math' => '',
+	        'cache_time' => '43200', //12 hours cache
+	    ), $atts ); 
+	    
+	    
+	    //Check Cache
+	    $trans_key = 'cd-purchased-total-'.get_the_ID().'-'.$_atts["cache_time"].'-'.$cd_shortcode_count;
+	    $trans_result = get_transient( $trans_key ); 
+	    //return cached results if found
+        if ( false != $trans_result ) { 
+            return $trans_result;
+        }
+	    
+	    $args = array(
+    		'numberposts' => -1,
+    		'post_type' => 'product',
+    		'post_status' => explode(",", $_atts['product_status']),
+    		'orderby' => 'date',
+    		'order' => 'dsc');
+    	
+    	if( $_atts['product_ids'] != '' ){
+	    	  $args['include'] = explode(",", $_atts['product_ids']);
+	    }
+	    if( $_atts['product_cats'] != '' ){
+	    	  $args['tax_query'] = array( array(
+	    	        'taxonomy' => 'product_cat',
+	    	        'field' => 'term_id',
+	    	        'terms' => explode(",", $_atts['product_cats']),
+	    	      ));
+	    }
+	    if( $_atts['product_tags'] != '' ){
+	    	  $args['tax_query'] = array( array(
+	    	        'taxonomy' => 'product_tag',
+	    	        'field' => 'term_id',
+	    	        'terms' => explode(",", $_atts['product_tags']),
+	    	      ));
+	    }
+	  
+    	$products = get_posts( $args );
+    	foreach ( $products as $product ){
+        	$var = cd_get_product_purchase_total($product->ID, $_atts['order_status']);
+        	$total_value += $var->_line_total;
+    	} 	
+	    
+        if( $_atts['math'] != '' ){
+            $ma = $total_value.$_atts['math'];
+            if(preg_match('/(\d+)(?:\s*)([\+\-\*\/])(?:\s*)(\d+)/', $ma, $matches) !== FALSE){
+                $operator = $matches[2];
+
+                switch($operator){
+                    case '+':
+                        $total_value = $matches[1] + $matches[3];
+                        break;
+                    case '-':
+                        $total_value = $matches[1] - $matches[3];
+                        break;
+                    case '*':
+                        $total_value = $matches[1] * $matches[3];
+                        break;
+                    case '/':
+                        $total_value = $matches[1] / $matches[3];
+                        break;
+                }
+            }
+        }
+        
+        $results = round($total_value, $_atts['round']);
+    	
+    	set_transient( $trans_key, $results, intval( $_atts['cache_time'] ) );
+		return $results;			
+    	
+}
+function cd_get_product_purchase_total($product_id ='', $post_status ='wc-completed') { 
+		global $wpdb;
+
+		//$post_status = array( 'wc-completed', 'wc-processing', 'wc-on-hold' );
+		//$post_status = array('wc-completed', 'wc-processing');
+		//$post_status = array('wc-completed');	
+		$post_status = explode(",", $post_status);
+			 
+		$order_items = $wpdb->get_row( $wpdb->prepare(" SELECT SUM( order_item_meta.meta_value ) as _line_total FROM {$wpdb->prefix}woocommerce_order_items as order_items
+
+		LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta as order_item_meta ON order_items.order_item_id = order_item_meta.order_item_id
+		LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta as order_item_meta_2 ON order_items.order_item_id = order_item_meta_2.order_item_id
+		LEFT JOIN {$wpdb->posts} AS posts ON order_items.order_id = posts.ID
+
+		WHERE posts.post_type = 'shop_order'			
+		AND posts.post_status IN ( '".implode( "','", $post_status )."' )
+		AND order_items.order_item_type = 'line_item'
+		AND order_item_meta.meta_key = '_line_total'
+		AND order_item_meta_2.meta_key = '_product_id'
+		AND order_item_meta_2.meta_value = %s
+
+		GROUP BY order_item_meta_2.meta_value
+
+		", $product_id));
+			
+		return $order_items;
+
+}
