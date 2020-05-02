@@ -1,0 +1,49 @@
+/*--------------------------------------
+Woocommerce - Allow Guest Checkout on Certain products
+----------------------------------------*/
+
+// Display Guest Checkout Field
+add_action( 'woocommerce_product_options_general_product_data', 'woo_add_custom_general_fields' );
+function woo_add_custom_general_fields() {
+  global $woocommerce, $post;
+  
+  echo '<div class="options_group">';
+  
+  // Checkbox
+  woocommerce_wp_checkbox( 
+  array( 
+	'id'            => '_allow_guest_checkout', 
+	'wrapper_class' => 'show_if_simple', 
+	'label'         => __('Checkout', 'woocommerce' ), 
+	'description'   => __('Allow Guest Checkout', 'woocommerce' ) 
+	)
+   );
+  
+  echo '</div>';
+}
+
+// Save Guest Checkout Field
+add_action( 'woocommerce_process_product_meta', 'woo_add_custom_general_fields_save' );
+function woo_add_custom_general_fields_save( $post_id ){
+	$woocommerce_checkbox = isset( $_POST['_allow_guest_checkout'] ) ? 'yes' : 'no';
+	update_post_meta( $post_id, '_allow_guest_checkout', $woocommerce_checkbox );
+}
+
+// Enable Guest Checkout on Certain products
+add_filter( 'pre_option_woocommerce_enable_guest_checkout', 'enable_guest_checkout_based_on_product' );
+function enable_guest_checkout_based_on_product( $value ) {
+
+  if ( WC()->cart ) {
+    $cart = WC()->cart->get_cart();
+    foreach ( $cart as $item ) {
+      if ( get_post_meta( $item['product_id'], '_allow_guest_checkout', true ) == 'yes' ) {
+        $value = "yes";
+      } else {
+        $value = "no";
+        break;
+      }
+    }
+  }
+  
+  return $value;
+}
