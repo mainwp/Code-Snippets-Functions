@@ -1,0 +1,1 @@
+define( 'WP_DISABLE_THEMES_AUTO_UPDATE_EMAIL', true );
