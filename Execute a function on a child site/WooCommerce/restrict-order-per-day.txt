@@ -1,0 +1,68 @@
+add_filter( 'woocommerce_general_settings', 'woo_restrict_orders_per_day_settings' );
+function woo_restrict_orders_per_day_settings( $settings ) {
+
+	$updated_settings = array();
+
+	foreach ( $settings as $section ) {
+
+		if ( isset( $section['id'] ) && 'general_options' == $section['id'] &&
+		isset( $section['type'] ) && 'sectionend' == $section['type'] ) {
+
+			$updated_settings[] = array(
+				'name'     => __( 'Maximum order day', 'woo-restrict-orders-per-day' ),
+				'desc_tip' => __( 'Define the number of order you can handle.', 'woo-restrict-orders-per-days' ),
+				'id'       => 'woocommerce_max_orders_per_day',
+				'type'     => 'number',
+				'css'      => 'min-width:300px;',
+				'std'      => '100',  // WC < 2.0
+				'default'  => '100',  // WC >= 2.0
+				'desc'     => __( 'You must enter a number.', 'woo-restrict-orders-per-day' ),
+			);
+		}
+
+		$updated_settings[] = $section;
+	}
+
+	return $updated_settings;
+}
+
+function get_daily_orders_count( $date = 'now' ) {
+	if ( 'now' === $date ) {
+		$date        = date( 'Y-m-d' );
+		$date_string = "> '$date'";
+	} else {
+		$date        = date( 'Y-m-d', strtotime( $date ) );
+		$date2       = date( 'Y-m-d', strtotime( $date ) + 86400 );
+		$date_string = "BETWEEN '$date' AND '$date2'";
+	}
+	global $wpdb;
+	$result = $wpdb->get_var( "
+		SELECT DISTINCT count(p.ID) FROM {$wpdb->prefix}posts as p
+		WHERE p.post_type = 'shop_order' AND p.post_date $date_string
+		AND p.post_status IN ('wc-on-hold','wc-processing','wc-completed')
+	" );
+
+	return $result;
+}
+
+add_action( 'init', 'enable_catalog_mode' );
+
+function enable_catalog_mode() {
+
+	if ( is_admin() ) {
+		return;
+	}
+
+	$orders_capacity = get_option( 'woocommerce_max_orders_per_day' );
+
+	if ( get_daily_orders_count() >= $orders_capacity ) {
+		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+		remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+
+		wc_add_notice( __( 'We exceeded our capacity and we are sorry to say we can not take new orders for today!', 'woo-restrict-orders-per-days' ), 'notice' );
+
+	}
+
+}
