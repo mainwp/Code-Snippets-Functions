@@ -1,0 +1,1 @@
+add_filter( 'send_themes_auto_update_email', '__return_false' );
