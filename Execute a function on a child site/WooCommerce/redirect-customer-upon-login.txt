@@ -1,0 +1,14 @@
+add_filter( 'woocommerce_login_redirect', 'wc_customer_login_redirect', 9999, 2 );
+ 
+function wc_customer_login_redirect( $redirect, $user ) {
+     
+    if ( wc_user_has_role( $user, 'customer' ) ) {
+        $redirect = get_home_url(); // homepage
+        //$redirect = wc_get_page_permalink( 'shop' ); // shop page
+        //$redirect = '/custom_url'; // custom URL same site
+        //$redirect = 'https://sitedomain.com'; // custom URL other site
+        //$redirect = add_query_arg( 'password-reset', 'true', wc_get_page_permalink( 'myaccount' ) ); // custom My Account tab
+    }
+  
+    return $redirect;
+}
