@@ -1,1 +1,0 @@
-define( 'WP_DISABLE_PLUGINS_AUTO_UPDATE', true );
