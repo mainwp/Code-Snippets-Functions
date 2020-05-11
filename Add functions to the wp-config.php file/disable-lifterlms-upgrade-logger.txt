@@ -1,0 +1,1 @@
+define( 'LLMS_BG_UPDATE_LOG', false );
