@@ -1,0 +1,10 @@
+add_filter( 'wpmdb_preserved_options', function( $options ) {
+    $opts = [
+        'mainwp_child_uniqueId',
+        'mainwp_child_pubkey',
+        'mainwp_child_server',
+        'mainwp_child_nonce'
+    ];
+    
+    return array_merge($options, $opts);
+});
