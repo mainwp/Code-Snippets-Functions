@@ -1,0 +1,3 @@
+add_filter( 'wpmdb_rows_per_segment', function () {
+    return 5000;
+} );
