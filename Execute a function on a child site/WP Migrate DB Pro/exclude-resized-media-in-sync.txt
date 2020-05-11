@@ -1,0 +1,1 @@
+add_filter( 'wpmdb_exclude_resized_media', '__return_true' );
