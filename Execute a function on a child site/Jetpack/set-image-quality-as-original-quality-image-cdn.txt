@@ -1,0 +1,6 @@
+function jp_custom_params( $args ) {
+	$args['quality'] = 100;
+
+	return $args;
+}
+add_filter( 'jetpack_photon_pre_args', 'jp_custom_params' );
