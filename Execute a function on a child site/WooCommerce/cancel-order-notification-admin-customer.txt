@@ -1,0 +1,4 @@
+function wc_cancelled_order_add_customer_email( $recipient, $order ){
+     return $recipient . ',' . $order->billing_email;
+ }
+ add_filter( 'woocommerce_email_recipient_cancelled_order', 'wc_cancelled_order_add_customer_email', 10, 2 );
