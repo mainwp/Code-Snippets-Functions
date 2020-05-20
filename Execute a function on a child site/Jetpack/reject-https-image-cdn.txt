@@ -1,0 +1,1 @@
+add_filter( 'jetpack_photon_reject_https', '__return_true' );
