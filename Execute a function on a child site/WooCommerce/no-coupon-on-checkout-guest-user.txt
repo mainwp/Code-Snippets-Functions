@@ -1,0 +1,9 @@
+function no_coupon_checkout_function() {
+    if ( !is_user_logged_in() ) {
+
+    remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+
+    }
+}
+    
+add_action('init', 'no_coupon_checkout_function');
