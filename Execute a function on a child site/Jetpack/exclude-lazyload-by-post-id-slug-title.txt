@@ -1,0 +1,8 @@
+add_filter( 'lazyload_is_enabled', 'jp_lazyload_exclude', 15 );
+function jp_lazyload_exclude() {
+    if ( is_page( array( 12, 'slug', 'Title' ) ) ) {
+        return false;
+    } else {
+        return true;
+    }
+}
