@@ -1,0 +1,24 @@
+//Hook into the after checkout validation action, add a callback function named 'validate_no_repeat_purchase' with a priority of 10 and pass two arguments.
+add_action( 'woocommerce_after_checkout_validation', 'validate_no_repeat_purchase', 10, 2 );
+
+//The callback function accepts the array of posted checkout data and an array of errors
+function validate_no_repeat_purchase( $data, $errors ) {
+	//extract the posted 'billing_email' and use that as an argument for querying orders.
+	$args = array(
+		'customer' => $data['billing_email'],
+	);
+
+	//loop through the cart items to see if one is the product that doesn't allow repeat purchases.
+	foreach( WC()->cart->get_cart() as $cart_item ) {
+		$product_id_no_repeat_purchases = 666;//substitute your product id.
+  if ( $cart_item['product_id'] === $product_id_no_repeat_purchases ) {//note the identical operator.
+			//use the WooCommerce helper function to query for orders with this email address:
+			$orders = wc_get_orders( $args );
+
+			//if an order with this email exists, don't allow another one.
+			if ( $orders ) {
+				$errors->add( 'validation', '<strong>Repeat order not allowed.</strong>' );
+			}
+		}
+	}
+}
