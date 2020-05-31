@@ -1,0 +1,32 @@
+// Shim support for Gravity Form submissions on AMP pages.
+add_action( 'gform_post_submission', function() {
+	$location = null;
+	foreach ( headers_list() as $header ) {
+		if ( preg_match( '/^Location:\s*(.+)/i', $header, $matches ) ) {
+			$location = $matches[1];
+			break;
+		}
+	}
+
+	if ( $location ) {
+		header_remove( 'Location' );
+		header( "AMP-Redirect-To: $location" );
+		header( 'AMP-Access-Control-Allow-Source-Origin: ' . home_url() );
+		header( 'Access-Control-Expose-Headers: AMP-Redirect-To, AMP-Access-Control-Allow-Source-Origin' );
+		wp_send_json(
+			[
+				'message'     => __( 'Redirecting…', 'amp' ),
+				'redirecting' => true, // Make sure that the submit-success doesn't get styled as success since redirection _could_ be to error page.
+			],
+			200
+		);
+	}
+} );
+
+// Use client-side validation UI instead of showing validation errors after page reload. Props Rahul Bansal at rtCamp.
+add_filter( 'gform_field_content', function( $content, $field ) {
+	if ( $field->isRequired ) {
+		return str_replace( 'aria-required=', 'required=', $content );
+	}
+	return $content;
+}, 10, 2 );
