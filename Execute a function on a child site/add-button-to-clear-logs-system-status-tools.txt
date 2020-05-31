@@ -1,0 +1,35 @@
+// Uses apply_filters( 'woocommerce_debug_tools', $tools )
+add_filter( 'woocommerce_debug_tools', 'woocommerce_debug_tools_remove_logs' );
+
+function woocommerce_debug_tools_remove_logs( $tools ) {
+	
+	// Disbale Remove Logs button
+	$disable_remove_logs = apply_filters( 'woocommerce_disable_woocommerce_debug_tools_remove_logs', FALSE );
+	
+	if( !$disable_remove_logs ) {
+		$tools['remove_logs'] = array(
+					'name'   => __( 'Remove all the logs.', 'woocommerce' ),
+					'button' => __( 'Remove logs', 'woocommerce' ),
+					'desc'   => __( 'This will remove all of the log files created by WooCommerce and WooCommerce plugins.', 'woocommerce' ),
+					'callback' => 'woocommerce_debug_tools_execute_remove_logs',
+				);
+	}
+	
+	return $tools;
+}
+
+function woocommerce_debug_tools_execute_remove_logs() {
+	$log_dir = WC_LOG_DIR;
+	
+	foreach( scandir( $log_dir ) as $file ) {
+		
+		$path = pathinfo( $file );
+		// Only delete log files, don't delete the test.log file
+		if ( $path['extension'] === 'log' && $path['filename'] !== 'test' ) {
+			unlink( "{$log_dir}/{$file}" );
+		}
+		
+	}
+	
+	return __( 'Log files deleted', 'woocommerce' );
+}
