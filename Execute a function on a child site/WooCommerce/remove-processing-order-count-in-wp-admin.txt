@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_menu_order_count', 'false' );
