@@ -1,0 +1,7 @@
+// Up-sells sorting
+add_filter( 'woocommerce_upsells_orderby', function() { return 'date'; } );
+add_filter( 'woocommerce_upsells_order', function() { return 'desc'; } );
+
+// Cross-sells sorting
+add_filter( 'woocommerce_cross_sells_orderby', function() { return 'date'; } );
+add_filter( 'woocommerce_cross_sells_order', function() { return 'desc'; } );
