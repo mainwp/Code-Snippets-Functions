@@ -1,0 +1,3 @@
+add_filter( 'wpseo_exclude_from_sitemap_by_post_ids', function () {
+  return array( 311, 322 );
+} );
