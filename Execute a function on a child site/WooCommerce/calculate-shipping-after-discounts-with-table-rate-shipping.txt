@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_table_rate_compare_price_limits_after_discounts', '__return_true' );
