@@ -1,0 +1,12 @@
+/**
+ * Remove the "nofollow" attribute from all comments author's links
+ * except for a specific author.
+ */
+function dofollow_blog_author_comment( $return, $author ) {
+		if ( $author === 'Your Name' ) {
+				$return = str_replace( "rel='external nofollow ugc'", '', $return );
+	 	}
+
+		return $return;
+}
+add_filter( 'get_comment_author_link', 'dofollow_blog_author_comment', 10, 2 );
