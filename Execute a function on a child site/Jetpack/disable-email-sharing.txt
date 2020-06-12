@@ -1,0 +1,1 @@
+add_filter( 'sharing_services_email', '__return_true' );
