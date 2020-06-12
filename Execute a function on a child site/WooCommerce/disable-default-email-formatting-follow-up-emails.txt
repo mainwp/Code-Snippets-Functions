@@ -1,0 +1,1 @@
+add_filter( 'fue_multipart_mail', '__return_false' );
