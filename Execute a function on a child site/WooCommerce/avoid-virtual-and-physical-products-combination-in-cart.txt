@@ -1,0 +1,48 @@
+// Check cart items and avoid add to cart
+add_filter( 'woocommerce_add_to_cart_validation', 'filter_wc_add_to_cart_validation', 10, 3 );
+function filter_wc_add_to_cart_validation( $passed, $product_id, $quantity ) {
+    $is_virtual = $is_physical = false;
+    $product = wc_get_product( $product_id );
+
+    if( $product->is_virtual() ) {
+        $is_virtual = true;
+    } else {
+        $is_physical = true;
+    }
+
+    // Loop though cart items
+    foreach( WC()->cart->get_cart() as $cart_item ) {
+        // Check for specific product categories
+        if ( ( $cart_item['data']->is_virtual() && $is_physical )
+        || ( ! $cart_item['data']->is_virtual() && $is_virtual ) ) {
+            wc_add_notice( __( "You can't combine physical and virtual products together.", "woocommerce" ), 'error' );
+            return false;
+        }
+    }
+
+    return $passed;
+}
+
+
+// For security: check cart items and avoid checkout
+add_action( 'woocommerce_check_cart_items', 'filter_wc_check_cart_items' );
+function filter_wc_check_cart_items() {
+    $cart = WC()->cart;
+    $cart_items = $cart->get_cart();
+    $has_virtual = $has_physical = false;
+
+    // Loop though cart items
+    foreach( WC()->cart->get_cart() as $cart_item ) {
+        // Check for specific product categories
+        if ( $cart_item['data']->is_virtual() ) {
+            $has_virtual = true;
+        } else {
+            $has_physical = true;
+        }
+    }
+
+    if ( $has_virtual && $has_physical ) {
+        // Display an error notice (and avoid checkout)
+        wc_add_notice( __( "You can't combine physical and virtual products together.", "woocommerce" ), 'error' );
+    }
+}
