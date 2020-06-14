@@ -1,0 +1,8 @@
+function jetpackcom_fix_woo_script_path( $url, $min_path, $non_min_path ) {
+	if ( wp_startswith( $min_path, 'https://stats.wp.com/s-' ) ) {
+		return $min_path;
+	}
+
+	return $url;
+}
+add_filter( 'jetpack_get_file_for_environment', 'jetpackcom_fix_woo_script_path', 10, 3 );
