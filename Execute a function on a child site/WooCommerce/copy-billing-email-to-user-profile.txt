@@ -1,0 +1,22 @@
+add_action( 'woocommerce_checkout_order_processed', 'my_woocommerce_copy_billing_email_to_user_profile', 10, 3 );
+
+/**
+ * Copy the order billing address to user profile when profile email is blank.
+ *
+ * Requires WooCommerce 3.0
+ *
+ * @param $order_id
+ * @param $posted_data
+ * @param \WC_Order $order
+ */
+function my_woocommerce_copy_billing_email_to_user_profile( $order_id, $posted_data, $order ){
+	$user = $order->get_user();
+
+	if ( ! $user || $user->user_email ) {
+		return;
+	}
+
+	$user->user_email = $order->get_billing_email();
+
+	wp_update_user( $user );
+}
