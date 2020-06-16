@@ -1,0 +1,9 @@
+add_action( 'template_redirect', 'no_products_found_redirect' );
+function no_products_found_redirect() {
+    global $wp_query; 
+    if( isset($_GET['s']) && isset($_GET['post_type']) && 'product' === $_GET['post_type'] 
+    && ! empty($wp_query) && $wp_query->post_count == 0 ) {
+        wp_redirect( get_permalink( 99 ) );
+        exit();
+    }
+}
