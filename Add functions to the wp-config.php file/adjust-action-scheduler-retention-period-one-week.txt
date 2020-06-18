@@ -1,0 +1,7 @@
+add_filter( 'action_scheduler_retention_period', 'wc_action_scheduler_purge' );
+/**
+ * Change Action Scheduler default purge to 1 week
+ */
+function wc_action_scheduler_purge() {
+ return WEEK_IN_SECONDS;
+}
