@@ -1,5 +1,5 @@
-function wp_heartbeat_settings( $settings ) {
+function wpmp_heartbeat_settings( $settings ) {
     $settings['interval'] = 60; //Anything between 15-120
     return $settings;
 }
-add_filter( 'heartbeat_settings', 'wp_heartbeat_settings' );
+add_filter( 'heartbeat_settings', 'wpmp_heartbeat_settings' );
