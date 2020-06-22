@@ -1,0 +1,4 @@
+function wp_no_wordpress_errors(){
+  return 'Someting went wrong!';
+}
+add_filter( 'login_errors', 'wp_no_wordpress_errors' );
