@@ -1,0 +1,1 @@
+add_filter( 'pre_comment_content', 'wp_specialchars' );
