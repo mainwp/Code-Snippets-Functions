@@ -1,5 +1,4 @@
-add_action( 'wp_enqueue_scripts', 'wc_disable_woocommerce_cart_fragments', 11 ); 
- 
-function wc_disable_woocommerce_cart_fragments() { 
-   wp_dequeue_script( 'wc-cart-fragments' ); 
+function dequeue_wc_fragments() {
+    wp_dequeue_script( 'wc-cart-fragments' );
 }
+add_action( 'wp_enqueue_scripts', 'dequeue_wc_fragments', 100 );
