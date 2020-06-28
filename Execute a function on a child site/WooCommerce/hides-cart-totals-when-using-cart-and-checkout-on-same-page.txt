@@ -1,0 +1,4 @@
+add_action( 'woocommerce_after_cart_table', 'woocommerce_show_cart_totals', 10 );
+function woocommerce_show_cart_totals() {
+    wc_get_template( 'cart/cart-totals.php' );
+}
