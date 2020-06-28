@@ -1,0 +1,17 @@
+add_action( 'woocommerce_cart_calculate_fees', 'discount_based_on_user_role', 20, 1 );
+function discount_based_on_user_role( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return; // Exit
+
+    // Only for 'company' user role
+    if ( ! current_user_can('wholesale') )
+        return; // Exit
+
+    // HERE define the percentage discount
+    $percentage = 10;
+
+    $discount = $cart->get_subtotal() * $percentage / 100; // Calculation
+
+    // Applying discount
+    $cart->add_fee( sprintf( __("Discount (%s)", "woocommerce"), $percentage . '%'), -$discount, true );
+}
