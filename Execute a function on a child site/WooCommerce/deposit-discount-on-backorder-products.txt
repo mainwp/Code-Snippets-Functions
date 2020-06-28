@@ -1,0 +1,24 @@
+add_action( 'woocommerce_cart_calculate_fees', 'calculated_deposit_discount_on_backorders' );
+function calculated_deposit_discount_on_backorders( $cart ) {
+
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    ## Set HERE your negative percentage (to remove an amount from cart total)
+    $percent = -.80; // 80% off (negative)
+
+    $backordered_amount = 0;
+
+    foreach( $cart->get_cart() as $cart_item ) {
+        if( $cart_item['data']->is_on_backorder( $cart_item['quantity'] ) ) {
+            $backordered_amount = $cart_item['line_total'] + $cart_item['line_tax'];
+        }
+    }
+
+    ## ## CALCULATION ## ##
+    $calculated_amount = $backordered_amount * $percent;
+
+    // Adding a negative fee to cart amount (Including taxes)
+    $cart->add_fee( __('Deposit calculation', 'woocommerce'), $calculated_amount, true );
+
+}
