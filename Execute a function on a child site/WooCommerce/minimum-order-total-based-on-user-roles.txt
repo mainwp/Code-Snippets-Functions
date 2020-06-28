@@ -1,0 +1,29 @@
+add_action( 'woocommerce_check_cart_items', 'wc_minimum_order_amount' );
+function wc_minimum_order_amount() {
+    // minimum order value by user role
+    if ( current_user_can('distributor_prices') )
+        $minimum = 3000; 
+    elseif ( current_user_can('wholesale_prices') )
+        $minimum = 1000;
+    elseif ( current_user_can('wholesale_vat_exc') )
+        $minimum = 600;
+    else 
+        $minimum = 300; // default
+
+    if ( WC()->cart->subtotal < $minimum ) {
+
+        if( is_cart() ) {
+            wc_print_notice( sprintf( 
+                'You must have an order with a minimum of %s to place your order, your current order total is %s.' , 
+                wc_price( $minimum ), 
+                wc_price( WC()->cart->subtotal )
+            ), 'error' );
+        } else {
+            wc_add_notice( sprintf( 
+                'You must have an order with a minimum of %s to place your order, your current order total is %s.' , 
+                wc_price( $minimum ), 
+                wc_price( WC()->cart->subtotal )
+            ), 'error' );
+        }
+    }
+}
