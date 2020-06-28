@@ -1,0 +1,24 @@
+function filter_woocommerce_package_rates( $rates, $package ) {
+    /* Settings */
+    $min = 25;
+    $max = 50;
+    $discount_percent = 50;
+
+    // Get cart total
+    $cart_total = WC()->cart->cart_contents_total;
+
+    // Condition
+    if ( $cart_total >= $min && $cart_total <= $max ) {
+        // (Multiple)
+        foreach ( $rates as $rate_key => $rate ) {
+            // Get rate cost            
+            $cost = $rates[$rate_key]->cost;
+            
+            // Set rate cost
+            $rates[$rate_key]->cost = $cost - ( ( $cost * $discount_percent ) / 100 );
+        }
+    }
+
+    return $rates;
+}
+add_filter( 'woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2 );
