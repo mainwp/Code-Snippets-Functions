@@ -1,0 +1,12 @@
+add_filter( 'woocommerce_register_post_type_product', 'wc_add_revision_support' );
+
+function wc_add_revision_support( $args ) {
+     $args['supports'][] = 'revisions';
+
+     return $args;
+}
+
+function wpcodex_add_excerpt_support_for_pages() {
+    add_post_type_support( 'product', 'revisions' );
+}
+add_action( 'init', 'wpcodex_add_excerpt_support_for_pages' );
