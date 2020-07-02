@@ -1,0 +1,7 @@
+function my_give_recurring_periods( $periods ) {
+	unset( $periods['day'] );
+	unset( $periods['week'] );
+
+	return $periods;
+}
+add_filter( 'give_recurring_periods', 'my_give_recurring_periods' );
