@@ -1,1 +1,1 @@
-add_filter( 'wp_plugins_auto_update_enabled', '__return_false' )
+add_filter( 'plugins_auto_update_enabled', '__return_false' );
