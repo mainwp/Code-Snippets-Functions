@@ -1,1 +1,1 @@
-add_filter( 'send_themes_auto_update_email', '__return_false' );
+add_filter( 'themes_auto_update_enabled', '__return_false' );
