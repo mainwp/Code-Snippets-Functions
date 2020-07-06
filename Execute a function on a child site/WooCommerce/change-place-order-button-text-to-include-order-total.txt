@@ -1,0 +1,4 @@
+add_filter('woocommerce_order_button_text', 'place_order_button_with_order_total');
+function place_order_button_with_order_total(){
+    return sprintf( '%s %s', __( 'Place Order & Pay', 'custom-order-button' ), strip_tags( WC()->cart->get_total() ) );
+}
