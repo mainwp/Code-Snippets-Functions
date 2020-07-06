@@ -1,0 +1,1 @@
+add_filter( 'elementor_pro/dynamic_tags/shortcode/should_escape', '__return_false' );
