@@ -1,0 +1,1 @@
+add_filter( 'jetpack_gutenberg', '__return_false' );
