@@ -1,0 +1,15 @@
+function wc_email_order_items_args( $args ) {
+    $args['show_image'] = true;
+return $args;
+}
+add_filter( 'woocommerce_email_order_items_args', 'wc_email_order_items_args', 10, 1 );
+
+add_filter('woocommerce_order_item_thumbnail', 'filter_item_thumb', 10, 2);
+function filter_item_thumb($image, $item){
+
+    $itemObject = $item->get_product();
+    $image_url = get_the_post_thumbnail($itemObject->get_id(), 'medium_large'); // use your image size
+    // you can add_image_size() to specify your uncropped thumbnail
+
+    return $image_url;
+}
