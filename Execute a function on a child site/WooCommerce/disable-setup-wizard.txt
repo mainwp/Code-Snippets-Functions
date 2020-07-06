@@ -1,1 +1,1 @@
-add_filter( 'woocommerce_enable_setup_wizard', '__return_false'; }
+add_filter( 'woocommerce_prevent_automatic_wizard_redirect', '__return_true' );
