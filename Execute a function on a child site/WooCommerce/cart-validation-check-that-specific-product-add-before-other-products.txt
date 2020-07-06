@@ -1,0 +1,32 @@
+function filter_woocommerce_add_to_cart_validation( $passed, $product_id, $quantity, $variation_id = null, $variations = null ) {
+    // Product (ID) in cart
+    $product_first_in_cart = 30;
+    
+    // Compare
+    if ( $product_first_in_cart != $product_id ) {
+        // Set variable
+        $in_cart = false;
+        
+        // Cart NOT empty
+        if ( ! WC()->cart->is_empty() ) {
+            // Loop trough cart
+            foreach( WC()->cart->get_cart() as $cart_item ) {
+                // Search for the specific product
+                if ( $cart_item['data']->get_id() == $product_first_in_cart ) {
+                    // Found, break loop
+                    $in_cart = true;
+                    break;
+                }
+            }
+        }
+        
+        // NOT in cart
+        if ( ! $in_cart ) {
+            wc_add_notice( __( 'Please add product "A" before adding other products', 'woocommerce' ), 'error' );
+            $passed = false;
+        }
+    }
+
+    return $passed;
+}
+add_filter( 'woocommerce_add_to_cart_validation', 'filter_woocommerce_add_to_cart_validation', 10, 5 );
