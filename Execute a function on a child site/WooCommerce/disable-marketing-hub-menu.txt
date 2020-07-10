@@ -3,18 +3,5 @@ add_filter( 'woocommerce_admin_features', 'disable_features' );
 function disable_features( $features ) {
 	$marketing = array_search('marketing', $features);
 	unset( $features[$marketing] );
-	//$coupons = array_search('coupons', $features);
-	//unset( $features[$coupons] );
-	//array_values( $features );
 	return $features;
 }
-
-/**
- * Add/edit additional marketing hub menu item/s
- */
-//add_filter( 'woocommerce_marketing_menu_items', '__return_empty_array' );
-
-/**
- * Remove wc-admin
- */
-//add_filter( 'woocommerce_admin_disabled', '__return_true' );
