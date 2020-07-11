@@ -1,0 +1,7 @@
+add_filter( 'the_title', 'display_product_image_in_order_item' );
+function display_product_image_in_order_item( $title ) {
+    if( is_account_page() && $title === __('My Account', 'woocommerce') && ! is_user_logged_in() ) {
+        $title = __( 'Account Login / Register', 'woocommerce' );
+    }
+    return $title;
+}
