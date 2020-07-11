@@ -1,0 +1,16 @@
+function woo_sub_in_cart_notice() {
+	if ( WC()->cart->get_cart_contents_count() == 0 ) {
+		wc_print_notice( __( 'Your cart contains nothing!', 'woocommerce' ), 'notice' );
+	} else {
+		if ( WC_Subscriptions_Cart::cart_contains_subscription() ) {
+			wc_print_notice( __( 'Your cart contains a subscription!', 'woocommerce' ), 'notice' );
+		} else {
+			wc_print_notice( __( 'Your cart is NOT empty, but does NOT contain a subscription!', 'woocommerce' ), 'notice' );
+		}
+	}
+}
+
+// Add to cart page
+add_action( 'woocommerce_check_cart_items', 'woo_sub_in_cart_notice' );
+// Add to shop archives & product pages
+add_action( 'woocommerce_before_main_content', 'woo_sub_in_cart_notice' );
