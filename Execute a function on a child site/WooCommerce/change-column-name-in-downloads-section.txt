@@ -1,0 +1,6 @@
+function filter_woocommerce_account_downloads_columns( $columns ) {
+    $columns['download-file'] = __( 'Files', 'woocommerce');
+
+    return $columns;
+}
+add_filter( 'woocommerce_account_downloads_columns', 'filter_woocommerce_account_downloads_columns', 10, 1 );
