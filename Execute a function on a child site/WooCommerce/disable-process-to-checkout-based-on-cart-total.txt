@@ -1,0 +1,63 @@
+/* 
+ * Cart total must be equal to or greater than a certain dollar amount 
+ * $minimum = total must be equal to or greater than
+ */
+
+function disable_ptc_min250() { 
+    $minimum = 250;
+    
+    if( $minimum >= WC()->cart->total ){
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        echo '<p class="checkout-button button alt">Cart total must be equal to or greater than $' . $minimum . '</p>'; 
+    }  
+}
+
+add_action( 'woocommerce_proceed_to_checkout', 'disable_ptc_min250', 1 );
+
+/* 
+ * Cart total cannot exceed a certain dollar amount 
+ * $maximum = cannot be equal to or exceed this amount
+ */
+
+function disable_ptc_max250() { 
+    $maximum = 250;
+    
+    if( $maximum < WC()->cart->total ){
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        echo '<p class="checkout-button button alt">Cart total must be lower than $' . $maximum . '</p>'; 
+    }  
+}
+
+add_action( 'woocommerce_proceed_to_checkout', 'disable_ptc_max250', 1 );
+
+/*
+ * Cart subtotal must be equal to or greather than a certain dollar amount 
+ * $minimum = subtotal must be equal to or greather than
+ */
+
+function disable_ptc_min250_subtotal() { 
+    $minimum = 250;
+    
+    if( $minimum >= WC()->cart->get_subtotal() ){
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        echo '<p class="checkout-button button alt">Cart subtotal must be equal to or greater than $' . $minimum . '</p>'; 
+    }  
+}
+
+add_action( 'woocommerce_proceed_to_checkout', 'disable_ptc_min250_subtotal', 1 );
+
+/*
+ * Cart subtotal must be less than a certain dollar amount 
+ * $maximum = subtotal must be less than
+ */
+
+function disable_ptc_max250_subtotal() { 
+    $maximum = 250;
+    
+    if( $maximum < WC()->cart->get_subtotal() ){
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        echo '<p class="checkout-button button alt">Cart subtotal must be less than $' . $maximum . '</p>'; 
+    }  
+}
+
+add_action( 'woocommerce_proceed_to_checkout', 'disable_ptc_max250_subtotal', 1 );
