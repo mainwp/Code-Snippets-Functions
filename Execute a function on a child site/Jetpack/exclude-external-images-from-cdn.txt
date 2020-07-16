@@ -1,0 +1,16 @@
+function jetpackblog_external( $skip, $image_url, $args, $scheme ) {
+// Get your site URL, without the protocol
+	$site_url = preg_replace( '~^(?:f|ht)tps?://~i', '', get_site_url() );
+
+	/**
+	 * If the image URL is from your site,
+	 * return default value (false, unless another function overwrites).
+	 * Otherwise, do not use the CDN
+	 */
+	if ( strpos( $image_url, $site_url ) ) {
+		return $skip;
+	} else {
+		return true;
+	}
+}
+add_filter( 'jetpack_photon_skip_for_url', 'jetpackblog_external', 9, 4 );
