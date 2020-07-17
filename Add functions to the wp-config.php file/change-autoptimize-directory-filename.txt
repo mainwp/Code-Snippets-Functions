@@ -1,0 +1,2 @@
+define('AUTOPTIMIZE_CACHE_CHILD_DIR','/resources/');
+define('AUTOPTIMIZE_CACHEFILE_PREFIX','aggregated_');
