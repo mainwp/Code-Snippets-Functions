@@ -1,0 +1,4 @@
+add_filter('autoptimize_filter_css_replacetag','override_aocss_replacetag',10,1);
+function override_aocss_replacetag($replacetag) {
+    return array("</head>","before");
+}
