@@ -1,0 +1,6 @@
+add_filter( 'aioseop_images_allowed_from_hosts', 'my_aioseop_images_allowed_from_hosts' );
+
+function my_aioseop_images_allowed_from_hosts( $hosts ) {
+$hosts[] = '*.wp.com';
+return $hosts;
+}
