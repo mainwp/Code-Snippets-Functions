@@ -1,0 +1,1 @@
+add_filter( 'aioseo_include_images_in_sitemap', '__return_false' );
