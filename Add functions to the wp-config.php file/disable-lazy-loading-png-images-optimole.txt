@@ -1,0 +1,1 @@
+define("OPTML_DISABLE_PNG_LAZYLOAD",true);
