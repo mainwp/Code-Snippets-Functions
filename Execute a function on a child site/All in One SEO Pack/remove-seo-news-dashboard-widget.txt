@@ -1,0 +1,1 @@
+add_filter( 'aioseo_show_seo_news', '__return_false' );
