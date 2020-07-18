@@ -1,0 +1,1 @@
+add_filter( 'aioseop_robotstxt_sitemap_url', '__return_false' );
