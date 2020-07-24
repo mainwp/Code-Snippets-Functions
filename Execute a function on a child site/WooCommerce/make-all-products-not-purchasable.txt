@@ -1,1 +1,2 @@
-add_filter( 'woocommerce_is_purchasable', '__return_false');
+add_filter( 'woocommerce_is_purchasable', '__return_false' );
+add_filter( 'woocommerce_variation_is_purchasable', '__return_false' );
