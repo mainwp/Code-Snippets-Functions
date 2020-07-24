@@ -1,0 +1,33 @@
+function is_shop_open() {
+    date_default_timezone_set('Europe/Paris');
+
+    $start_time   = mktime('10', '00', '00', date('m'), date('d'), date('Y')); // 10h
+    $end_time     = mktime('17', '00', '00', date('m'), date('d'), date('Y')); // 17h
+    $now_time     = time();
+    $allowed_days = in_array( date('N'), array(2, 4, 6) ); // tuesdays, thursdays and saturdays
+
+    return $allowed_days && $now_time >= $start_time && $now_time <= $end_time ? true : false;
+}
+
+add_filter( 'woocommerce_variation_is_purchasable', 'shop_closed_disable_purchases' );
+add_filter( 'woocommerce_is_purchasable', 'shop_closed_disable_purchases' );
+function shop_closed_disable_purchases( $purchasable ) {
+    return is_shop_open() ? $purchasable : false;
+}
+
+add_action( 'woocommerce_check_cart_items', 'shop_open_allow_checkout' );
+add_action( 'woocommerce_checkout_process', 'shop_open_allow_checkout' );
+function shop_open_allow_checkout() {
+    if ( ! is_shop_open() ) {
+        wc_add_notice( __("The online store is currently closed. You can view products, but purchases are not allowed."), 'error' );
+    }
+}
+
+add_action( 'template_redirect', 'shop_is_closed_notice' );
+function shop_is_closed_notice(){
+    if ( ! ( is_cart() || is_checkout() ) && ! is_shop_open() ) {
+        wc_add_notice( sprintf( '<span class="shop-closed">%s</span>',
+            esc_html__('The online store is currently closed. You can view products. But purchases are allowed between x-x.', 'woocommerce' )
+        ), 'notice' );
+    }
+}
