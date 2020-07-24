@@ -1,2 +1,8 @@
 add_filter( 'woocommerce_is_purchasable', '__return_false' );
-add_filter( 'woocommerce_variation_is_purchasable', '__return_false' );
+add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
+    if ( 'Read more' == $text ) {
+        $text = __( 'More Info', 'woocommerce' );
+    }
+
+    return $text;
+} );
