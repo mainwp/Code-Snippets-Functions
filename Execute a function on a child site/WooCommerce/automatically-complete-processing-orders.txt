@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_payment_complete_order_status', 'wc_autocomplete_processing_orders', 9999 );
+ 
+function wc_autocomplete_processing_orders() {
+   return 'completed';
+}
