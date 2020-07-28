@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_enable_nocache_headers', '__return_false' );
