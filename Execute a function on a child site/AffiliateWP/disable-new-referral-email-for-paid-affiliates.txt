@@ -1,0 +1,20 @@
+/*-- Disable New Referral Email for PAID Affiliates -----------*/
+function disable_new_refferal_email( $return, $referral ) {
+
+	// Check to see if AffiliateWP is active.
+	if ( ! function_exists( 'affiliate_wp' ) ) {
+		return;
+	}
+
+    $affiliate_id = $referral->affiliate_id;
+    
+    $store_credit_disabled = affwp_get_affiliate_meta( $affiliate_id, 'store_credit_disabled', true );
+
+	// If Store Credit Disable cancel email
+	if( $store_credit_disabled ) {
+			$return = false;
+	}
+
+	return $return;
+}
+add_filter( 'affwp_notify_on_new_referral', 'disable_new_refferal_email', 10, 2 );
