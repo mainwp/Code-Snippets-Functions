@@ -1,4 +1,0 @@
-function am_affwp_disable_all_emails() {
-	return true;
-}
-add_filter( 'affwp_disable_all_emails', 'am_affwp_disable_all_emails' );
