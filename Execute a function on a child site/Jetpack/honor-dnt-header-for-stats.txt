@@ -1,0 +1,1 @@
+apply_filters ( 'jetpack_honor_dnt_header_for_stats', bool false )
