@@ -1,0 +1,30 @@
+add_action( 'woocommerce_product_query', 'hide_variable_products_with_all_outofstock_variations', 10, 2 );
+function hide_variable_products_with_all_outofstock_variations( $q, $query ) {
+    // Get any existing meta query
+    $meta_query = $q->get( 'meta_query');
+
+    // Define an additional meta query
+    $meta_query['relation'] = 'OR';
+    $meta_query[] = array(
+        'key'     => '_all_variations_outofstock',
+        'value'   => '1',
+        'compare' => '!=',
+    );
+    $meta_query[] = array(
+        'key'     => '_all_variations_outofstock',
+        'compare' => 'NOT EXISTS',
+    );
+
+    // Set the new merged meta query
+    $q->set( 'meta_query', $meta_query );
+}
+
+// Hide "Out of stock" variable product single pages
+add_action( 'template_redirect', 'hide_out_of_stock_variable_product_single_pages' );
+function hide_out_of_stock_variable_product_single_pages(){
+    if( get_post_meta( get_the_id(), '_all_variations_outofstock', true ) ) {
+        // Redirect to Shop page
+        wp_redirect( wc_get_page_permalink( 'shop' ) );
+        exit();
+    }
+}
