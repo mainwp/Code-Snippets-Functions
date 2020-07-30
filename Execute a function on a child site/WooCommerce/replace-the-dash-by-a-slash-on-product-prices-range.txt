@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_format_price_range', 'custom_format_price_range', 10, 3 );
+function custom_format_price_range( $price ) {
+    $price = str_replace('&ndash;', '&#47;', $price);
+    return $price;
+}
