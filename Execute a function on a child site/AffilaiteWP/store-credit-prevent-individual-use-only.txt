@@ -1,0 +1,5 @@
+function affwp_custom_store_credit_prevent_individual_use_only( $data ) {
+	$data['individual_use'] = 'no';
+	return $data;
+}
+add_filter( 'affwp_store_credit_woocommerce_coupon_data', 'affwp_custom_store_credit_prevent_individual_use_only', 10, 2 );
