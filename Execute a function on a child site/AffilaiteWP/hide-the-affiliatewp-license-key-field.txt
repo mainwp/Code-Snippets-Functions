@@ -1,0 +1,26 @@
+function am_affwp_hide_license_key_field() {
+
+	$screen = get_current_screen();
+
+	if ( $screen->id !== 'affiliates_page_affiliate-wp-settings' ) {
+		return;
+	}
+
+	$first_tab = false;
+
+	if (
+		isset( $_GET['page'] ) && 'affiliate-wp-settings' === $_GET['page'] && ! isset( $_GET['tab'] ) ||
+		isset( $_GET['page'] ) && 'affiliate-wp-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'general' === $_GET['tab']
+	) {
+		$first_tab = true;
+	}
+
+	if ( ! $first_tab ) {
+		return;
+	}
+
+	?>
+	<style>.affiliates_page_affiliate-wp-settings .form-table tr:nth-child(-n+2) { display: none; }</style>
+	<?php
+}
+add_action( 'admin_head', 'am_affwp_hide_license_key_field' );
