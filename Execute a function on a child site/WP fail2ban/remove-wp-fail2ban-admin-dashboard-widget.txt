@@ -1,0 +1,6 @@
+add_action( 'wp_dashboard_setup', 'wp_fail2ban_remove_dashboard_widget' );
+
+function wp_fail2ban_remove_dashboard_widget() {
+	
+	remove_meta_box('wp_fail2ban_last_messages','dashboard', 'normal');
+}
