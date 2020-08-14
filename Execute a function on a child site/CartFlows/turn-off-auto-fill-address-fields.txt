@@ -1,0 +1,6 @@
+add_filter( 'cartflows_autocomplete_zip_data', 'wa_disable_autocomplete_zipcode', 10, 1 );
+
+function wa_disable_autocomplete_zipcode( $allow ) {
+    $allow = 'no';
+    return $allow;
+}
