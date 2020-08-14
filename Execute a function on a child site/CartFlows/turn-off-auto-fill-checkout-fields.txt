@@ -1,0 +1,6 @@
+add_filter( 'cartflows_allow_persistace', 'do_not_store_persistance_data', 10, 1 );
+
+function do_not_store_persistance_data( $allow ){
+	$allow = 'no';
+	return $allow;
+}
