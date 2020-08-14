@@ -1,0 +1,12 @@
+add_filter( 'cartflows_do_not_cache_step', 'cache_CartFlows_pages' );
+
+function cache_CartFlows_pages( $post_id ) {
+ 
+// If you want to remove more pages from the cache then add those page's id in the array.
+
+	if( in_array( $post_id , array( 'add_your_landing_page_ids_comma_separated_id_more_than_one' ) ) ){
+		return false; // Do not cache.
+	}
+
+	return true; // Do cache.
+}
