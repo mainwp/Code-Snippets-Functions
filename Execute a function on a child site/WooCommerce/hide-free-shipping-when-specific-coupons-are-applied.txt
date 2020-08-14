@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2 );
+function filter_woocommerce_package_rates( $rates, $package ) {
+    $targeted_coupons = array("544"); // Here set your related coupon codes
+
+    $applied_coupons = WC()->cart->get_applied_coupons();
+
+    if ( ! empty($applied_coupons) && array_intersect( $targeted_coupons, $applied_coupons ) ) {
+        foreach ( $rates as $rate_key => $rate ) {
+            if ( 'free_shipping' === $rate->method_id ) {
+                unset($rates[$rate_key]);
+            }
+        }
+    }
+    return $rates;
+}
