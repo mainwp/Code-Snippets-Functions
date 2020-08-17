@@ -1,0 +1,6 @@
+add_action( 'pre_get_posts', 'shop_default_orderby_rand' );
+function shop_default_orderby_rand( $query ) {
+    if ( is_shop() && ( ! isset($_GET['orderby']) || 'menu_order' === $_GET['orderby'] ) ) {
+        $query->set( 'orderby', 'rand' );
+    }
+}
