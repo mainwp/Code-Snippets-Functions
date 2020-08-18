@@ -1,0 +1,23 @@
+add_filter('woocommerce_order_button_text', 'subscriptions_custom_checkout_submit_button_text' );
+function subscriptions_custom_checkout_submit_button_text( $button_text ) {
+    if ( WC_Subscriptions_Cart::cart_contains_subscription() ) {
+        $cart  = WC()->cart;
+        $total = $cart->total;
+        $other = false;
+
+        // Loop through cart items
+        foreach ( $cart->get_cart() as $item )  {
+            $product = $item['data'];
+            if( in_array( $product->get_type(), ['subscription', 'subscription_variation'] ) ) {
+                $period = get_post_meta( $product->get_id(), '_subscription_period', true );
+            } else {
+                $other = true; // There are other items in cart
+            }
+        }
+        // When there are only Subscriptions in cart
+        if ( isset($period) && ! $other ) {
+            return sprintf( __('Pay %s/%s' , 'woocommerce'), strip_tags( wc_price($total) ), ucfirst($period) );
+        }
+    }
+    return $button_text;
+}
