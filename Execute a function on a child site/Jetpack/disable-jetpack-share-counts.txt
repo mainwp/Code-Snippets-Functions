@@ -1,0 +1,1 @@
+add_filter( 'jetpack_sharing_counts', '__return_false', 99 );
