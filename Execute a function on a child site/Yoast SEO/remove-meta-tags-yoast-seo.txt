@@ -1,0 +1,1 @@
+add_filter( 'wpseo_metadesc', '__return_false' );
