@@ -1,0 +1,9 @@
+function filter_woocommerce_coupon_get_discount_amount( $discount, $price_to_discount , $cart_item, $single, $coupon ) {    
+    // On backorder
+    if ( $cart_item['data']->is_on_backorder() ) {
+        $discount = 0;
+    }
+
+    return $discount;
+}
+add_filter( 'woocommerce_coupon_get_discount_amount', 'filter_woocommerce_coupon_get_discount_amount', 10, 5 );
