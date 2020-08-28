@@ -1,0 +1,26 @@
+function change_stock_message( $text, $product ) {  
+    // Managing stock NOT checked
+    if ( !$product->managing_stock() ) {
+
+        // Get stock status
+        if ( method_exists( $product, 'get_stock_status' ) ) {
+            $stock_status = $product->get_stock_status();
+        }
+
+        // Check stock status, adjust the message accordingly
+        switch ( $stock_status ) {
+            case 'instock':
+                $text = __( 'Available', 'woocommerce' );
+                break;
+            case 'outofstock':
+                $text = __( 'Out of stock', 'woocommerce' );
+                break;
+            case 'onbackorder':
+                $text = __( 'Available after 4-7 days', 'woocommerce' );
+                break;
+        }
+    }
+
+    return $text;
+}
+add_filter( 'woocommerce_get_availability_text', 'change_stock_message', 10, 2 );
