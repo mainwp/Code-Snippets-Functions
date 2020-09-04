@@ -1,0 +1,3 @@
+add_filter( 'rank_math/sitemap/include_noindex', function( $value, $type ) {
+	return true;
+}, 10, 2 );
