@@ -1,0 +1,1 @@
+add_filter( 'rank_math/sitemap/remove_credit', '__return_true');
