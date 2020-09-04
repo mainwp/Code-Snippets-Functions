@@ -1,0 +1,1 @@
+add_filter( 'rank_math/'elementor/add_seo_tab', '__return_false' );
