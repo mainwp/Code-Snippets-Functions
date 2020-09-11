@@ -1,0 +1,1 @@
+define( 'GENERATE_HOOKS_DISALLOW_PHP', true );
