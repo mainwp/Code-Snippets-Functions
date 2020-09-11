@@ -1,0 +1,9 @@
+add_action('woocommerce_shop_loop_item_title', 'description_after_related_product_title', 15 );
+function description_after_related_product_title(){
+    global $woocommerce_loop, $product;
+
+    // Only for related products: Display product description
+    if( isset($woocommerce_loop['name']) && 'related' === $woocommerce_loop['name'] ) {
+        echo '<p class="description">' . $product->get_description() . '</p>';
+    }
+}
