@@ -1,0 +1,4 @@
+function remove_woocommerce_support() {
+    remove_theme_support( 'woocommerce' );
+}
+add_action( 'wp', 'remove_woocommerce_support', 100 );
