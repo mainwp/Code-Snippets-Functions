@@ -1,0 +1,4 @@
+add_action( 'after_setup_theme', 'gp_remove_footer_area' );
+function gp_remove_footer_area() {
+    remove_action( 'generate_footer','generate_construct_footer' );
+}
