@@ -1,0 +1,17 @@
+add_filter( 'generate_page_hero_background_image_url', function( $url ) {
+    
+    if ( ! function_exists( 'get_woocommerce_term_meta' ) ) {
+        return $url;
+    }
+
+    global $wp_query;
+    $cat = $wp_query->get_queried_object();
+    $thumbnail_id = get_woocommerce_term_meta( $cat->term_id, 'thumbnail_id', true ); 
+    $background_image = wp_get_attachment_url( $thumbnail_id );
+
+    if ( $background_image ) {
+        $url = $background_image;
+    }
+
+    return $url;
+});
