@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_cart_contents_count', 'wc_alter_cart_contents_count', 9999, 1 );
+ 
+function wc_alter_cart_contents_count( $count ) {
+   $count = count( WC()->cart->get_cart() );
+   return $count;
+}
