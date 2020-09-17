@@ -1,0 +1,14 @@
+function filter_woocommerce_checkout_cart_item_quantity( $item_qty, $cart_item, $cart_item_key ) {
+    // Get quantity
+    $cart_item_quantity = $cart_item['quantity'];
+    
+    // Format
+    $cart_item_quantity = number_format($cart_item_quantity, 0, ',', ' ');
+    
+    // Output
+    $item_qty = '<strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $cart_item_quantity ) . '</strong>';
+
+    // Return
+    return $item_qty;
+}
+add_filter( 'woocommerce_checkout_cart_item_quantity', 'filter_woocommerce_checkout_cart_item_quantity', 10, 3 );
