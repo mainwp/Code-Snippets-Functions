@@ -1,0 +1,9 @@
+function mandatory_coupon_code() {
+    $applied_coupons = WC()->cart->get_applied_coupons();
+
+    if ( empty ( $applied_coupons ) ) {
+        // Not found: display an error notice
+        wc_add_notice( __( 'Add coupon before checkout.', 'woocommerce' ), 'error' );   
+    }
+}
+add_action( 'woocommerce_check_cart_items', 'mandatory_coupon_code', 10, 0 );
