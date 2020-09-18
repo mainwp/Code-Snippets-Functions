@@ -1,0 +1,1 @@
+add_filter( 'run_ngg_resource_manager', '__return_false' );
