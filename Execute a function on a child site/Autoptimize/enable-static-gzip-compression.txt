@@ -1,0 +1,1 @@
+add_filter('autoptimize_filter_cache_create_static_gzip','__return_true');
