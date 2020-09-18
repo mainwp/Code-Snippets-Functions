@@ -1,0 +1,6 @@
+if (!function_exists('rsssl_dismiss_review_notice')) {
+    function rsssl_dismiss_review_notice() {
+        RSSSL()->really_simple_ssl->review_notice_shown = true;
+    }
+}
+add_action('admin_init', 'rsssl_dismiss_review_notice');
