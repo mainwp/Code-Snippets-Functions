@@ -1,0 +1,4 @@
+add_action( 'woocommerce_payment_complete_order_status', 'wc_auto_complete_paid_order', 10, 3 );
+function wc_auto_complete_paid_order( $status, $order_id, $order ) {
+    return 'processing';
+}
