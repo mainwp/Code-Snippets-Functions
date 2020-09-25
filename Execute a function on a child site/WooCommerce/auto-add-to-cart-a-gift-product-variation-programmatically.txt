@@ -1,0 +1,38 @@
+add_action( 'woocommerce_before_calculate_totals', 'wc_auto_add_gift_to_cart' );
+function wc_auto_add_gift_to_cart( $cart ) {
+    if (is_admin() && !defined('DOING_AJAX'))
+        return;
+    
+    $required_product_id = 37; // The required product Id (or variation Id)
+    $parent_gift_id      = 40; // The parent variable product Id (gift) for a product variation (set to zero for simple products)
+    $product_gift_id     = 41; // the variation Id or the product Id (gift)
+    
+    $has_required = $gift_key = false; // Initializing
+    
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        // Check if required product is in cart
+        if( in_array( $required_product_id, array($cart_item['product_id'], $cart_item['variation_id']) ) ) {
+           $has_required = true;
+        }
+        // Check if gifted product is already in cart
+        if( $cart_item['data']->get_id() == $product_gift_id ) {
+           $gift_key = $cart_item_key;
+        }
+    }
+    
+    // If gift is in cart, but not the required product: Remove gift from cart
+    if ( ! $has_required && $gift_key ) {
+        $cart->remove_cart_item( $gift_key );
+    }
+    // If gift is not in cart and the required product is in cart: Add gift to cart
+    elseif ( $has_required && ! $gift_key ) {
+        // For simple products
+        if( $parent_gift_id == 0 ) {
+            $cart->add_to_cart( $product_gift_id );
+        } 
+        // For product variations (of a variable product)
+        else {
+            $cart->add_to_cart( $parent_gift_id, 1, $product_gift_id );
+        }
+    }
+}
