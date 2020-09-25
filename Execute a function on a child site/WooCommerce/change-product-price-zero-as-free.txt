@@ -1,0 +1,17 @@
+// Cart and minicart
+add_filter( 'woocommerce_cart_item_price', 'change_cart_item_price_html', 10, 3 );
+function change_cart_item_price_html( $price_html, $cart_item, $cart_item_key ) {
+    if( $cart_item['data']->get_price() == 0 ) {
+        return '<span class="woocommerce-Price-amount amount">'.__("FREE", "woocommerce").'</span>';
+    }
+    return $price_html;
+}
+
+// Cart and Checkout
+add_filter( 'woocommerce_cart_item_subtotal', 'change_checkout_item_subtotal_html', 10, 3 );
+function change_checkout_item_subtotal_html( $subtotal_html, $cart_item, $cart_item_key ) {
+    if( $cart_item['data']->get_price() == 0 ) {
+        return '<span class="woocommerce-Price-amount amount">'.__("FREE", "woocommerce").'</span>';
+    }
+    return $subtotal_html;
+}
