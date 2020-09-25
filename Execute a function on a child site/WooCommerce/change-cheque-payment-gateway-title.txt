@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_gateway_title', 'change_cheque_payment_gateway_title', 100, 2 );
+function change_cheque_payment_gateway_title( $title, $payment_id ){
+    if( $payment_id === 'cheque' ) {
+        $title = __("Something else", "woocommerce");
+    }
+    return $title;
+}
