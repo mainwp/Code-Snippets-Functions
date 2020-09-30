@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_checkout_fields', 'wc_checkout_fields_custom_attributes', 9999 );
+
+function wc_checkout_fields_custom_attributes( $fields ) {
+	$fields['billing']['billing_company']['maxlength'] = 15;
+	return $fields;
+}
