@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_form_field', 'wc_span_tag_inside_checkout_input_fields', 10, 4);
+function wc_span_tag_inside_checkout_input_fields ( $field, $key, $args, $value ) {
+    // Wrap all fields except first and last name.
+    if ( $key === 'shipping_city' ) {
+        $field = str_replace( array('<label ', '</span>'), array('<span class="special"><label ', '</span></span>'), $field );
+    }
+    return $field;
+}
