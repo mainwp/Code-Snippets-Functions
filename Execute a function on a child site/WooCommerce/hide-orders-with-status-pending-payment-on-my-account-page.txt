@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_my_account_my_orders_query', 'unset_pending_payment_orders_from_my_account', 10, 1 );
+function unset_pending_payment_orders_from_my_account( $args ) {
+    $statuses = wc_get_order_statuses();    
+    unset( $statuses['wc-pending'] );
+    $args['post_status'] = array_keys( $statuses );
+    return $args;
+}
