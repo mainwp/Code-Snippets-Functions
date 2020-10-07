@@ -1,0 +1,41 @@
+add_action( 'woocommerce_before_single_product', 'wc_single_product_layout_logged_in_purchased' );
+ 
+function wc_single_product_layout_logged_in_purchased() { 
+    global $product;
+    if ( ! is_user_logged_in() ) return;  
+    $current_user = wp_get_current_user();
+    $theid = $product->get_id();
+ 
+    // TARGET ONLY LOGGED IN CUSTOMERS WHO PURCHASED THIS PRODUCT    
+    if ( wc_customer_bought_product( $current_user->user_email, $current_user->ID, $theid ) ) {
+ 
+        // REMOVE ADD TO CART
+        remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+ 
+        // REMOVE PRICE
+        remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+ 
+        // REMOVE FEAT. IMAGE
+        remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+  
+        // ADD CUSTOM CSS
+        ?>
+            <style>
+                .selector {
+                    property: value;
+                    property: value;
+                }
+            </style>
+        <?php
+ 
+        // ADD CUSTOM HTML E.G. VIDEO
+        add_action( 'woocommerce_after_single_product_summary', 'wc_add_video_single_prod_page', 1 );
+ 
+    }
+}
+ 
+function wc_add_video_single_prod_page() {
+    ?>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/3KGM3FfaXew" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <?php
+}
