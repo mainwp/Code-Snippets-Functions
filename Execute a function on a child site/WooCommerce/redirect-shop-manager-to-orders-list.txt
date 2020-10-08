@@ -1,0 +1,12 @@
+add_filter( 'login_redirect', 'login_redirect_shop_manager_on_orders_list', 10, 3 );
+function login_redirect_shop_manager_on_orders_list( $redirect_to, $request, $user ) {
+    $defined_user_role = 'shop_manager'; // The defined user role
+
+    if( isset($user->roles) && is_array($user->roles) && in_array( $defined_user_role, $user->roles ) ) {
+        $redirect_to = admin_url('edit.php?post_type=shop_order'); // Custom redirection url
+
+        wp_safe_redirect( $redirect_to ); // Force redirection
+        exit(); // Mandatory to avoid errors
+    }
+    return $redirect_to;
+}
