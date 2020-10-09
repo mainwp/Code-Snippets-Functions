@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_coupons_enabled', 'woocommerce_coupons_enabled_checkout' );
+
+function woocommerce_coupons_enabled_checkout( $coupons_enabled ) {
+    global $woocommerce;
+    if ( ! empty( $woocommerce->cart->applied_coupons ) ) {
+        return false;
+    }
+    return $coupons_enabled;
+}
