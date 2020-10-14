@@ -1,0 +1,1 @@
+define( 'WCPAY_DEV_MODE', true );
