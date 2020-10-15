@@ -1,0 +1,16 @@
+function wpf_dev_blacklist( $honeypot, $fields, $entry, $form_data ) {
+ 
+    // Use the email as the key. The value will be used in the log
+    $blacklist = array(
+        '123test@me.com' => 'Ima Believer',
+        'me@me.com' => 'Me Me'
+    );
+     
+    foreach( $form_data['fields'] as $id => $field ) {
+        if( 'email' == $field['type'] && array_key_exists( $entry['fields'][$id], $blacklist ) )
+            $honeypot = '[Blacklist] ' . $blacklist[$entry['fields'][$id]];
+    }
+     
+    return $honeypot;
+}
+add_filter( 'wpforms_process_honeypot', 'wpf_dev_blacklist', 10, 4 )
