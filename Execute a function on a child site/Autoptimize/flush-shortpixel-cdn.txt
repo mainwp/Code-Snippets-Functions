@@ -1,0 +1,4 @@
+add_filter('autoptimize_html_after_minify','change_shortpixel_client', 11, 1);
+function change_shortpixel_client( $HtmlIn ) {
+     return str_replace( 'cdn.shortpixel.ai/client/', 'cdn.shortpixel.ai/client2/', $HtmlIn );
+}
