@@ -1,0 +1,11 @@
+function wpf_dev_remove_media_button( $display ) {
+ 
+    $screen = get_current_screen();
+ 
+    if ( 'page' == $screen->post_type || 'post' == $screen->post_type ) {
+        return false;
+ 
+    } 
+    return $display;
+}
+add_filter( 'wpforms_display_media_button', 'wpf_dev_remove_media_button' );
