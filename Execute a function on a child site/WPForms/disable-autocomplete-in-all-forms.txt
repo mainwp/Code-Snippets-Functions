@@ -1,0 +1,13 @@
+function wpf_dev_disable_form_autocomplete( $atts, $form_data ) {
+     
+    // This check will only form autocomplete for Form #11.
+    // Removing this check would disable autocomplete on ALL forms.
+    if ( absint( $form_data['id'] ) !== 11 ) {
+        return $atts;
+    }
+ 
+    $atts['atts']['autocomplete'] = 'nope';
+ 
+    return $atts;
+}
+add_filter( 'wpforms_frontend_form_atts', 'wpf_dev_disable_form_autocomplete', 10, 2 )
