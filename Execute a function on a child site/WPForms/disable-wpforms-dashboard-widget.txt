@@ -1,0 +1,1 @@
+add_filter( 'wpforms_admin_dashboardwidget', '__return_false' );
