@@ -1,0 +1,1 @@
+add_filter( 'wcwl_automatic_mailouts_are_disabled', '__return_true' );
