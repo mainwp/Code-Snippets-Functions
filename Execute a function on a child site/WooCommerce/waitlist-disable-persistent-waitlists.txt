@@ -1,0 +1,1 @@
+add_filter( 'wcwl_persistent_waitlists_are_disabled', '__return_false' );
