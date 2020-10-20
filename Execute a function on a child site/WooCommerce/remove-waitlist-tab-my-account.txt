@@ -1,0 +1,1 @@
+add_filter( 'wcwl_enable_waitlist_account_tab', '__return_false' );
