@@ -1,0 +1,14 @@
+add_action('wp_footer', 'minicart_checkout_refresh_script');
+function minicart_checkout_refresh_script(){
+    if ( is_checkout() && ! is_wc_endpoint_url() ) :
+    ?>
+    <script type="text/javascript">
+    (function($){
+        $(document.body).on('change', 'input[name="payment_method"],input[name^="shipping_method"]', function(){
+            $(document.body).trigger('update_checkout').trigger('wc_fragment_refresh');
+        });
+    })(jQuery);
+    </script>
+    <?php
+    endif;
+}
