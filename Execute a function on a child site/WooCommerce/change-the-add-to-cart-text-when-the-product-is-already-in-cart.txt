@@ -1,0 +1,24 @@
+function woocommerce_custom_add_to_cart_text( $add_to_cart_text, $product ) {
+    // Get cart
+    $cart = WC()->cart;
+    
+    // If cart is NOT empty
+    if ( ! $cart->is_empty() ) {
+
+        // Iterating though each cart items
+        foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+            // Get product id in cart
+            $_product_id = $cart_item['product_id'];
+     
+            // Compare 
+            if ( $product->get_id() == $_product_id ) {
+                // Change text
+                $add_to_cart_text = __( 'Already in cart', 'woocommerce' );
+                break;
+            }
+        }
+    }
+
+    return $add_to_cart_text;
+}
+add_filter( 'woocommerce_product_add_to_cart_text', 'woocommerce_custom_add_to_cart_text', 10, 2 );
