@@ -1,0 +1,13 @@
+function action_wp_footer() {
+    // Returns true on the checkout page, when false, return
+    if ( ! is_checkout() ) return;
+    ?>
+    <script>
+        jQuery(document).ready(function($){
+            $( '#billing_postcode' ).attr( 'maxlength', '5' );
+            $( '#shipping_postcode' ).attr( 'maxlength', '5' );
+        });
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'action_wp_footer' );
