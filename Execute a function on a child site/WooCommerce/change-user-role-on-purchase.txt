@@ -1,0 +1,14 @@
+add_action( 'woocommerce_order_status_processing', 'change_role_on_purchase', 10, 2 );
+add_action( 'woocommerce_order_status_completed', 'change_role_on_purchase', 10, 2 );
+function change_role_on_purchase( $order_id, $order ) {
+    $user = $order->get_user(); // Get the WP_User Object
+
+    // Check for "customer" user roles only
+    if( is_a( $user, 'WP_User' ) && in_array( 'customer', (array) $user->roles ) ) {
+        // Remove WooCommerce "customer" role
+        $user->remove_role( 'customer' ); 
+
+        // Add new role
+        $user->add_role( 'editor' );
+    }
+}
