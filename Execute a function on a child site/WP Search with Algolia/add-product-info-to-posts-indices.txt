@@ -1,0 +1,15 @@
+function add_product_shared_attributes( array $shared_attributes, WP_Post $post ) {
+    $product = wc_get_product( $post );
+
+    $shared_attributes['price'] =  $product->get_price();
+    $shared_attributes['regular_price'] =  $product->get_regular_price();
+    $shared_attributes['sale_price'] =  $product->get_sale_price();
+    $shared_attributes['is_on_sale'] =  $product->is_on_sale();
+    $shared_attributes['sku'] = $product->get_sku();
+    $shared_attributes['stock_quantity'] =  $product->get_stock_quantity();
+
+    return $shared_attributes;
+}
+
+add_filter( 'algolia_post_product_shared_attributes', 'add_product_shared_attributes', 10, 2 );
+add_filter( 'algolia_searchable_post_product_shared_attributes', 'add_product_shared_attributes', 10, 2 );
