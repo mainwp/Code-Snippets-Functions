@@ -1,0 +1,55 @@
+// CSS rules
+add_action( 'woocommerce_before_checkout_billing_form', 'move_checkout_create_an_account_css' );
+function move_checkout_create_an_account_css() {
+    if( ! is_user_logged_in() ) :
+    ?><style>
+        .woocommerce-account-fields label.woocommerce-form__label-for-checkbox {display: none !important;}
+        #account_cb_field {margin-top: 32px;}
+        #account_cb_field input {margin-right: 6px;}
+    </style>
+    <?php
+    endif;
+}
+
+// Add a checkbox to billing section
+add_filter( 'woocommerce_checkout_fields', 'move_checkout_create_an_account_checkbox' );
+function move_checkout_create_an_account_checkbox( $fields ) {
+    if( ! is_user_logged_in() ) {
+        // Make email field on half on left side
+        $fields['billing']['billing_email']['class'] = array('form-row-first');
+
+        // Custom checkbox on half right side
+        $fields['billing']['account_cb'] = array(
+            'type'  => 'checkbox',
+            'label' => __("Create an account?", "woocommerce"),
+            'class' => array('form-row-last'),
+        );
+    }
+    return $fields;
+}
+
+// remove "(optional)" from the new checkbox
+add_filter( 'woocommerce_form_field' , 'remove_checkout_optional_fields_label', 10, 4 );
+function remove_checkout_optional_fields_label( $field, $key, $args, $value ) {
+    // Only on checkout page
+    if ( is_checkout() && ! is_wc_endpoint_url() && $key === 'account_cb' ) {
+        $optional = '&nbsp;<span class="optional">(' . esc_html__( 'optional', 'woocommerce' ) . ')</span>';
+        $field = str_replace( $optional, '', $field );
+    }
+    return $field;
+}
+
+// The jQuery code
+add_action( 'wp_footer', 'move_checkout_create_an_account_js' );
+function move_checkout_create_an_account_js() {
+    if ( ! is_user_logged_in() && is_checkout() && ! is_wc_endpoint_url() ) :
+    ?><script>
+    (function($){
+        $('input[name=account_cb]').on( 'click', function() {
+            $('input[name=createaccount]').trigger('click');
+        });
+    })(jQuery);
+    </script>
+    <?php
+    endif;
+}
