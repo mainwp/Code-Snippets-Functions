@@ -1,0 +1,16 @@
+add_filter( 'woocommerce_package_rates', 'hide_shipping_method_based_on_day_of_the_week_and_time', 10, 2 );
+function hide_shipping_method_based_on_day_of_the_week_and_time( $rates, $package )
+{
+    // Set your default time zone (http://php.net/manual/en/timezones.php)
+    date_default_timezone_set('Europe/London');
+    
+    // Here set your shipping rate Id
+    $shipping_rate_id = 'flat_rate:29';
+
+    // When this shipping method is available and after 2 PM
+    if ( array_key_exists( $shipping_rate_id, $rates ) 
+    && ! ( date('H') <= 15 && ! in_array(date('N'), [6,7]) ) ) {
+        unset($rates[$shipping_rate_id]); // remove it
+    }
+    return $rates;
+}
