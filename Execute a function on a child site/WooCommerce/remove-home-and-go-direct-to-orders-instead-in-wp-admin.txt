@@ -1,0 +1,10 @@
+function action_admin_menu() {
+    // Contains the URI of the current page.
+    $current_url = $_SERVER['REQUEST_URI'];
+    
+    // Make sure wc-admin / customers page will still work
+    if ( strpos( $current_url, 'customers' ) == false) {
+        remove_submenu_page( 'woocommerce', 'wc-admin' );
+    }
+}
+add_action( 'admin_menu', 'action_admin_menu', 99, 0 );
