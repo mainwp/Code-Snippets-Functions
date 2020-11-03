@@ -1,0 +1,1 @@
+add_filter( 'allow_major_auto_core_updates', '_return_false' );
