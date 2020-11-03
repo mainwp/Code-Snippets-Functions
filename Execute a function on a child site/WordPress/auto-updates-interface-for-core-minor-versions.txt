@@ -1,0 +1,19 @@
+function my_plugin_after_core_auto_updates_settings_fields( $auto_update_settings ) {
+    if ( isset( $_POST['core-auto-updates-settings'] ) && wp_verify_nonce( $_POST['set_core_auto_updates_settings'], 'core-auto-updates-nonce' ) ) {
+        if ( isset( $_POST['my-plugin-core-auto-updates-minor'] ) && 1 === (int) $_POST['my-plugin-core-auto-updates-minor'] ) {
+            update_site_option( 'my_plugin_auto_update_core_minor', 1 );
+        } else {
+            update_site_option( 'my_plugin_auto_update_core_minor', 0 );
+        }
+    }
+    $minor_auto_updates_settings = get_site_option( 'my_plugin_auto_update_core_minor' );
+    ?>
+    <p>
+        <input type="checkbox" name="my-plugin-core-auto-updates-minor" id="my-plugin-core-auto-updates-minor" value="1" <?php checked( $minor_auto_updates_settings, 1 ); ?> />
+        <label for="my-plugin-core-auto-updates-minor">
+            <?php _e( 'Automatically keep this site up-to-date with minor updates.', 'my-plugin' ); ?>
+        </label>
+    </p>
+    <?php
+}
+add_action( 'after_core_auto_updates_settings_fields', 'my_plugin_after_core_auto_updates_settings_fields', 10, 1 );
