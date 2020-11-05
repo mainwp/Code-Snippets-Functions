@@ -1,0 +1,20 @@
+add_filter( 'woocommerce_package_rates', 'shipping_methods_based_on_wholesale_customer', 10, 2 );
+function shipping_methods_based_on_wholesale_customer( $rates, $package ){
+    $is_wholesale = get_user_meta( get_current_user_id(), 'wcs_wholesale_customer', true );
+    
+    // Set the shipping methods rate ids in the arrays:
+    if( $is_wholesale ) {
+        $shipping_rates_ids = array('flat_rate:1', 'flat_rate:4'); // To be removed for NON Wholesale users
+    } else {
+        $shipping_rates_ids = array('flat_rate:2'); // To be removed for Wholesale users
+    }
+
+    // Loop through shipping rates fro the current shipping package
+    foreach( $rates as $rate_key => $rate ) {
+        if ( in_array( $rate_key, $shipping_rates_ids) ) {
+            unset( $rates[$rate_key] ); 
+        }
+    }
+    
+    return $rates;
+}
