@@ -1,0 +1,28 @@
+add_filter( 'woocommerce_default_address_fields' , 'filter_my_account_addresses_fields', 999 );
+add_filter( 'woocommerce_billing_fields', 'filter_my_account_addresses_fields', 999 );
+function filter_my_account_addresses_fields( $fields ) {
+    // Only on My account edit addresses
+    if ( is_wc_endpoint_url( 'edit-address' ) ) {
+        // Loop through existing fields
+        foreach( $fields as $field_key => $field_data ) {
+            // if they are required
+            if( $fields[$field_key]['required'] ) {
+                // Make them optional
+                $fields[$field_key]['required'] = false;
+            }
+        }
+    }
+
+    return $fields;
+}
+
+// Optionaly remove ("optional)" text from My account addresses fields
+add_filter( 'woocommerce_form_field' , 'remove_account_addresses_optional_fields_label', 10, 4 );
+function remove_account_addresses_optional_fields_label( $field, $key, $args, $value ) {
+    // Only on My account edit addresses
+    if ( is_wc_endpoint_url( 'edit-address' ) ) {
+        $optional = '&nbsp;<span class="optional">(' . esc_html__( 'optional', 'woocommerce' ) . ')</span>';
+        $field = str_replace( $optional, '', $field );
+    }
+    return $field;
+}
