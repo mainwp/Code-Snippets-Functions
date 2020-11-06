@@ -1,0 +1,2 @@
+add_filter( ‘woocommerce_shipping_calculator_enable_city’, ‘__return_false’ );
+add_filter( ‘woocommerce_shipping_calculator_enable_postcode’, ‘__return_false’ );
