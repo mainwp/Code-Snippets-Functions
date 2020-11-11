@@ -1,0 +1,1 @@
+define ('WP_ROCKET_WHITE_LABEL_FOOTPRINT', true);
