@@ -1,0 +1,9 @@
+add_action( 'wp', function() {
+
+    if ( class_exists( 'woocommerce') ) {
+        if ( is_cart() ) {
+            add_filter( 'wc_tax_enabled', '__return_false' );
+        }
+    }
+
+});
