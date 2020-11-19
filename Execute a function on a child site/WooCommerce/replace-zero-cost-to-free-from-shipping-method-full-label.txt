@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'Add_free_to_shipping_label_for_zero_cost', 10, 2 );
+function Add_free_to_shipping_label_for_zero_cost( $label, $method ) {
+    // If shipping method cost is 0 or null, display 'Free' (except for free shipping method)
+    if ( ! ( $method->cost > 0 ) && $method->method_id !== 'free_shipping' ) {
+        $label .= ': ' . __('Free');
+    }
+    return $label;
+}
