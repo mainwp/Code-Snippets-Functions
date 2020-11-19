@@ -1,0 +1,19 @@
+function filter_woocommerce_cart_item_thumbnail( $thumbnail, $cart_item, $cart_item_key ) {
+    // Get product
+    $product = $cart_item['data'];
+    
+    // Get gallery image ids
+    $attachment_ids = $product->get_gallery_image_ids();
+    
+    // NOT empty
+    if ( ! empty ( $attachment_ids ) ) {
+        // First
+        $attachment_id = $attachment_ids[0];
+        
+        // New thumbnail
+        $thumbnail = wp_get_attachment_image( $attachment_id, 'woocommerce_thumbnail' );
+    }
+    
+    return $thumbnail;
+}
+add_filter( 'woocommerce_cart_item_thumbnail', 'filter_woocommerce_cart_item_thumbnail', 10, 3 );
