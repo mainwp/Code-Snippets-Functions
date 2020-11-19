@@ -1,0 +1,19 @@
+add_filter( 'woocommerce_billing_fields', 'custom_billing_fields' );
+function custom_billing_fields( $fields ) {
+    // Only on checkout page
+    if( is_checkout() && ! is_wc_endpoint_url() ) {
+        $fields['billing_phone']['required'] = false;
+    }
+    return $fields;
+}
+
+// Remove string "(optional)" from billing phone field
+add_filter( 'woocommerce_form_field' , 'remove_checkout_optional_fields_label', 10, 4 );
+function remove_checkout_optional_fields_label( $field, $key, $args, $value ) {
+    // Only on checkout page
+    if( is_checkout() && ! is_wc_endpoint_url() && $key === 'billing_phone') {
+        $optional = '&nbsp;<span class="optional">(' . esc_html__( 'optional', 'woocommerce' ) . ')</span>';
+        $field = str_replace( $optional, '', $field );
+    }
+    return $field;
+}
