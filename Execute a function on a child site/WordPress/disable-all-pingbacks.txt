@@ -1,0 +1,1 @@
+remove_action( ‘do_all_pings’, ‘do_all_pingbacks’ );
