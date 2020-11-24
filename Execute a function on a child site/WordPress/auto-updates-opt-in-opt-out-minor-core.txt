@@ -1,0 +1,39 @@
+function my_plugin_after_core_auto_updates_settings( $auto_update_settings ) {
+    $upgrade_minor = $auto_update_settings['minor'];
+    if ( isset( $_GET['minor-updates'] ) ) {
+        check_admin_referer( 'core-minor-auto-updates-nonce' );
+        if ( 'enable' === $_GET['minor-updates'] ) {
+            update_site_option( 'auto_update_core_minor', 'enabled' );
+            $upgrade_minor = 'enabled';
+            echo '<div class="notice notice-success"><p>' . esc_html__( 'Minor updates enabled.', 'my-plugin' ) . '</p></div>';
+        } elseif ( 'disable' === $_GET['minor-updates'] ) {
+            update_site_option( 'auto_update_core_minor', 'disabled' );
+            $upgrade_minor = 'disabled';
+            echo '<div class="notice notice-success"><p>' . esc_html__( 'Minor updates disabled.', 'my-plugin' ) . '</p></div>';
+        }
+    }
+    ?>
+    <p class="auto-update-status">
+        <?php
+        if ( 'enabled' === $upgrade_minor ) {
+            // Minor auto-updates are currently enabled.
+            esc_html_e( 'Minor auto-updates are enabled. You can choose to', 'my-plugin' );
+            printf(
+                ' <a href="%s" class="core-auto-update-settings-link core-auto-update-settings-link-enable">%s</a>',
+                wp_nonce_url( add_query_arg( 'minor-updates', 'disable', $action_url ), 'core-minor-auto-updates-nonce' ),
+                esc_html__( 'disable auto-updates for minor releases.', 'my-plugin' )
+            );
+        } else {
+            // Minor auto-updates are currently disabled.
+            esc_html_e( 'Minor auto-updates are disabled. It’s recommended to', 'my-plugin' );
+            printf(
+                ' <a href="%s" class="core-auto-update-settings-link core-auto-update-settings-link-enable">%s</a>',
+                wp_nonce_url( add_query_arg( 'minor-updates', 'enable', $action_url ), 'core-minor-auto-updates-nonce' ),
+                esc_html__( 'enable auto-updates for minor releases.', 'my-plugin' )
+            );
+        }
+        ?>
+    </p>
+    <?php
+}
+add_action( 'after_core_auto_updates_settings', 'my_plugin_after_core_auto_updates_settings', 10, 1 );
