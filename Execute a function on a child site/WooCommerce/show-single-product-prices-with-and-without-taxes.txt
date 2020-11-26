@@ -1,0 +1,65 @@
+add_filter('woocommerce_get_price_html', 'display_prices_incl_and_excl_taxes', 100, 2 );
+function display_prices_incl_and_excl_taxes( $price_html, $product ) {
+    global $woocommerce_loop;
+
+    // On single product pages only (and not on any product loop)
+    if( isset($woocommerce_loop['total']) && $woocommerce_loop['total'] == 0
+    && isset($woocommerce_loop['total']) && empty($woocommerce_loop['name']) ) {
+
+        // For simple products and products variations
+        if( $product->is_type('simple') || $product->is_type('variation') ) {
+            // On sale products
+            if( $product->is_on_sale() ) {
+                $regular_price_incl_tax = wc_get_price_including_tax( $product, array( 'price' => $product->get_regular_price() ) );
+                $price_incl_tax_html    = wc_format_sale_price( $regular_price_incl_tax, wc_get_price_including_tax( $product ) );
+                $regular_price_excl_tax = wc_get_price_excluding_tax( $product, array( 'price' => $product->get_regular_price() ) );
+                $price_excl_tax_html    = wc_format_sale_price( $regular_price_excl_tax, wc_get_price_excluding_tax( $product ) );
+            }
+            // Not on sale
+            else {
+                $price_incl_tax_html = wc_price( wc_get_price_including_tax( $product ) );
+                $price_excl_tax_html = wc_price( wc_get_price_excluding_tax( $product ) );
+            }
+        }
+        // variable pproducts
+        elseif( $product->is_type('variable') ) {
+            $prices = $product->get_variation_prices( true );
+
+            if ( ! empty( $prices['price'] ) ) {
+                $act_keys = array_keys($prices['price']);
+                $reg_keys = array_keys($prices['regular_price']);
+
+                $min_price_incl_tax = wc_get_price_including_tax( wc_get_product(reset($act_keys)));
+                $max_price_incl_tax = wc_get_price_including_tax( wc_get_product(end($act_keys)));
+
+                $min_price_excl_tax = wc_get_price_excluding_tax( wc_get_product(reset($act_keys)));
+                $max_price_excl_tax = wc_get_price_excluding_tax( wc_get_product(end($act_keys)));
+
+                $min_reg_price_jncl_tax = wc_get_price_including_tax( wc_get_product(reset($reg_keys)));
+                $max_reg_price_incl_tax = wc_get_price_including_tax( wc_get_product(end($reg_keys)));
+
+                $min_reg_price_excl_tax = wc_get_price_excluding_tax( wc_get_product(reset($reg_keys)));
+                $max_reg_price_excl_tax = wc_get_price_excluding_tax( wc_get_product(end($reg_keys)));
+
+                if ( $min_price_excl_tax !== $max_price_excl_tax ) {
+                    $price_incl_tax_html = wc_format_price_range( $min_price_incl_tax, $max_reg_price_incl_tax );
+                    $price_excl_tax_html = wc_format_price_range( $min_price_excl_tax, $max_reg_price_excl_tax );
+                }
+                elseif ( $product->is_on_sale() && $min_reg_price_excl_tax === $max_reg_price_excl_tax ) {
+                    $price_incl_tax_html = wc_format_sale_price( wc_price( $max_reg_price_incl_tax ), wc_price( $min_price_incl_tax ) );
+                    $price_excl_tax_html = wc_format_sale_price( wc_price( $max_reg_price_excl_tax ), wc_price( $min_price_excl_tax ) );
+                }
+                else {
+                    $price_incl_tax_html = wc_price( $min_price_incl_tax );
+                    $price_excl_tax_html = wc_price( $min_price_excl_tax );
+                }
+            }
+        }
+        if ( isset($price_incl_tax_html) && isset($price_excl_tax_html) ) {
+            $price_html  = '<bdi><span class="inc-vat-price"></span>' . $price_incl_tax_html . '<bdi><br>';
+            $price_html .= '<bdi><span class="ex-vat-price">'. __("Tax Free") . ' - </span>' . $price_excl_tax_html . '<bdi><br>';
+            $price_html .= $product->get_price_suffix();
+        }
+    }
+    return $price_html;
+}
