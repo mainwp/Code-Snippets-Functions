@@ -1,0 +1,5 @@
+add_action( 'init', 'remove_stripe_payment_request_from_cart_20200608', 99 );
+function remove_stripe_payment_request_from_cart_20200608() {
+remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+}
