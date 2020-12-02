@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_is_sold_individually', 'wc_product_max_1_cart_stock_low', 9999, 2 );
+ 
+function wc_product_max_1_cart_stock_low( $individually, $product ) {
+   if ( $product->get_stock_quantity() < 3 ) {
+      $individually = true;
+   }
+   return $individually;
+}
