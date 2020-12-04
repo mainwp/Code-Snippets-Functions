@@ -1,0 +1,29 @@
+add_action( 'woocommerce_cart_calculate_fees', 'welcome_discount_on_normal_items', 20, 1 );
+function welcome_discount_on_normal_items( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    $user_id = get_current_user_id();
+
+    if( $user_id > 0 ) {
+        $percentage   = 5; // Discount percentage
+        $orders_count = (int) wc_get_customer_order_count($user_id);
+        $subtotal     = 0; // Initializing
+
+        // Loop through cart items
+        foreach( $cart->get_cart() as $cart_item ) {
+            // Add non on sale items to subtotal
+            if( ! $cart_item['data']->is_on_sale() ) {
+                $subtotal += $cart_item['line_subtotal'];
+            }
+        }
+
+        // Discount percentage amount on non "on sale" items subtotal
+        $discount = $subtotal * $percentage / 100;
+
+        // For new customer only that haven't purchase yet
+        if( $subtotal > 0 && $orders_count === 0 ) {
+            $cart->add_fee( sprintf( __("Discount (%s)", "woocommerce"), $percentage . '%'), -$discount, true );
+        }
+    }
+}
