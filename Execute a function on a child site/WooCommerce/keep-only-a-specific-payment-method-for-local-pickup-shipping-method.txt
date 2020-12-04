@@ -1,0 +1,27 @@
+add_filter( 'woocommerce_available_payment_gateways', 'my_custom_available_payment_gateways', 10, 1 );
+function my_custom_available_payment_gateways( $available_gateways ) {
+    if( is_admin() ) return $available_gateways; // Only for frontend
+    
+    $local_found = false; // Initializing
+
+    // Loop through chosen shipping method rates
+    foreach ( WC()->session->get( 'chosen_shipping_methods' ) as $chosen_shipping_rate_id ) {
+        if( strpos( $chosen_shipping_rate_id, 'local_pickup' ) !== false || strpos( $chosen_shipping_rate_id, 'local_delivery' ) !== false ) {
+            $local_found = true; // Local pickup/delivery found
+            break; // Stop the loop
+        }
+    }
+    
+    // If Local pickup/delivery is the chosen shipping method
+    if( $local_found ) {
+        // Loop through available payment methods
+        foreach ( $available_gateways as $payment_method_id => $payment_label ) {
+            // Remove all payement methods except "cheque"
+            if ( 'cheque' !== $payment_method_id ) {
+                unset( $available_gateways[$payment_method_id] );
+            }
+        }
+    }
+
+    return $available_gateways;
+}
