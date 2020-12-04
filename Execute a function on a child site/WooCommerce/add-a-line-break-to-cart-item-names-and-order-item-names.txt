@@ -1,0 +1,17 @@
+// For mini cart and cart item name
+add_action( 'woocommerce_cart_item_name', 'alter_wc_cart_item_name', 10, 2 );
+function alter_wc_cart_item_name( $item_name, $cart_item ) {
+    if ( strpos($item_name , '|') !== false ) {
+        $item_name = str_replace( '|', '<br/>', $item_name );
+    }
+    return $item_name;
+}
+
+// For order item name (even on email notifications)
+add_action( 'woocommerce_order_item_name', 'alter_wc_order_item_name', 10, 2 );
+function alter_wc_order_item_name( $item_name, $item ) {
+    if ( strpos($item_name , '|') !== false ) {
+        $item_name = str_replace( '|', '<br/>', $item_name );
+    }
+    return $item_name;
+}
