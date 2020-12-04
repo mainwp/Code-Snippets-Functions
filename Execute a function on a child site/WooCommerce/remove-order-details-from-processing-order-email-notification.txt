@@ -1,0 +1,7 @@
+add_action( 'woocommerce_email_order_details', 'action_email_order_details', 2, 4 );
+function action_email_order_details( $order, $sent_to_admin, $plain_text, $email ) {
+    // Targeting "processing" order email notification sent to customer.
+    if ( 'customer_processing_order' === $email->id ) {
+        remove_action( 'woocommerce_email_order_details', array( WC()->mailer(), 'order_details' ) );
+    }
+}
