@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_get_order_item_totals', 'custom_order_total_line_html', 1000, 3 );
+function custom_order_total_line_html( $total_rows, $order, $tax_display ){
+    $total_rows['order_total']['value'] = __('excl. BTW ') . ' ' . $total_rows['order_total']['value'];
+
+    return $total_rows;
+}
