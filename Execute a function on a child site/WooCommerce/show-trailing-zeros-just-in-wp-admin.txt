@@ -1,0 +1,10 @@
+function filter_woocommerce_price_trim_zeros( $trim ) {
+    // True if inside WordPress administration interface, false otherwise.
+    // if NOT true = false
+    if ( ! is_admin() ) {
+        $trim = true;
+    }
+
+    return $trim;
+}
+add_filter( 'woocommerce_price_trim_zeros', 'filter_woocommerce_price_trim_zeros', 10, 1 );
