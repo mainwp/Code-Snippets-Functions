@@ -1,0 +1,5 @@
+add_filter('woocommerce_login_redirect', 'wc_login_redirect');
+function wc_login_redirect( $redirection_url ) {
+    $redirection_url = get_home_url();
+    return $redirection_url;
+}
