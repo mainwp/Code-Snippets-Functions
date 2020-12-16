@@ -1,0 +1,6 @@
+add_filter( 'bulk_actions-edit-shop_order', 'remove_a_bulk_order_action', 20, 1 );
+function remove_a_bulk_order_action( $actions ) {
+    unset($actions['mark_on-hold']);
+
+    return $actions;
+}
