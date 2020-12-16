@@ -1,0 +1,1 @@
+add_filter('woocommerce_checkout_get_value','__return_empty_string', 1, 1);
