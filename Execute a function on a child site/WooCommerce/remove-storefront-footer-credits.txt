@@ -1,0 +1,5 @@
+add_action( 'wp', 'wc_remove_storefront_credits' );
+ 
+function wc_remove_storefront_credits() {
+   remove_action( 'storefront_footer', 'storefront_credit', 20 );
+}
