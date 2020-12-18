@@ -1,6 +1,6 @@
 ## WooCommerce Mailchimp code snippets
 
-Tested version of WordPress 5.2.2, plugin version was WooCommerce Mailchimp 2.3.2.
+Tested version of WordPress 5.6, plugin version was WooCommerce Mailchimp 2.3.12.
 
 This file is a code snippet that is used for [WooCommerce Mailchimp](https://wordpress.org/plugins/woocommerce-mailchimp/) plugin. 
 
