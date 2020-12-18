@@ -1,0 +1,1 @@
+add_filter( 'gform_ip_address', '__return_empty_string' );
