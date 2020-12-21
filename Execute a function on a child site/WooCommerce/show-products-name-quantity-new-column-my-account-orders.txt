@@ -1,0 +1,23 @@
+add_filter( 'woocommerce_my_account_my_orders_columns', 'additional_my_account_orders_column', 10, 1 );
+function additional_my_account_orders_column( $columns ) {
+    $new_columns = [];
+
+    foreach ( $columns as $key => $name ) {
+        $new_columns[ $key ] = $name;
+
+        if ( 'order-status' === $key ) {
+            $new_columns['order-items'] = __( 'Product | qty', 'woocommerce' );
+        }
+    }
+    return $new_columns;
+}
+
+add_action( 'woocommerce_my_account_my_orders_column_order-items', 'additional_my_account_orders_column_content', 10, 1 );
+function additional_my_account_orders_column_content( $order ) {
+    $details = array();
+
+    foreach( $order->get_items() as $item )
+        $details[] = $item->get_name() . '&nbsp;&times;&nbsp;' . $item->get_quantity();
+
+    echo count( $details ) > 0 ? implode( '<br>', $details ) : '&ndash;';
+}
