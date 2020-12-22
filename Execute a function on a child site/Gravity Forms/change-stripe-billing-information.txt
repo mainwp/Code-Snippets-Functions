@@ -1,0 +1,47 @@
+// Save the users' Stripe customer ID after a payment is made via a subscription Stripe feed.
+add_action( 'gform_stripe_customer_after_create', 'save_stripe_customer_id' );
+function save_stripe_customer_id( $customer ) {
+    gf_stripe()->log_debug( __METHOD__ . '(): Running...' );
+    if ( is_user_logged_in () ) {
+        $user_id = get_current_user_id();
+        gf_stripe()->log_debug( __METHOD__ . '(): Adding customer id ' . $customer->id . ' to user ' . $user_id );
+        update_user_meta( $user_id, 'stripe_customer_id', $customer->id );
+    }
+}
+ 
+// Gets the current Stripe customer ID to change the billing details on. Tests if the user has an ID and is signed in.
+add_filter( 'gform_stripe_customer_id', 'get_stripe_customer_id' );
+function get_stripe_customer_id( $customer_id ) {
+    gf_stripe()->log_debug( __METHOD__ . '(): Running...' );
+    if ( is_user_logged_in () &&  get_user_meta( get_current_user_id(), 'stripe_customer_id', true ) != ''){
+        $user_id = get_current_user_id();
+        gf_stripe()->log_debug( __METHOD__ . '(): Getting customer id from user ' . $user_id );
+        $customer_id = get_user_meta( $user_id, 'stripe_customer_id', true );
+        gf_stripe()->log_debug( __METHOD__ . '(): Customer id set to: ' . $customer_id );
+    }
+    return $customer_id;
+}
+ 
+// Make a form that has a Stripe Product and Services feed, and make sure no payment is made.
+add_filter( 'gform_stripe_charge_authorization_only', 'stripe_charge_authorization_only', 10, 2 );
+function stripe_charge_authorization_only( $authorization_only, $feed ) {
+    gf_stripe()->log_debug( __METHOD__ . '(): Running...' );
+    $feed_name  = rgars( $feed, 'meta/feedName' );
+    // The name associated with the Stripe feed.
+    if ( $feed_name == 'Update Billing' ) {
+        gf_stripe()->log_debug( __METHOD__ . '(): Authorization only for Update Billing feed.' );
+        return true;
+    }
+    return $authorization_only;
+}
+ 
+add_filter( 'gform_stripe_charge_pre_create', function( $charge_meta, $feed, $submission_data, $form, $entry ) {
+    $feed_name  = rgars( $feed, 'meta/feedName' );
+    // The name associated with the Stripe feed.
+    if ( $feed_name == 'Update Billing' ) {
+        gf_stripe()->log_debug( 'gform_stripe_charge_pre_create: running for feed ' . rgars( $feed, 'meta/feedName' ) );
+        $charge_meta['setup_future_usage'] = 'off_session';
+    }
+  
+    return $charge_meta;
+}, 10, 5 );
