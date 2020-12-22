@@ -1,0 +1,1 @@
+add_filter( 'rocket_init_cache_dir_generate_htaccess', '__return_false' );
