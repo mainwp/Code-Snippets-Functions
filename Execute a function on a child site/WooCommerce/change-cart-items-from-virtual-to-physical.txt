@@ -1,0 +1,10 @@
+add_action( 'woocommerce_before_calculate_totals', 'custom_cart_item_data_replacement', 16 );
+function custom_cart_item_data_replacement( $cart ) {
+
+    foreach ( $cart->get_cart() as $cart_item ) {
+        // Change virtual cart item to "physical"
+        if( $cart_item['data']->get_virtual() ) {
+            $cart_item['data']->set_virtual(false);
+        }
+    }
+}
