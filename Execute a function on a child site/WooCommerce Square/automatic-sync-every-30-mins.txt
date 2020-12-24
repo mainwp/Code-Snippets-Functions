@@ -1,0 +1,3 @@
+add_filter( 'wc_square_sync_interval', function( $interval ) {
+    return 30 * MINUTE_IN_SECONDS;
+} );
