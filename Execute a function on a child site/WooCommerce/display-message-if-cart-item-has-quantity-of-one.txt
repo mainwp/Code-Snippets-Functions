@@ -1,0 +1,19 @@
+add_action( 'woocommerce_before_cart_contents', 'display_notice_based_on_item_quantity' );
+function display_notice_based_on_item_quantity() {
+    foreach ( WC()->cart->get_cart() as $cart_item ) {    
+            if ( $cart_item['quantity'] == 1 )
+            {
+             $terms = get_the_terms( $cart_item['product_id'], 'product_cat' );
+             foreach ( $terms as $term )
+                {
+                if ($term->slug == 'your-category-slug')
+                    continue 2;
+                }
+                if ( is_cart() )
+                    echo '<div class="cart-qty-notice">';
+                    printf( __("Message goes here", "woocommerce"));
+                    echo '</div>';
+                break;
+            }
+       }
+    }
