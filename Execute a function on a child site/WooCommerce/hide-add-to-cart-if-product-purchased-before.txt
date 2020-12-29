@@ -1,0 +1,9 @@
+function wc_bought_before_woocommerce_add_to_cart_validation( $is_purchasable, $instance ){
+    
+    $current_user = wp_get_current_user();
+    if ( wc_customer_bought_product( $current_user->user_email, $current_user->ID, $instance->get_id()) ) {
+        $is_purchasable = false;
+    }
+    return $is_purchasable;
+}
+add_filter( 'woocommerce_is_purchasable', 'wc_bought_before_woocommerce_add_to_cart_validation', 10, 2 );
