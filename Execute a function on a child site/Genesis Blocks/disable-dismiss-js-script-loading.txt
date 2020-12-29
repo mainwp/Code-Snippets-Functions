@@ -1,0 +1,6 @@
+add_action( 'wp_enqueue_scripts', 'genesis_dequeue_dismiss_js' );
+ 
+function genesis_dequeue_dismiss_js() {
+	wp_dequeue_script( 'genesis-blocks-dismiss-js' );
+ 
+}
