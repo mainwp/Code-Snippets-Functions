@@ -1,0 +1,7 @@
+function filter_woocommerce_cart_totals_coupon_html( $coupon_html, $coupon, $discount_amount_html ) {
+    // Change text
+    $coupon_html = str_replace( '[Remove]', '[Remove &amp; Re-Calculate]', $coupon_html );
+
+    return $coupon_html;
+}
+add_filter( 'woocommerce_cart_totals_coupon_html', 'filter_woocommerce_cart_totals_coupon_html', 10, 3 );
