@@ -1,0 +1,17 @@
+function filter_woocommerce_cart_product_cannot_add_another_message( $message, $product_data ) {    
+    $message = '<div class="hide-this-error-message"></div>';
+    
+    return $message;
+}
+add_filter( 'woocommerce_cart_product_cannot_add_another_message', 'filter_woocommerce_cart_product_cannot_add_another_message', 10, 2 );
+
+function action_wp_footer() {
+    ?>
+    <script>
+        jQuery(document).ready(function($) {
+            $( '.hide-this-error-message' ).closest( 'ul.woocommerce-error' ).hide();
+        });
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'action_wp_footer' );
