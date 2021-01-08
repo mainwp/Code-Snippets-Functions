@@ -1,0 +1,4 @@
+add_action( 'admin_menu', 'remove_links_menu' );
+function remove_links_menu() {
+     remove_menu_page('link-manager.php');
+}
