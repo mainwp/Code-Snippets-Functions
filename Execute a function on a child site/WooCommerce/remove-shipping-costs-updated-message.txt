@@ -1,0 +1,10 @@
+function filter_woocommerce_add_notice ( $message ) {
+    // Equal to (Must be exactly the same).
+    // If the message is displayed in another language, adjust where necessary!
+    if ( $message == 'Shipping costs updated.' ) {
+        return false;
+    }   
+    
+    return $message;
+}
+add_filter( 'woocommerce_add_notice', 'filter_woocommerce_add_notice', 10, 1 );
