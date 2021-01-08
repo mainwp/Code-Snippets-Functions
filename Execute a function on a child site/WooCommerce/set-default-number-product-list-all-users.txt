@@ -1,0 +1,7 @@
+function filter_edit_product_per_page ( $per_page ) {
+    // The number of items to be displayed on product page of the list table
+    $per_page = 50;
+    
+    return $per_page;
+}
+add_filter( 'edit_product_per_page', 'filter_edit_product_per_page', 10, 1 );
