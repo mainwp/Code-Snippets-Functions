@@ -1,0 +1,7 @@
+function wp_remove_role() {
+//    remove_role( 'editor' );
+    remove_role( 'author' );
+    remove_role( 'contributor' );
+    remove_role( 'subscriber' );
+}
+add_action( 'init', 'wp_remove_role' );
