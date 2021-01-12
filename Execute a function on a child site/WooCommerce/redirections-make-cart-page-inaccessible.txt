@@ -1,0 +1,12 @@
+add_action('template_redirect', 'custom_cart_redirections');
+function custom_cart_redirections() {
+    if ( is_cart() ) {
+        if ( WC()->cart->is_empty() ) {
+            wp_redirect( home_url('/') );
+            exit();
+        } else {
+            wp_redirect( wc_get_checkout_url() );
+            exit();
+        }
+    }
+}
