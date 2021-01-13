@@ -1,0 +1,5 @@
+function removezero( $user_id ) {
+    if (isset($_POST['billing_phone'])) {
+       update_user_meta( $user_id, 'billing_phone', $_POST['billing_phone'] = preg_replace('/^0/', '', $_POST['billing_phone']));
+    }
+}
