@@ -1,0 +1,53 @@
+// Add order number and order date creation as order meta data
+add_action( 'woocommerce_checkout_create_order', 'add_some_order_meta_data', 10, 2 );
+function add_some_order_meta_data( $order, $data ) {
+    $order->update_meta_data( '_order_number', $order->get_id() );
+    $order->update_meta_data( 'order_date', $order->get_date_created()->date('Y-m-d H:i:s') );
+}
+
+// Add order Id as custom order item meta data
+add_action( 'woocommerce_checkout_create_order_line_item', 'add_meta_to_line_item', 10, 4 );
+function add_meta_to_line_item( $item, $cart_item_key, $values, $order )
+{
+    $item->add_meta_data( '_order_id', $order->get_id() );
+}
+
+// Include order number meta data for the method get_order_number()
+add_filter( 'woocommerce_order_number', 'wc_set_order_number', 10, 2 );
+function wc_set_order_number( $order_id, $order ) {
+    // Get the order number (custom meta data)
+    $order_number = $order->get_meta('_order_number');
+
+    return $order_number ? $order_number : $order_id;
+}
+
+// Add columns to my account orders
+add_filter( 'woocommerce_my_account_my_orders_columns', 'add_my_account_orders_columns' );
+function add_my_account_orders_columns( $columns ) {
+    $new_columns = array();
+
+    foreach ( $columns as $key => $name ) {
+
+        $new_columns[ $key ] = $name;
+
+        // add meta_value after order status column
+        if ( 'order-status' === $key ) {
+            $new_columns['number'] = __( 'Order Number', 'textdomain' );
+            $new_columns['date-created'] = __( 'Date Created', 'textdomain' );
+        }
+    }
+
+    return $new_columns;
+}
+
+// Column order number content
+add_action( 'woocommerce_my_account_my_orders_column_number', 'my_account_order_number_column_content', 10, 1 );
+function my_account_order_number_column_content( $order ) {
+    echo $order->get_order_number();
+}
+
+// Column order date created content
+add_action( 'woocommerce_my_account_my_orders_column_date-created', 'my_account_order_date_created_column_content', 10, 1 );
+function my_account_order_date_created_column_content( $order ) {
+    echo $order->get_meta('order_date');
+}
