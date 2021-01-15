@@ -1,10 +1,11 @@
-add_filter( 'woocommerce_email_recipient_customer_completed_order', 'wc_disable_customer_order_email_if_free', 10, 2 );
-  
-function wc_disable_customer_order_email_if_free( $recipient, $order ) {
-    $page = $_GET['page'] = isset( $_GET['page'] ) ? $_GET['page'] : '';
-    if ( 'wc-settings' === $page ) {
-        return $recipient; 
+add_filter('woocommerce_email_recipient_new_order', 'restrict_admin_new_order_mail', 1, 2);
+function restrict_admin_new_order_mail( $recipient, $order ) {
+    if ( ! is_a( $order, 'WC_Order' ) ) 
+        return $recipient;
+
+    if( $order->get_total() > 0 ) {
+        return $recipient;
+    } else {
+        return '';
     }
-    if ( (float) $order->get_total() === '0.00' ) $recipient = '';
-    return $recipient;
 }
