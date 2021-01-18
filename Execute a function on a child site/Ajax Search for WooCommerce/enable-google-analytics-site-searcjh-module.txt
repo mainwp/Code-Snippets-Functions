@@ -1,0 +1,1 @@
+add_filter('dgwt/wcas/scripts/enable_ga_site_search_module', '__return_true');
