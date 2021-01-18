@@ -1,0 +1,6 @@
+function filter_woocommerce_endpoint_order_received_title( $title, $endpoint, $action ) {   
+    $title = __( 'Thank you, good luck!', 'woocommerce' );
+ 
+    return $title;
+}
+add_filter( 'woocommerce_endpoint_order-received_title', 'filter_woocommerce_endpoint_order_received_title', 10, 3 );
