@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_checkout_fields', 'checkout_country_fields_disabled' );
+function checkout_country_fields_disabled( $fields ) {
+    $fields['billing']['billing_country']['custom_attributes']['disabled'] = 'disabled';
+    $fields['billing']['shipping_country']['custom_attributes']['disabled'] = 'disabled';
+
+    return $fields;
+}
