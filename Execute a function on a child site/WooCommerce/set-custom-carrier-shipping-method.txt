@@ -1,0 +1,9 @@
+add_action( 'woocommerce_checkout_create_order_shipping_item', 'action_wc_checkout_create_order_shipping_item', 10, 4 );
+function action_wc_checkout_create_order_shipping_item( $item, $package_key, $package, $order ) {
+    if ( isset($_POST['carrier_name']) && ! empty($_POST['carrier_name']) ) {
+        // Get carrier number
+        $carrier_number = isset($_POST['carrier_number']) && ! empty($_POST['carrier_number']) ? '(' . sanitize_text_field($_POST['carrier_number']) . ')' : ''; 
+        
+        $item->set_method_title( sprintf( '%s: %s %s', __("Custom Carrier", "woocommerce"), sanitize_text_field($_POST['carrier_name']), $carrier_number ) );
+    }
+}
