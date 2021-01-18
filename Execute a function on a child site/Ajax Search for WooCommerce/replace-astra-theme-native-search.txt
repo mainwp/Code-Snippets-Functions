@@ -1,0 +1,26 @@
+add_filter('astra_get_search_form', function ($form) {
+
+    if (defined('DGWT_WCAS_NAME')) {
+        $form = '<div class="search-form">';
+        $form .= do_shortcode('[wcas-search-form]');
+        $form .= '</div>';
+    }
+
+    return $form;
+});
+
+add_filter('wp_head', function () {
+    if (defined('DGWT_WCAS_NAME')) {
+        ?>
+        <style>
+            .ast-dropdown-active .search-form {
+                padding-left: 0 !important;
+            }
+
+            .ast-dropdown-active .ast-search-icon {
+                display: none !important;
+            }
+        </style>
+        <?php
+    }
+});
