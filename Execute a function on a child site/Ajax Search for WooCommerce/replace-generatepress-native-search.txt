@@ -1,0 +1,47 @@
+add_filter('generate_navigation_search_output', function ($html) {
+
+    $html = '<div class="search-form navigation-search">';
+    $html .= do_shortcode('[wcas-search-form]');
+    $html .= '</div>';
+
+    return $html;
+}, 10, 1);
+
+add_action('wp_head', function () {
+    ?>
+    <style>
+        .navigation-search .dgwt-wcas-search-form {
+            margin-top: 10px;
+        }
+
+        .navigation-search {
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: row;
+        }
+
+        .navigation-search .dgwt-wcas-search-wrapp {
+            margin: 0;
+            max-width: 600px;
+            margin-right: 52px;
+        }
+
+    </style>
+    <?php
+});
+
+add_action('wp_footer', function () {
+    ?>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $('.menu .search-item:not(.active)').on('click', function () {
+                var $input = $('.navigation-search .dgwt-wcas-search-input');
+                if ($input.length > 0) {
+                    $input.focus();
+                }
+            });
+        });
+    </script>
+    <?php
+});
