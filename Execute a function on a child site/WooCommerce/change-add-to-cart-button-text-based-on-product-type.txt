@@ -1,0 +1,17 @@
+add_filter( 'woocommerce_loop_add_to_cart_link', 'replace_loop_add_to_cart_button', 10, 2 );
+function replace_loop_add_to_cart_button( $button, $product  ) {
+    // Out of stock products
+    if( ! $product->is_in_stock() ) {
+        $button_text = __( "Unavailable", "woocommerce" );
+    }
+    // Simple and Variable products
+    elseif( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) {
+        $button_text = __( "Show product", "woocommerce" );
+    } 
+    // Other product types
+    else {
+        $button_text = add_to_cart_text(); 
+    }
+    
+    return '<a class="view-product button" href="' . $product->get_permalink() . '">' . $button_text . '</a>';
+}
