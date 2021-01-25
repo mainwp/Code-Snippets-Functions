@@ -1,0 +1,8 @@
+function filter_manage_edit_shop_coupon_columns( $columns ) {
+    // Remove
+    unset( $columns['products'] );
+    unset( $columns['amount'] );    
+
+    return $columns;
+}
+add_filter( 'manage_edit-shop_coupon_columns', 'filter_manage_edit_shop_coupon_columns', 10, 1 );
