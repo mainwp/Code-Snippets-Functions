@@ -1,0 +1,24 @@
+add_action( 'template_redirect', 'empty_cart_redirection' );
+function empty_cart_redirection(){
+    if( is_cart() ) :
+    
+    // Here set the Url redirection
+    $url_redirection = get_permalink( wc_get_page_id( 'shop' ) );
+    
+    // When trying to access cart page if cart is already empty  
+    if( WC()->cart->is_empty() ){
+        wp_safe_redirect( $url_redirection );
+        exit();
+    }
+    
+    // When emptying cart on cart page
+    wc_enqueue_js( "jQuery(function($){
+        $(document.body).on( 'wc_cart_emptied', function(){
+            if ( $( '.woocommerce-cart-form' ).length === 0 ) {
+                $(window.location).attr('href', '" . $url_redirection . "');
+                return;
+            }
+        });
+    });" );
+    endif;
+}
