@@ -1,0 +1,25 @@
+add_action( 'woocommerce_single_product_summary', 'action_single_product_summary_callback', 1 );
+function action_single_product_summary_callback() {
+    global $product;
+
+    $weight = $product->get_weight();
+    preg_replace('/\D/', '', $weight);
+
+    if ( $weight > 8 ) {
+
+        // For variable product types
+        if( $product->is_type( 'variable' ) ) {
+            remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20 );
+            add_action( 'woocommerce_single_variation', 'add_to_quote_replacement_button', 20 );
+        }
+        // For all other product types
+        else {
+            remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+            add_action( 'woocommerce_single_product_summary', 'add_to_quote_replacement_button', 30 );
+        }
+    }
+}
+
+function add_to_quote_replacement_button(){
+    echo '<a href="#" class="button alt">' . __( "Add to Quote", "woocommerce" ) . '</a>';
+}
