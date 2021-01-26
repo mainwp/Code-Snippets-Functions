@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_get_terms_and_conditions_checkbox_text', 'custom_terms_and_conditions_checkbox_text' );
+function custom_terms_and_conditions_checkbox_text( $text ){
+    $text = get_option( 'woocommerce_checkout_terms_and_conditions_checkbox_text', sprintf( __( 'I have read and agree to the website %s', 'woocommerce' ), '[terms]' ) );
+
+    return $text;
+}
