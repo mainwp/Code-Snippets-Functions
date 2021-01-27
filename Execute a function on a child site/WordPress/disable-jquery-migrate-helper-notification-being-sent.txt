@@ -1,0 +1,4 @@
+add_action('init', function() {
+	$timestamp = wp_next_scheduled( 'enable_jquery_migrate_helper_notification' );
+	wp_unschedule_event($timestamp, 'enable_jquery_migrate_helper_notification');
+}, 100); 
