@@ -1,0 +1,12 @@
+add_filter(  'gettext',  'change_checkout_no_shipping_method_text', 10, 3 );
+function change_checkout_no_shipping_method_text( $translated_text, $text, $domain ) {
+    if ( is_checkout() && ! is_wc_endpoint_url() ) {
+        $original_text = 'No shipping method has been selected. Please double check your address, or contact us if you need any help.';
+        $new_text      = 'Here your own text replacement.';
+        
+        if ( $text === $original_text ) {
+            $translated_text = $new_text;
+        }
+    }
+    return $translated_text;
+}
