@@ -1,0 +1,8 @@
+remove_action( 'woocommerce_cart_is_empty', 'wc_empty_cart_message', 10 );
+add_action( 'woocommerce_cart_is_empty', 'custom_empty_cart_message', 10 );
+
+function custom_empty_cart_message() {
+    $html  = '<div class="col-12 offset-md-1 col-md-10"><p class="cart-empty">';
+    $html .= wp_kses_post( apply_filters( 'wc_empty_cart_message', __( 'Your cart is currently empty.', 'woocommerce' ) ) );
+    echo $html . '</p></div>';
+}
