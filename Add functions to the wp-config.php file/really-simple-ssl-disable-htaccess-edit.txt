@@ -1,0 +1,1 @@
+define( 'RLRSSSL_DO_NOT_EDIT_HTACCESS', TRUE );
