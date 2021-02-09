@@ -1,0 +1,72 @@
+add_filter( 'woocommerce_get_order_item_totals', 'delivery_estimate_as_order_item_total_row', 10, 3 );
+function delivery_estimate_as_order_item_total_row( $total_rows, $order, $tax_display ){
+    $from   = get_option('wc_shipping_method_estimate_from');
+    $to     = get_option('wc_shipping_method_estimate_to');
+    $format = get_option('wc_shipping_estimate_format');
+
+    $shipping_methods = $order->get_shipping_methods();
+    $shipping_method  = reset($shipping_methods);
+    $instance_id      = $shipping_method->get_instance_id();
+
+    $from = isset($from[$instance_id]) ? $from[$instance_id] : '';
+    $to   = isset($to[$instance_id])   ? $to[$instance_id]   : '';
+
+    if ( isset($total_rows['shipping']) && ( $from || $to ) ) {
+        if ( $from ) {
+            $from_days = _n( 'day', 'days', $from, 'woocommerce' );
+        }
+
+        if ( $to ) {
+            $to_days   = _n( 'day', 'days', $to, 'woocommerce' );
+        }
+
+        if ( $format === 'days' ) {
+
+            if ( $from && $to && $from != $to ) {
+                $delivery_estimate_value = sprintf( '%d - %d %s', $from, $to, $to_days );
+            } elseif ( $from && ! $to ) {
+                $delivery_estimate_value = sprintf( __('At least %d %s', 'woocommerce' ), $from, $from_days );
+            } else {
+                $delivery_estimate_value = sprintf( __('Up to %d %s', 'woocommerce' ), $to, $to_days );
+            }
+        } else {
+
+            $order_date = $order->get_date_created()->date_i18n('Y-m-d'); // Get Order date
+
+            print_pr($order_date);
+
+            if ( $from ) {
+                $from_date = date_i18n( 'F d', strtotime($order_date) + ( $from * 24 * 3600 ) );
+            }
+
+            if ( $to ) {
+                $to_date   = date_i18n( 'F d', strtotime($order_date) + ( $to * 24 * 3600 ) );
+            }
+
+            if ( $from && $to && $from != $to ) {
+                $delivery_estimate_value = sprintf( '%s - %s', $from_date, $to_date );
+            } elseif ( $from && ! $to ) {
+                $delivery_estimate_value = sprintf( __('On or after %s', 'woocommerce' ), $from_date );
+            } else {
+                $delivery_estimate_value = sprintf( __('By %s', 'woocommerce' ), $to_date );
+            }
+        }
+
+        $new_total_rows = array(); // Initializing
+
+        // Loop through order total rows
+        foreach( $total_rows as $key => $values ) {
+            $new_total_rows[$key] = $values;
+
+            // Inserting Delivery estimate array
+            if( $key === 'shipping' ) {
+                $new_total_rows['estimate'] = array(
+                    'label' => __("Delivery estimate", "woocommerce"),
+                    'value' => esc_html( $delivery_estimate_value )
+                );
+            }
+        }
+        return $new_total_rows;
+    }
+    return $total_rows;
+}
