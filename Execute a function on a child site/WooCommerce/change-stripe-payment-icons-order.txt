@@ -1,0 +1,23 @@
+add_filter( 'woocommerce_gateway_icon', 'sort_stripe_payment_icons', 10, 2 );
+function sort_stripe_payment_icons( $icons_str, $payment_id ) {
+    if ( $payment_id === 'stripe' && is_checkout() ) {
+        $available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+        $stripe = $available_gateways['stripe'];
+
+        $icons = $stripe->payment_icons();
+
+        $icons_str = '';
+
+        if ( 'USD' === get_woocommerce_currency() ) {
+            $icons_str .= isset( $icons['discover'] ) ? $icons['discover'] : '';
+            // $icons_str .= isset( $icons['jcb'] ) ? $icons['jcb'] : '';
+            // $icons_str .= isset( $icons['diners'] ) ? $icons['diners'] : '';
+        }
+
+        $icons_str .= isset( $icons['amex'] ) ? $icons['amex'] : '';
+        $icons_str .= isset( $icons['mastercard'] ) ? $icons['mastercard'] : '';
+        $icons_str .= isset( $icons['visa'] ) ? $icons['visa'] : '';
+
+    }
+    return $icons_str;
+}
