@@ -1,4 +1,3 @@
-<?php
 $option_name = 'woocommerce_allow_tracking' ;
 $new_value = 'no' ;
 
@@ -14,4 +13,3 @@ if ( get_option( $option_name ) !== false ) {
     $autoload = 'no';
     add_option( $option_name, $new_value, $deprecated, $autoload );
 }
-?>
