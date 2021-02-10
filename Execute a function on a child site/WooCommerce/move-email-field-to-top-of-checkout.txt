@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_billing_fields', 'wc_move_checkout_email_field' );
+ 
+function wc_move_checkout_email_field( $address_fields ) {
+    $address_fields['billing_email']['priority'] = 1;
+    return $address_fields;
+}
