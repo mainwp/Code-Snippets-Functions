@@ -1,0 +1,13 @@
+add_action( 'woocommerce_my_account_my_orders_column_order-number', 'my_account_orders_product_thumbnails', 20, 1 );
+function my_account_orders_product_thumbnails( $order ) {
+    echo '<a href="'. wc_get_endpoint_url('view-order') . $order->get_id()  . '/' . '">' . '#' . $order->get_order_number() . '</a>';
+
+    // Loop through order items
+    foreach( $order->get_items() as $item ) {
+        $product   = $item->get_product(); // Get the WC_Product object (from order item)
+        $thumbnail = $product->get_image(array( 36, 36)); // Get the product thumbnail (from product object)
+        if( $product->get_image_id() > 0 ) {
+            echo '&nbsp;' . $thumbnail;
+        }
+    }
+}
