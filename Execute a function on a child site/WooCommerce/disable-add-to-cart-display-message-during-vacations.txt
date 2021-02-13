@@ -1,0 +1,33 @@
+function on_vacation() {
+    $release_date      = '2021-02-12';
+    $current_timestamp = strtotime( date( 'Y-m-d' ) );
+    $release_timestamp = strtotime( date( 'Y-m-d', strtotime( $release_date ) ) );
+
+    return $current_timestamp < $release_timestamp ? true : false;
+}
+
+function vacations_message() {
+    return __("We are on vacation and will come back next week on Monday.");
+}
+
+// Disable add to cart and display a message on single product pages
+add_filter( 'woocommerce_is_purchasable', 'vacation_notice_add_to_cart', 10, 2 );
+function vacation_notice_add_to_cart( $is_purchasable, $product ) {
+    if ( on_vacation() ) {
+        $is_purchasable = false;
+        add_action( 'woocommerce_single_product_summary', 'single_product_vacation_notice', 5 );
+    }
+    return $is_purchasable;
+}
+
+function single_product_vacation_notice() {
+    echo '<div class="vaction-notice">' . vacations_message() . '</div>';
+}
+
+// Display a message everywhere else (not on single product pages)
+add_action( 'template_redirect', 'general_vacation_notice' );
+function general_vacation_notice() {
+    if ( ! is_product() && on_vacation() ) {
+        wc_add_notice( vacations_message() );
+    }
+}
