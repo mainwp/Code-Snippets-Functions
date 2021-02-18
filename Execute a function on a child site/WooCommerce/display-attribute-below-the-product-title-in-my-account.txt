@@ -1,0 +1,18 @@
+add_filter( 'woocommerce_product_variation_title_include_attributes', '__return_false' );
+add_filter( 'woocommerce_is_attribute_in_product_name', '__return_false' );
+
+add_filter( 'woocommerce_product_variation_title_include_attributes', 'show_attributes_outside_title_1' );
+function show_attributes_outside_title_1( $enabled ) {
+    if ( is_account_page() ) {
+        $enabled = true;
+    }
+    return $enabled;
+}
+
+add_filter( 'woocommerce_is_attribute_in_product_name', 'show_attributes_outside_title_2' );
+function show_attributes_outside_title_2( $enabled ) {
+    if ( ! is_account_page() ) {
+        $enabled = false;
+    }
+    return $enabled;
+}
