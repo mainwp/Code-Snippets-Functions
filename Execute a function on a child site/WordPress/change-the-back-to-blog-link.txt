@@ -1,0 +1,4 @@
+function wporg_login_site_html_link( $link ) {
+        return '<a href="' . esc_url( home_url( '/' ) ) . '">' . __( 'Back to the website', 'text-domain' ) . '</a>';
+}
+add_filter( 'login_site_html_link', 'wporg_login_site_html_link', 10, 1 );
