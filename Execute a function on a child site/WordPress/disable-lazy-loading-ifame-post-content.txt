@@ -1,0 +1,11 @@
+function disable_post_content_iframe_lazy_loading( $default, $tag_name, $context ) {
+    if ( 'iframe' === $tag_name && 'the_content' === $context ) {
+        return false;
+    }
+    return $default;
+}
+add_filter(
+    'wp_lazy_loading_enabled',
+    'disable_post_content_iframe_lazy_loading',
+    10,
+    3
