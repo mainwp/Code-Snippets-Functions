@@ -1,7 +1,0 @@
-function ithemes_security_custom_notification_email( $emails ) {
-    return [
-        'custom@example.org'
-    ];
-}
-
-add_filter( 'itsec_notification_email_recipients', 'ithemes_security_custom_notification_email' );
