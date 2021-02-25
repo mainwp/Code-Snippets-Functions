@@ -1,0 +1,17 @@
+add_filter( 'woocommerce_gateway_title', 'change_payment_gateway_title', 100, 2 );
+function change_payment_gateway_title( $title, $payment_id ){
+    $targeted_payment_id  = 'redsys_gw'; // Set your payment method ID
+    $targeted_product_ids = array(37, 53); // Set your product Ids
+
+    // Only on checkout page for specific payment method Id
+    if( is_checkout() && ! is_wc_endpoint_url() && $payment_id === $targeted_payment_id ) {
+        // Loop through cart items
+        foreach( WC()->cart->get_cart() as $item ) {
+            // Check for specific products: Change payment method title
+            if( in_array( $item['product_id'], $targeted_product_ids ) ) {
+                return __("Payment in installments", "woocommerce");
+            }
+        }
+    }
+  return $title;
+}
