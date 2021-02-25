@@ -1,0 +1,19 @@
+add_action( 'woocommerce_check_cart_items', 'mandatory_coupon_for_specific_items' );
+function mandatory_coupon_for_specific_items() {
+    $targeted_ids  = array(40, 41, 42, 43, 44); // The targeted product ids (in this array)
+    $coupon_codes  = array('summer1', 'summer2', 'summer3', 'summer4', 'summer5'); // Array of required coupon codes
+
+    $coupons_found = array_intersect( array_filter( array_map( 'sanitize_title', $coupon_codes) ), WC()->cart->get_applied_coupons() );
+
+    // Loop through cart items
+    foreach(WC()->cart->get_cart() as $item ) {
+        // Check cart item for defined product Ids and applied coupon
+        if( in_array( $item['product_id'], $targeted_ids ) && empty($coupons_found) ) {
+            wc_clear_notices(); // Clear all other notices
+
+            // Avoid checkout displaying an error notice
+            wc_add_notice( sprintf( 'The product"%s" requires a coupon for checkout.', $item['data']->get_name() ), 'error' );
+            break; // stop the loop
+        }
+    }
+}
