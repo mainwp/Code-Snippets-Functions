@@ -1,0 +1,41 @@
+add_filter( 'woocommerce_cart_item_price', 'filter_cart_item_price', 10, 3 );
+function filter_cart_item_price( $price_html, $cart_item, $cart_item_key ) {
+    if( $cart_item['data']->is_on_sale() ) {
+        return $cart_item['data']->get_price_html();
+    }
+    return $price_html;
+}
+
+add_filter( 'woocommerce_cart_item_subtotal', 'filter_cart_item_subtotal', 10, 3 );
+function filter_cart_item_subtotal( $subtotal_html, $cart_item, $cart_item_key ){
+    $product    = $cart_item['data'];
+    $quantity   = $cart_item['quantity'];
+    $tax_string = '';
+
+    if ( $product->is_taxable() ) {
+        if ( WC()->cart->display_prices_including_tax() ) {
+            $regular_price = wc_get_price_including_tax( $product, array( 'qty' => $quantity, 'price' => $product->get_regular_price() ) );
+            $active_price  = wc_get_price_including_tax( $product, array( 'qty' => $quantity ) );
+
+            if ( ! wc_prices_include_tax() && WC()->cart->get_subtotal_tax() > 0 ) {
+                $tax_string = ' <small class="tax_label">' . WC()->countries->inc_tax_or_vat() . '</small>';
+            }
+        } else {
+            $regular_price = wc_get_price_excluding_tax( $product, array( 'qty' => $quantity, 'price' => $product->get_regular_price() ) );
+            $row_price     = wc_get_price_excluding_tax( $product, array( 'qty' => $quantity ) );
+
+            if ( wc_prices_include_tax() && WC()->cart->get_subtotal_tax() > 0 ) {
+                $tax_string = ' <small class="tax_label">' . WC()->countries->ex_tax_or_vat() . '</small>';
+            }
+        }
+    } else {
+        $regular_price = $product->get_regular_price() * $quantity;
+        $active_price  = $product->get_price() * $quantity;
+    }
+
+    if( $product->is_on_sale() ) {
+        return wc_format_sale_price( $regular_price, $active_price ) . $product->get_price_suffix() . $tax_string;
+    }
+
+    return $subtotal_html;
+}
