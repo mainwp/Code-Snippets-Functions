@@ -1,0 +1,37 @@
+add_action( 'woocommerce_single_product_summary', 'add_product_outofstock_contact_form', 30, 2 );
+function add_product_outofstock_contact_form() {
+    global $product;
+
+    $contact_form = do_shortcode('[contact-form-7 id="14880" title="Fiyat Sorunuz"]');
+
+    if( $product->is_type('variable') ) {
+        echo '<div class="outofstock-form" style="display:none">' . $contact_form . '</div>';
+    } elseif( ! $product->is_in_stock() ) {
+        echo $contact_form;
+    }
+}
+
+add_action('woocommerce_after_variations_form', 'outofstock_product_variation_js');
+function outofstock_product_variation_js() {
+    ?>
+    <script type="text/javascript">
+    jQuery(function($) {
+        var contactFormObject  = $('.outofstock-form'),
+            addToCartButtonObj = $('.woocommerce-variation-add-to-cart');
+
+        $('form.variations_form').on('show_variation', function(event, data) { // No selected variation
+            if ( ! data.is_in_stock  ) {
+                addToCartButtonObj.hide('fast');
+                contactFormObject.show('fast');
+            } else {
+                addToCartButtonObj.show('fast');
+                contactFormObject.hide('fast');
+            }
+        }).on('hide_variation', function() { // Not on selected variation
+            addToCartButtonObj.show('fast');
+            contactFormObject.hide('fast');
+        });
+    });
+    </script>
+    <?php
+}
