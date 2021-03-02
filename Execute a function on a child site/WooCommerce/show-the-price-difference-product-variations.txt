@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_available_variation', 'filter_available_variation_attributes', 10, 3 );
+function filter_available_variation_attributes( $data, $product, $variation ){
+    $price_min  = $product->get_variation_regular_price('min', true); // Min price for display
+    $price_diff = $data['display_price'] - $price_min;
+
+    if ($price_diff > 0 ) {
+        $data['price_html'] = '<span class="price">' . $variation->get_price_html() . ' <em>(+' . wc_price( $price_diff ) . ')</em></span>';
+    }
+    return $data;
+}
