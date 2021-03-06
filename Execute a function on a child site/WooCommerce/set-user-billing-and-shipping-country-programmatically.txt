@@ -1,0 +1,8 @@
+$country_code = 'US';
+
+// Get the WC_Customer instance object from user ID
+$customer = new WC_Customer( $user_id );
+
+$customer->set_billing_country( $country_code );
+$customer->set_shipping_country( $country_code );
+$customer->save();
