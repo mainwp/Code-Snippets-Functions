@@ -1,0 +1,13 @@
+add_filter( 'woocommerce_order_needs_shipping_address', 'filter_order_needs_shipping_address', 10,  );
+function change_order_received_page_title_based_on_order_status( $needs_address, $hide, $order ) {
+    // Here set your shipping method instance Ids
+    $targeted_instances_ids = array( 1, 2 ); 
+    
+    // Loop through "shipping" order items
+    foreach ( $order->get_items('shipping') as $item ) {
+        if( in_array( $item->get_instance_id(), $targeted_instances_ids ) ) {
+            return false;
+        }
+    }
+    return $needs_address;
+}
