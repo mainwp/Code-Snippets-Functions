@@ -1,0 +1,1 @@
+add_filter('woocommerce_new_order_email_allows_resend', '__return_true' );
