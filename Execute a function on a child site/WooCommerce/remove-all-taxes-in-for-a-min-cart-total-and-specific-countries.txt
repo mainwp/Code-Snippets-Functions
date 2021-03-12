@@ -1,0 +1,31 @@
+add_action( 'woocommerce_calculate_totals', 'set_customer_tax_exempt' );
+function set_customer_tax_exempt( $cart ) {
+    if ( is_admin() && ! defined('DOING_AJAX') )
+        return;
+
+    $min_amount = 150; // Minimal cart amount
+    $countries  = array('GB'); // Defined countries array
+
+    $subtotal   = floatval( $cart->cart_contents_total );
+    $shipping   = floatval( $cart->shipping_total );
+    $fees       = floatval( $cart->fee_total );
+    $total      = $subtotal + $shipping + $fees; // cart total (without taxes including shipping and fees)
+
+    $country    = WC()->customer->get_shipping_country();
+    $country    = empty($country) ? WC()->customer->get_billing_country() : $country;
+    $vat_exempt = WC()->customer->is_vat_exempt();
+    $condition  = in_array( $country, $countries ) && $total >= $min_amount;
+
+    if ( $condition && ! $vat_exempt ) {
+        WC()->customer->set_is_vat_exempt( true ); // Set customer tax exempt
+    } elseif ( ! $condition && $vat_exempt ) {
+        WC()->customer->set_is_vat_exempt( false ); // Remove customer tax exempt
+    }
+}
+
+add_action( 'woocommerce_thankyou', 'remove_customer_tax_exempt' );
+function remove_customer_tax_exempt( $order_id ) {
+    if ( WC()->customer->is_vat_exempt() ) {
+        WC()->customer->set_is_vat_exempt( false );
+    }
+}
