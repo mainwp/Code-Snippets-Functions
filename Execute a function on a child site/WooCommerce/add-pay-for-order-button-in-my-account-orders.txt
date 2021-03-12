@@ -1,0 +1,22 @@
+add_filter( 'woocommerce_my_account_my_orders_columns', 'add_payment_column_to_myaccount' );
+function add_payment_column_to_myaccount( $columns ) {
+    $new_columns = [];
+
+    foreach ($columns as $key => $name){
+        $new_columns[$key] = $name;
+
+        if ('order-actions' === $key){
+            $new_columns['pay-order'] = __('Payment', 'woocommerce');
+        }
+    }
+    return $new_columns;
+}
+
+add_action( 'woocommerce_my_account_my_orders_column_pay-order', 'add_pay_for_order_to_payment_column_myaccount' );
+function add_pay_for_order_to_payment_column_myaccount( $order ) {
+    if( in_array( $order->get_status(), array( 'pending', 'on-hold' ) ) ) {
+        printf( '<a class="woocommerce-button button pay" href="%s/order-pay/%s/?pay_for_order=true&key=%s">%s</a>',
+            wc_get_checkout_url(), $order->get_id(), $order->get_order_key(), __("Pay for this order", "woocommerce")
+        );
+    }
+}
