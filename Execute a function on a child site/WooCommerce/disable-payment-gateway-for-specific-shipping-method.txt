@@ -1,0 +1,26 @@
+add_filter( 'woocommerce_available_payment_gateways', 'filter_woocommerce_available_payment_gateways' );
+function filter_woocommerce_available_payment_gateways( $available_gateways ) { 
+    if( is_checkout() && ! is_wc_endpoint_url() ) {
+        $gateways_to_disable = array( 'cardgatecreditcard', 'cardgategiropay', 'cardgateideal', 'cardgatesofortbanking' );
+        $shipping_methods    = array( 'flat_rate', 'request_shipping_quote' );
+        $chosen_shipping     = WC()->session->get( 'chosen_shipping_methods' )[0];
+        $disable_gateways    = false;
+    
+        // Check if we need to disable gateways
+        foreach ( $shipping_methods as $shipping_method ) {
+            if ( strpos( $chosen_shipping, $shipping_method ) !== false ) {
+                $disable_gateways = true;
+            }
+        }
+        
+        // If so, disable the gateways
+        if ( $disable_gateways ) {
+            foreach ( $available_gateways as $payment_id => $gateway ) {
+                if ( in_array( $payment_id, $gateways_to_disable ) ) {
+                    unset( $available_gateways[$payment_id] );
+                }
+            }
+        }
+    }
+    return $available_gateways;
+}
