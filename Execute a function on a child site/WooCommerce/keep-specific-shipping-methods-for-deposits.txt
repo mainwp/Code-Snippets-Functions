@@ -1,0 +1,24 @@
+add_filter( 'woocommerce_package_rates', 'only_local_pickup_for_deposits', 100, 2 );
+function only_local_pickup_for_deposits( $rates, $package ) {
+    $has_deposit = false;
+
+    // Loop through cart items for the current shipping package
+    foreach( $package['contents'] as $item ) {
+        if ( isset($item['is_deposit']) && $item['is_deposit'] ) {
+            $has_deposit = true;
+            break; // Stop the loop
+        }
+    }
+
+    // If deposit is enabled for a cart item
+    if( $has_deposit ) {
+        // Loop through shipping rates
+        foreach ( $rates as $rate_key => $rate ) {
+            // Remove all shipping methods except "Local pickup" 
+            if ( 'local_pickup' !== $rate->method_id ) {
+                unset($rates[$rate_key]);
+            }
+        }
+    }
+    return $rates;
+}
