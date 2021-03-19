@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_payment_complete_reduce_order_stock', '__return_false' );
