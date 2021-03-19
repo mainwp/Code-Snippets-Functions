@@ -1,0 +1,35 @@
+add_action( 'woocommerce_single_product_summary', 'custom_single_product_summary', 2 );
+function custom_single_product_summary(){
+    global $product;
+
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+    add_action( 'woocommerce_single_product_summary', 'custom_single_excerpt', 20 );
+}
+
+function custom_single_excerpt(){
+    global $post, $product;
+
+    $short_description = apply_filters( 'woocommerce_short_description', $post->post_excerpt );
+
+    if ( ! $short_description )
+        return;
+
+    // For "toons" category
+    if ( has_term( array('toons'), 'product_cat', $product->get_id() ) ) {
+        $custom_text = __('A custom text for "Toons" category');
+    } 
+    // For "people" category
+    elseif ( has_term( array('people'), 'product_cat', $product->get_id() ) ) {
+        $custom_text = __('A different custom text for "People" category');
+    } 
+    // For All other categories (or no categories)
+    else {
+        $custom_text = __('A custom text for All other categories (or no categories)');
+    }
+ 
+    echo '<div class="woocommerce-product-details__short-description">' . 
+        $short_description // WPCS: XSS ok.
+        . '<div class="custom-text">' . $custom_text // WPCS: XSS ok.
+        . '</div>
+    </div>';
+}
