@@ -1,0 +1,78 @@
+add_filter('woocommerce_before_checkout_form', 'custom_order_notes_checkout_fields_js');
+function custom_order_notes_checkout_fields_js($fields) {
+    // Here below set your custom order notes attributes (when a coupon is applied)
+    $field_label = __('custom label');
+    $placeholder = __('custom placeholder');
+    $label       = 'tote-bag';
+
+    $required    = '<abbr class="required" title="required">*</abbr>';
+
+    wc_enqueue_js( "jQuery(function($){
+        var required     = '".$required."',
+            label        = '".$field_label."',
+            placeholder  = '".$placeholder."',
+            input_class  = '".$input_class."',
+            class_requ   = 'validate-required',
+            class_valid  = 'woocommerce-validated',
+            class_unval  = 'woocommerce-invalid woocommerce-invalid-required-field',
+            notesPara    = '#order_comments_field',
+            notesLabel   = notesPara+' label',
+            notesText    = notesPara+' textarea',
+            defaultLabel = $(notesText).html(),
+            defaultPHold = $(notesText).attr('placeholder'),
+            newLabel     = label+'&nbsp'+required;
+
+            console.log(defaultPHold);
+
+        if( $('tr.cart-discount').length > 0 ) {
+            $(notesPara).addClass(class_requ).addClass(class_valid);
+            $(notesLabel).html(newLabel);
+            $(notesText).attr('placeholder', placeholder);
+        }
+
+        // On order notes change
+        $(document.body).on('change input', notesText, function(){
+            if( $('tr.cart-discount').length > 0 ) {
+                if( $(this).val() != '' ) {
+                    $(notesPara).removeClass(class_unval);
+                    if ( ! $(notesPara).hasClass(class_valid) ) {
+                        $(notesPara).addClass(class_valid);
+                    }
+                } else {
+                    $(notesPara).removeClass(class_valid);
+                    if ( ! $(notesPara).hasClass(class_unval) ) {
+                        $(notesPara).addClass(class_unval);
+                    }
+                }
+            }
+        });
+
+        // On coupon change
+        $(document.body).on('updated_checkout', function(){
+            if( $('tr.cart-discount').length > 0 ) {
+                if( ! $(notesPara).hasClass(class_requ) ) {
+                    $(notesPara).addClass(class_requ).addClass(class_valid);
+                    $(notesLabel).html(newLabel);
+                    $(notesText).addClass(input_class);
+                    $(notesText).attr('placeholder', placeholder);
+                }
+            } else {
+                if( $(notesPara).hasClass(class_requ) ) {
+                    $(notesPara).removeClass(class_requ).removeClass(class_valid).removeClass(class_unval);
+                    $(notesLabel).html(defaultLabel);
+                    $(notesText).addClass(input_class);
+                    $(notesText).attr('placeholder', defaultPHold);
+                }
+            }
+        });
+    });");
+}
+
+// Enable "Order notes" field validation for applied coupons
+add_filter('woocommerce_checkout_process', 'validation_checkout_required_order_comments');
+function validation_checkout_required_order_comments() {
+    $applied_coupons = WC()->cart->get_applied_coupons();
+    if ( ! empty($applied_coupons) && isset($_POST['order_comments']) && strlen($_POST['order_comments']) < 3 ) {
+        wc_add_notice( __("Order comments is a required custom field whan a coupon is applied", "woocommerce"), 'error' );
+    }
+}
