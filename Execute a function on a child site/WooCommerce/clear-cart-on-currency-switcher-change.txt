@@ -1,0 +1,32 @@
+// The jQuery AJAX enqueued code
+add_action('template_redirect', 'currency_change_trigger_clear_cart_js' );
+function currency_change_trigger_clear_cart_js() {
+    wc_enqueue_js( "jQuery( function($){
+        $(document.body).on('change', '#alg_currency_select', function() {
+            $.ajax({
+                url: '" . admin_url('/admin-ajax.php') . "',
+                type: 'POST',
+                data: {
+                    'action': 'currency_change_clear_cart'
+                },
+                success: function(response) {
+                    if( response == 'cleared' ) {
+                        $(document.body).trigger('wc_fragment_refresh'); // Refresh cart
+                    }
+                    // console.log(response);
+                }
+            });
+        });
+    });" );
+}
+
+// PHP AJAX receiver: Empty cart
+add_action( 'wp_ajax_currency_change_clear_cart', 'currency_change_clear_cart' );
+add_action( 'wp_ajax_nopriv_currency_change_clear_cart', 'currency_change_clear_cart' );
+function currency_change_clear_cart() { 
+    if( count(WC()->cart->get_cart()) > 0 ) {
+        WC()->cart->empty_cart();   
+        echo 'cleared';
+    }
+    die();   
+}
