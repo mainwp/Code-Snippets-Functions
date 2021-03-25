@@ -1,0 +1,6 @@
+add_action( 'woocommerce_checkout_create_order', 'add_expiration' );
+function add_expiration( $order, $data ) {
+    $items_count  = WC()->cart->get_cart_contents_count();
+
+    $order->update_meta_data('expiration_date', date( 'Y-m-d H:i:s', strtotime( '+'. ( $items_count * 15 ) .' days' ) ) );
+}
