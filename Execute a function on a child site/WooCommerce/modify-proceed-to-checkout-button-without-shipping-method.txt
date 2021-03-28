@@ -1,0 +1,10 @@
+add_action( 'woocommerce_proceed_to_checkout', 'modify_checkout_button_no_shipping', 1 );
+function modify_checkout_button_no_shipping() {
+    $chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods' );
+    // removes empty values from the array
+    $chosen_shipping_methods = array_filter( $chosen_shipping_methods );
+    if ( empty( $chosen_shipping_methods ) ) {
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        echo '<a href="'.esc_url(wc_get_checkout_url()).'" class="checkout-button button alt wc-forward">' . __("Alternate checkout text", "woocommerce") . '</a>';
+    }
+}
