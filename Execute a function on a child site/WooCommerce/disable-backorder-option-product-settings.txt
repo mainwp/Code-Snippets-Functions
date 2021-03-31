@@ -1,0 +1,21 @@
+add_action( 'admin_footer', 'disable_backorder_option_from_product_settings' );
+function disable_backorder_option_from_product_settings() {
+    global $pagenow, $post_type;
+
+    if( in_array( $pagenow,  array('post-new.php', 'post.php') ) && $post_type === 'product' ) :
+    ?>
+    <script>
+    jQuery(function($){
+        // For product variations
+        $('#variable_product_options').on('change', function(){
+            $('select[name^=variable_backorders]').each( function(){
+                $(this).prop('disabled','disabled').val('no');
+            });
+        });
+        // For all other product types
+        $('select#_backorders').prop('disabled','disabled').val('no');
+    });
+    </script>
+    <?php
+    endif;
+}
