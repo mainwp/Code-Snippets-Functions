@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_coupon_is_valid_for_product', 'wc_exclude_product_from_product_promotions_frontend', 9999, 4 );
+ 
+function wc_exclude_product_from_product_promotions_frontend( $valid, $product, $coupon, $values ) {
+   // PRODUCT ID HERE (E.G. 12345)
+   if ( 12345 == $product->get_id() ) {
+      $valid = false;
+   }
+   return $valid;
+}
