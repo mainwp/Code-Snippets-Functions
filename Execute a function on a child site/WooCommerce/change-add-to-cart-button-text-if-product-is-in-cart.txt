@@ -1,0 +1,17 @@
+function change_add_to_cart_text_if_product_already_in_cart( $add_to_cart_text, $product ) {    
+    if ( WC()->cart ) {
+        $cart = WC()->cart; // Get cart
+        if ( ! $cart->is_empty() ) {
+            foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+                $_product_id = $cart_item['product_id'];
+                if ( $product->get_id() == $_product_id ) {
+                    $add_to_cart_text = '('.$cart_item['quantity'].')'.' Already in cart';
+                    break;
+                }
+            }
+        }
+    }
+    return $add_to_cart_text;
+}
+add_filter( 'woocommerce_product_add_to_cart_text', 'change_add_to_cart_text_if_product_already_in_cart', 10, 2 );
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'change_add_to_cart_text_if_product_already_in_cart', 10, 2 );
