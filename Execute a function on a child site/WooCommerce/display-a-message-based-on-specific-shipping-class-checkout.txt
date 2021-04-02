@@ -1,0 +1,22 @@
+add_action( 'woocommerce_review_order_before_order_total', 'checkout_shipping_class_message' );
+function checkout_shipping_class_message(){
+    // Here your shipping class slugs in the array
+    $shipping_classes = array('truck');
+    // Here your shipping message
+    $message = __("Please add some shipping details in order notes field.", "woocommerce");
+
+    // Loop through cart items
+    foreach( WC()->cart->get_cart() as $cart_item ){
+        $shipping_class = $cart_item['data']->get_shipping_class();
+        
+        // echo '<pre>' . print_r($shipping_class, true) . '</pre>'; // Uncomment for testing
+
+        // Check cart items for specific shipping class, displaying a message
+        if( in_array($shipping_class, $shipping_classes ) ){
+            echo '<tr class="shipping-note">
+                <td colspan="2"><strong>'.__("Note", "woocommerce").':</strong> '.$message.'</td>
+            </tr>';
+            break;
+        }
+    }
+}
