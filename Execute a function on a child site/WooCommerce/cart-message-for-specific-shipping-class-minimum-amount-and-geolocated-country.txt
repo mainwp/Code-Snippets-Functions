@@ -1,0 +1,46 @@
+add_action( 'woocommerce_before_calculate_totals', 'cart_items_shipping_class_message', 20, 1 );
+function cart_items_shipping_class_message( $cart ){
+    if ( ( is_admin() && ! defined('DOING_AJAX' ) ) || ! is_cart() )
+        return;
+
+    $shipping_class = 'supplier';
+    $min_amout      = 20;
+    $free_shipping  = 50;
+    $items_subtotal = 0;
+
+    // Getting non discounted "supplier" cart items subtotal including taxes 
+    foreach( $cart->get_cart() as $cart_item ){
+        // Targeting our defined shipping class only
+        if( $cart_item['data']->get_shipping_class() === $shipping_class ){
+            // Add each subtotal from our defined shipping class only
+            $items_subtotal += $cart_item['line_subtotal'] + $cart_item['line_subtotal_tax'];
+        }
+    }
+
+    $is_geo_ip_italy = WC_Geolocation::geolocate_ip()['country'] === 'IT';
+
+    if( $items_subtotal > 0 && $items_subtotal < $min_amout ){
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
+        $free_message =  sprintf( ' <span class="sub-button">%s %s</span>',
+            wc_price( $free_shipping - $items_subtotal ),
+            __('for free shipping!', 'woocommerce')
+        );
+
+        wc_add_notice( sprintf( '<p><strong style="color:#cc1602;">%s %s</strong></p><a href="%s" class="button">%s</a>%s',
+            wc_price( $min_amout ),
+            __('of minimum amount on products SUPPLIER', 'woocommerce'),
+            home_url('/brand/supplier-slug'),
+            sprintf( __('Add %s of products', 'woocommerce'), wc_price($min_amout - $amout_incl_tax) ),
+            $is_geo_ip_italy ? $free_message : '',
+        ), 'error' );
+    }
+    elseif( $items_subtotal >= $min_amout && $items_subtotal < $free_shipping && $is_geo_ip_italy ){
+        wc_add_notice( sprintf( '<p><strong style="color:green">%s %s</strong></p><a href="%s" class="button free">%s</a>',
+            __('FREE SHIPPING on products SUPPLIER width at least', 'woocommerce'),
+            wc_price( $free_shipping ),
+            home_url('/brand/supplier-slug'),
+            sprintf( __('Add %s of products for free shipping!', 'woocommerce'), wc_price($min_amout - $amout_incl_tax) ),
+        ), 'notice' );
+    }
+}
