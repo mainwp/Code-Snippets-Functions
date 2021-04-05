@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_default_address_fields', 'customize_default_address_checkout_fields', 1000 );
+function customize_default_address_checkout_fields( $fields ) {
+    if( is_checkout() ) {
+        $fields['first_name']['required'] = $fields['last_name']['required'] = false;
+    }
+    return $fields;
+}
+
+add_filter( 'woocommerce_billing_fields', 'customize_billing_checkout_fields', 1000 );
+function customize_billing_checkout_fields( $fields ) {
+    if( is_checkout() ) {
+        unset($fields['billing_first_name'], $fields['billing_last_name']);
+    }
+    return $fields;
+}
