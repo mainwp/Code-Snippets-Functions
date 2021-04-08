@@ -1,0 +1,31 @@
+add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
+add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
+function wc_minimum_order_amount() {
+    $minimum   = 50; // Set the minimum order value
+    $postcodes = array('99152', '99154'); // Define your targeted postcodes in the array
+    $postcode  = ''; // Initializing
+
+    if ( isset($_POST['shipping_postcode']) && ! empty($_POST['shipping_postcode']) ) {
+        $postcode = $_POST['shipping_postcode'];
+        if ( empty($postcode) && isset($_POST['billing_postcode']) && ! empty($_POST['billing_postcode']) ) {
+            $postcode = $_POST['billing_postcode'];
+        }
+    } elseif ( $postcode = WC()->customer->get_shipping_postcode() ) {
+        if ( empty($postcode) ) {
+            $postcode = WC()->customer->get_billing_postcode();
+        }
+    }
+
+    if ( WC()->cart->total < $minimum && ! empty($postcode) && in_array( $postcode, $postcodes ) ) {
+        $error_notice = sprintf( 'Your current order total is %s — you must have an order with a minimum of %s to place your order ' , 
+            wc_price( WC()->cart->total ), 
+            wc_price( $minimum )
+        );
+
+        if( is_cart() ) {
+            wc_print_notice( $error_notice, 'error' );
+        } else {
+            wc_add_notice( $error_notice, 'error' );
+        }
+    }
+}
