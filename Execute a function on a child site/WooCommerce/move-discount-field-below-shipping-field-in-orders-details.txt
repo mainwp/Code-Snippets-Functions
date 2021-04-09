@@ -1,0 +1,18 @@
+function reordering_order_item_totals( $total_rows, $wc_order, $tax_display ) {
+
+    $total_rows = move_key_before( $total_rows, 'discount', 'shipping' );
+
+    return $total_rows;
+}
+add_filter( 'woocommerce_get_order_item_totals', 'reordering_order_item_totals', 10, 3 );
+
+function move_key_before( $arr, $find, $move ) {
+    if ( ! isset( $arr[ $find ], $arr[ $move ] ) ) { // Check both keys exists.
+        return $arr;
+    }
+
+    $elem  = array( $move => $arr[ $move ] );
+    $start = array_splice( $arr, 0, array_search( $find, array_keys( $arr ), true ) );
+    unset( $start[ $move ] ); 
+    return $start + $elem + $arr;
+}
