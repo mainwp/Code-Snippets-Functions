@@ -1,6 +1,6 @@
 ## Yoast SEO code snippets
 
-Tested version of WordPress 5.6, plugin version was Yoast SEO 15.6.2.
+Tested version of WordPress 5.7, plugin version was Yoast SEO 16.1.1.
 
 This file is a code snippet that is used for [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) plugin. 
 
