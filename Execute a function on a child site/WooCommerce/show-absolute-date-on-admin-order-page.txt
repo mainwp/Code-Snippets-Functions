@@ -1,0 +1,28 @@
+add_filter( 'manage_shop_order_posts_columns', 'custom_shop_order_posts_columns', 99 );
+function custom_shop_order_posts_columns( $columns ) {
+  $new_columns = array();
+  foreach( $columns as $key => $name ) {
+    if( 'order_date' == $key ) {
+      $new_columns['custom_order_date'] = 'Date';
+    } else {
+      $new_columns[$key] = $name;
+    }    
+  }
+  return $new_columns;
+}
+ 
+add_action( 'manage_shop_order_posts_custom_column' , 'show_custom_columns', 10, 2 );
+function show_custom_columns( $column_name, $post_id ) {
+  if( 'custom_order_date'== $column_name ) {
+    $order = wc_get_order( $post_id );
+    if( ! $order ) {
+      return;
+    }
+    $order_timestamp = $order->get_date_created() ? $order->get_date_created()->getTimestamp() : '';
+    if ( ! $order_timestamp ) {
+      echo '&ndash;';
+      return;
+    }
+    print date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $order_timestamp );
+  }
+}
