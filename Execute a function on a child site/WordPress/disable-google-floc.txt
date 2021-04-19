@@ -1,0 +1,6 @@
+function disable_floc($headers) {
+    $headers['Permissions-Policy'] = 'interest-cohort=()';
+    return $headers;
+  }
+ 
+add_filter('wp_headers', 'disable_floc');
