@@ -1,0 +1,5 @@
+add_filter( 'wp_sitemaps_post_types', 'remove_post_type_from_wp_sitemap' );
+function remove_post_type_from_wp_sitemap( $post_types ) {
+     unset( $post_types['mailpoet_page'] ); 
+     return $post_types;
+} 
