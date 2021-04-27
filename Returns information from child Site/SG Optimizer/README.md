@@ -1,6 +1,6 @@
 ## Purge SG Optimizer Cache on your Child Sites
 
-Tested version of WordPress 5.0
+Tested version of WordPress 5.7.1.
 
 This file is a code snippet that is used for [SG Optimizer](https://wordpress.org/plugins/sg-cachepress/).
 
