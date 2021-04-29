@@ -1,0 +1,14 @@
+// Displaying short product description in email notifications sent to admin
+add_action( 'woocommerce_order_item_meta_end', 'product_description_in_new_email_notification', 10, 4 );
+function product_description_in_new_email_notification( $item_id, $item, $order = null, $plain_text = false ){
+    // Only on email notifications
+    if( is_wc_endpoint_url() ) return;
+
+    $product_obj = wc_get_product( $item->get_product_id() );
+    $short_descr = $product_obj->get_short_description();
+    
+    if( ! empty($short_descr) ) {
+        // Display the product description
+        echo '<div class="product-description"><p>' . $short_descr . '</p></div>';
+    }
+}
