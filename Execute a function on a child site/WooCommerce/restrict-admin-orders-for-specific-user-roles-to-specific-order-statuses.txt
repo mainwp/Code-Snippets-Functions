@@ -1,0 +1,50 @@
+function user_roles_allowed_orders() {
+    $targeted_roles = array('shop_manager'); // Here define your targeted user roles
+    return (bool) array_intersect( wp_get_current_user()->roles, $targeted_roles );
+}
+
+// Admin orders list: bulk order status change dropdown
+add_filter( 'bulk_actions-edit-shop_order', 'filter_dropdown_bulk_actions_shop_order', 100 );
+function filter_dropdown_bulk_actions_shop_order( $actions ) {
+    if ( user_roles_allowed_orders() ) {
+        $allowed_actions = array('mark_on-hold', 'mark_processing');
+
+        foreach( $actions as $key => $option ){
+            if( ! in_array( $key, $allowed_actions ) ){
+                unset($actions[$key]);
+            }
+        }
+    }
+    return $actions;
+}
+
+// Admin order pages: Order status change dropdown
+add_filter('wc_order_statuses', 'filter_order_statuses', 100 );
+function filter_order_statuses( $statuses ) {
+    global $pagenow, $typenow;
+
+    if( in_array( $pagenow, array('post.php', 'post-new.php') )
+    && 'shop_order' === $typenow && user_roles_allowed_orders() ) {
+        $allowed_statusses = array('wc-on-hold', 'wc-processing');
+
+        foreach ($statuses as $key => $option ) {
+            if( ! in_array( $key, $allowed_statusses ) ){
+                unset($statuses[$key]);
+            }
+        }
+    }
+    return $statuses;
+}
+
+// Filter admin orders for shop managers based
+add_action( 'pre_get_posts', 'filter_shop_manager_orders', 100 );
+function filter_shop_manager_orders( $query ) {
+    global $pagenow, $post_type;
+    //'shop_manager'
+    if( $query->is_admin && 'edit.php' === $pagenow && 'shop_order' === $post_type
+    && user_roles_allowed_orders() ){
+        $allowed_statusses = array('wc-on-hold', 'wc-processing');
+
+        $query->set( 'post_status', $allowed_statusses );
+    }
+}
