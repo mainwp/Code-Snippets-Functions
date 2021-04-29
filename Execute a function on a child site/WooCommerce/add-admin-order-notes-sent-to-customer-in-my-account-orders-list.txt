@@ -1,0 +1,43 @@
+// Add custom column on admin orders list page
+add_filter( 'woocommerce_my_account_my_orders_columns', 'add_myaccount_admin_order_notes_column' );
+function add_myaccount_admin_order_notes_column( $columns ) {
+    $column_actions = $columns['order-actions'];
+    unset($columns['order-actions']);
+
+    $columns['admin-notes'] = __('Admin Notes', 'woocommerce');
+    $columns['order-actions'] = $column_actions;
+
+    return $columns;
+}
+
+// CSS styles
+add_action( 'wp_head', 'myaccount_admin_order_notes_inline_style', 100 );
+function myaccount_admin_order_notes_inline_style() {
+    if( is_account_page() && is_wc_endpoint_url('orders') ) :
+    ?><style>ul.order-note-item {list-style:none; margin:0;} ul.order-note-item > li { margin:0 0 6px;}</style><?php
+    endif;
+}
+
+// Admin orders list custom column displayed content
+add_action( 'woocommerce_my_account_my_orders_column_admin-notes', 'add_myaccount_admin_order_notes_content' );
+function add_myaccount_admin_order_notes_content( $order ) {
+    $notes = wc_get_order_notes( array(
+        'order_id' => $order->get_id(),
+        'order_by' => 'date_created',
+        'order' => 'ASC',
+    ) );
+
+    if( ! empty($notes) ) {
+        $output = [];
+
+        foreach( $notes as $note ) {
+            if( $note->customer_note && 'system' !== $note->added_by ) {
+                $output[] = sprintf( __('%s <br> %s'),
+                    date_i18n( 'm/d/y H:i', strtotime( $note->date_created ) ),
+                    $note->content
+                );
+            }
+        }
+        echo '<ul class="order-note-item"><li>'. implode('</li><li>', $output) .'</li></ul>';
+    }
+}
