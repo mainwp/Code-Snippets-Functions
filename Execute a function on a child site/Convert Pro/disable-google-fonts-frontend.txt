@@ -1,0 +1,8 @@
+function cp_remove_google_font( $style_id ) {
+
+// your custom logic
+$load_font = false;
+return $load_font;
+}
+
+add_filter( 'cpro_disable_google_font', 'cp_remove_google_font', 10, 1 );
