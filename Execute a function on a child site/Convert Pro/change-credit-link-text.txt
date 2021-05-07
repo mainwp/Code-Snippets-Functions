@@ -1,0 +1,6 @@
+function credit_link_text_callback( $content ) {
+    $content = 'Share with your friends';
+    return $content;
+}
+add_filter( 'cppro_credit_text', 'credit_link_text_callback', 10 );
+NOTE: You can set credit link color in Panel section of popup settings.
