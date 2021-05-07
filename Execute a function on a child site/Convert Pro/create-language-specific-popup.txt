@@ -1,0 +1,24 @@
+function cpro_callback_function( $display, $style_id ) {
+     
+     if( $display ) {
+        // Replace call-to-action id with your call-to-action ID
+        if( '31' == $style_id ) {
+            
+            if( defined( 'ICL_LANGUAGE_CODE' ) ) {
+            
+                // get current language code
+                $language_code = ICL_LANGUAGE_CODE;
+                        
+                // replace fr with your language code 
+                if( 'fr' == $language_code ) {
+                    $display = true;
+                } else {
+                    $display = false;
+                }
+            }
+        }
+    }
+ 
+    return $display;
+}
+add_filter( 'cp_pro_target_page_settings', 'cpro_callback_function', 10, 3 );
