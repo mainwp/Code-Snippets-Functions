@@ -1,0 +1,22 @@
+function product_sold_count() {
+    global $product;
+    
+    // Is a WC product
+    if ( is_a( $product, 'WC_Product' ) ) {
+        // Get total sales
+        $units_sold = $product->get_total_sales();
+        
+        if ( $units_sold >= 1 ) {
+            // https://www.php.net/manual/en/class.numberformatter.php
+            $fmt = new NumberFormatter( 'en', NumberFormatter::SPELLOUT );
+            
+            // Singular are plural
+            $units_sold == 1 ? $s_p = '' : $s_p = 's';
+        
+            // Output
+            echo '<span class="bought-by-customers">' . sprintf( __( 'Bought by %s customer%s so far', 'woocommerce' ), $fmt->format( $units_sold ), $s_p ) . '</span>';
+        }
+    }
+}
+add_action( 'woocommerce_single_product_summary', 'product_sold_count', 11 );
+add_action( 'woocommerce_after_shop_loop_item', 'product_sold_count', 11 );
