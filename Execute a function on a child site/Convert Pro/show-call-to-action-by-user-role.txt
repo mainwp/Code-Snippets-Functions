@@ -1,0 +1,26 @@
+function check_user_role( $display, $style_id ) {
+ 
+   // Replace style id with your style ID
+   if( $style_id == '18' ) {
+ 
+    if( is_user_logged_in() ) {
+
+        // get current user role
+        $current_user = new WP_User(wp_get_current_user());
+        $user_roles = $current_user->roles;
+ 
+       if( in_array( "author", $user_roles ) ) {
+          $display = true;
+       } else {
+          $display = false;
+       }
+    } else {
+ 
+       // hide style for non logged in users
+       $display = false;
+    }
+  }
+ 
+  return $display;
+}
+add_filter( 'cp_pro_target_page_settings', 'check_user_role', 10, 3 );
