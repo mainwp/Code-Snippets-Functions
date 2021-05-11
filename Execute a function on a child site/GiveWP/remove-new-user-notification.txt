@@ -1,0 +1,5 @@
+function my_give_remove_new_user_notification() {
+	remove_action( 'give_insert_user', 'give_new_user_notification', 10);
+}
+
+add_action( 'give_insert_user', 'my_give_remove_new_user_notification', 1 );
