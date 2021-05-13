@@ -1,6 +1,6 @@
 ## Imagify Image Optimization code snippets
 
-Tested version of WordPress 5.4, plugin version was Imagify Image Optimizer 1.9.9.
+Tested version of WordPress 5.7.2, plugin version was Imagify Image Optimizer 1.9.14.
 
 This file is a code snippet that is used for [Imagify Image Optimizer](https://wordpress.org/plugins/imagify/) plugin. 
 
