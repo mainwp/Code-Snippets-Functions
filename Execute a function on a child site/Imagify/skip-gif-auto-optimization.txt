@@ -1,0 +1,10 @@
+function no_auto_optimize_gif( $optimize, $attachment_id, $metadata ) {
+	if ( ! $optimize ) {
+		return false;
+	}
+
+	$mime_type = get_post_mime_type( $attachment_id );
+
+	return 'image/gif' !== $mime_type;
+}
+add_filter( 'imagify_auto_optimize_attachment', __NAMESPACE__ . '\no_auto_optimize_gif', 10, 3 );
