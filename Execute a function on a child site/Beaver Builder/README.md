@@ -1,6 +1,6 @@
 ## Beaver Builder code snippets
 
-Tested version of WordPress 5.3.2, plugin version was Beaver Builder 2.3.0.2
+Tested version of WordPress 5.7.2, plugin version was Beaver Builder 2.4.2.2.
 
 This file is a code snippet that is used for [Beaver Builder](https://www.wpbeaverbuilder.com/) plugin. 
 
