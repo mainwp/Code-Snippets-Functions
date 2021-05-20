@@ -1,0 +1,7 @@
+add_action( 'init', 'custom_stock_increase' );
+function custom_stock_increase() {
+    // disable stock increase when order status changes to "canceled"
+    remove_action( 'woocommerce_order_status_cancelled', 'wc_maybe_increase_stock_levels' );
+    // enable stock increase when status changes from "other-status" to "canceled"
+    add_action( 'woocommerce_order_status_other-status_to_cancelled', 'wc_maybe_increase_stock_levels' );
+}
