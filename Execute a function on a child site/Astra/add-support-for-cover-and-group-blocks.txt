@@ -1,0 +1,1 @@
+add_filter( 'astra_gtn_group_cover_css_comp', '__return_true' );
