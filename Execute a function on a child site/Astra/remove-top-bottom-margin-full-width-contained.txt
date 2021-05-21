@@ -1,0 +1,1 @@
+add_filter( 'astra_content_margin_full_width_contained', '__return_false' );
