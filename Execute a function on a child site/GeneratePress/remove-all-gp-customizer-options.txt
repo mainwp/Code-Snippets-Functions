@@ -1,0 +1,17 @@
+add_action( 'after_setup_theme','tu_remove_customizer_options', 1000 );
+function tu_remove_customizer_options( $wp_customize ) {
+	remove_action( 'customize_register', 'generate_customize_register' );
+	remove_action( 'customize_register', 'generate_default_fonts_customize_register' );
+	remove_action( 'customize_register', 'generate_backgrounds_customize', 999 );
+	remove_action( 'customize_register', 'generate_backgrounds_secondary_nav_customizer', 1000 );
+	remove_action( 'customize_register', 'generate_blog_customize_register', 99 );
+	remove_action( 'customize_register', 'generate_colors_customize_register' );
+	remove_action( 'customize_register', 'generate_colors_secondary_nav_customizer', 1000 );
+	remove_action( 'customize_register', 'generate_colors_wc_customizer', 100 );
+	remove_action( 'customize_register', 'generate_copyright_customize_register' );
+	remove_action( 'customize_register', 'generate_menu_plus_customize_register', 100 );
+	remove_action( 'customize_register', 'generate_page_header_blog_customizer', 99 );
+	remove_action( 'customize_register', 'generate_secondary_nav_customize_register', 100 );
+	remove_action( 'customize_register', 'generate_spacing_customize_register', 99 );
+	remove_action( 'customize_register', 'generate_fonts_customize_register' );
+}
