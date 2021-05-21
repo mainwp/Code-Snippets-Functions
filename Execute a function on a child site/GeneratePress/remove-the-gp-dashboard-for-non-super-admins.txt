@@ -1,0 +1,4 @@
+add_filter( 'generate_dashboard_page_capability', 'tu_super_admin_dashboard' );
+function tu_super_admin_dashboard() {
+  return 'manage_sites';
+}
