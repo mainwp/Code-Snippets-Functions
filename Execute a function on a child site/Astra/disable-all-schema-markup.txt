@@ -1,0 +1,1 @@
+add_filter( 'astra_schema_enabled', '__return_false' );
