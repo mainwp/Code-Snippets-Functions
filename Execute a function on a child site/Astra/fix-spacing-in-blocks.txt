@@ -1,0 +1,1 @@
+add_filter( 'astra_gutenberg_patterns_compatibility', '__return_true' );
