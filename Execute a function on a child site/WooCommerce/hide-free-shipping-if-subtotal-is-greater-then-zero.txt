@@ -1,0 +1,17 @@
+function filter_woocommerce_package_rates( $rates, $package ) {
+    // Get subtotal
+    $subtotal = $package['cart_subtotal'];
+    
+    // Hide free shipping if subtotal > 0
+    if ( $subtotal > 0 ) {
+        // Loop trough
+        foreach ( $rates as $rate_id => $rate ) {
+            if ( $rate->method_id === 'free_shipping' ) {
+                unset( $rates[$rate_id] );
+            }
+        }   
+    }
+    
+    return $rates;
+}
+add_filter( 'woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2 );
