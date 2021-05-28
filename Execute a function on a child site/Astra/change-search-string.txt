@@ -1,0 +1,5 @@
+add_filter( 'astra_the_search_page_title', 'my_function', 10 ); 
+
+function my_function() {
+    return sprintf( __( 'Add Custom Text Here: %s', 'astra' ), '<span>' . get_search_query() . '</span>' );
+}
