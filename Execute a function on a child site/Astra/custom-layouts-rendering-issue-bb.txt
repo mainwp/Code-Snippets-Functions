@@ -1,0 +1,1 @@
+add_filter( 'astra_bb_render_content_by_id', '__return_true' );
