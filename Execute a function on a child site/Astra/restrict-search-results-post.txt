@@ -1,0 +1,64 @@
+add_action( 'wp', 'astra_modify_search_loop', 99 );
+
+/**
+* Modify Search Loop.
+*
+* @return void
+*/
+function astra_modify_search_loop() {
+    remove_action( 'astra_content_loop', array( Astra_Loop::get_instance(), 'loop_markup' ) );
+    add_action( 'astra_content_loop', 'astra_redo_loop_markup' );
+}
+
+/**
+* Redo loop to search only posts.
+*
+* @return void
+*/
+function astra_redo_loop_markup( $is_page = false ) {
+
+    global $post;
+
+    ?>
+    <main id="main" class="site-main" role="main">
+
+        <?php if ( have_posts() ) : ?>
+
+            <?php do_action( 'astra_template_parts_content_top' ); ?>
+
+            <?php
+            while ( have_posts() ) :
+                the_post();
+
+                if ( is_search() && ( 'page' == $post->post_type ) ) {
+                    continue;
+                }
+
+                if ( true == $is_page ) {
+                    do_action( 'astra_page_template_parts_content' );
+                } else {
+                    do_action( 'astra_template_parts_content' );
+                }
+
+                ?>
+
+            <?php endwhile; ?>
+
+            <?php do_action( 'astra_template_parts_content_bottom' ); ?>
+
+        <?php else : ?>
+
+            <?php do_action( 'astra_template_parts_content_none' ); ?>
+
+        <?php endif; ?>
+
+    </main><!-- #main -->
+    <?php
+}
+
+add_filter( 'astra_infinite_pagination_post_type', 'astra_infinite_pagination_post_type_func' );
+
+function astra_infinite_pagination_post_type_func( $post_type ) {
+	$post_type = 'page';
+	return $post_type;
+}
