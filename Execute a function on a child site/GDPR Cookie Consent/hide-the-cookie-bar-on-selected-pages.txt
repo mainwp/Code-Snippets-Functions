@@ -1,0 +1,23 @@
+add_filter('cli_show_cookie_bar_only_on_selected_pages', 'webtoffee_custom_selected_pages', 10, 2);
+
+function webtoffee_custom_selected_pages($html, $slug) {
+
+    $slug_array = array('sample-page', 'test-page', 'my*');
+    if (in_array($slug, $slug_array)) {
+        $html = '';
+        return $html;
+    }
+
+    // For wild card URL entry
+    foreach ($slug_array as $slug_ar) {
+        if (strpos($slug_ar, '*') !== false) {
+
+            if (fnmatch($slug_ar, $slug)) {
+                $html = '';
+                return $html;
+            }
+        }
+    }
+
+    return $html;
+}
