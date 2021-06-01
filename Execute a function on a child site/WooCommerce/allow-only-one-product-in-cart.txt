@@ -1,0 +1,21 @@
+// Used to calculate totals
+function action_woocommerce_before_calculate_totals( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+        return;
+    
+    // Get cart
+    $get_cart = $cart->get_cart();
+
+    // Solution for PHP 7.3 and up
+    foreach ( $get_cart as $cart_item_key => $cart_item ) {
+        // NOT last element
+        if ( $cart_item_key !== array_key_last( $get_cart ) ) {
+            // Remove a cart item
+            $cart->remove_cart_item( $cart_item_key );
+        }
+    }
+}
+add_action( 'woocommerce_before_calculate_totals', 'action_woocommerce_before_calculate_totals', 10, 1 );
