@@ -1,0 +1,7 @@
+function jp_rcp_user_registration_data( $user ) {
+	rcp_errors()->remove( 'username_empty' );
+	$user['login'] = $user['email'];
+	return $user;
+}
+
+add_filter( 'rcp_user_registration_data', 'jp_rcp_user_registration_data' );
