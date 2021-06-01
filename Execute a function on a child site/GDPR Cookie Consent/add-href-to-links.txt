@@ -1,0 +1,17 @@
+add_action('wp_footer', 'wt_cli_add_href_to_links');
+function wt_cli_add_href_to_links() {
+	if (class_exists('Cookie_Law_Info')) {
+	?>
+		<script>
+			jQuery(function($) {
+				wt_cli_links = $('#cookie-law-info-bar a, #cliSettingsPopup a');
+				wt_cli_links.each(function() {
+					if($(this).attr('href') === undefined) { 
+						$(this).attr('href', '#');
+					}
+				});
+			});
+		</script>
+<?php
+	}
+}
