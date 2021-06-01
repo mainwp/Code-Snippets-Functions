@@ -1,0 +1,7 @@
+function wt_move_gdpr_script_to_footer() {
+	if (class_exists('Cookie_Law_Info')) {
+		wp_dequeue_script('cookie-law-info');
+		wp_enqueue_script('cookie-law-info', '', array(), false, true);
+	}
+}
+add_action( 'admin_enqueue_scripts', 'wt_move_gdpr_script_to_footer', 999 );
