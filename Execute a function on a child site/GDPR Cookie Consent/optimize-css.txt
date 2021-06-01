@@ -1,0 +1,12 @@
+function wt_cli_add_rel_preload($html, $handle, $href, $media) {
+	$preload = array(
+		'cookie-law-info',
+		'cookie-law-info-gdpr',
+		'cookie-law-info-table'
+	);
+	if (in_array($handle, $preload)) {
+		return '<link rel="preload" as="style" onload="this.onload=null;this.rel=' . "'stylesheet'" . '" id="' . $handle . '-css" href="' . $href . '" type="text/css" media="all" />' . "\n";
+	}
+	return $html;
+}
+add_filter( 'style_loader_tag', 'wt_cli_add_rel_preload', 10, 4 );
