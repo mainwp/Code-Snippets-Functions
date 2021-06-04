@@ -1,0 +1,7 @@
+add_filter('wpmeteor_enabled', function ($value) {
+    global $post;
+    if ($post && $post->ID == 1) {
+        return false;
+    }
+    return $value;
+});
