@@ -1,0 +1,13 @@
+function filter_woocommerce_cart_subtotal( $subtotal, $compound, $cart ) {
+    // Rounds a float
+    $round_num = round( $cart->subtotal / 0.05 ) * 0.05;
+    
+    // Format a number with grouped thousands
+    $number_format = number_format( $round_num, 2 );
+    
+    // Subtotal
+    $subtotal = wc_price( $number_format );
+
+    return $subtotal;
+}
+add_filter( 'woocommerce_cart_subtotal', 'filter_woocommerce_cart_subtotal', 10, 3 );
