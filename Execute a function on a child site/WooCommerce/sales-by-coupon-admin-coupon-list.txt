@@ -1,0 +1,46 @@
+// Add a Header
+function filter_manage_edit_shop_coupon_columns( $columns ) {   
+    // Add new column
+    $columns['total_sales'] = __( 'Total sales', 'woocommerce' );
+
+    return $columns;
+}
+add_filter( 'manage_edit-shop_coupon_columns', 'filter_manage_edit_shop_coupon_columns', 10, 1 );
+
+// Populate the Column
+function action_manage_shop_coupon_posts_custom_column( $column, $post_id ) {
+    // Compare
+    if ( $column == 'total_sales' ) {
+        // Get ALL orders with certain status
+        // NOTE THE USE OF WC-.. at the order status
+        $orders = wc_get_orders( array(
+            'status' => array( 'wc-processing', 'wc-completed', 'wc-on-hold' ),
+        ));
+        
+        // NOT empty
+        if ( sizeof( $orders ) > 0 ) {      
+            // Set variable
+            $total = 0;
+            
+            // Iterating through each order
+            foreach ( $orders as $order ) {         
+                // Loop through WC_Order_Item_Coupon objects
+                foreach ( $order->get_used_coupons() as $coupon_code ) {
+                    // Retrieving the coupon ID
+                    $coupon_post_obj = get_page_by_title( $coupon_code, OBJECT, 'shop_coupon' );
+                    $coupon_id       = $coupon_post_obj->ID;                    
+                    
+                    // Compare
+                    if ( $coupon_id == $post_id ) {
+                        // Add to total
+                        $total += $order->get_total();
+                    }
+                }
+            }
+            
+            // Output
+            echo wc_price( $total );
+        }
+    }
+}
+add_action( 'manage_shop_coupon_posts_custom_column' , 'action_manage_shop_coupon_posts_custom_column', 10, 2 );
