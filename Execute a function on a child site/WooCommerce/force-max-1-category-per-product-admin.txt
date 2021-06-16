@@ -1,0 +1,18 @@
+add_action( 'admin_head', 'wc_max_one_product_category', 9999 );
+ 
+function wc_max_one_product_category() {
+   $screen = get_current_screen();
+   $screen_id = $screen ? $screen->id : '';
+   if ( ( 'add' === $screen->action && 'product' === $_GET['post_type'] ) || in_array( $screen_id, array( 'product', 'edit-product' ) ) ) {
+      wc_enqueue_js( "
+         $('#product_cat-all input:checkbox').change(function () {
+            var max = 1;
+            var count = $('#product_cat-all input:checked').length;
+            if (count > max) {
+               $(this).prop('checked', '');
+               alert('Sorry, you can only pick one category. Please untick current category and pick another one in case you wish to switch category.');
+            }
+         });
+      " );
+   }
+}
