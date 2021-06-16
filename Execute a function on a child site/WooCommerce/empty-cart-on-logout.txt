@@ -1,0 +1,6 @@
+function wc_empty_cart_logout() {
+    if( function_exists('WC') ){
+        WC()->cart->empty_cart();
+    }
+}
+add_action('wp_logout', 'wc_empty_cart_logout');
