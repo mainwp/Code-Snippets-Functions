@@ -1,6 +1,6 @@
 ## SendGrid code snippet for hiding the admin dashboard
 
-Tested version of WordPress 5.1, plugin version was SendGrid 1.11.8.
+Tested version of WordPress 5.7.2, plugin version was SendGrid 1.11.8.
 
 This file is a code snippet that is used for [SendGrid](https://wordpress.org/plugins/sendgrid-email-delivery-simplified/) plugin. 
 
