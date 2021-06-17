@@ -1,0 +1,16 @@
+function filter_woocommerce_get_country_locale( $country_locale ) { 
+    // Loop through
+    foreach( $country_locale as $key => $locale ) {
+        // Isset
+        if ( isset ( $locale['postcode']['hidden'] ) ) {
+            // When true
+            if ( $locale['postcode']['hidden'] == true ) {
+                // Set to false
+                $country_locale[$key]['postcode']['hidden'] = false;
+            }
+        }
+    }
+
+    return $country_locale;
+}
+add_filter( 'woocommerce_get_country_locale', 'filter_woocommerce_get_country_locale', 10, 1 );
