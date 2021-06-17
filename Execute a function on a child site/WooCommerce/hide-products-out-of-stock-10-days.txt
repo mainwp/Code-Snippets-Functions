@@ -1,0 +1,66 @@
+// After stock change events, when the product is without stock
+function action_woocommerce_no_stock( $wc_get_product ) {
+    // Retrieves the date, in localized format.
+    $date = wp_date( 'Y-m-d' );
+    
+    // Update meta
+    $wc_get_product->update_meta_data( '_no_stock_date', $date );
+
+    // Save
+    $wc_get_product->save();
+}
+add_action( 'woocommerce_no_stock', 'action_woocommerce_no_stock', 10, 1 );
+
+// When product is saved in WooCommerce backend
+function action_woocommerce_admin_process_product_object( $product ) {
+    // Get stock quantity
+    $stock_quantity = $product->get_stock_quantity();
+    
+    // Greater than or equal to
+    if ( $stock_quantity >= 1 ) {
+        // Get meta value
+        $no_stock_date = $product->get_meta( '_no_stock_date' );
+
+        // NOT empty
+        if ( ! empty ( $no_stock_date ) ) {
+            // Update
+            $product->update_meta_data( '_no_stock_date', '' );
+        }
+    }
+}
+add_action( 'woocommerce_admin_process_product_object', 'action_woocommerce_admin_process_product_object', 10, 1 ); 
+
+// Change the shop query
+function action_woocommerce_product_query( $q, $query ) {
+    // Returns true when on the product archive page (shop).
+    if ( is_shop() ) {
+        // Retrieves the date, in localized format.
+        $date = wp_date( 'Y-m-d' );
+        
+        // Date - 10 days
+        $date = wp_date( 'Y-m-d', strtotime( $date . ' -10 days' ) );
+        
+        // Get any existing meta query
+        $meta_query = $q->get( 'meta_query' );
+        
+        // Define an additional meta query 
+        $meta_query[] = array(
+            'relation'    => 'OR',
+            array(
+                'key'     => '_no_stock_date',
+                'value'   => $date,
+                'compare' => '>',
+                'type'    => 'date',
+            ),
+            array(
+                'key'     => '_no_stock_date',
+                'compare' => 'NOT EXISTS',
+                'type'    => 'date',
+            )
+        );
+
+        // Set the new merged meta query
+        $q->set( 'meta_query', $meta_query );
+    }
+}
+add_action( 'woocommerce_product_query', 'action_woocommerce_product_query', 10, 2 );
