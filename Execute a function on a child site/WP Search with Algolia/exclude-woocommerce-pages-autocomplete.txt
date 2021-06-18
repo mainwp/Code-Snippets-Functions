@@ -1,0 +1,37 @@
+// We alter the indexing decision making for both the posts index and the searchable_posts index.
+add_filter('algolia_should_index_post', 'custom_should_index_post', 10, 2);
+add_filter('algolia_should_index_searchable_post', 'custom_should_index_post', 10, 2);
+
+/**
+ * @param bool    $should_index
+ * @param WP_Post $post
+ *
+ * @return bool
+ */
+function custom_should_index_post($should_index, WP_Post $post) {
+    if (false === $should_index) {
+        // If the decision has already been taken to not index the post
+        // stick to that decision.
+        return $should_index;
+    }
+
+    if ($post->post_type !== 'page') {
+        // We only want to alter the decision making for pages.
+        // We we are dealing with another post_type, return the $should_index as is.
+        return  $should_index;
+    }
+
+    $woocommerce_page_ids = [
+        get_option('woocommerce_cart_page_id'),
+        get_option('woocommerce_checkout_page_id'),
+        get_option('woocommerce_myaccount_page_id')
+    ];
+
+    if (in_array($post->ID, $woocommerce_page_ids)) {
+        // If the post is a page and has an excluded page ID,
+        // we return false to inform that we do not want to index the post.
+        return false;
+    }
+
+    return $should_index;
+}
