@@ -1,0 +1,10 @@
+add_action( 'woocommerce_after_checkout_validation', 'bks_validate_fname_lname', 10, 2);
+
+function bks_validate_fname_lname( $fields, $errors ){
+    if (!preg_match( '/^[a-zA-Z ]+$/', $fields[ 'billing_first_name' ])){
+        $errors->add( 'validation', 'First name should only have no special characters.' );
+    }
+    if (!preg_match( '/^[a-zA-Z ]+$/', $fields[ 'billing_last_name' ])){
+        $errors->add( 'validation', 'Last name should only have no special characters.' );
+    }
+}
