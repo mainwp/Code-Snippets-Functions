@@ -1,0 +1,21 @@
+add_filter( 'woocommerce_cart_item_name', 'bks_custom_text_cart_item_name', 10, 3 );
+function bks_custom_text_cart_item_name( $item_name, $cart_item, $cart_item_key ) {
+
+    if( ! ( is_cart() || is_checkout()) ) // CHANGE HERE
+        return $item_name;
+
+
+    $shipping_class_1 = '5-gallon';
+    $shipping_class_2 = '10-gallon';
+
+    $shipping_class   = $cart_item['data']->get_shipping_class();
+
+    if( $shipping_class === $shipping_class_1 ) {
+        $item_name .= '<br /><div class="item-shipping-class">' . __("Please call confirm shipping rates", "woocommerce") . '</div>';
+    }
+    elseif( $shipping_class === $shipping_class_2 ) {
+        $item_name .= '<br /><div class="item-shipping-class">' . __("Some different message…", "woocommerce") . '</div>';
+    }
+
+    return $item_name;
+}
