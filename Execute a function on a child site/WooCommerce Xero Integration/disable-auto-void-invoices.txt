@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_xero_disable_auto_void_invoices', '__return_true' );
