@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_xero_create_unique_tax_label', '__return_false' );
