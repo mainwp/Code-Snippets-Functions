@@ -1,0 +1,6 @@
+function mysite_wp_image_editor_output_format( $formats ) {
+    $formats['image/jpg'] = 'image/webp';
+ 
+    return $formats;
+}
+add_filter( 'wp_image_editor_output_format', 'mysite_wp_image_editor_output_format' );
