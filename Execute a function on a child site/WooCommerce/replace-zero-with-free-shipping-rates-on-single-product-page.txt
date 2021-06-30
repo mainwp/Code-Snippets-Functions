@@ -1,0 +1,59 @@
+function action_woocommerce_after_add_to_cart_form() {
+    // get all zones
+    $zones = WC_Shipping_Zones::get_zones();
+
+    // get the shop base country
+    $base_country = WC()->countries->get_base_country();
+    $base_city = WC()->countries->get_base_city();
+
+    // start display of table
+    echo '<div>' . __( 'Available Shipping', 'woocommerce' );
+    echo '<br><small><span class="shipping-time-cutoff">All orders are shipped from the '.$base_country.'. Order before 12AM Mon-Fri for same day delivery within '.$base_city.'. Order before 3PM Mon-Thu for next day delivery.</span></small>';
+    echo '<small><table class="shipping-and-delivery-table">';
+
+    // get name of each zone and each shipping method for each zone
+    foreach ( $zones as $zone_id => $zone ) {
+        
+        echo '<tr><td>';
+       
+        echo '<strong>' . $zone['zone_name'] . '</strong>' . '</td><td>';
+
+        $zone_shipping_methods = $zone['shipping_methods'];
+    
+        foreach ( $zone_shipping_methods as $index => $method ) {
+            $instance = $method->instance_settings;
+            
+            // Initialize
+            $above = '';
+            $output_cost = __( 'Free', 'woocommerce' );
+
+            // Cost isset
+            if ( isset( $instance['cost'] ) ) {
+                // NOT empty
+                if ( ! empty ( $instance['cost'] ) ) {
+                    // Output
+                    $output_cost = wc_price( $instance['cost'] );   
+                }
+            }
+            
+            // Min amount isset
+            if ( isset( $instance['min_amount'] ) ) {
+                // NOT empty
+                if ( ! empty ( $instance['min_amount'] ) ) {
+                    // Above
+                    $above = __( 'above ', 'woocommerce' );
+                    
+                    // Output
+                    $output_cost = wc_price( $instance['min_amount'] );
+                }
+            }
+            
+            echo $instance['title'] . ': ' . $above . '<strong>' . $output_cost . '</strong>' . '<br>';        
+        }
+
+        echo '</td></tr>';
+    }
+        
+    echo '</table></small></div>';
+}
+add_action( 'woocommerce_after_add_to_cart_form', 'action_woocommerce_after_add_to_cart_form', 10, 0 );
