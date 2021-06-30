@@ -1,0 +1,15 @@
+function filter_woocommerce_email_recipient_new_order( $recipient, $order = false ) {   
+    if ( ! $order || ! is_a( $order, 'WC_Order' ) ) return $recipient;
+    
+    // Get shipping method
+    $shipping_method = $order->get_shipping_method();
+
+    // NOT equal (Note: this should be adjusted to the shipping method in your site language)
+    // Such as: 'Afhalen' for dutch, etc...
+    if ( $shipping_method != 'Local Pickup' ) {
+        $recipient = '';
+    }
+
+    return $recipient;
+}
+add_filter( 'woocommerce_email_recipient_new_order', 'filter_woocommerce_email_recipient_new_order', 10, 2 );
