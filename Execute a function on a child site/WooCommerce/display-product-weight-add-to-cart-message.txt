@@ -1,0 +1,15 @@
+add_filter( 'wc_add_to_cart_message', 'my_add_to_cart_function', 10, 2 ); 
+
+function my_add_to_cart_function( $message, $product_id ) {
+
+    $product = wc_get_product($product_id);
+    
+
+    $message = sprintf('<span style="font-size: 12px;"> %s  has been added by to your basket.</span><br><span style="font-size: 12px;">Weight: %s </span><a href="https://example.com/cart/" class="w-100 add-to-card-pills btn mt-3">View Basket</a>', 
+    get_the_title( $product_id ) ,
+    $product->get_weight()
+    
+    ); 
+    return $message; 
+    
+}
