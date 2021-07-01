@@ -1,0 +1,17 @@
+add_filter( ‘woocommerce_new_customer_data’, ‘custom_new_customer_data’, 10, 1 );
+function custom_new_customer_data( $new_customer_data ){
+
+// get the first and last billing names
+if(isset($_POST[‘billing_first_name’])) $first_name = $_POST[‘billing_first_name’];
+if(isset($_POST[‘billing_last_name’])) $last_name = $_POST[‘billing_last_name’];
+
+// the customer billing complete name
+if( ! empty($first_name) || ! empty($last_name) )
+$complete_name = $first_name . ‘ ‘ . $last_name;
+
+// Replacing ‘user_login’ in the user data array, before data is inserted
+if( ! empty($complete_name) )
+$new_customer_data[‘user_login’] = sanitize_user( str_replace( ‘ ‘, ‘-‘, $complete_name ) );
+
+return $new_customer_data;
+}
