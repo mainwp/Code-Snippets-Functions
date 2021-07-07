@@ -1,0 +1,7 @@
+function filter_woocommerce_add_to_cart_item_name_in_quotes( $item_name, $product_id ) {
+    // Item name 
+    $item_name = sprintf( _x( '%s', 'Item name in quotes', 'woocommerce' ), strip_tags( get_the_title( $product_id ) ) );
+    
+    return $item_name;
+}
+add_filter ( 'woocommerce_add_to_cart_item_name_in_quotes', 'filter_woocommerce_add_to_cart_item_name_in_quotes', 10, 2 );
