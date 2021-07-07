@@ -1,0 +1,21 @@
+function action_comment_post( $comment_ID, $comment_approved, $commentdata ) {  
+    // Isset
+    if ( isset ( $commentdata['comment_author_email'] ) ) {
+        // Get author email
+        $author_email = $commentdata['comment_author_email'];
+
+        if ( is_email( $author_email ) ) {
+            // Post ID
+            $post_id = $commentdata['comment_post_ID'];
+            
+            // Send e-mail
+            $to = $author_email;
+            $subject = 'The subject';
+            $body = sprintf( __(' Thank you for giving a review on %s', 'woocommerce' ), '<a href="' . get_permalink( $post_id ) . '">' .  get_the_title( $post_id ) . '</a>' );
+            $headers = array( 'Content-Type: text/html; charset=UTF-8' );
+            
+            wp_mail( $to, $subject, $body, $headers );
+        }
+    } 
+}
+add_action( 'comment_post', 'action_comment_post', 10, 3 );
