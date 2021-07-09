@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_get_price_html', 'theme_add_description_after_or_after_price', 2, 10 );
+
+function theme_add_description_after_or_after_price($price, $product){
+    $description = ($product->is_featured()) ? 'Your HTML or text' : '';
+    return $price . $description  ;
+}
