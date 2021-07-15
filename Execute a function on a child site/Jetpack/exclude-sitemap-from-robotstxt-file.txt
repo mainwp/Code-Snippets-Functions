@@ -1,0 +1,1 @@
+add_filter( 'jetpack_sitemap_include_in_robotstxt', '__return_false' );
