@@ -1,0 +1,5 @@
+function my_defer_scripts($tag, $handle, $src) {
+    if ('comment-reply' == $handle) return "<script type='text/javascript' defer src='$src'></script>";
+   return $tag;
+} 
+add_filter('script_loader_tag', 'my_defer_scripts', 10, 3);
