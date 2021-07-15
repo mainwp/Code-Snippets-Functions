@@ -1,0 +1,12 @@
+add_action( 'woocommerce_before_single_product', 'woocommerce_before_single_product_action' );
+function woocommerce_before_single_product_action() {
+    global $product;
+
+    if ( $product ) {
+        $quantity = $product->get_stock_quantity();
+
+        if ( $quantity !== null && $quantity === 0 ) {
+            remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+        }
+    }
+}
