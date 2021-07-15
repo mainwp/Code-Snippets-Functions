@@ -1,0 +1,1 @@
+add_filter( 'jetpack_enable_carousel_stats', '__return_true' );
