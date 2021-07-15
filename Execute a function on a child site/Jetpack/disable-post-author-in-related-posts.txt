@@ -1,0 +1,20 @@
+function jetpackme_related_authors( $context, $post_id ) {
+    // Get the author ID.
+    $post_author = get_post_field( 'post_author', $post_id );
+ 
+    // Get the author's display name.
+    $author_display_name = get_the_author_meta( 'display_name', $post_author );
+ 
+    // Add the author name after the existing context.
+    if ( isset( $author_display_name ) && ! empty( $author_display_name ) ) {
+        return sprintf(
+            __( '%1$s<span class="jp-relatedposts-post-author">By %2$s</span>', 'my-plugin-slug' ),
+            $context,
+            esc_html( $author_display_name )
+        );
+    }
+ 
+    // Final fallback.
+    return $context;
+}
+add_filter( 'jetpack_relatedposts_filter_post_context', 'jetpackme_related_authors', 10, 2 );
