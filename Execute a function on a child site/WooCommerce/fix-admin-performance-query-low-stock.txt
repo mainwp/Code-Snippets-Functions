@@ -1,0 +1,7 @@
+add_filter('posts_where', function ($where, WP_Query $wp_query) {
+    if ($wp_query->get('low_in_stock')) {
+        $wp_query->set('low_in_stock', false);
+    }
+
+    return $where;
+}, 9, 3);
