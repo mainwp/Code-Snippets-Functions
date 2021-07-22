@@ -1,0 +1,2 @@
+add_filter( 'wp_page_revisions_to_keep', '__return_zero' );
+add_filter( 'wp_post_revisions_to_keep', '__return_zero' );
