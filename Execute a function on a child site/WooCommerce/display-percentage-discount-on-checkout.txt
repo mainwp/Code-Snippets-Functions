@@ -1,0 +1,37 @@
+add_action('woocommerce_cart_totals_after_order_total', 'wc_discount_total', 99);
+
+add_action('woocommerce_review_order_after_order_total', 'wc_discount_total', 99);
+
+function wc_discount_total()
+{
+  global $woocommerce;
+  $discount_total = 0;
+
+  foreach ($woocommerce->cart->get_cart() as $cart_item_key => $values) {
+
+    $_product = $values['data'];
+
+    if ($_product->is_on_sale()) {
+      $regular_price = $_product->get_regular_price();
+      $sale_price = $_product->get_sale_price();
+      $discount = ($regular_price - $sale_price) * $values['quantity'];
+      $discount_total += $discount;
+    }
+  }
+  if ($discount_total > 0) {
+    echo '<tr class="cart-discount">
+      <th>' . __('Your Savings', 'woocommerce') . '</th>
+      <td data-title=" ' . __('You Saved', 'woocommerce') . ' ">'
+      . wc_price($discount_total + $woocommerce->cart->discount_cart) . '</td>
+      </tr>';
+
+    $total = WC()->cart->cart_contents_total;
+    $total_saved = wc_price($discount_total + $woocommerce->cart->discount_cart);
+    $percentage_saved = round(($total_saved * 100) / $total);
+
+    echo '<tr class="cart-percentage-discount">
+      <th>' . __('Percentage Saved', 'woocommerce') . '</th>
+      <td data-title=" ' . __('You Saved', 'woocommerce') . ' ">' . esc_html($percentage_saved . "%") . '</td>
+      </tr>';
+  }
+}
