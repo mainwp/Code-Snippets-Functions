@@ -1,6 +1,6 @@
 ## Permalinks Customizer code snippets
 
-Tested version of WordPress 5.2.3, plugin version was Permalinks Customizer 2.7.0.
+Tested version of WordPress 5.8, plugin version was Permalinks Customizer 2.8.2.
 
 This file is a code snippet that is used for [Permalinks Customizer](https://wordpress.org/plugins/permalinks-customizer/) plugin. 
 
