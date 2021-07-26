@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_form_field', 'change_autofill', 1, 1 );
+
+function change_autofill( $field) {
+
+$agent = $_SERVER['HTTP_USER_AGENT'];
+
+if (strpos($agent, 'Firefox') !== false) {
+    $field = str_replace('autocomplete="address-line1"', 'autocomplete="off"', $field);
+    return $field;
+}   
+else {
+    $field = str_replace('autocomplete="address-line1"', 'autocomplete="none"', $field);
+    return $field;
+}      
+}
