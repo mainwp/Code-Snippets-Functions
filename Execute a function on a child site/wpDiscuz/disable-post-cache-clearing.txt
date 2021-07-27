@@ -1,0 +1,3 @@
+add_filter("wpdiscuz_manage_post_cache_clearing", function ($clear) {
+    return false;
+});
