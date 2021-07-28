@@ -1,6 +1,6 @@
 ## WP Rocket code snippets
 
-Tested version of WordPress 5.7.2, plugin version was WP Rocket 3.9.0.4.
+Tested version of WordPress 5.8, plugin version was WP Rocket 3.9.1.1.
 
 This file is a code snippet that is used for [WP Rocket](https://wp-rocket.me/) plugin. 
 
