@@ -1,0 +1,5 @@
+add_filter( 'flatsome_infinite_scroll_params', function ( $params ) {
+	$params['history'] = false;
+
+	return $params;
+} );
