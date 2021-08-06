@@ -1,0 +1,4 @@
+add_filter( 'jetpack_publicize_options', function( $option ) { 
+    $option['attach_media'] = true;
+    return $option;
+} );
