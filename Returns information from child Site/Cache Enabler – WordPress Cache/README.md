@@ -1,6 +1,6 @@
 ## Purge Cache Enabler – WordPress Cache on your Child Sites
 
-Tested version of WordPress 5.7.1
+Tested version of WordPress 5.8.
 
 This file is a code snippet that is used for [Cache Enabler – WordPress Cache Plugin By KeyCDN](https://wordpress.org/plugins/cache-enabler/).
 
