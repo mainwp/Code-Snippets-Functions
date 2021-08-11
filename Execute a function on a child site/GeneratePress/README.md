@@ -1,6 +1,6 @@
 ## GeneratePress code snippets
 
-Tested version of WordPress 5.7.2, theme version was GeneratePress 3.0.3.
+Tested version of WordPress 5.8, theme version was GeneratePress 3.0.4.
 
 This file is a code snippet that is used for [GeneratePress](https://wordpress.org/themes/generatepress/) theme. 
 
