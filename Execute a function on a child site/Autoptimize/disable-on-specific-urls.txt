@@ -1,0 +1,9 @@
+add_filter('autoptimize_filter_noptimize','my_ao_noptimize',10,0);
+
+function my_ao_noptimize() {
+   if (strpos($_SERVER['REQUEST_URI'],'term1')!==false || strpos($_SERVER['REQUEST_URI'],'term2')!==false) {
+       return true;
+   } else {
+       return false;
+   }
+}
