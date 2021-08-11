@@ -1,0 +1,4 @@
+define('WP_FAIL2BAN_LOG_PINGBACKS', true);
+define('WP_FAIL2BAN_LOG_SPAM', true);
+define('WP_FAIL2BAN_PLUGIN_LOG_XMLRPC', true);
+define('WP_FAIL2BAN_LOG_PASSWORD_REQUEST', true);
