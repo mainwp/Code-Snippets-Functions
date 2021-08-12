@@ -1,0 +1,22 @@
+add_filter( 'relevanssi_hits_filter', 'rlv_sku_exact_match' );
+function rlv_sku_exact_match( $hits ) {
+    global $wpdb;
+    $post_ids = $wpdb->get_col(
+		$wpdb->prepare(
+			"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'status' AND meta_value = %s",
+			$hits[1]
+		)
+	);
+    if ( ! $post_ids ) {
+		// No matches found, don't touch the results.
+        return $hits;
+    }
+	// Return only results with ID numbers that are in $post_ids.
+	$hits[0] = array_filter(
+		$hits[0],
+		function( $hit ) use ( $post_ids ) {
+			return in_array( $hit->ID, $post_ids, false );
+		}
+	);
+	return $hits;
+}
