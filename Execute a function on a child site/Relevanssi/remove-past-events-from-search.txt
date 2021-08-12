@@ -1,0 +1,23 @@
+function rlv_no_past_events( $status, $post_id ) {
+	$end_date = get_post_meta( $post_id, '_EventEndDate', true );
+	if ( $end_date ) {
+		if ( strtotime( $end_date ) < time() ) {
+			$status = false;
+		}
+	}
+	return $status;
+}
+
+/**
+ * Removes past events from indexing.
+ *
+ * @param array $restriction The MySQL restriction and an explanation.
+ *
+ * @return array The restriction set with event restriction included.
+ */
+function rlv_exclude_past_events( $restriction ) {
+	global $wpdb;
+	$restriction['mysql']  .= " AND post.ID NOT IN (SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_EventEndDate' AND meta_value < NOW())";
+	$restriction['reason'] .= ' Past event';
+	return $restriction;
+}
