@@ -1,0 +1,6 @@
+add_filter( 'relevanssi_search_ok', function( $ok, $query ) {
+	if ( 'elementor_library' === $query->query_vars['post_type'] ) {
+		$ok = false;
+	}
+	return $ok;
+}, 10, 2 );
