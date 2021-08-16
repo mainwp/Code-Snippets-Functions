@@ -1,0 +1,40 @@
+add_filter( 'relevanssi_content_to_index', 'rlv_envira_gallery_content', 10, 2 );
+/**
+ * Indexes the attachment content as part of the Envira Gallery posts.
+ *
+ * @param string  $content The post content.
+ * @param WP_Post $post    The post object.
+ *
+ * @return string The updated content.
+ */
+function rlv_envira_gallery_content( string $content, WP_Post $post ) : string {
+	if ( 'envira' !== $post->post_type ) {
+		return $content; // Not a gallery post, skip.
+	}
+	$args     = array(
+		'post_parent'    => $post->ID,
+		'posts_per_page' => -1,
+	);
+	$children = get_children( $args ); // Fetches all the attached images.
+	foreach ( $children as $child ) {
+		$content .= ' ' . $child->post_title; // Adds the image title.
+		$content .= ' ' . $child->post_excerpt; // Adds the image caption.
+
+        $tags = get_the_terms( $child->ID, 'envira-tag' );
+		if ( ! is_array( $tags ) ) {
+			$tags = array();
+		}
+		foreach ( $tags as $tag ) {
+			$content .= ' ' . $tag->name; // Adds the tag name.
+		}
+      
+		$cats = get_the_terms( $child->ID, 'envira-category' );
+		if ( ! is_array( $cats ) ) {
+			$cats = array();
+		}
+		foreach ( $cats as $cat ) {
+			$content .= ' ' . $cat->name; // Adds the category name.
+		}
+	}
+	return $content;
+}
