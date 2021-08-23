@@ -1,0 +1,28 @@
+add_filter( 'relevanssi_orderby', 'woocommerce_relevanssi_orderby' );
+function woocommerce_relevanssi_orderby( $orderby ) {
+	if ( in_array( $orderby, array( 'price', 'price-desc' ), true ) ) {
+		global $wp_query;
+		$orderby = 'meta_value_num';
+		$wp_query->query_vars['meta_key'] = '_regular_price';
+	}
+	if ( 'date ID' === $orderby ) {
+		global $wp_query;
+		$orderby = 'post_date';
+	}
+	if ( 'popularity' === $orderby ) {
+		global $wp_query, $rlv_wc_order;
+		$orderby = 'meta_value_num';
+		$rlv_wc_order = 'desc';
+		$wp_query->query_vars['meta_key'] = 'total_sales';
+	}
+	return $orderby;
+}
+
+add_filter( 'relevanssi_order', 'woocommerce_relevanssi_order' );
+function woocommerce_relevanssi_order( $order ) {
+	global $rlv_wc_order;
+	if ( $rlv_wc_order ) {
+		$order = $rlv_wc_order;
+	}
+	return $order;
+}
