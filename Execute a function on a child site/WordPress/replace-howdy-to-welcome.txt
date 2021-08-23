@@ -1,0 +1,9 @@
+add_filter( 'admin_bar_menu', 'replace_wordpress_howdy', 25 );
+function replace_wordpress_howdy( $wp_admin_bar ) {
+$my_account = $wp_admin_bar->get_node('my-account');
+$newtext = str_replace( 'Howdy,', 'Welcome,', $my_account->title );
+$wp_admin_bar->add_node( array(
+'id' => 'my-account',
+'title' => $newtext,
+) );
+}
