@@ -1,0 +1,17 @@
+add_action( 'admin_menu', function () {
+  remove_submenu_page( 'index.php', 'relevanssi_admin_search' );
+  add_menu_page(
+    'Search all content',
+    'Search all content',
+    'manage_options',
+    'relevanssi_admin_search',
+    'relevanssi_admin_search_page',
+    'dashicons-search',
+    2
+  );
+}, 99 );
+
+add_filter( 'relevanssi_acceptable_hooks', function( $hooks ) {
+    $hooks[] = 'toplevel_page_relevanssi_admin_search';
+    return $hooks;
+} );
