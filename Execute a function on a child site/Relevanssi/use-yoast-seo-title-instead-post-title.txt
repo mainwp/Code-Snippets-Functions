@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_post_title_before_tokenize', 'rlv_use_yoast_title', 10, 2 );
+function rlv_use_yoast_title( $title, $post ) {
+    return get_post_meta( $post->ID, '_yoast_wpseo_title', true );
+}
