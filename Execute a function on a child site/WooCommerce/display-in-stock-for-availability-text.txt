@@ -2,7 +2,7 @@ add_filter( 'woocommerce_get_availability_text', 'wc_display_in_stock', 10 );
 
 function wc_display_in_stock( $availability ) {
     if ( empty( $availability ) ) {
-        $availability = esc_html__( 'In Stock', 'electro' );
+        $availability = esc_html__( 'In Stock' );
     }
     return $availability;
 }
