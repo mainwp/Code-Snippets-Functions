@@ -1,0 +1,5 @@
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+add_action( 'plugins_loaded', function () {
+	deactivate_plugins( 'hello-dolly/hello.php' );
+} );
