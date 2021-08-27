@@ -1,0 +1,1 @@
+add_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
