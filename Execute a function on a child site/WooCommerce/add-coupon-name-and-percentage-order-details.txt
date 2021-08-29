@@ -1,0 +1,36 @@
+function filter_woocommerce_get_order_item_totals( $total_rows, $order, $tax_display ) {
+    // Exit if there is no coupons applied
+    if ( sizeof( $order->get_coupon_codes() ) == 0 ) return $total_rows;
+
+    $new_total_rows = []; // Initializing
+
+    foreach( $total_rows as $key => $total ) {
+        $new_total_rows[$key] = $total;
+
+        if ( $key == 'discount' ) {
+            // Get used coupon codes only
+            $coupon_codes = $order->get_coupon_codes();
+            
+            // Loop through WC_Order_Item_Coupon objects
+            foreach ( $coupon_codes as $index => $coupon_code ) {
+                // Get an instance of the WC_Coupon Object
+                $coupon = new WC_Coupon( $coupon_code );
+
+                // Discount type = percent & amount NOT empty
+                if ( $coupon->get_discount_type() == 'percent' && ! empty ( $coupon->get_amount() ) ) {
+                    $coupon_codes[$index] = $coupon_code . ' (' . $coupon->get_amount() . '%)';
+                }
+            }
+            
+
+            // Insert applied coupon codes in total lines after discount line
+            $new_total_rows['coupon_codes'] = array(
+                'label' => __( 'Applied coupons:', 'woocommerce' ),
+                'value' => implode( ', ', $coupon_codes ),
+            );
+        }
+    }
+
+    return $new_total_rows;
+}
+add_filter( 'woocommerce_get_order_item_totals', 'filter_woocommerce_get_order_item_totals', 10, 3 );
