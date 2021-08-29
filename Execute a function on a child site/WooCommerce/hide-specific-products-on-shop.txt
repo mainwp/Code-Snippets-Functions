@@ -1,0 +1,16 @@
+add_action( 'pre_get_posts', 'erginous_exclude_id' );
+
+function custom_pre_get_posts_query( $q ) {
+
+  if ( ! $q->is_main_query() ) return;
+  if ( ! $q->is_post_type_archive() ) return;
+  
+  if ( ! is_admin() && is_shop() ) {
+
+    $q->set( 'post__not_in', array(70, 53) ); // Replace 70 and 53 with your products IDs. Separate each ID with a comma.
+  
+  }
+
+  remove_action( 'pre_get_posts', 'erginous_exclude_id' );
+
+}
