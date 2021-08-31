@@ -1,0 +1,12 @@
+
+add_filter('sensei_check_for_activity', 'sensei_allow_teachers_to_grade_all_quizzes', 5 );
+
+function sensei_allow_teachers_to_grade_all_quizzes( $args ){
+
+    // remove the limit
+    remove_filter( 'sensei_check_for_activity' , array( Sensei()->teacher, 'filter_grading_activity_queries') );
+
+    // make sure to the return the expected arguments
+    return $args;
+
+}
