@@ -1,0 +1,10 @@
+function woocommerce_after_shop_loop_item_title_short_description() {
+    global $product;
+
+    if ( !$product->post->post_excerpt ) return;
+    ?>
+    <div itemprop="description">
+        <?php echo wp_trim_words( apply_filters( 'woocommerce_short_description', $product->post->post_excerpt ), 30, '...' );?>
+    </div>
+    <?php
+}
