@@ -1,0 +1,12 @@
+add_action( 'sensei_learners_extra', 'custom_sense_disable_teacher_learner_add', 1 );
+
+function custom_sense_disable_teacher_learner_add ( ){
+
+    // remove the learner add box for teachers
+    if( ! current_user_can( 'manage_options' )  ){
+
+        remove_all_actions( 'sensei_learners_extra' );
+
+    }
+
+}
