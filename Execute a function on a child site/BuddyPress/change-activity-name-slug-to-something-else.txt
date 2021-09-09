@@ -1,0 +1,10 @@
+// change BP /activity/ slug to /dashboard/
+define( 'BP_ACTIVITY_SLUG', 'dashboard' );
+ 
+// Change the name for the "Activity" tab to "Dashboard", 
+// and reference the newly defined slug /dashboard/
+function bpcodex_rename_profile_tabs() {
+    // Change "Activity" to "Dashboard"
+    buddypress()->members->nav->edit_nav( array( 'name' => __( 'Dashboard', 'textdomain' ) ), 'dashboard' );
+}
+add_action( 'bp_actions', 'bpcodex_rename_profile_tabs' );
