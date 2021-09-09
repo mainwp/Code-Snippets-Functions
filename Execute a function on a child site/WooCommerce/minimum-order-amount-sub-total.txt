@@ -1,0 +1,30 @@
+add_action( 'woocommerce_check_cart_items', 'wc_minimum_order_amount' );
+ 
+function wc_minimum_order_amount() {
+    // Set this variable to specify a minimum order value
+    $minimum = 50;
+
+    if ( WC()->cart->subtotal < $minimum ) {
+
+        if( is_cart() ) {
+
+            wc_print_notice( 
+                sprintf( 'You must have an order with a minimum of %s to place your order, your current order total is %s.' , 
+                    wc_price( $minimum ), 
+                    wc_price( WC()->cart->subtotal )
+                ), 'error' 
+            );
+
+        } else {
+
+            wc_add_notice( 
+                sprintf( 'You must have an order with a minimum of %s to place your order, your current order total is %s.' , 
+                    wc_price( $minimum ), 
+                    wc_price( WC()->cart->subtotal )
+                ), 'error' 
+            );
+
+        }
+    }
+
+}
