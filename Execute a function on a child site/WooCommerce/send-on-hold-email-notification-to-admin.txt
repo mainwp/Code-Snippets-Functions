@@ -1,0 +1,13 @@
+function filter_woocommerce_email_headers( $header, $email_id, $order ) {
+    // Compare
+    if ( $email_id == 'customer_on_hold_order' ) {      
+        // Prepare the the data
+        $formatted_email = utf8_decode( 'My test <my_test@email.com>' );
+
+        // Add Bcc to headers
+        $header .= 'Bcc: ' . $formatted_email . '\r\n';
+    }
+
+    return $header;
+}
+add_filter( 'woocommerce_email_headers', 'filter_woocommerce_email_headers', 10, 3 );
