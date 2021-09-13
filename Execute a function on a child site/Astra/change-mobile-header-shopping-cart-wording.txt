@@ -1,0 +1,3 @@
+add_filter( 'astra_header_cart_flyout_shopping_cart_text', function() {
+return 'My Shop Flyout Cart';
+} );
