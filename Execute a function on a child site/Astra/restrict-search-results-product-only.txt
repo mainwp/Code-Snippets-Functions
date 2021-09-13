@@ -1,0 +1,5 @@
+add_filter( 'get_search_form', 'astra_get_search_form_callback' );
+function astra_get_search_form_callback( $search_form ) {
+	$search_form = str_replace( '-1">', '-1"/><input type="hidden" name="post_type" value="product"/>', $search_form ); 
+	return $search_form;
+}
