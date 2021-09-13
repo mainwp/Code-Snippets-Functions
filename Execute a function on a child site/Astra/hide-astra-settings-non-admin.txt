@@ -1,0 +1,6 @@
+function ast_remove_plugin_metaboxes(){
+    if ( ! current_user_can( 'administrator' ) ) {
+        remove_meta_box( 'astra_settings_meta_box', 'page', 'side' ); // Remove Astra Settings in Pages
+        remove_meta_box( 'astra_settings_meta_box', 'post', 'side' ); // Remove Astra Settings in Posts
+    }
+}
