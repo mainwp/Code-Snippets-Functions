@@ -1,0 +1,27 @@
+// Overwrite the existing 'order-total' column
+function filter_woocommerce_my_account_my_orders_column_order_total( $order ) {
+    // Empty array
+    $product_skus = array();
+
+    // Loop through order items
+    foreach( $order->get_items() as $item ) {
+        // Get an instance of corresponding the WC_Product object
+        $product = $item->get_product();
+        
+        // Get product SKU
+        $product_sku = $product->get_sku();
+    
+        // NOT empty
+        if ( ! empty ( $product_sku ) ) {
+            // Push to array
+            $product_skus[] = $product_sku;
+        }
+    }
+    
+    // Get item count
+    $item_count = $order->get_item_count() - $order->get_item_count_refunded();
+    
+    // translators: 1: formatted order total 2: total order items
+    echo wp_kses_post( sprintf( _n( '%1$s for %2$s ', '%1$s for %2$s ', $item_count, 'woocommerce' ) . implode( ", ", $product_skus ), $order->get_formatted_order_total(), $item_count ) );
+}
+add_action( 'woocommerce_my_account_my_orders_column_order-total', 'filter_woocommerce_my_account_my_orders_column_order_total', 10, 1 );
