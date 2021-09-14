@@ -1,0 +1,11 @@
+add_filter( 'woocommerce_order_item_name', 'display_product_image_in_order_item', 20, 3 );
+function display_product_image_in_order_item( $item_name, $item, $is_visible ) {
+    // Targeting view order pages only
+    if( is_wc_endpoint_url( 'view-order' ) ) {
+        $product   = $item->get_product(); // Get the WC_Product object (from order item)
+        $thumbnail = $product->get_image(array( 36, 36)); // Get the product thumbnail (from product object)
+        if( $product->get_image_id() > 0 )
+            $item_name = '<div class="item-thumbnail">' . $thumbnail . '</div>' . $item_name;
+    }
+    return $item_name;
+}
