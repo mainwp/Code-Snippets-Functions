@@ -1,0 +1,13 @@
+add_action( 'wp_footer', function(){
+    ?>
+    <script>
+    jQuery(document).ready(function() {
+        if ( jQuery('.wpProQuiz_content input[name="restartQuiz"]' ).length ) {
+            jQuery( '.wpProQuiz_content input[name="restartQuiz"]' ).click(function( event ) {
+                window.location.reload(true);
+            });
+        }
+    });
+    </script>
+    <?php
+}, 999 );
