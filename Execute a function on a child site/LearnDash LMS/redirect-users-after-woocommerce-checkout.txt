@@ -1,0 +1,14 @@
+add_action( 'template_redirect', 'ld_custom_redirect_after_purchase' );
+ 
+function ld_custom_redirect_after_purchase() {
+    global $wp;
+     
+    if ( is_checkout() && ! empty( $wp->query_vars['order-received'] ) ) {
+     
+        // Change the URL below to the URL you want your customer to be redirected to. 
+        // We recommend redirecting users to their LD User Profile Page
+        wp_redirect( 'http://www.yoururl.com/user-profile-page' );
+ 
+        exit;
+    }
+}
