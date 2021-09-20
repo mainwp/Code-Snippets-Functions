@@ -1,0 +1,57 @@
+add_action( 'wp_footer', function() {
+	?>
+	<script>
+	jQuery(document).ready(function() {
+		// Define the minimum and maximum number of answers to select. Use 0 for no value.
+		var mc_selected_MIN = 1;
+		var mc_selected_MAX = 3;
+
+		// Not changes below.
+		jQuery('.wpProQuiz_content input.wpProQuiz_button[name="startQuiz"]').each(function(quiz_idx, quiz_start_button) {
+			var quizWrapper = jQuery(quiz_start_button).parents('div.wpProQuiz_content');
+
+			if ( typeof quizWrapper !== 'undefined' ) {
+				// chck to ensure we have at least one Multiple Choice question.
+				var mc_questions_count = jQuery('.wpProQuiz_list .wpProQuiz_listItem[data-type="multiple"]', quizWrapper ).length;
+				if ( mc_questions_count > 0 ) {
+					// If we only have one question we will not have a 
+					var questions_total = jQuery('.wpProQuiz_list .wpProQuiz_listItem', quizWrapper ).length;
+					// Only disable the check/next button if we have a minimum selected setting
+					if ( mc_selected_MIN > 0 ) {
+						if (  questions_total == 1  ) {
+							// If single question then no "Check" button. Only 'Finish Quiz" button.
+							jQuery('input.wpProQuiz_button[name="checkSingle"]', quizWrapper ).attr('disabled', 'disabled');
+						} else if ( questions_total > 1 ) {
+							jQuery('.wpProQuiz_list .wpProQuiz_listItem[data-type="multiple"] input.wpProQuiz_button[name="check"]', quizWrapper ).attr('disabled', 'disabled');
+							jQuery('.wpProQuiz_list .wpProQuiz_listItem[data-type="multiple"] input.wpProQuiz_button[name="next"]', quizWrapper ).attr('disabled', 'disabled');
+						}
+					} 
+
+					// Hook into the click event on the multiple choice question checkboxes. Get a count ot the answers items.
+					jQuery('.wpProQuiz_list .wpProQuiz_listItem[data-type="multiple"] input[type="checkbox"]', quizWrapper ).click(function(e) {
+						var questionWrapper = jQuery(e.currentTarget).parents('.wpProQuiz_listItem');
+						var mc_selected = jQuery('input.wpProQuiz_questionInput:checked', questionWrapper).length;
+
+						if ( ( ( mc_selected_MIN > 0 ) && ( mc_selected < mc_selected_MIN ) ) || ( mc_selected_MAX > 0 ) && ( mc_selected > mc_selected_MAX ) ) {
+							if (  questions_total == 1 ) {
+								jQuery('input.wpProQuiz_button[name="checkSingle"]', quizWrapper ).attr('disabled', 'disabled');
+							} else if ( questions_total > 1 ) {
+								jQuery('input.wpProQuiz_button[name="check"]', questionWrapper ).attr('disabled', 'disabled');
+								jQuery('input.wpProQuiz_button[name="next"]', questionWrapper ).attr('disabled', 'disabled');
+							}
+						} else {
+							if (  questions_total == 1 ) {
+								jQuery('input.wpProQuiz_button[name="checkSingle"]', quizWrapper ).attr('disabled', false);
+							} else if ( questions_total > 1 ) {
+								jQuery('input.wpProQuiz_button[name="check"]', questionWrapper ).attr('disabled', false);
+								jQuery('input.wpProQuiz_button[name="next"]', questionWrapper ).attr('disabled', false);
+							}
+						}
+					});
+				}
+			}
+		});
+	});
+	</script>
+	<?php
+}, 999 );
