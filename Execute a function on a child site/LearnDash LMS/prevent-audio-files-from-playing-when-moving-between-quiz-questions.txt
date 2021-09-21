@@ -1,0 +1,28 @@
+function ld_mute_audio_files(){
+	
+    // We want this to only run on quiz post types.
+    
+	if ( get_post_type( get_the_ID() ) == 'sfwd-quiz' ) {
+		echo '<script type="text/javascript">
+			window.my_mute = false;
+			jQuery(".wpProQuiz_button").bind("click", function(){
+				jQuery("audio,video").each(function(){
+					if (!my_mute ) {
+						if( !jQuery(this).paused ) {
+							jQuery(this).data("muted",true); //Store elements muted by the button.
+							jQuery(this).get(0).pause(); // or .muted=true to keep playing muted
+						}
+					} else {
+						if( jQuery(this).data("muted") ) {
+							jQuery(this).data("muted",false);
+							jQuery(this).get(0).pause(); // or .muted=false
+						}
+					}
+				});
+				my_mute = !my_mute;
+			});</script>';
+	}
+	
+}
+
+add_action('wp_footer', 'ld_mute_audio_files');
