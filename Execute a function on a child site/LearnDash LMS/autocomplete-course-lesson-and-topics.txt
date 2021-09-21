@@ -1,0 +1,58 @@
+/**
+ * LearnDash Auto Complete Course Lessons and Topics
+ */
+add_action( 'template_redirect', function() {
+
+	// Comma sperated course_ids to exclude from logic;
+	$excluded_courses = array();
+
+	$user_id = get_current_user_id();
+	if ( ! $user_id ) {
+		return false;
+	}
+
+	/**
+	 * Never trust the global $post object. Too many plugins 
+	 * override this with no WP_Post content.
+	 */
+	$current_step_id = get_the_ID();
+	if ( empty( $current_step_id ) ) {
+		return false;
+	}
+
+	// Get the current course step POST and make sure it is one from LD.
+	$current_step_post = get_post( $current_step_id );
+	if ( ( ! $current_step_post ) || ( ! is_a( $current_step_post, 'WP_Post' ) ) || ( ! in_array( $current_step_post->post_type, learndash_get_post_types( 'course_steps' ) ) ) ) {
+		return false;
+	}
+
+	// Check that the current user has access.
+	if ( ! sfwd_lms_has_access( $current_step_id, $user_id ) ) {
+		return false;
+	}
+
+	// Get the course step
+	$course_id = learndash_get_course_id(); 
+	if ( ! $course_id ) {
+		return false;
+	}
+
+	// Check that we are not excluding this course.
+	if ( in_array( $course_id, $excluded_courses ) ) {
+		return false;
+	}
+
+	/**
+	 * Get the Mark Complete form/button.
+	 * If this does NOT return empty then the mark complete
+	 * button would be shown on the page to the user. We use
+	 * that to know if we can automatically mark the step
+	 * complete here.
+	 */
+	$mark_html = learndash_mark_complete( $current_step_post );
+	if ( ! empty( $mark_html ) ) {
+		return learndash_process_mark_complete( $user_id, $current_step_id );
+	}
+
+	return false;
+});
