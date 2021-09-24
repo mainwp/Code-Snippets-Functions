@@ -1,0 +1,8 @@
+function wc_hide_woocommerce_menus() {
+	//Hide "WooCommerce → Marketplace".
+	remove_submenu_page('woocommerce', 'wc-addons');
+	//Hide "WooCommerce → My Subscriptions".
+	remove_submenu_page('woocommerce', 'wc-addons&section=helper');
+}
+
+add_action('admin_menu', 'wc_hide_woocommerce_menus', 71);
