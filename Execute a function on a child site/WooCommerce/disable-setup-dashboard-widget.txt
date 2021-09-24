@@ -1,4 +1,4 @@
-// Disable setup widget
+// Disable setup widget in WooCommerce
 function disable_woocommerce_setup_remove_dashboard_widgets() {
 	remove_meta_box( 'wc_admin_dashboard_setup', 'dashboard', 'normal');
 }
