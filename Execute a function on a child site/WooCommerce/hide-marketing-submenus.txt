@@ -1,0 +1,10 @@
+function wc_hide_marketing_woocommerce_menus() {
+	//Hide "Marketing".
+	remove_menu_page('woocommerce-marketing');
+	//Hide "Marketing → Overview".
+	remove_submenu_page('woocommerce-marketing', 'admin.php?page=wc-admin&path=/marketing');
+	//Hide "Marketing → Coupons".
+	remove_submenu_page('woocommerce-marketing', 'edit.php?post_type=shop_coupon');
+}
+
+add_action('admin_menu', 'wc_hide_marketing_woocommerce_menus', 71);
