@@ -1,0 +1,10 @@
+function filter_woocommerce_login_redirect( $redirect_to ) {    
+    // Gets the url to the checkout page
+    if ( $redirect_to == wc_get_checkout_url() ) return $redirect_to;
+
+    // My url
+    $redirect_to = home_url( '/myurl/' );
+    
+    return $redirect_to;
+}
+add_filter( 'woocommerce_login_redirect', 'filter_woocommerce_login_redirect', 10, 1 );
