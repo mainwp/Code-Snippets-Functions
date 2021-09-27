@@ -1,0 +1,21 @@
+add_filter ( 'wc_add_to_cart_message_html', 'wc_add_to_cart_message_custom', 10, 2 );
+
+function wc_add_to_cart_message_custom( $message, $products ) {
+    if ( empty( $products ) ) {
+        return $message;
+    }
+
+    foreach( $products as $product_id => $qty ) {
+        // get product object from ID
+        $product = wc_get_product( $product_id );
+        // add product SKU to array
+        $skus[] = $product->get_sku();
+         
+    }
+
+    $skus = array_filter( $skus );
+    $added_text = sprintf( _n( 'product %s', 'product %s', sizeof( $skus ), 'woocommerce' ), wc_format_list_of_items( $skus ) );
+    $message = sprintf( '%s <img src="images/Success.svg" style="width: 24px"> <a style="font-weight: 800">Added: </a>%s', esc_html__( '', 'woocommerce' ), esc_html( $added_text ));
+
+    return $message;
+}
