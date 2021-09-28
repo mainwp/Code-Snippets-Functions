@@ -1,0 +1,1 @@
+add_filter( 'rocket_plugins_to_deactivate', '__return_empty_array' );
