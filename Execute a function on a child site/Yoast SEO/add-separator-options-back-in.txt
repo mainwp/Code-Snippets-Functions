@@ -1,0 +1,12 @@
+function wptips_add_old_separators($separators){
+            $separators['sc-pipe']   = array(
+                'option' => '|',
+                'label'  => __( 'Vertical bar', 'wordpress-seo' ),
+            );
+            $separators['sc-tilde']  = array(
+                'option' => '~',
+                'label'  => __( 'Small tilde', 'wordpress-seo' ),
+            );
+    return $separators;
+}
+add_filter('wpseo_separator_option_list', 'wptips_add_old_separators');
