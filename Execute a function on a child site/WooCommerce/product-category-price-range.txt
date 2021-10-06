@@ -1,0 +1,42 @@
+add_filter( 'woocommerce_subcategory_count_html', 'wc_category_price_range', 9999, 2 );
+ 
+function wc_category_price_range( $html, $category ) {
+ 
+   $min = PHP_FLOAT_MAX;
+   $max = 0.00;
+    
+   $all_ids = get_posts( array(
+      'post_type' => 'product',
+      'numberposts' => -1,
+      'post_status' => 'publish',
+      'fields' => 'ids',
+      'tax_query' => array(
+         'relation' => 'AND',
+         array(
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => $category->slug,
+         ),
+         array(
+            'taxonomy' => 'product_visibility',
+            'field' => 'name',
+            'terms' => 'exclude-from-catalog',
+              'operator' => 'NOT IN',
+         ),
+      )
+   ) );
+    
+   foreach ( $all_ids as $id ) {
+      $product = wc_get_product( $id );
+      if ( $product->is_type( 'simple' ) ) {
+         $min = $product->get_price() < $min ? $product->get_price() : $min;
+         $max = $product->get_price() > $max ? $product->get_price() : $max;
+      } elseif ( $product->is_type( 'variable' ) ) {
+         $prices = $product->get_variation_prices();
+         $min = current( $prices['price'] ) < $min ? current( $prices['price'] ) : $min;
+         $max = end( $prices['price'] ) > $max ? end( $prices['price'] ) : $max;
+      } 
+   }
+    
+   return ' (' . wc_format_price_range( $min, $max ) . ')';
+}
