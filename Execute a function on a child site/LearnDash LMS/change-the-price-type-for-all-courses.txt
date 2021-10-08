@@ -1,0 +1,24 @@
+add_action( 'wp_footer', function ( $course_query_args ) {
+    $course_query_args = array(
+        'post_type'         =>   'sfwd-courses',
+        'post_status'       =>   'publish',
+        'fields'            =>   'ids'
+    );
+ 
+    $course_query = new WP_Query( $course_query_args );
+    if ( !empty( $course_query->posts ) ) {
+        foreach( $course_query->posts as $course_id ) {
+            // Example #1: Set the course price type to 'closed' for all courses.
+            learndash_update_setting( $course_id, 'course_price_type', 'closed' );
+ 
+            // Example #2: Set the course price type to 'closed' only if it is currently 'open'.
+            //$course_price_type = learndash_get_setting( $course_id, 'course_price_type' );
+            //if ( $course_price_type === 'open' ) {
+            //  learndash_update_setting( $course_id, 'course_price_type', 'closed' );
+            //}
+ 
+            // Example #3: Disable Course Progression.
+            //learndash_update_setting( $course_id, 'course_disable_lesson_progression', 'on' );
+        }
+    }
+});
