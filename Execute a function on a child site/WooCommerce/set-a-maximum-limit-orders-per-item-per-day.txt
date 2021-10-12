@@ -1,0 +1,23 @@
+add_filter('woocommerce_is_purchasable', 'preventPurchaseIfDailyOrderLimitReached', 10, 2);
+
+function preventPurchaseIfDailyOrderLimitReached($is_purchasable, $product)
+{
+    $dailyOrderLimit = 10;
+    $productId = $product->get_id();
+    $quantityOrderedToday = getDailyOrderAmount($productId);
+
+    if ($quantityOrderedToday >= $dailyOrderLimit) {
+        $is_purchasable = false;
+    }
+
+    return $is_purchasable;
+}
+
+function getDailyOrderAmount($productId)
+{
+    global $wpdb;
+    $today = date('Y-m-d');
+    $result = $wpdb->get_results("SELECT sum(product_qty) as quantity_ordered_today FROM {$wpdb->prefix}wc_order_product_lookup where product_id= {$productId} and date_created > '{$today} 00:00:00';");
+
+    return $result[0]->quantity_ordered_today;
+}
