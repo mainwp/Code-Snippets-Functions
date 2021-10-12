@@ -1,0 +1,1 @@
+add_action( 'gdpr_cc_prevent_ajax_script_inject', '__return_true' );
