@@ -1,0 +1,4 @@
+add_action( 'init', 'remove_unsuccessfull_attempts_block' );
+function remove_unsuccessfull_attempts_block() {
+    update_option( 'sg_security_unsuccessful_login', array() );
+}
