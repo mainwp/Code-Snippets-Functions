@@ -1,0 +1,4 @@
+add_action( 'init', 'remove_login_access_data' );
+function remove_login_access_data() {
+    update_option( 'sg_login_access', array() );
+}
