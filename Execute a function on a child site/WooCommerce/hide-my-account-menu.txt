@@ -1,0 +1,8 @@
+function action_woocommerce_account_navigation () {
+    // Detect the WC Dashboard page, and if NOT
+    if ( is_user_logged_in() && is_account_page() && is_wc_endpoint_url() ) {
+        // Remove navigation
+        remove_action( 'woocommerce_account_navigation', 'woocommerce_account_navigation' );
+    }
+}
+add_action( 'woocommerce_account_navigation', 'action_woocommerce_account_navigation', 1, 0 );
