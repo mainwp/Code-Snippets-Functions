@@ -1,0 +1,5 @@
+add_filter('give_checkout_payment_method_text', 'new_payment_text');
+
+function new_payment_text() {	
+	return __('Choose your Payment Option', 'give');
+}
