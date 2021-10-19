@@ -1,0 +1,12 @@
+add_filter( 'woocommerce_email_headers', 'filter_wc_remove_reply_to', 20, 3 );
+function filter_wc_remove_reply_to( $header, $email_id, $order ) {
+
+	$headers=explode("\n", $header);
+	$newheaders=array();
+	foreach ($headers as $line) {
+		if (strncmp($line, "Reply-to", 8)!=0) {
+			$newheaders[]=$line;
+		}
+	}
+	return(implode("\n", $newheaders));
+}
