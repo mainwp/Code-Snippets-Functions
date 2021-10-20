@@ -1,0 +1,47 @@
+// Adds a new column to the "My Orders" table in the account.
+function filter_woocommerce_my_account_my_orders_columns( $columns ) {
+    $new_columns = array();
+
+    foreach ( $columns as $key => $column ) {
+
+        $new_columns[ $key ] = $column;
+
+        // Add after order number column
+        if ( $key === 'order-number' ) {
+            $new_columns['order-category'] = __( 'Catégorie', 'woocommerce' );
+        }
+    }
+
+    return $new_columns;
+}
+add_filter( 'woocommerce_my_account_my_orders_columns', 'filter_woocommerce_my_account_my_orders_columns', 10, 1 );
+
+// Adds data to the custom "order-category" column in "My Account > Orders"
+function filter_woocommerce_my_account_my_orders_column_order( $order ) {
+    // Initialize
+    $categories = array();
+    
+    // Loop through order items
+    foreach ( $order->get_items() as $item_key => $item ) {
+        // Get product ID
+        $product_id = $item->get_product_id();
+        
+        // Get terms
+        $term_names = wp_get_post_terms( $product_id, 'product_cat', array( 'fields' => 'names' ) );
+        
+        // Loop through term names
+        foreach ( $term_names as $term_name ) { 
+            // NOT in array
+            if ( ! in_array( $term_name, $categories, true ) ) {
+                // Push one or more elements onto the end of array
+                array_push( $categories, $term_name );
+            }
+        }
+    }
+    
+    // NOT empty
+    if ( ! empty( $categories ) ) {
+        echo implode( ', ', $categories );
+    }
+}
+add_action( 'woocommerce_my_account_my_orders_column_order-category', 'filter_woocommerce_my_account_my_orders_column_order', 10, 1 );
