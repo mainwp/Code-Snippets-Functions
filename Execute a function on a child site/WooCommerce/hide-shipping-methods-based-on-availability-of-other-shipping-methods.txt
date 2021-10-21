@@ -1,0 +1,12 @@
+function filter_woocommerce_package_rates( $rates, $package ) { 
+    // Loop trough
+    foreach ( $rates as $rate_id => $rate ) {
+        // Checks if a value exists in an array, multiple can be added, separated by a comma
+        if ( in_array( $rate_id, array( 'local_pickup:1', 'free_shipping:2' ) ) ) {
+            unset( $rates['flat_rate:28'] );
+        }
+    }   
+    
+    return $rates;
+}
+add_filter( 'woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2 );
