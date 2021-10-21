@@ -1,8 +1,8 @@
 ## CartFlows code snippets
 
-Tested version of WordPress 5.7.2, plugin version was CartFlows 1.6.15.
+Tested version of WordPress 5.8.1, plugin version was CartFlows 1.7.1.
 
-This file is a code snippet that is used for [WooCommerce](https://wordpress.org/plugins/cartflows/) plugin. 
+This file is a code snippet that is used for [CartFlows](https://wordpress.org/plugins/cartflows/) plugin. 
 
 ## Things to do
 
