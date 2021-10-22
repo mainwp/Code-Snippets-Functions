@@ -1,0 +1,1 @@
+define('WORDFENCE_DISABLE_FILE_VIEWER', true);
