@@ -1,1 +1,0 @@
-define('WFWAF_ENABLED', false);
