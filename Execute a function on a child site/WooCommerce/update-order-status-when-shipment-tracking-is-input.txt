@@ -1,0 +1,10 @@
+function update_order_status_when_shipment_tracking_input( $meta_id, $object_id, $meta_key, $meta_value ){
+    if( $meta_key == '_wc_shipment_tracking_items' ){
+        error_log('update_order_status_when_shipment_tracking_input');
+        $order = wc_get_order( $object_id );
+        if( $order ){
+            $order->update_status( 'completed' );
+        }
+    }
+}
+add_action( 'update_postmeta', 'update_order_status_when_shipment_tracking_input', 10, 4 );
