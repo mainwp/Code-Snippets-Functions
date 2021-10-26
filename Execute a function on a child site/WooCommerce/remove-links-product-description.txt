@@ -1,0 +1,8 @@
+function remove_links_from_product_descriptions ( $content ) {
+    if ( is_product() ) {
+        $content = preg_replace('#<a.*?>(.*?)</a>#i', '\1', $content);
+        return $content;
+    }
+    return $content;
+}
+add_filter( 'the_content', 'remove_links_from_product_descriptions');
