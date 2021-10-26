@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_short_description', 'remove_links_from_product_descriptions');
