@@ -1,0 +1,1 @@
+wp_clear_scheduled_hook( 'woocommerce_tracker_send_event' );
