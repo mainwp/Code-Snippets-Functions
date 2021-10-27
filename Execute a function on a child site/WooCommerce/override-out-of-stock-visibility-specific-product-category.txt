@@ -1,0 +1,8 @@
+add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', 'wc_hide_out_of_stock_exception_category' );
+ 
+function wc_hide_out_of_stock_exception_category( $hide ) {
+   if ( is_product_category( 'tables' ) ) {
+      $hide = 'no';
+   }   
+   return $hide;
+}
