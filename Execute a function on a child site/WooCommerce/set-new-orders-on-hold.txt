@@ -1,0 +1,6 @@
+add_action( 'woocommerce_checkout_create_order', 'force_new_order_status', 20, 1 );
+function force_new_order_status( $order ) {
+
+    if( ! $order->has_status('on-hold') )
+        $order->set_status( 'on-hold', 'Forced status by a custom script' );
+}
