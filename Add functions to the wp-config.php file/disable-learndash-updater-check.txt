@@ -1,0 +1,1 @@
+define( 'LEARNDASH_ADDONS_UPDATER', false );
