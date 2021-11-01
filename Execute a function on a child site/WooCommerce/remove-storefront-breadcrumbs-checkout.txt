@@ -1,0 +1,7 @@
+add_action( 'storefront_before_content', 'wc_remove_storefront_breadcrumbs_checkout', 1 );
+
+function wc_remove_storefront_breadcrumbs_checkout() {
+   if ( is_checkout() ) {
+      remove_action( 'storefront_before_content', 'woocommerce_breadcrumb', 10 );
+   }
+}
