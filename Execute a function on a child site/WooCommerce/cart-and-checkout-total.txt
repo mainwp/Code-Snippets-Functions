@@ -1,0 +1,7 @@
+add_action( 'woocommerce_before_cart_table', 'free_shipping_notice' ); 
+add_action( 'woocommerce_checkout_before_customer_details', 'free_shipping_notice' ); 
+function free_shipping_notice() {
+  if ( 25 > WC()->cart->get_total() ) {
+    echo '<div style="color: #e08e79;">All orders over $25 ship free</div>';
+  }
+}
