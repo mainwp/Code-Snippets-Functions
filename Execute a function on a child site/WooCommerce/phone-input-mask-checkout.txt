@@ -1,0 +1,33 @@
+add_filter( 'woocommerce_checkout_fields', 'bbloomer_checkout_phone_us_format' );
+   
+function bbloomer_checkout_phone_us_format( $fields ) {
+    $fields['billing']['billing_phone']['placeholder'] = '123-456-7890';
+    $fields['billing']['billing_phone']['maxlength'] = 12; // 123-456-7890 is 12 chars long
+    return $fields;
+}
+ 
+add_action( 'woocommerce_after_checkout_form', 'bbloomer_phone_mask_us' );
+ 
+function bbloomer_phone_mask_us() {
+   wc_enqueue_js( "
+      $('#billing_phone')
+      .keydown(function(e) {
+         var key = e.which || e.charCode || e.keyCode || 0;
+         var phone = $(this);         
+         if (key !== 8 && key !== 9) {
+           if (phone.val().length === 3) {
+            phone.val(phone.val() + '-'); // add dash after char #3
+           }
+           if (phone.val().length === 7) {
+            phone.val(phone.val() + '-'); // add dash after char #7
+           }
+         }
+         return (key == 8 ||
+           key == 9 ||
+           key == 46 ||
+           (key >= 48 && key <= 57) ||
+           (key >= 96 && key <= 105));
+        });
+         
+   " );
+}
