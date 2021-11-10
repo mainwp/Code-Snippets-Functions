@@ -25,6 +25,6 @@ add_action( 'manage_shop_coupon_posts_custom_column', 'wc_admin_shop_coupon_sale
   
 function wc_admin_shop_coupon_sales_column_content( $column, $coupon_id ) {
     if ( $column == 'totsales' ) {
-      echo bbloomer_get_sales_by_coupon( get_the_title( $coupon_id ) );
+      echo wc_get_sales_by_coupon( get_the_title( $coupon_id ) );
     }
 }
