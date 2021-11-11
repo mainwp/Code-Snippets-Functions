@@ -1,6 +1,6 @@
 ## Facebook for WooCommerce code snippets
 
-Tested version of WordPress 5.82, plugin version was Facebook for WooCommerce 2.6.5.
+Tested version of WordPress 5.8.2, plugin version was Facebook for WooCommerce 2.6.7.
 
 This file is a code snippet that is used for [Facebook for WooCommerce](https://wordpress.org/plugins/facebook-for-woocommerce/) plugin. 
 
