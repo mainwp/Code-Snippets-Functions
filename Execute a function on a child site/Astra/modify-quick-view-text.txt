@@ -1,0 +1,12 @@
+add_filter( 'astra_woo_add_quick_view_text_html', 'astra_woo_add_quick_view_text_html_func', 10, 3 );
+
+function astra_woo_add_quick_view_text_html_func( $button, $label, $product_id ) {
+
+    global $product;
+    $product_id = $product->get_id();
+
+    $label = __( 'Buy Now', 'astra-addon' );
+    $button = '<a href="#" class="ast-quick-view-text" data-product_id="' . esc_attr( $product_id ) . '">' . $label . '</a>';
+    
+    return $button;
+}
