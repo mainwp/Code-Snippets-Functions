@@ -1,0 +1,1 @@
+add_filter( 'astra_add_to_cart_quantity_btn_enabled', '__return_false' ); 
