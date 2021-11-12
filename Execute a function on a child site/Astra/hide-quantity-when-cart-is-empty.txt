@@ -1,0 +1,8 @@
+add_filter('astra_woo_header_cart_total', 'remove_cart_count');
+function remove_cart_count( $default){
+	if(0 == WC()->cart->get_cart_contents_count()){
+		return false;
+	}else{
+		return $default;
+	}
+}
