@@ -1,0 +1,8 @@
+function change_free_order_status( $order_id ) {  
+    if ( ! $order_id ) {return;}            
+    $order = wc_get_order( $order_id );
+    if($order->get_total() <= 0):
+        $order->update_status( 'on-hold' ); // Change to what you need 
+    endif;
+}
+add_action('woocommerce_thankyou','change_free_order_status');
