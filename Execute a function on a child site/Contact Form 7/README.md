@@ -1,6 +1,6 @@
 ## Contact Form 7 code snippets
 
-Tested version of WordPress 5.8.1, plugin version was Contact Form 7 5.5.1.
+Tested version of WordPress 5.8.2, plugin version was Contact Form 7 5.5.2.
 
 This file is a code snippet that is used for [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) plugin. 
 
