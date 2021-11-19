@@ -1,0 +1,1 @@
+define('AUTOPTIMIZE_INIT_EARLIER', true);
