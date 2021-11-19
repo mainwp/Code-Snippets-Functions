@@ -1,0 +1,22 @@
+/**
+  * Remove HTML before tag for link.
+  * @param string $markup markup of post.
+  * @return string
+  */
+function astra_remove_link_before( $markup ) {
+    $markup = __return_empty_string();
+    return $markup;
+}
+
+/**
+  * Remove HTML after tag for link.
+  * @param string $markup markup of post.
+  * @return string
+  */
+function astra_remove_link_after( $markup ) {
+    $markup = __return_empty_string();
+    return $markup;
+}
+
+add_filter( 'astra_blog_post_featured_image_link_before', 'astra_remove_link_before' );
+add_filter( 'astra_blog_post_featured_image_link_after', 'astra_remove_link_after' );
