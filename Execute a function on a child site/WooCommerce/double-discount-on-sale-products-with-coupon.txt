@@ -1,0 +1,30 @@
+function filter_woocommerce_coupon_get_discount_amount( $discount, $price_to_discount , $cart_item, $single, $coupon ) {    
+    // Only apply for this coupon
+    if ( $coupon->get_code() == 'doublediscount' ) {
+        // On sale
+        if ( $cart_item['data']->is_on_sale() ) {
+            // Regular price
+            $cart_item_regular_price = $cart_item['data']->get_regular_price();
+            
+            // Sale price
+            $cart_item_sale_price = $cart_item['data']->get_sale_price();
+            
+            // Calculate the percentage difference
+            $cart_item_diff = $cart_item_regular_price - $cart_item_sale_price;
+            $cart_item_percentage = round( $cart_item_diff / $cart_item_regular_price * 100, 0 );
+            
+            // Get maximum added discount
+            $max_added_discount = $coupon->get_amount();
+            
+            // Less than maximum added discount
+            if ( $cart_item_percentage < $max_added_discount ) {
+                $discount = round( ( $price_to_discount * $cart_item_percentage ) / 100, 0 );
+            }
+        } else {
+            $discount = 0;
+        }
+    }
+
+    return $discount;
+}
+add_filter( 'woocommerce_coupon_get_discount_amount', 'filter_woocommerce_coupon_get_discount_amount', 10, 5 );
