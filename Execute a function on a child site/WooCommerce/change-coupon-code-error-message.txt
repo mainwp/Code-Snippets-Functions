@@ -1,0 +1,12 @@
+function filter_woocommerce_coupon_error( $err, $err_code, $coupon ) {
+    // Compare
+    if ( intval( $err_code ) === WC_COUPON::E_WC_COUPON_INVALID_FILTERED ) {
+        // Message
+        $err = sprintf( __( 'Sorry, coupon code "%s" is not valid.', 'woocommerce' ), $coupon->get_code() );
+    } else {
+        $err = 'DEBUG INFORMATION, error code number = ' . intval( $err_code );
+    }
+    
+    return $err;
+}
+add_filter( 'woocommerce_coupon_error', 'filter_woocommerce_coupon_error', 10, 3 );
