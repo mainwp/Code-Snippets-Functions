@@ -1,0 +1,1 @@
+add_filter( 'astra_zero_font_size_case', '__return_true' );
