@@ -1,6 +1,6 @@
 ## WooCommerce Stripe Gateway code snippets
 
-Tested version of WordPress 5.8.2, plugin version was WooCommerce Stripe Gateway 2.9.2.
+Tested version of WordPress 5.8.2, plugin version was WooCommerce Stripe Gateway 5.8.1.
 
 This file is a code snippet that is used for [WooCommerce Stripe Gateway](https://wordpress.org/plugins/woocommerce-gateway-stripe/) plugin. 
 
