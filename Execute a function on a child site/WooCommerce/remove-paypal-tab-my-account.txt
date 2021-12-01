@@ -1,0 +1,9 @@
+add_filter('woocommerce_account_menu_items', 'wc_paypal_remove_my_account_links', 50);
+
+function wc_paypal_remove_my_account_links($menu_links)
+{
+
+    unset($menu_links['ppcp-paypal-payment-tokens']);
+
+    return $menu_links;
+}
