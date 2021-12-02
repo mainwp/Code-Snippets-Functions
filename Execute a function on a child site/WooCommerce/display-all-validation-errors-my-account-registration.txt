@@ -1,0 +1,14 @@
+function custom_woocommerce_process_registration_errors( $validation_errors, $username, $password, $email ){
+
+    if ( !isset( $_POST['email'] ) || $_POST['email'] == '' ) {
+        $validation_errors->add( 'email', __( 'Please enter email address.', 'woocommerce' ) );
+    }
+
+    if ( !isset( $_POST['password'] ) || $_POST['password'] == '' ) {
+        $validation_errors->add( 'password', __( 'Please enter passwors.', 'woocommerce' ) );
+    }
+    
+    return $validation_errors;
+}
+
+add_filter( 'woocommerce_process_registration_errors', 'custom_woocommerce_process_registration_errors', 10, 4 );
