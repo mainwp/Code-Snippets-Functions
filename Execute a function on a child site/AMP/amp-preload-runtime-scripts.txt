@@ -1,0 +1,10 @@
+/**
+ * Preload AMP runtime scripts.
+ */
+function amp_preload_amp_runtime() {
+	echo sprintf( '<link as="script" href="%s" rel="preload" crossorigin="anonymous">', esc_url( 'https://cdn.ampproject.org/v0.js' ) );
+	echo sprintf( '<link as="script" href="%s" rel="preload" crossorigin="anonymous">', esc_url( 'https://cdn.ampproject.org/v0.mjs' ) );
+}
+
+add_action( 'wp_head', 'amp_preload_amp_runtime' );
+add_action( 'amp_post_template_head', 'amp_preload_amp_runtime' );
