@@ -1,0 +1,8 @@
+add_filter( 'comments_open', 'wc_force_enable_reviews', 9999, 2 );
+ 
+function wc_force_enable_reviews( $enable, $post_id ) {
+   if ( 'product' === get_post_type( $post_id ) ) {
+      $enable = true;
+   }
+   return $enable;
+}
