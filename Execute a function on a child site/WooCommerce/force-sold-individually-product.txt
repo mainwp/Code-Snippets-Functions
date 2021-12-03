@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_is_sold_individually', '__return_true' );
