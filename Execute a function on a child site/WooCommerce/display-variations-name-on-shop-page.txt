@@ -1,0 +1,17 @@
+add_action( 'woocommerce_after_shop_loop_item', 'wc_echo_stock_variations_loop' );
+    
+function wc_echo_stock_variations_loop(){
+    global $product;
+    if ( $product->get_type() == 'variable' ) {
+        foreach ( $product->get_available_variations() as $key ) {
+            $variation = wc_get_product( $key['variation_id'] );
+            $stock = $variation->get_availability();
+            $stock_string = $stock['availability'] ? $stock['availability'] : __( 'In stock', 'woocommerce' );
+            $attr_string = array();
+            foreach ( $key['attributes'] as $attr_name => $attr_value ) {
+                $attr_string[] = $attr_value;
+            }
+            echo '<br/>' . implode( ', ', $attr_string ) . ': ' . $stock_string;
+        }
+    }
+}
