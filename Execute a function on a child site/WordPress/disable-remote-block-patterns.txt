@@ -1,0 +1,4 @@
+function disable_remote_patterns_filter() {
+	return false;
+}
+add_filter( 'should_load_remote_block_patterns', 'disable_remote_patterns_filter' );
