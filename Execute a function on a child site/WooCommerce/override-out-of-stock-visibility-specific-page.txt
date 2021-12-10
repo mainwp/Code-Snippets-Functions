@@ -1,0 +1,8 @@
+add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', 'wc_hide_out_of_stock_exception_page' );
+ 
+function wc_hide_out_of_stock_exception_page( $hide ) {
+   if ( is_page( 123 ) ) {
+      $hide = 'no';
+   }   
+   return $hide;
+}
