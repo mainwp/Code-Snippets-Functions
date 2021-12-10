@@ -1,0 +1,4 @@
+function my_cr_ajaxreviews_show_search( $show_search ) {
+   return false;
+}
+add_filter( 'cr_ajaxreviews_show_search', 'my_cr_ajaxreviews_show_search', 10, 1 );
