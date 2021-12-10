@@ -1,0 +1,11 @@
+function my_cr_floatingtrustbadge_hide() {
+  $current_post_id = get_the_ID();
+  // replace '526' with a post id from your site
+  if( 526 === $current_post_id ) {
+    // return 'true' to hide the floating trust badge
+    return true;
+  }
+  // return 'false' to display the floating trust badge
+  return false;
+}
+add_filter( 'cr_floatingtrustbadge_hide', 'my_cr_floatingtrustbadge_hide' );
