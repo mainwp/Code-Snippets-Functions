@@ -1,0 +1,1 @@
+add_filter( 'aioseo_disable_link_format', '__return_true' );
