@@ -1,0 +1,6 @@
+add_filter( 'aioseo_canonical_url', function( $canonicalUrl ) {
+	if ( is_search() ) {
+		return '';
+	}
+	return $canonicalUrl;
+} );
