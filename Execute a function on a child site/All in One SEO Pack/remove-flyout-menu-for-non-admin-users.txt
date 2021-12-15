@@ -1,0 +1,8 @@
+add_filter( 'aioseo_flyout_menu_enable', 'aioseo_filter_flyout_menu_enable' );
+function aioseo_filter_flyout_menu_enable( $enabled ) {
+	if ( ! aioseo()->access->isAdmin() ) {
+		$enabled = false;
+	}
+
+	return $enabled;
+}
