@@ -1,0 +1,8 @@
+add_filter( 'aioseo_disable', 'aioseo_disable_term_output' );
+
+function aioseo_disable_term_output( $disabled ) {
+   if ( is_category() || is_tag() || is_tax() ) {
+      return true;
+   }
+   return false;
+}
