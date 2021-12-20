@@ -1,0 +1,4 @@
+add_filter( 'facetwp_indexer_query_args', function( $args ) {
+    $args['post_status'] = [ 'publish', 'inherit' ];
+    return $args;
+});
