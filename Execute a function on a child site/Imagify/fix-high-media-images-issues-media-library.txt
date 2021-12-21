@@ -1,0 +1,8 @@
+function pfx_limit_imagify_optimize_count( $count ) {
+  return 1;
+}
+add_filter( 'imagify_count_optimized_attachments', 'pfx_limit_imagify_optimize_count' );
+add_filter( 'imagify_count_attachments', 'pfx_limit_imagify_optimize_count' );
+add_filter( 'imagify_count_unoptimized_attachments', 'pfx_limit_imagify_optimize_count' );
+add_filter( 'imagify_count_saving_data', 'pfx_limit_imagify_optimize_count' );
+add_filter( 'imagify_count_error_attachments', 'pfx_limit_imagify_optimize_count' );
