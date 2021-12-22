@@ -1,0 +1,12 @@
+add_action( 'woocommerce_after_add_to_cart_form', 'wc_echo_variation_info' );
+ 
+function wc_echo_variation_info() {
+   global $product;
+   if ( ! $product->is_type( 'variable' ) ) return;
+   echo '<div class="var_info"></div>';
+   wc_enqueue_js( "
+      $(document).on('found_variation', 'form.cart', function( event, variation ) {   
+         $('.var_info').html(variation.dimensions_html);
+      });
+   " );
+}
