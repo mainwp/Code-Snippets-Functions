@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_shipping_calculator_enable_postcode', '__return_false' );
+
+add_filter( 'woocommerce_default_address_fields' , 'wc_disable_postcode_validation' );
+ 
+function wc_disable_postcode_validation( $address_fields ) {
+  $address_fields['postcode']['required'] = false;
+  return $address_fields;
+}
