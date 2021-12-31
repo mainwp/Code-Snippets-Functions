@@ -1,0 +1,53 @@
+function filter_woocommerce_cart_item_remove_link( $link, $cart_item_key ) {
+    // Settings (multiple settings arrays can be added/removed if desired)
+    $settings = array(
+        array(
+            'product_id_1'  => 100,
+            'product_id_2'  => 101,
+        ),
+        array(
+            'product_id_1'  => 30,
+            'product_id_2'  => 813,
+        ),
+        array(
+            'product_id_1'  => 53,
+            'product_id_2'  => 817,
+        ),
+    );
+    
+    // Get cart
+    $cart = WC()->cart;
+    
+    // If cart
+    if ( $cart ) {
+        // Get cart item
+        $cart_item = $cart->get_cart()[$cart_item_key];
+        
+        // Get parent/real ID
+        $product_id = $cart_item['data']->get_parent_id() != 0 ? $cart_item['data']->get_parent_id() : $cart_item['data']->get_id();
+        
+        // Loop trough settings array
+        foreach ( $settings as $key => $setting ) {
+            // Compare, get the correct setting array
+            if ( $product_id == $settings[$key]['product_id_1'] ) {
+                // Cart id of the other product
+                $product_cart_id = $cart->generate_cart_id( $settings[$key]['product_id_2'] );
+                
+                // Find other product in cart
+                $in_cart = $cart->find_product_in_cart( $product_cart_id );
+                
+                // When true
+                if ( $in_cart ) {
+                    // Hide remove button
+                    $link = '';
+                    
+                    // Break loop
+                    break;
+                }
+            }
+        }
+    }
+
+    return $link;
+}
+add_filter( 'woocommerce_cart_item_remove_link', 'filter_woocommerce_cart_item_remove_link', 10, 2 );
