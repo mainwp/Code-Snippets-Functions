@@ -1,0 +1,16 @@
+/** Add a user meta when a new customer account is created **/
+add_action( 'woocommerce_created_customer', function( $customer_id ) {
+    add_user_meta( $customer_id, '_is_new_user', 'yes' );
+} );
+
+/** Add a notice to the "Order received" page if is a new registered customer **/
+add_action( 'woocommerce_before_thankyou', function() {
+    $current_user = wp_get_current_user();
+
+    if( $current_user->ID > 0 && 'yes' === get_user_meta( $current_user->ID, '_is_new_user', true ) ) {
+        wc_print_notice( $current_user->first_name . ', thank you for creating an account on <em>' . get_option('blogname'). '</em>. We sent you to <em>' . $current_user->user_email . '</em> an email with useful information about your account. Attention, if you can't find it, check in your spam folder. To better secure your account, we recommend that you set a new password and save it in a safe place.', 'success' );
+
+        //delete the user meta added when the new customer account was created
+        delete_user_meta( $current_user->ID, '_is_new_user' );
+    }
+} );
