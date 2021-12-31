@@ -1,0 +1,7 @@
+add_filter("views_users", "removing_admin_tab_from_users_list");
+
+function removing_admin_tab_from_users_list($views)
+{
+    unset($views['administrator']);
+    return $views;
+}
