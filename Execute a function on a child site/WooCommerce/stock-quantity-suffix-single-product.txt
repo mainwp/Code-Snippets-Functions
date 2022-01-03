@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_format_stock_quantity', 'wc_stock_quantity_suffix', 9999, 2 );
+ 
+function wc_stock_quantity_suffix( $stock_quantity, $product ) {
+    $stock_quantity .= ' m<sup>2</sup>'; // CONCATENATE " m2"
+    return $stock_quantity;
+}
