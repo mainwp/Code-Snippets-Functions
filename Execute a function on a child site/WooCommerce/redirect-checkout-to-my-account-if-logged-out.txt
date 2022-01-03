@@ -1,0 +1,15 @@
+add_action('template_redirect','check_if_logged_in');
+function check_if_logged_in()
+{
+
+    if(!is_user_logged_in() && is_checkout())
+    {
+        $url = add_query_arg(
+            'redirect_to',
+            get_permalink($pagid),
+            site_url('/my-account/')
+        );
+        wp_redirect($url);
+        exit;
+    }
+}
