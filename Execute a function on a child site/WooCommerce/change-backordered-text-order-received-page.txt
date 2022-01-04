@@ -1,0 +1,7 @@
+function filter_woocommerce_backordered_item_meta_name( $string, $item ) {  
+    // Replace with new text
+    $string = 'My new text';
+    
+    return $string;
+}
+add_filter( 'woocommerce_backordered_item_meta_name', 'filter_woocommerce_backordered_item_meta_name', 10, 2 );
