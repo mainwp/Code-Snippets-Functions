@@ -1,0 +1,1 @@
+add_filter( 'autoptimize_filter_cache_clear_advanced', '__return_true' );
