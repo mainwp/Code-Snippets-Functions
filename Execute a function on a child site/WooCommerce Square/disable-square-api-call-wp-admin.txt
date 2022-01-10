@@ -1,0 +1,13 @@
+add_filter( 'pre_http_request', 'sport_shooting_depot_mock_square_background_check', 10, 3 );
+function sport_shooting_depot_mock_square_background_check( $preemt, $args, $url ) {
+	if ( $url !== 'YOUR_SITE_URL_HERE/wp-admin/admin-ajax.php?action=wc_square_background_sync_test' ) {
+		return false;
+	}
+
+	return array(
+		'body' => '[TEST_LOOPBACK]',
+		'response' => array(
+			'code' => '200 OK'
+		),
+	);
+}
