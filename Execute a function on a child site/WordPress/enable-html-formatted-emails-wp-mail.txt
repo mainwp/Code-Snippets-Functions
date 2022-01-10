@@ -1,0 +1,4 @@
+function filter_wp_mail_content_type() {
+    return "text/html";
+}
+add_filter( 'wp_mail_content_type', 'filter_wp_mail_content_type', 10, 0 );
