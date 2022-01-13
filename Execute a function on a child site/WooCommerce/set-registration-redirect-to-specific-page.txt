@@ -1,0 +1,4 @@
+function filter_woocommerce_registration_redirect( $redirect ) {
+    return get_permalink( get_option( 'woocommerce_myaccount_page_id') ) . 'edit-address/billing';
+}
+add_filter( 'woocommerce_registration_redirect', 'filter_woocommerce_registration_redirect', 10, 1 );
