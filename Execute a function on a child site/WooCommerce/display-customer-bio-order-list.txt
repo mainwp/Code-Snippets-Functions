@@ -1,0 +1,18 @@
+function action_woocommerce_admin_order_data_after_billing_address( $order ) {  
+    // Get user
+    $user = $order->get_user();
+    
+    // Initialize
+    $output = __( 'Bio: ', 'woocommerce' );
+
+    // Is a WP user
+    if ( is_a( $user, 'WP_User' ) ) {
+        ! empty( $user->description ) ? $output .= $user->description : $output .= __( 'n/c', 'woocommerce' );
+    } else {
+        $output .= __( 'n/c', 'woocommerce' );
+    }
+    
+    // Output
+    echo $output;
+}
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'action_woocommerce_admin_order_data_after_billing_address', 10, 1 );
