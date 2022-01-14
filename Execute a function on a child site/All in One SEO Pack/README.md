@@ -1,6 +1,6 @@
 ## All in One SEO Pack code snippets
 
-Tested version of WordPress 5.8.2, plugin version was All in One SEO Pack 4.1.5.3.
+Tested version of WordPress 5.8.3, plugin version was All in One SEO Pack 4.1.6.2.
 
 This file is a code snippet that is used for [All in One SEO Pack](https://wordpress.org/plugins/all-in-one-seo-pack/) plugin. 
 
