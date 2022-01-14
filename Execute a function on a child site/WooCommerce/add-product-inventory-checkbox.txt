@@ -1,0 +1,24 @@
+// Add checkbox
+function action_woocommerce_product_options_inventory_product_data() {
+    global $product_object;
+    
+    // Get meta
+    $value = $product_object->get_meta( '_cutom_meta_key' );
+    
+    // Checkbox
+    woocommerce_wp_checkbox( array( 
+        'id'            => '_cutom_meta_key', // Required, it's the meta_key for storing the value (is checked or not)
+        'label'         => __( 'Custom label', 'woocommerce' ), // Text in the editor label
+        'desc_tip'      => false, // true or false, show description directly or as tooltip
+        'description'   => __( 'Enable this to make something', 'woocommerce' ), // Provide something useful here
+        'value'         => empty( $value ) ? 'yes' : $value // Checked by default
+    ) );
+}
+add_action( 'woocommerce_product_options_inventory_product_data', 'action_woocommerce_product_options_inventory_product_data', 10, 0 );
+        
+// Save Field
+function action_woocommerce_admin_process_product_object( $product ) {
+    // Update meta
+    $product->update_meta_data( '_cutom_meta_key', isset( $_POST['_cutom_meta_key'] ) ? 'yes' : 'no' );
+}
+add_action( 'woocommerce_admin_process_product_object', 'action_woocommerce_admin_process_product_object', 10, 1 );
