@@ -1,0 +1,10 @@
+function filter_woocommerce_currency_symbol( $currency_symbol, $currency ) {    
+    // Compare
+    switch( $currency ) {
+        case 'GBP': $currency_symbol = '&euro;';
+        break;
+    }
+    
+    return $currency_symbol;
+}
+add_filter( 'woocommerce_currency_symbol', 'filter_woocommerce_currency_symbol', 1, 2 );
