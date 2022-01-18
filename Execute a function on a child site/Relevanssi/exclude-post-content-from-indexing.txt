@@ -1,0 +1,1 @@
+add_filter( 'relevanssi_index_content', '__return_false' );
