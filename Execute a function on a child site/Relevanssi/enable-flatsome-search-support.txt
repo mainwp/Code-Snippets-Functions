@@ -1,0 +1,6 @@
+function rlv_flatsome_search_function( $query, $args, $defaults ) {
+  $args['relevanssi'] = true;
+  return get_posts( $args );
+}
+
+add_filter( 'flatsome_ajax_search_function', function() { return 'rlv_flatsome_search_function'; } );
