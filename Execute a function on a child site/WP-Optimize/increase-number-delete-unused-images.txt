@@ -1,0 +1,3 @@
+add_filter( 'wpo_unused_images_per_page', function() {
+     return 1000;
+});
