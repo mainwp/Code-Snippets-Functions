@@ -1,4 +1,4 @@
-## AMP code snippets
+## Enable jQuery Migrate Helper code snippets
 
 Tested version of WordPress 5.8, plugin version was Enable jQuery Migrate Helper 1.3.0.
 
