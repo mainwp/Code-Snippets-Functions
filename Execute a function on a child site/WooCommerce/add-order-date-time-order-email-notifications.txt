@@ -1,0 +1,15 @@
+add_action( 'woocommerce_email_order_details', 'custom_processing_order_notification', 1, 4 );
+function custom_processing_order_notification( $order, $sent_to_admin, $plain_text, $email ) {
+    // Only for processing email notifications to customer
+    if( ! 'customer_processing_order' == $email->id ) return;
+
+    $date_modified = $order->get_date_modified();
+    $date_paid = $order->get_date_paid();
+
+    $date =  empty( $date_paid ) ? $date_modified : $date_paid;
+
+    echo sprintf( '<p>Order NO. %s (placed on <time>%s</time>)</p>',
+        $order->get_order_number( ),
+        $date->date("F j, Y, g:i:s A T")
+    );
+}
