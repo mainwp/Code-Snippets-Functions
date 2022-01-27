@@ -1,0 +1,1 @@
+add_filter('wt_crp_subcategory_only', '__return_true');
