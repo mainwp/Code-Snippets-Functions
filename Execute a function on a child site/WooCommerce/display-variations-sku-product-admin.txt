@@ -1,0 +1,16 @@
+add_filter( 'woocommerce_product_get_sku', 'wc_variable_product_skus_admin', 9999, 2 );
+ 
+function wc_variable_product_skus_admin( $sku, $product ) {
+   if ( ! is_admin() ) return $sku;
+   global $post_type, $pagenow;
+   if ( 'edit.php' === $pagenow && 'product' === $post_type ) {
+      if ( $product->is_type('variable') ) {
+         $sku = '';
+         foreach ( $product->get_children() as $child_id ) {
+            $variation = wc_get_product( $child_id ); 
+            if ( $variation && $variation->exists() ) $sku .= '(' . $variation->get_sku() . ') ';
+         }
+      }
+   }
+   return $sku;
+}
