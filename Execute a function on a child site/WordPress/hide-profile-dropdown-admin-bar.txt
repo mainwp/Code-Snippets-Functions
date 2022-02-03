@@ -1,0 +1,14 @@
+add_action( 'admin_bar_menu', 'rpdab_remove_my_account', 999 );
+function rpdab_remove_my_account( $wp_admin_bar ) {
+   $wp_admin_bar->remove_node( 'user-actions' );
+}
+
+add_action( 'admin_bar_menu', 'rpdab_add_logout', 999 );
+function rpdab_add_logout( $wp_admin_bar ) {
+   $args = array(
+      'id'     => 'logout',           // id of the existing child node (New > Post)
+      'title'  => 'Logout',           // alter the title of existing node
+      'parent' => 'top-secondary',    // set parent
+  );
+  $wp_admin_bar->add_node( $args );
+}
