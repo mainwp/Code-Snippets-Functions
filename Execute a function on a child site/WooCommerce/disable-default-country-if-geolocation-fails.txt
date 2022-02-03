@@ -1,0 +1,20 @@
+function filter_default_checkout_billing_country( $default ) {  
+    // If the user already exists, don't override country
+    if ( WC()->customer->get_is_paying_customer() ) {
+        return $default;
+    } elseif ( class_exists( 'WC_Geolocation' ) ) {
+        // Get location country
+        $location = WC_Geolocation::geolocate_ip();
+        
+        if ( isset( $location['country'] ) ) {
+            return $location['country'];
+        } else {
+            $default = null;
+        }
+    } else {
+        $default = null;
+    }
+    
+    return $default;
+}
+add_filter( 'default_checkout_billing_country', 'filter_default_checkout_billing_country', 10, 1 );
