@@ -1,0 +1,5 @@
+add_filter('rank_math/sitemap/entry', function ($url){
+    if (isset($url['loc']) && empty($url['loc'])) {
+        return false;
+    }    return $url;
+});
