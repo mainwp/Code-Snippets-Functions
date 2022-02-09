@@ -1,0 +1,17 @@
+function filter_woocommerce_form_field_state( $field, $key, $args, $value ) {
+    // Checkout page only
+    if ( ! is_checkout() ) return $field;
+    
+    // Only for shipping
+    if ( $key == 'shipping_state' ) {
+        // Replace all occurrences of the search string with the replacement string
+        $field = str_replace( '<option value="CE" >Ceuta</option>', '', $field );
+        $field = str_replace( '<option value="ML" >Melilla</option>', '', $field );
+        $field = str_replace( '<option value="PM" >Baleares</option>', '', $field );
+        // Etc..
+    }
+    
+    // Do something
+    return $field;
+}
+add_filter( 'woocommerce_form_field_state', 'filter_woocommerce_form_field_state', 10, 4 );
