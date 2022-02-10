@@ -1,6 +1,6 @@
 ## BuddyPress code snippets
 
-Tested version of WordPress 5.8.2, plugin version was BuddyPress 9.1.1.
+Tested version of WordPress 5.9, plugin version was BuddyPress 10.0.0.
 
 This file is a code snippet that is used for [BuddyPress](https://wordpress.org/plugins/buddypress/) plugin. 
 
