@@ -1,0 +1,5 @@
+add_filter( 'kadence_logo_url', 'custom_logo_url' );
+function custom_logo_url( $url ) {
+	$url = 'https://www.example.com';
+	return $url;
+}
