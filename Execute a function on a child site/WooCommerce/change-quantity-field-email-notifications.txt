@@ -1,0 +1,6 @@
+function filter_woocommerce_email_order_item_quantity( $qty_display, $item ) {
+    $qty_display = $qty_display . ' VE';
+
+    return $qty_display; 
+}
+add_filter( 'woocommerce_email_order_item_quantity', 'filter_woocommerce_email_order_item_quantity', 10, 2 );
