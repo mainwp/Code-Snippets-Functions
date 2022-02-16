@@ -1,0 +1,24 @@
+function change_order_formatted_billing_address( $address, $WC_Order ) {
+    
+    $current_screen = get_current_screen();
+
+    if( $current_screen == 'shop_order' && isset( $_GET['action'] ) && $_GET['action'] == 'edit' ){
+
+        $address = array(
+            'first_name'    => $WC_Order->billing_first_name,
+            'last_name'     => $WC_Order->billing_last_name,
+            'vat'           => $WC_Order->billing_vat,
+            'company'       => $WC_Order->billing_company,
+            'address_1'     => $WC_Order->billing_address_1.' '.$WC_Order->billing_address_2,
+            'city'          => $WC_Order->billing_city,
+            'state'         => $WC_Order->billing_state,
+            'postcode'      => $WC_Order->billing_postcode,
+            'country'       => $WC_Order->billing_country
+        );
+     }
+    
+    return $address;
+
+}
+
+add_filter( 'woocommerce_order_formatted_billing_address' , 'change_order_formatted_billing_address', 10, 2 );
