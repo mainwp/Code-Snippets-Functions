@@ -1,0 +1,7 @@
+add_filter( 'dgwt/wcas/product/thumbnail_src', function($src, $product_id) {
+  $thumbnail_url = wp_get_attachment_image_src(get_post_thumbnail_id($product_id), 'medium' );
+  if ( is_array( $thumbnail_url ) && !empty( $thumbnail_url[0] ) ) {
+    $src = $thumbnail_url[0];
+  }
+  return $src;
+}, 10, 2);
