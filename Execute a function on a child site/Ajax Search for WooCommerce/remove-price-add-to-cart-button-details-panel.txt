@@ -1,0 +1,14 @@
+// Remove price from products in a details panel
+add_filter( 'dgwt/wcas/suggestion_details/product/html', function($html){
+    // Remove price
+    $html = preg_replace('#<div class="dgwt-wcas-pd-price">(.+?)</div>#s', '', $html);
+    // Remove "Add to cart" button
+    $html = preg_replace('#<div class="dgwt-wcas-pd-addtc js-dgwt-wcas-pd-addtc">(.+?)</form>#s', '<div>', $html);
+    return $html;
+}, 10);
+// Remove price from terms in a details panel
+add_filter( 'dgwt/wcas/suggestion_details/term/html', function($html){
+    // Remove price
+    $html = preg_replace('#<div class="dgwt-wcas-tpd-price">(.+?)</div>#s', '', $html);
+    return $html;
+}, 10);
