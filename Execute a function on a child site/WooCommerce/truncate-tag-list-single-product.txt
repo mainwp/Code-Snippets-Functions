@@ -1,0 +1,17 @@
+add_action( 'woocommerce_after_single_product', 'wc_woocommerce_tag_list_truncate' );
+  
+function wc_woocommerce_tag_list_truncate() { 
+   wc_enqueue_js('
+      var ellipses = "... ";
+      var delimiter = ",";
+      var content = $(".tagged_as").html();
+      var a = content.split(delimiter).slice(0, 3);
+      var b = content.split(delimiter).slice(3);
+      var html = a + "<span class=\'truncated\'>" + ellipses + "<a class=\'read-more\'>+</a></span><span class=\'truncated\' style=\'display:none\'>, " + b + "</span>";
+      $(".tagged_as").html(html);
+      $(".read-more").click(function(e) {
+         e.preventDefault();
+         $(".tagged_as .truncated").toggle();
+      });
+   ');
+}
