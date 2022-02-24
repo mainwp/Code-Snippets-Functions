@@ -1,0 +1,3 @@
+add_filter( 'dgwt/wcas/settings/load_value/key=exclude_out_of_stock', function ( $value ) {
+    return 'off';
+}, PHP_INT_MAX - 5 );
