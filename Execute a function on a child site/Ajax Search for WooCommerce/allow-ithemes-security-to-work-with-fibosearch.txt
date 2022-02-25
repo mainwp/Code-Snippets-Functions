@@ -1,0 +1,4 @@
+add_filter( 'itsec_filter_apache_server_config_modification', function ( $modification ) {
+    $modification = str_replace( 'RewriteRule ^wp\-content/plugins/.*\.(?:php[1-7]?|pht|phtml?|phps)\.?$ - [NC,F]', 'RewriteRule ^wp\-content/plugins/(?!ajax\-search\-for\-woocommerce\-premium/includes/Engines/TNTSearchMySQL/Endpoints/search\.php).*\.(?:php[1-7]?|pht|phtml?|phps)\.?$ - [NC,F]', $modification );
+    return $modification;
+}, PHP_INT_MAX - 5 );
