@@ -1,0 +1,8 @@
+add_action( 'template_redirect', 'rlv_redirect_emails' );
+function rlv_redirect_emails() {
+    if ( filter_var( get_search_query(), FILTER_VALIDATE_EMAIL ) ) {
+        if ( wp_redirect( 'https://www.example.com/wp-login.php' ) ) {
+            exit();
+        }
+    }
+}
