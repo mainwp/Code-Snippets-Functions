@@ -1,0 +1,4 @@
+add_filter( 'dgwt/wcas/labels', function ( $labels ) {
+    $labels['sku_label'] = 'ISBN:'; // Change label "SKU:" to "ISBN:"
+    return $labels;
+} );
