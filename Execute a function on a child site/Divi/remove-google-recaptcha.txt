@@ -1,0 +1,8 @@
+function project_dequeue_recaptcha() {
+    wp_dequeue_script( 'recaptcha-v3' );
+    wp_deregister_script( 'recaptcha-v3' );
+    wp_dequeue_script( 'et-core-api-spam-recaptcha' );
+wp_deregister_script( 'et-core-api-spam-recaptcha' );
+}
+
+add_action( 'wp_print_scripts', 'project_dequeue_recaptcha' );
