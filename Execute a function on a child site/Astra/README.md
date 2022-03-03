@@ -1,6 +1,6 @@
 ## Astra theme code snippets
 
-Tested version of WordPress 5.9, theme version was Astra 3.7.7.
+Tested version of WordPress 5.9, theme version was Astra 3.7.9.
 
 This file is a code snippet that is used for [Astra](https://wordpress.org/themes/astra/) theme. 
 
