@@ -1,0 +1,29 @@
+function action_woocommerce_applied_coupon( $coupon_code ) {
+    // Settings
+    $product_id = 131468;
+    $quantity = 1;
+    $free_price = 0;
+    $coupon_codes = array( 'coupon1', 'mybday' );
+
+    // Compare
+    if ( in_array( $coupon_code, $coupon_codes ) ) {
+        // Add product to cart
+        WC()->cart->add_to_cart( $product_id, $quantity, 0, array(), array( 'free_price' => $free_price ) );
+    }
+}
+add_action( 'woocommerce_applied_coupon', 'action_woocommerce_applied_coupon', 10, 1 );
+
+// Set free price from custom cart item data
+function action_woocommerce_before_calculate_totals( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) return;
+
+    // Loop through cart contents
+    foreach ( $cart->get_cart_contents() as $cart_item ) {       
+        if ( isset( $cart_item['free_price'] ) ) {
+            $cart_item['data']->set_price( $cart_item['free_price'] );
+        }
+    }
+}
+add_action( 'woocommerce_before_calculate_totals', 'action_woocommerce_before_calculate_totals', 10, 1 );
