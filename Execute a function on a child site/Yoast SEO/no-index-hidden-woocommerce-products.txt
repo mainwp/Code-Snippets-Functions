@@ -1,0 +1,25 @@
+add_filter( 'wpseo_sitemap_entry', 'wc_remove_hidden_products', 99, 3);
+function wc_remove_hidden_products($url, $type, $post) {
+	if($post->post_type == 'product' && is_object_in_term( $post->ID, 'product_visibility', 'exclude-from-catalog')){
+		return '';
+	}
+	return $url;
+}
+
+add_filter('wpseo_robots', 'wc_noindex_hidden_products', 10, 2);
+function wc_noindex_hidden_products($robots, $indexable) {
+	
+	if(!isset($indexable->model)) {
+		return $robots;
+	}
+
+	if(!isset($indexable->model->object_id)) {
+		return $robots;
+	}
+	
+	if(is_object_in_term( $indexable->model->object_id, 'product_visibility', 'exclude-from-catalog')){
+		$robots = 'noindex, nofollow';
+
+	}
+	return $robots;
+}
