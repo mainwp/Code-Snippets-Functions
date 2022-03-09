@@ -1,0 +1,16 @@
+$post_ids = array();
+// Query ALL posts ordered by random
+$args = array(
+   'post_type'           => array('post'), // Posts
+   'orderby'             => 'rand', // Order random
+   'posts_per_page'      => -1, // get all posts
+   'ignore_sticky_posts' => true, // Do not preserve order of stickies
+);
+$the_query = new WP_Query( $args );
+ 
+while ( $the_query->have_posts() ) : $the_query->the_post();
+   $post_ids[] = $post->ID; // Build array of post IDs
+endwhile; wp_reset_query();
+   
+// Pass $post_ids array to Ajax Load More post__in parameter
+echo do_shortcode('[ajax_load_more post__in="'. implode(',', $post_ids) .'" orderby="post__in"]'); 
