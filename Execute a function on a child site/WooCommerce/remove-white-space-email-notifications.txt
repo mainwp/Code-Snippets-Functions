@@ -1,0 +1,6 @@
+function filter_woocommerce_email_styles( $css, $email ) {
+    $extra_css = '#wrapper { padding-top: 0 }';
+    
+    return $css . $extra_css;
+}
+add_filter( 'woocommerce_email_styles', 'filter_woocommerce_email_styles', 10, 2 );
