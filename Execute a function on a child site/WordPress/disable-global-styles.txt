@@ -1,0 +1,1 @@
+remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
