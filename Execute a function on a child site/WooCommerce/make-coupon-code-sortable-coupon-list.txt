@@ -1,0 +1,26 @@
+// Make column sortable
+function filter_manage_edit_shop_coupon_sortable_columns( $columns ) {
+    $columns['coupon_code'] = 'code';
+
+    return $columns;
+}
+add_filter( 'manage_edit-shop_coupon_sortable_columns', 'filter_manage_edit_shop_coupon_sortable_columns', 10, 1 );
+
+// Fires after the query variable object is created, but before the actual query is run.
+function action_pre_get_posts( $query ) {
+    global $pagenow, $post_type, $wpdb;
+
+    // Only for coupons
+    if ( $query->is_admin && $pagenow === 'edit.php' && $post_type === 'shop_coupon' && $query->get( 'orderby' ) == 'code' ) {
+        // ASC OR DESC
+        $asc_desc = $query->get( 'order' );
+
+        // Get all coupon IDs
+        $coupon_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'shop_coupon' ORDER BY post_name $asc_desc" );
+
+        // Set
+        $query->set( 'post__in', $coupon_ids );
+        $query->set( 'orderby', 'post__in' );
+    }
+}
+add_action( 'pre_get_posts', 'action_pre_get_posts', 10, 1 );
