@@ -1,0 +1,59 @@
+// Add new/extra button
+function action_woocommerce_after_add_to_cart_button() {
+    global $product;
+    
+    // Is a WC product
+    if ( is_a( $product, 'WC_Product' ) ) {
+        // Run only on simple products
+        if ( $product->is_type( 'simple' ) ) {
+            // Get product ID
+            $product_id = $product->get_id();
+
+            // Get permalink
+            $permalink = $product->get_permalink();
+
+            // Output url
+            echo '<a href="' . $permalink . '?product_id=' . $product_id . '&redirect_checkout=true" class="mongo_single_add_to_cart_button button">'. __ ( 'Buy Now', 'woocommerce' ) . '</a>';
+        }
+    }
+}
+add_action( 'woocommerce_after_add_to_cart_button', 'action_woocommerce_after_add_to_cart_button', 10 );
+
+// Redirect
+function action_template_redirect() {
+    // Determines whether the current request is for an administrative interface page
+    if ( is_admin() ) return;
+
+    // Returns true when viewing a single product
+    if ( ! is_product() ) return;
+
+    // Get params
+    if ( isset( $_GET['product_id'] ) && isset( $_GET['redirect_checkout'] ) ) {
+        // Get param 1
+        $product_id = $_GET['product_id'];
+
+        // Get param 2
+        $boolean = $_GET['redirect_checkout'];
+
+        // WC Cart
+        if ( WC()->cart ) {
+            // 1. Empty cart
+            WC()->cart->empty_cart();
+
+            // 2. Add to cart
+            WC()->cart->add_to_cart( $product_id );
+
+            // 3. Redirect
+            // When true
+            if ( $boolean ) {
+                // Gets the url to the checkout page
+                $checkout_url = wc_get_checkout_url();
+
+                // Performs a safe (local) redirect
+                wp_safe_redirect( $checkout_url );
+                exit;
+            }
+        }
+    }
+}
+add_action( 'template_redirect', 'action_template_redirect' );
