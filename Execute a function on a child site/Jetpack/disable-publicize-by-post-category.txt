@@ -1,0 +1,20 @@
+function jeherve_control_publicize_for_categories( $should_publicize, $post ) {
+    // Return early if we don't have a post yet (it hasn't been saved as a draft)
+    if ( ! $post ) {
+        return $should_publicize;
+    }
+  
+    // Get list of categories for our post.
+    $categories = get_the_category( $post-&amp;amp;amp;gt;ID );
+     
+    if ( is_array( $categories ) &amp;amp;amp;amp;&amp;amp;amp;amp; ! empty( $categories ) ) {
+        foreach( $categories as $category ) {
+            if ( 'do-not-publicize' === $category-&amp;amp;amp;gt;slug ) {
+                return false;
+            }
+        }
+    }
+  
+    return $should_publicize;
+}
+add_filter( 'publicize_should_publicize_published_post', 'jeherve_control_publicize_for_categories', 10, 2 );
