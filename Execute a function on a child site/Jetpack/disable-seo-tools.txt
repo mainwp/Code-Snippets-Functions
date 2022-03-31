@@ -1,0 +1,1 @@
+add_filter( 'jetpack_disable_seo_tools', '__return_true' );
