@@ -1,0 +1,3 @@
+add_filter( 'pre_get_rocket_option_emoji', function($value){
+    return 0;
+} );
