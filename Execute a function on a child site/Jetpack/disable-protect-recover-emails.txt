@@ -1,0 +1,1 @@
+add_filter( 'jetpack_protect_can_send_recovery_emails', '__return_false' );
