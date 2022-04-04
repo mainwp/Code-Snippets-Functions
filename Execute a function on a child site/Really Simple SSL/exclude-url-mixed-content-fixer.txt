@@ -1,0 +1,5 @@
+function rsssl_exclude_http_url($html) {
+  $html = str_replace("https://www.domain.com", "http://www.domain.com", $html);
+  return $html;
+}
+add_filter("rsssl_fixer_output","rsssl_exclude_http_url");
