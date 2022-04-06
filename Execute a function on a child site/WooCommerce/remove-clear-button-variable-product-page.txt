@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_reset_variations_link', '__return_empty_string', 9999 );
