@@ -1,0 +1,1 @@
+add_filter( 'wc_stripe_require_3ds', '__return_true' );
