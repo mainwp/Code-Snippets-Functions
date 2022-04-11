@@ -1,0 +1,1 @@
+add_filter( 'autoptimize_html_minify_inline_js_css', '__return_true'); .
