@@ -1,0 +1,8 @@
+add_filter( 'aioseo_breadcrumbs_output', 'aioseo_breadcrumbs_output' );
+function aioseo_breadcrumbs_output( $display ) {
+	if ( is_singular( 'page' ) ) {
+		$display = false;
+	}
+
+	return $display;
+}
