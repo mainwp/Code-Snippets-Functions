@@ -1,0 +1,4 @@
+function woocommerce_product_query( $q ) {
+    $q->set( 'meta_key', '_thumbnail_id' );
+}
+add_action( 'woocommerce_product_query', 'woocommerce_product_query' );
