@@ -1,0 +1,4 @@
+function yarpp_disable_review_notice() {
+  remove_action( 'admin_notices', array('YARPP_Admin', 'display_review_notice' ) );
+}
+add_action( 'admin_init', 'yarpp_disable_review_notice', 11 );
