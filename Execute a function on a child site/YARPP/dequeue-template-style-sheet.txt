@@ -1,0 +1,1 @@
+add_filter( 'yarpp_enqueue_related_style', '__return_false' );
