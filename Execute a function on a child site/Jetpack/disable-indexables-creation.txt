@@ -1,0 +1,1 @@
+add_filter( 'Yoast\WP\SEO\should_index_indexables', '__return_false' );
