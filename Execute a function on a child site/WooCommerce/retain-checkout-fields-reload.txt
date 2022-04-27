@@ -1,0 +1,23 @@
+add_action( 'woocommerce_checkout_update_order_review', 'wc_save_checkout_values', 9999 );
+ 
+function wc_save_checkout_values( $posted_data ) {
+    parse_str( $posted_data, $output );
+    WC()->session->set( 'checkout_data', $output );
+    return $posted_data;
+}
+ 
+add_filter( 'woocommerce_checkout_get_value', 'wc_get_saved_checkout', 9999, 2 );
+ 
+function wc_get_saved_checkout( $value, $index ) {
+    $data = WC()->session->get( 'checkout_data' );
+    if ( ! $data || empty( $data[$index] ) ) return $value;
+    return is_bool( $data[$index] ) ? (int) $data[$index] : $data[$index];
+}
+ 
+add_filter( 'woocommerce_ship_to_different_address_checked', 'wc_get_saved_ship_to_different' );
+ 
+function wc_get_saved_ship_to_different( $checked ) {
+    $data = WC()->session->get( 'checkout_data' );
+    if ( ! $data || empty( $data['ship_to_different_address'] ) ) return $checked;
+    return true;
+}
