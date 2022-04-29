@@ -1,0 +1,4 @@
+function dlm_custom_empty_download_redirect_url( $s ) {
+	return site_url('no-access');
+}
+add_filter( 'dlm_empty_download_redirect_url', 'dlm_custom_empty_download_redirect_url' );
