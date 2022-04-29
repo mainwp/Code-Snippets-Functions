@@ -1,0 +1,1 @@
+add_filter( 'dlm_do_not_force', '__return_true' );
