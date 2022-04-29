@@ -1,0 +1,4 @@
+function dlm_disable_empty_download_redirect( $b ) {
+	return false;
+}
+add_filter( 'dlm_empty_download_redirect_enabled', 'dlm_disable_empty_download_redirect' );
