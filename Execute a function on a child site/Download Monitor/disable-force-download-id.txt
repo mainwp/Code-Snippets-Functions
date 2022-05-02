@@ -1,0 +1,9 @@
+add_filter( 'dlm_do_not_force', 'do_not_force_by_id' );
+
+function do_not_force_by_id( $do_not_force, $download ) {
+	if ( '25' == $download->id ) {
+		return true;
+	}
+
+	return $do_not_force;
+}
