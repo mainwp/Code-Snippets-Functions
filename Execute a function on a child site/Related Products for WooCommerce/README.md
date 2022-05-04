@@ -1,6 +1,6 @@
 ## Related Products for WooCommerce code snippets
 
-Tested version of WordPress 5.9.2, plugin version was Related Products for WooCommerce 1.4.1.
+Tested version of WordPress 5.9.3, plugin version was Related Products for WooCommerce 1.4.3.
 
 This file is a code snippet that is used for [Related Products for WooCommerce](https://wordpress.org/plugins/wt-woocommerce-related-products/) plugin. 
 
