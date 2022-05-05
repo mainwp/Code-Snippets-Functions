@@ -1,0 +1,25 @@
+function my_pmpro_after_change_membership_level( $level_id, $user_id ) {
+
+	// are they cancelling? and don't do this from admin (e.g. when admin's are changing levels)
+	if ( empty( $level_id ) && ! is_admin() ) {
+
+		// only delete non-admins
+		if ( ! user_can( $user_id, 'manage_options' ) ) {
+
+			// remove the delete hooks so we don't try to cancel the membership again
+			remove_action( 'delete_user', 'pmpro_delete_user' );
+			remove_action( 'wpmu_delete_user', 'pmpro_delete_user' );
+
+			// delete the user
+			require_once ABSPATH . '/wp-admin/includes/user.php';
+			wp_delete_user( $user_id );
+
+			// add the delete hooks back in
+			add_action( 'delete_user', 'pmpro_delete_user' );
+			add_action( 'wpmu_delete_user', 'pmpro_delete_user' );
+
+		}
+	}
+
+}
+add_action( 'pmpro_after_change_membership_level', 'my_pmpro_after_change_membership_level', 10, 2 );
