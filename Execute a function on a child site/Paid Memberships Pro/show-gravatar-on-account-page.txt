@@ -1,0 +1,10 @@
+function show_gravatar_pmpro_account_bullets_top() {
+	global $current_user;
+	echo '<li class="alignright" style="display: inline-block; list-style: none; margin: -5rem 0 0 0;">' . get_avatar( $current_user->ID, 160 ) . '</li>';
+}
+add_action( 'pmpro_account_bullets_top', 'show_gravatar_pmpro_account_bullets_top' );
+
+function show_gravatar_pmpro_account_bullets_bottom() {
+	echo '<li><strong>' . __( 'Avatar', 'pmpro' ) . ':</strong> <a href="http://gravatar.com/" target="_blank">' . __( 'Update at Gravatar.com', 'pmpro' ) . '</a></li>';
+}
+add_action( 'pmpro_account_bullets_bottom', 'show_gravatar_pmpro_account_bullets_bottom' );
