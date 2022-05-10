@@ -1,0 +1,10 @@
+function my_pmpro_email_headers_admin_emails( $headers, $email ) {
+
+	// BCC emails already going to admin_email.
+	if ( strpos( $email->template, '_admin' ) !== false ) {
+		$headers[] = 'Bcc:' . 'otheremail@domain.com';
+	}
+
+	return $headers;
+}
+add_filter( 'pmpro_email_headers', 'my_pmpro_email_headers_admin_emails', 10, 2 );
