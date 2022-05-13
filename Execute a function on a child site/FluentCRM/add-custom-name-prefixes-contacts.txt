@@ -1,0 +1,5 @@
+add_filter('fluentcrm_contact_name_prefixes', function ($prefixes) {
+   $prefixes[] = 'Dr.';
+   $prefixes[] = 'Eng.';
+   return $prefixes;
+});
