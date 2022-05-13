@@ -1,0 +1,14 @@
+add_filter(
+    'block_editor_settings_all',
+    function( $settings, $context ) {
+        
+        // Disable for posts/pages.
+        if ( $context->post && $context->post->post_type === 'page' ) {
+            $settings['canLockBlocks'] = false;
+        }
+ 
+        return $settings;
+    },
+    10,
+    2
+);
