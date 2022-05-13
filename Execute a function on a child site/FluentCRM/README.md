@@ -1,4 +1,4 @@
-## FLuentCRM code snippets
+## FluentCRM code snippets
 
 Tested version of WordPress 5.9.3, plugin version was FluentCRM 2.5.8.
 
