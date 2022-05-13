@@ -1,0 +1,1 @@
+add_filter('fluentcrm_track_click', '__return_false');
