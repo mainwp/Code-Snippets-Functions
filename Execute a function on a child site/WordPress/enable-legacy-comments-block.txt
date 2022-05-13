@@ -1,0 +1,8 @@
+function wporg_enable_post_comments_legacy_block( $metadata ) {
+    if ( 'core/post-comments' === $metadata['name'] ) {
+        $metadata['title'] = esc_html__( 'Post Comments', 'textdomain' );
+    $metadata['supports']['inserter'] = true;
+    }
+    return $metadata;
+}
+add_filter( 'block_type_metadata', 'wporg_enable_post_comments_legacy_block' );
