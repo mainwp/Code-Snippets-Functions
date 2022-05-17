@@ -1,0 +1,1 @@
+add_filter( 'action_scheduler_allow_async_request_runner', '__return_false' );
