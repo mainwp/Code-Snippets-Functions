@@ -1,6 +1,6 @@
 ## Ajax Search for WooCommerce code snippets
 
-Tested version of WordPress 5.9.2, plugin version was Ajax Search for WooCommerce 1.17.0.
+Tested version of WordPress 5.9.3, plugin version was Ajax Search for WooCommerce 1.18.0.
 
 This file is a code snippet that is used for [Ajax Search for WooCommerce](https://wordpress.org/plugins/ajax-search-for-woocommerce/) plugin. 
 
