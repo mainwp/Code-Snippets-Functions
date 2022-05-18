@@ -1,0 +1,6 @@
+add_action( 'woocommerce_after_shop_loop_item', 'wc_show_product_categories', 9 );
+ 
+function wc_show_product_categories() {
+   global $product;   
+   echo wc_get_product_category_list( $product->get_id(), ', ', '<p>', '</p>' );
+}
