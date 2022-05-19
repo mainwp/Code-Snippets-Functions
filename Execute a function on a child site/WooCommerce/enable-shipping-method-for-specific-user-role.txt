@@ -1,0 +1,18 @@
+function filter_woocommerce_package_rates( $rates, $package ) {
+    // Set the rate IDs in the array
+    $rate_ids = array( 'local_pickup:1', 'free_shipping:2' );
+    
+    // NOT the required user role, remove shipping method(s)
+    if ( ! current_user_can( 'administrator' ) ) {
+        // Loop trough
+        foreach ( $rates as $rate_id => $rate ) {
+            // Checks if a value exists in an array
+            if ( in_array( $rate_id, $rate_ids ) ) {
+                unset( $rates[$rate_id] );
+            }
+        }
+    }
+    
+    return $rates;
+}
+add_filter( 'woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2 );
