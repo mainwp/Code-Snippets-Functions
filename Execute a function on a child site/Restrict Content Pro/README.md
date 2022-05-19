@@ -1,6 +1,6 @@
 ## Restrict Content Pro code snippets
 
-Tested version of WordPress 5.8.2, plugin version was Restrict Content Pro 3.5.12.
+Tested version of WordPress 5.9.3, plugin version was Restrict Content Pro 3.5.13.
 
 This file is a code snippet that is used for [Restrict Content Pro](https://restrictcontentpro.com/) plugin. 
 
