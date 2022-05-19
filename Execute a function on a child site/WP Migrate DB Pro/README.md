@@ -1,6 +1,6 @@
 ## WP Migrate DB Pro code snippets
 
-Tested version of WordPress 5.9.2, plugin version was WP Migrate DB Pro 2.3.0.
+Tested version of WordPress 5.9.3, plugin version was WP Migrate DB Pro 2.3.2.
 
 This file is a code snippet that is used for [WP Migrate DB Pro](https://deliciousbrains.com/wp-migrate-db-pro/) plugin. 
 
