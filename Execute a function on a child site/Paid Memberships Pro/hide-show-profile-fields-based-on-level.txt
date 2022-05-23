@@ -1,0 +1,31 @@
+function my_pmpro_member_profile_fields( $fields, $user ) {
+
+	$premium_fields = array( 'user_url', 'facebook', 'twitter', 'linkedin', 'instagram' );
+	$premium_levels = array( 1, 2, 5, 6 );
+
+	if ( ! empty( $fields ) && ! pmpro_hasMembershipLevel( $premium_levels, $user->ID ) ) {
+
+		$new_fields = array();
+
+		foreach ( $fields as $key => $field ) {
+
+			$include = true;
+
+			foreach ( $premium_fields as $pfield ) {
+				if ( ! isset( $field[1] ) || $field[1] == $pfield ) {
+					$include = false;
+					break;
+				}
+			}
+
+			if ( $include ) {
+				$new_fields[] = $field;
+			}
+		}
+
+		$fields = $new_fields;
+	}
+
+	return $fields;
+}
+add_filter( 'pmpro_member_profile_fields', 'my_pmpro_member_profile_fields', 10, 2 );
