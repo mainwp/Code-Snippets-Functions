@@ -1,0 +1,9 @@
+add_action( 'woocommerce_product_query', 'wc_sale_category' );
+ 
+function wc_sale_category( $q ) {
+   if ( "sale" !== $q->get( 'product_cat' ) ) return; // "sale" = slug
+   $q->set( 'post_type', 'product' );
+   $q->set( 'product_cat', null );
+   $product_ids_on_sale = wc_get_product_ids_on_sale() ? wc_get_product_ids_on_sale() : array();
+   $q->set( 'post__in', $product_ids_on_sale );
+}
