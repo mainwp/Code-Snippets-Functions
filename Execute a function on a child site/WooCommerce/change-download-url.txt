@@ -1,0 +1,14 @@
+function filter_woocommerce_customer_available_downloads( $downloads, $customer_id ) {
+    // Only on my account downloads section
+    if ( ! is_wc_endpoint_url( 'downloads' ) )
+        return $downloads;
+
+    // Loop though downloads
+    foreach( $downloads as $key => $download ) {
+        // Replace
+        $downloads[$key]['download_url'] = str_replace( '/?download_file', '/account/downloads/?download_file', $download['download_url'] );
+    }
+
+    return $downloads;
+}
+add_filter( 'woocommerce_customer_available_downloads', 'filter_woocommerce_customer_available_downloads', 10, 2 );
