@@ -1,0 +1,15 @@
+function my_pmpro_invoice_company_name() {
+
+	// Get user meta
+	global $current_user;
+	
+	$company = get_user_meta( $current_user->ID, 'company', true );
+	
+	// Add if meta is available
+	if ( ! empty( $company ) ) {
+	?>
+		<li><strong>Company:</strong> <?php echo $company; ?></li>
+	<?php
+	}
+}
+add_action( 'pmpro_invoice_bullets_top', 'my_pmpro_invoice_company_name' );
