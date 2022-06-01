@@ -1,0 +1,1 @@
+define('AUTOSAVE_INTERVAL', 86400);
