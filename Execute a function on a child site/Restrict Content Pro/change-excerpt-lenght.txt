@@ -1,0 +1,4 @@
+function pw_rcp_custom_excerpt_length( $length ) {
+	return 100; // Set length to 100 words
+}
+add_filter( 'rcp_filter_excerpt_length', 'pw_rcp_custom_excerpt_length' );
