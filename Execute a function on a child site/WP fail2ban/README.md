@@ -1,6 +1,6 @@
 ## WP fail2ban code snippets
 
-Tested version of WordPress 5.9.1, plugin version was WP fail2ban 4.4.0.3.
+Tested version of WordPress 6.0, plugin version was WP fail2ban 4.4.0.4.
 
 This file is a code snippet that is used for [WP fail2ban](https://wordpress.org/plugins/wp-fail2ban/) plugin. 
 
