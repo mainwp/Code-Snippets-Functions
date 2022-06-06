@@ -1,0 +1,1 @@
+add_filter( 'eio_lazy_responsive', '__return_false' );
