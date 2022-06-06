@@ -1,0 +1,17 @@
+function action_woocommerce_check_cart_items() {
+    // Setting
+    $minimum = 500;
+
+    // Get cart total
+    $cart_total = WC()->cart->get_cart_contents_total();
+
+    // Less than the minimum
+    if ( $cart_total < $minimum ) {
+        // Notice
+        wc_add_notice( sprintf( __( 'Wholesale Orders is only valid on order more than %s Euros.', 'woocommerce' ), $minimum ), 'error' );
+        
+        // Optional: remove proceed to checkout button
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+    }
+}   
+add_action( 'woocommerce_check_cart_items' , 'action_woocommerce_check_cart_items', 10 );
