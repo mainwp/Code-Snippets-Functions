@@ -1,0 +1,1 @@
+define( EWWW_IMAGE_OPTIMIZER_JPG_TO_PNG', false );
