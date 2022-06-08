@@ -1,0 +1,1 @@
+define( 'EIO_ENABLE_NATIVE_LAZY', true );
