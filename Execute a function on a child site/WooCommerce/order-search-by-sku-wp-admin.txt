@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_shop_order_search_results', 'wc_order_search_by_sku', 9999, 3 );
+ 
+function wc_order_search_by_sku( $order_ids, $term, $search_fields ) {
+   global $wpdb;
+   if ( ! empty( $search_fields ) ) {
+      $product_id = wc_get_product_id_by_sku( $wpdb->esc_like( wc_clean( $term ) ) );
+      if ( ! $product_id ) return $order_ids;       
+      $order_ids = array_unique(
+         $wpdb->get_col(
+            $wpdb->prepare( "SELECT order_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id IN ( SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE meta_key = '_product_id' AND meta_value = %d ) AND order_item_type = 'line_item'", $product_id )
+         )
+      );
+   }
+   return $order_ids; 
+}
