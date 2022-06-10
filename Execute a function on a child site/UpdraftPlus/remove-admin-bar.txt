@@ -1,0 +1,8 @@
+function updraftplus_remove_toolbar_menu() {
+	
+	global $wp_admin_bar;
+	
+	$wp_admin_bar->remove_menu('updraft_admin_node');
+	
+}
+add_action('wp_before_admin_bar_render', 'updraftplus_remove_toolbar_menu', 999);
