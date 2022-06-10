@@ -1,0 +1,1 @@
+define('UPDRAFTPLUS_ADMINBAR_DISABLE', true);
