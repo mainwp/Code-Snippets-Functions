@@ -1,0 +1,1 @@
+define('UPDRAFTPLUS_DISABLE_WP_CRON_NOTICE', true);
