@@ -1,0 +1,1 @@
+define('UPDRAFTPLUS_ALWAYS_TRY_MYSQLDUMP', true);
