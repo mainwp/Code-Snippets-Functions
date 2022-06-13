@@ -1,0 +1,5 @@
+add_filter('wpo_option_key_page_cache_length', 'my_prefix_page_cache_length');
+
+function my_prefix_page_cache_length() {
+  return 60 * 30;
+}
