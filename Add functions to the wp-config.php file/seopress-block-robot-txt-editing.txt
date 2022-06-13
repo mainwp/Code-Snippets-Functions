@@ -1,0 +1,1 @@
+define('SEOPRESS_BLOCK_ROBOTS', true);
