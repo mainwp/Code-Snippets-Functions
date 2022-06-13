@@ -1,0 +1,1 @@
+add_filter('wpo_cache_show_cached_by_comment', '__return_false');
