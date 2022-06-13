@@ -1,0 +1,4 @@
+function sp_enable_setup_wizard( $true ) {
+    return false; 
+};
+add_filter( 'seopress_enable_setup_wizard', 'sp_enable_setup_wizard', 10, 1 );
