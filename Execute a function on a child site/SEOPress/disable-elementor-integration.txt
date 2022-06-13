@@ -1,0 +1,2 @@
+remove_action('elementor/editor/footer', 'seopress_elementor_tabs_seo_start', 0);
+remove_action('elementor/editor/footer', 'seopress_elementor_tabs_seo_end', 999);
