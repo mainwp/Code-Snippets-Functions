@@ -1,0 +1,1 @@
+define('SEOPRESS_WL_ADMIN_HEADER', false);
