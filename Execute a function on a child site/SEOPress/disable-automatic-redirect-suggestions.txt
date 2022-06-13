@@ -1,0 +1,1 @@
+add_filter( 'seopress_post_automatic_redirect', '__return_false' );
