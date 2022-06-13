@@ -1,0 +1,3 @@
+if (isset($_GET['page']) && ($_GET['page'] == 'seopress-option' || $_GET['page'] == 'seopress-network-option' || $_GET['page'] == 'seopress-titles' || $_GET['page'] == 'seopress-xml-sitemap' || $_GET['page'] == 'seopress-social' || $_GET['page'] == 'seopress-google-analytics' || $_GET['page'] == 'seopress-advanced' || $_GET['page'] == 'seopress-pro-page') ) {      
+	add_filter('admin_footer_text', '__return_empty_string'); 
+}
