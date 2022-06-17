@@ -1,0 +1,1 @@
+add_filter('seopress_breadcrumbs_old_markup', '__return_true');
