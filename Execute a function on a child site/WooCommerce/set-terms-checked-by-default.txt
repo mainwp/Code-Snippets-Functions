@@ -1,0 +1,5 @@
+function check_wc_terms( $terms_is_checked ) {
+    return true;
+}
+add_filter( 'woocommerce_terms_is_checked', 'check_wc_terms', 10 );
+add_filter( 'woocommerce_terms_is_checked_default', 'check_wc_terms', 10 );
