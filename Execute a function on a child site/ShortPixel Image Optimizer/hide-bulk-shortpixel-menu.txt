@@ -1,0 +1,3 @@
+add_action('admin_menu', function () {
+  remove_submenu_page('upload.php', 'wp-short-pixel-bulk');
+}, 20);
