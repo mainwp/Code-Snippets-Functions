@@ -1,0 +1,3 @@
+add_filter( 'charitable_minimum_donation_amount', function() { 
+    return 2;
+} );
