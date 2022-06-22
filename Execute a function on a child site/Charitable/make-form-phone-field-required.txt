@@ -1,0 +1,6 @@
+function ed_charitable_make_donation_form_field_required( $fields ) {
+    $fields['phone']['required'] = true; // Change to false to make it not required.
+    return $fields;
+}
+
+add_filter( 'charitable_donation_form_user_fields', 'ed_charitable_make_donation_form_field_required' );
