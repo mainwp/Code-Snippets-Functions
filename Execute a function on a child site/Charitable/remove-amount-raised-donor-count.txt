@@ -1,0 +1,7 @@
+function ed_unhook_default_template_functions() {
+    remove_action( 'charitable_campaign_summary', 'charitable_template_campaign_percentage_raised', 4 );
+    remove_action( 'charitable_campaign_summary', 'charitable_template_campaign_donation_summary', 6 );
+    remove_action( 'charitable_campaign_summary', 'charitable_template_campaign_donor_count', 8 );
+}
+
+add_action( 'after_setup_theme', 'ed_unhook_default_template_functions', 11 );
