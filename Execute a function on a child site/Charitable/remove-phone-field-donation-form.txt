@@ -1,0 +1,6 @@
+function ed_remove_phone_field_from_donation_form( $fields ) {
+    unset( $fields['phone'] );
+    return $fields;
+}
+
+add_filter( 'charitable_donation_form_user_fields', 'ed_remove_phone_field_from_donation_form' );
