@@ -1,6 +1,6 @@
 ## SiteGround Security code snippets
 
-Tested version of WordPress 5.9.3, plugin version was SiteGround Security 1.2.7.
+Tested version of WordPress 6.0, plugin version was SiteGround Security 1.2.9.
 
 This file is a code snippet that is used for [SiteGround Security](https://wordpress.org/plugins/sg-security/) plugin. 
 
