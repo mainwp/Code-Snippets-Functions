@@ -1,0 +1,24 @@
+add_filter(
+	'charitable_monetary_amount',
+	function( $formatted, $amount ) {
+		switch( get_locale() ) {
+			case 'nl_NL':
+			case 'fr_FR':
+			case 'it_IT':
+				$format = 'right'; // Other options include 'left', 'left-with-space' and 'right-with-space'.
+				break;
+			default:
+				return $formatted;
+		}
+
+		$currency_helper = charitable_get_currency_helper();
+
+		return sprintf(
+			$currency_helper->get_currency_format( $format ),
+			$currency_helper->get_currency_symbol(),
+			$amount
+		);
+	},
+	10,
+	2
+);
