@@ -1,0 +1,18 @@
+add_filter( 'cp_pro_target_page_settings', 'cp_is_display_popup', 10, 2 );
+
+function cp_is_display_popup( $display_style, $style_id ) {
+     // if style is to display on this page ( replace 7 with your style id ) 
+     if( $display_style && 7 == $style_id ) {
+         global $woocommerce;
+         $display_style = false;
+         foreach( $woocommerce->cart->get_cart() as $key => $val ) { 
+             $_product = $val['data']; 
+             // replace 10 with your product id
+             if( 10 == $_product->get_id() ) {
+                 // display style
+                 $display_style = true;    
+             }  
+         }  
+     }
+     return $display_style;
+ }
