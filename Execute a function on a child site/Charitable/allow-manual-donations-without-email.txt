@@ -1,0 +1,1 @@
+add_filter( 'charitable_permit_donor_without_email', '__return_true' );
