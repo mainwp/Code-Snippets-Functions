@@ -1,0 +1,1 @@
+add_filter('seopress_faq_block_inline_css', '__return_false');
