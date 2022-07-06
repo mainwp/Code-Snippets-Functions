@@ -1,6 +1,6 @@
 ## CartFlows code snippets
 
-Tested version of WordPress 6.0, plugin version was CartFlows 1.9.2.
+Tested version of WordPress 6.0, plugin version was CartFlows 1.10.0.
 
 This file is a code snippet that is used for [CartFlows](https://wordpress.org/plugins/cartflows/) plugin. 
 
