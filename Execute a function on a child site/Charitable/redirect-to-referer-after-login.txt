@@ -1,0 +1,11 @@
+function ed_charitable_redirect_to_previous_page_after_login( $args ) {
+    $referrer = wp_get_referer();
+
+    if ( false != $referrer ) {
+        $args['redirect'] = $referrer;
+    }
+    
+    return $args;
+}
+
+add_filter( 'charitable_login_form_args', 'ed_charitable_redirect_to_previous_page_after_login' );
