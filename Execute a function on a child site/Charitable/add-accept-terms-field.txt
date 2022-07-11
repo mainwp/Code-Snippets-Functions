@@ -1,0 +1,37 @@
+add_action(
+	'init',
+	function() {
+		/* Create the `Charitable_Donation_Field` object. */
+		$field = new Charitable_Donation_Field(
+			'accept_terms',
+			array(
+				'label'          => __( 'Terms and Conditions Accepted' ),
+				'data_type'      => 'meta',
+				'donation_form'  => false,
+				'admin_form'     => false,
+				'show_in_meta'   => true,
+				'show_in_export' => true,
+				'email_tag'      => array(
+					'description' => __( 'Whether the terms and conditions were accepted.' ),
+				),
+				'value_callback' => function( Charitable_Abstract_Donation $donation, $key ) {
+					$parent_id = $donation->get_donation_plan_id();
+
+					if ( $parent_id ) {
+						$accepted = get_post_meta( $parent_id, 'accept_terms', true );
+					} else {
+						$accepted = get_post_meta( $donation->ID, 'accept_terms', true );
+					}
+
+					return $accepted ? __( 'Yes' ) : __( 'No' );
+				},
+			)
+		);
+
+		/* Get the `Charitable_Donation_Field_Registry` instance. */
+		$fields = charitable()->donation_fields();
+
+		/* Add the new field. */
+		$fields->register_field( $field );
+	}
+);
