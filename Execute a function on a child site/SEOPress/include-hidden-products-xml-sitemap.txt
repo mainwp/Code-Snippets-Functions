@@ -1,0 +1,14 @@
+function sp_sitemaps_single_query($args, $cpt_key) { 
+	if ( $cpt_key == 'product' ) {
+		//default
+		// $args['tax_query'][] = [
+		// 	'taxonomy' => 'product_visibility',
+		// 	'field'    => 'slug',
+		// 	'terms'    => ['exclude-from-catalog'],
+		// 	'operator' => 'NOT IN',
+		// ];
+		unset($args['tax_query']);
+	}
+	return $args;
+}
+add_filter('seopress_sitemaps_single_query', 'sp_sitemaps_single_query', 10, 2);
