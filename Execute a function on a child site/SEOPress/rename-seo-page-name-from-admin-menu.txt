@@ -1,0 +1,5 @@
+add_filter('seopress_seo_admin_menu_title', 'sp_seo_admin_menu_title');
+function sp_seo_admin_menu_title($name) {
+    $name = __('my custom page name', 'your-text-domain');
+    return $name;
+}
