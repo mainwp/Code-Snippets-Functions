@@ -1,6 +1,6 @@
 ## WPForms code snippets
 
-Tested version of WordPress 6.0, plugin version was WPForms 1.7.4.2.
+Tested version of WordPress 6.0.1, plugin version was WPForms 1.7.5.1.
 
 This file is a code snippet that is used for [WPForms](https://wordpress.org/plugins/wpforms-lite//) plugin. 
 
