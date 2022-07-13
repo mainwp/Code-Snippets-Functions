@@ -1,0 +1,1 @@
+define( ‘MAILCHIMP_USE_OUTBOUND_IP’, false );
