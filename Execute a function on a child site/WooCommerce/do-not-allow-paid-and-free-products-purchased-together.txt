@@ -1,0 +1,45 @@
+function action_woocommerce_add_to_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+    // Get current product
+    $current_product = wc_get_product( $product_id );
+
+    // Get current product price
+    $current_product_price = $current_product->get_price();
+
+    // Initialize
+    $is_free = false;
+    $notice = false;
+
+    // When current product price = 0
+    if ( $current_product_price == 0 ) {
+        // Make true
+        $is_free = true;
+    }
+
+    // Loop through cart contents
+    foreach ( WC()->cart->get_cart_contents() as $item_key => $cart_item ) {
+        // Get price
+        $product_price = $cart_item['data']->get_price();
+
+        // Product price is NOT equal to 0 and current product is free
+        if ( $product_price != 0 && $is_free ) {
+            // Remove product from cart
+            WC()->cart->remove_cart_item( $item_key );
+
+            // Make true
+            $notice = true;
+        // Product price is equal to 0 and current product is NOT free
+        } elseif ( $product_price == 0 && ! $is_free ) {
+            // Remove product from cart
+            WC()->cart->remove_cart_item( $item_key );
+
+            // Make true
+            $notice = true;
+        }
+    }
+
+    // Optionaly displaying a notice
+    if ( $notice ) {
+        wc_add_notice( __( 'Some products have been removed from the cart because free and paid products cannot be bought together', 'woocommerce' ), 'notice' );
+    }
+}
+add_action( 'woocommerce_add_to_cart', 'action_woocommerce_add_to_cart', 10, 6 );
