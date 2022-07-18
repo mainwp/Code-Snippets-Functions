@@ -1,0 +1,15 @@
+add_action('init', 'sp_remove_bulk_edit_actions', 100);
+function sp_remove_bulk_edit_actions() {
+	if (current_user_can('manage_options')) {
+		return;
+	}
+	foreach (seopress_get_post_types() as $key => $value) {
+		remove_all_filters('bulk_actions-edit-'.$key, 10);
+	}
+	foreach (seopress_get_taxonomies() as $key => $value) {
+		remove_all_filters('bulk_actions-edit-'.$key, 10);
+	}
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' )) {
+		remove_all_filters('bulk_actions-edit-product', 10);
+	}
+}
