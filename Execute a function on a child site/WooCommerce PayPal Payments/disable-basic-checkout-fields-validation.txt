@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_paypal_payments_basic_checkout_validation_enabled', '__return_false' );
