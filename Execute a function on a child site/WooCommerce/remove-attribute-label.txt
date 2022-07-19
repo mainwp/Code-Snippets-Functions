@@ -1,0 +1,4 @@
+add_filter( 'woocommerce_attribute_label', 'remove_attribute_label');
+function remove_attribute_label() {
+    return "";
+}
