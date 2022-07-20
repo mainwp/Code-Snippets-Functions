@@ -1,0 +1,4 @@
+function rocket_lazyload_custom_threshold( $threshold ) {
+	return 100;
+}
+add_filter( 'rocket_lazyload_threshold', 'rocket_lazyload_custom_threshold' );
