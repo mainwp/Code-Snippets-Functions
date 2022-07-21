@@ -1,0 +1,1 @@
+add_filter( 'rocket_cache_wc_empty_cart', '__return_false' );
