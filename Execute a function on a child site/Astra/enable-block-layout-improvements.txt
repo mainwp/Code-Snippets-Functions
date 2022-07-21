@@ -1,0 +1,2 @@
+add_filter( 'astra_get_option_customizer-default-layout-update', '__return_true' );
+add_filter( 'astra_get_option_wp-blocks-v2-ui', '__return_true' );
