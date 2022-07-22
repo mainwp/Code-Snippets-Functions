@@ -1,0 +1,1 @@
+add_filter('mailpoet_subscription_limit_enabled', '__return_false');
