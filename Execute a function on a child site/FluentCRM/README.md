@@ -1,6 +1,6 @@
 ## FluentCRM code snippets
 
-Tested version of WordPress 6.0, plugin version was FluentCRM 2.5.91.
+Tested version of WordPress 6.0.1, plugin version was FluentCRM 2.5.93.
 
 This file is a code snippet that is used for [FluentCRM](https://wordpress.org/plugins/fluent-crm/) plugin. 
 
