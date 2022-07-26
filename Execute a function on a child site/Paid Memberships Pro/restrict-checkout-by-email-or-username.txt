@@ -1,0 +1,88 @@
+//text area for emails and user names on edit level page
+function my_add_restrict_by_email_or_username_settings() {
+	$level = intval( $_REQUEST['edit'] );
+	$restrict_emails = pmpro_getOption( 'level_' . $level . '_restrict_emails' );
+	?>
+	<h3 class="topborder">Restrict by Email</h3>
+	<p>To restrict signups to specific email addresses, enter those email addresses below, one per line. If blank, signups will not be restricted.</p>
+	<textarea rows="10" cols="80" name="restrict_emails" id="restrict_emails"><?php echo esc_textarea( $restrict_emails ); ?></textarea>
+	<?php
+
+	$restrict_usernames = pmpro_getOption( 'level_' . $level . '_restrict_usernames' );
+	?>
+	<h3 class="topborder">Restrict by Username</h3>
+	<p>To restrict signups to specific users or usernames, enter those usernames below, one per line. If blank, signups will not be restricted.</p>
+	<textarea rows="10" cols="80" name="restrict_usernames" id="restrict_usernames"><?php echo esc_textarea( $restrict_usernames ); ?></textarea>
+	<?php
+}
+add_action( 'pmpro_membership_level_after_other_settings', 'my_add_restrict_by_email_or_username_settings' );
+
+//update the emails and usernames on save
+function my_update_restrict_by_email_or_username_settings($saveid) {
+	$restrict_emails = sanitize_textarea_field( $_REQUEST['restrict_emails'] );
+	pmpro_setOption( 'level_' . $saveid . '_restrict_emails', $restrict_emails );
+
+	$restrict_emails = sanitize_textarea_field( $_REQUEST['restrict_usernames'] );
+	pmpro_setOption( 'level_' . $saveid . '_restrict_usernames', $restrict_emails );
+}
+add_action( 'pmpro_save_membership_level', 'my_update_restrict_by_email_or_username_settings' );
+
+//check emails when registering
+function my_check_if_restricted_by_email_or_username( $okay ) {
+	global $current_user;
+
+	//only check if we're okay so far and there is an email to check
+	if( $okay && ( ! empty($_REQUEST['bemail']) || ! empty( $current_user->user_email ) ) ) {
+		//are we restricting emails for this level
+		global $pmpro_level;
+		$restrict_emails = pmpro_getOption( 'level_' . $pmpro_level->id . '_restrict_emails' );
+		if( ! empty( $restrict_emails ) ) {
+			$restrict_emails = strtolower( str_replace( array(";", ",", " "), "\n", $restrict_emails ) );
+			if( ! empty( $current_user->user_email ) ) {
+				$needle = strtolower($current_user->user_email);
+			} else {
+				$needle = strtolower($_REQUEST['bemail']);
+			}				
+			$haystack = explode( "\n", $restrict_emails );
+			array_walk( $haystack, function( &$val ) { 
+				$val = trim($val);
+				return $val;
+			});
+			if( ! in_array( $needle, $haystack ) ) {
+				global $pmpro_msg, $pmpro_msgt;
+				$pmpro_msg = "This membership level is restricted to certain users only. Make sure you've entered your email address correctly.";
+				$pmpro_msgt = "pmpro_error";
+				$okay = false;
+
+				//no further checks here
+				return $okay;
+			}
+		}
+
+		//are we restricting user names for this level
+		$restrict_usernames = pmpro_getOption( 'level_' . $pmpro_level->id . '_restrict_usernames' );
+
+		if( ! empty( $restrict_usernames ) ) {
+			$restrict_usernames = strtolower( str_replace( array( ";", ",", " " ), "\n", $restrict_usernames ) );
+			if( ! empty( $current_user->user_login ) ) {
+				$needle = strtolower($current_user->user_login);
+			} else {
+				$needle = strtolower($_REQUEST['username']);
+			}
+			$haystack = explode( "\n", $restrict_usernames );
+			array_walk( $haystack, function( &$val ) { 
+				$val = trim($val);
+				return $val;
+			});
+			if( ! in_array( $needle, $haystack ) ) {
+				global $pmpro_msg, $pmpro_msgt;
+				$pmpro_msg = "This membership level is restricted to certain users only. Make sure you are logged into your existing account and using the proper username.";
+				$pmpro_msgt = "pmpro_error";
+				$okay = false;
+			}
+		}
+	}
+
+	return $okay;
+}
+add_filter( 'pmpro_registration_checks', 'my_check_if_restricted_by_email_or_username' );
