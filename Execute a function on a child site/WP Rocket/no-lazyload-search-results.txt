@@ -6,4 +6,4 @@ function deactivate_on_search_results() {
 		remove_action( 'wp_footer', 'rocket_lazyload_script', PHP_INT_MAX );
 	}
 }
-add_action( 'wp', __NAMESPACE__ . '\deactivate_on_search_results' );
+add_action( 'deactivate_on_search_results' );
