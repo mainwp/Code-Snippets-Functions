@@ -1,0 +1,1 @@
+add_filter( 'sb_optimizer_automatic_purge_on_post_save', '__return_true' );
