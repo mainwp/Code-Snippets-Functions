@@ -1,0 +1,1 @@
+add_filter( 'mailster_cookie_time', function(){ return 3 * HOUR_IN_SECONDS; } );
