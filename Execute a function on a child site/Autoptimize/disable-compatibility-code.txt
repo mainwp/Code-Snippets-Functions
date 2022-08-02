@@ -1,0 +1,1 @@
+add_filter( 'autoptimize_filter_init_compatibility', '__return_false' );
