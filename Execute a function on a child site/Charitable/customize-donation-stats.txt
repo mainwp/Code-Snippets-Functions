@@ -1,0 +1,38 @@
+function ed_charitable_customize_donation_stats( $donation_stats ) {
+	// First, we get all campaigns in the Advocacy category.
+	$campaigns = Charitable_Campaigns::query( array(
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'tax_query'      => array(
+			array(
+				'taxonomy' => 'campaign_category',
+				'field'    => 'slug',
+				'term'     => 'advocacy',
+			),
+		),
+	) );
+
+	$report = new Charitable_Donation_Report( array(
+		'report_type' => 'all',
+		'campaigns'   => $campaigns->posts,
+	) );
+
+	$donation_stats['campaign_count']['amount'] = $campaigns->found_posts;
+	$donation_stats['donated']['amount']        = $report->get_report( 'amount' );
+	$donation_stats['donor_count']['amount']    = $report->get_report( 'donors' );
+
+	// You can also add the number of donations made:
+	//
+	// $donation_stats['donation_count'] = array(
+	// 	'amount'      => $report->get_report( 'donations' ),
+	// 	'description' => 'Donations',
+	// );
+
+	// To remove a particular stat, use unset(), like this:
+	//
+	// unset( $donations_stats['campaign_count'] );
+
+	return $donation_stats;
+}
+
+add_filter( 'charitable_donation_stats', 'ed_charitable_customize_donation_stats' );
