@@ -1,0 +1,10 @@
+add_filter(
+    hook_name: 'woocommerce_cart_item_price',
+    accepted_args: 3,
+    callback: function (string $price, array $item, string $key): string {
+        return wc_price(
+            price: $item['data']->get_price(),
+            args: [ 'decimals' => 2 ],
+        );
+    },
+);
