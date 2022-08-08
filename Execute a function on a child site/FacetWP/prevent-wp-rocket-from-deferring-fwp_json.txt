@@ -1,0 +1,4 @@
+add_filter( 'rocket_defer_inline_exclusions', function( $exclusions ) {
+    $exclusions[] = 'FWP_JSON';
+    return $exclusions;
+});
