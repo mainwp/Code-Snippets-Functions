@@ -1,0 +1,6 @@
+add_filter( 'facetwp_is_main_query', function( $is_main_query, $query ) {
+    if ( 0 === strpos( FWP()->helper->get_uri(), 'author' ) ) {
+        $is_main_query = false;
+    }
+    return $is_main_query;
+}, 10, 2 );
