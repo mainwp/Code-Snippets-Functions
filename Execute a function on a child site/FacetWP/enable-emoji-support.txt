@@ -1,0 +1,4 @@
+add_filter('facetwp_index_row', function( $params ) {
+    $params['facet_display_value'] = wp_encode_emoji( $params['facet_display_value'] );
+    return $params;
+});
