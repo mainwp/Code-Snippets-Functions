@@ -1,0 +1,1 @@
+add_filter( 'rocket_htaccess_mod_rewrite', '__return_false' );
