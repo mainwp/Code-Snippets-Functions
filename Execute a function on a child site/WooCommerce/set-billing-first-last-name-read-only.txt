@@ -1,0 +1,8 @@
+add_filter('woocommerce_billing_fields', 'my_woocommerce_billing_fields');
+function my_woocommerce_billing_fields($fields)
+{
+   $fields['billing_first_name']['custom_attributes'] = array('readonly'=>'readonly');
+   $fields['billing_last_name']['custom_attributes'] = array('readonly'=>'readonly');
+        
+   return $fields;
+}
