@@ -1,0 +1,1 @@
+dd_filter( 'jetpack_block_editor_republicize_feature', '__return_false' );
