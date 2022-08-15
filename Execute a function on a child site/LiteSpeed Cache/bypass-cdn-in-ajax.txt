@@ -1,0 +1,1 @@
+defined( 'DOING_AJAX' ) && add_filter( 'litespeed_can_cdn', '__return_false' );
