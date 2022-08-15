@@ -1,0 +1,1 @@
+add_filter( 'jpp_use_captcha_when_blocked', '__return_false' );
