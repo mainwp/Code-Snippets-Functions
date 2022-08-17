@@ -1,0 +1,13 @@
+add_filter( 'wc_order_statuses', 'wc_rename_completed_order_status' );
+ 
+function wc_rename_completed_order_status( $statuses ) {
+   $statuses['wc-completed'] = 'Shipped';
+   return $statuses;
+}
+ 
+add_filter( 'woocommerce_register_shop_order_post_statuses', 'wc_rename_completed_order_status_counter' );
+  
+function wc_rename_completed_order_status_counter( $statuses ) {
+   $statuses['wc-completed']['label_count'] = _n_noop( 'Shipped <span class="count">(%s)</span>', 'Shipped <span class="count">(%s)</span>', 'woocommerce' );
+   return $statuses;
+}
