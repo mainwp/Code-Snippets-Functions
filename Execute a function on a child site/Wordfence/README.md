@@ -1,6 +1,6 @@
 ## Wordfence code snippets
 
-Tested version of WordPress 6.0, plugin version was Wordfence 7.5.11.
+Tested version of WordPress 6.0.1, plugin version was Wordfence 7.6.0.
 
 This file is a code snippet that is used for [Wordfence](https://wordpress.org/plugins/wordfence/) plugin. 
 
