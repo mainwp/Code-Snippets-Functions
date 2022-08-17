@@ -1,6 +1,6 @@
 ## Paid Memberships Pro code snippets
 
-Tested version of WordPress 6.0.1, plugin version was Paid Memberships Pro 2.9.
+Tested version of WordPress 6.0.1, plugin version was Paid Memberships Pro 2.9.2.
 
 This file is a code snippet that is used for [Paid Memberships Pro](https://www.paidmembershipspro.com) plugin. 
 
