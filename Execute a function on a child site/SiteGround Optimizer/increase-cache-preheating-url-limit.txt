@@ -1,0 +1,7 @@
+add_filter( 'sg_file_caching_preheat_url_limit', 'sgo_preheat_limit' );
+function sgo_preheat_limit( $xml_urls ) {
+    // Define custom limit for XML URL preheat.
+    $xml_urls = 300;
+
+    return $xml_urls;
+}
