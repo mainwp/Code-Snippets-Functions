@@ -1,0 +1,8 @@
+add_filter( 'sgo_db_optimization_exclude', 'sgo_db_optimization_exclude_table' );
+function sgo_db_optimization_exclude_table( $excluded_tables ) {
+    // Add tables that you need to exclude without the wpdb prefix.
+    $excluded_tables[] = 'woocommerce_sessions';
+    $excluded_tables[] = 'woocommerce_log';
+
+    return $excluded_tables;
+}
