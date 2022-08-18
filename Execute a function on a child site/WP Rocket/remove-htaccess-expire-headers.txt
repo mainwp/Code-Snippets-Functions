@@ -1,0 +1,1 @@
+remove_filter('rocket_htaccess_mod_expires', '__return_false');
