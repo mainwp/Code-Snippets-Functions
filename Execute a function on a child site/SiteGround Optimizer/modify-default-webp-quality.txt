@@ -1,0 +1,7 @@
+add_filter( 'sgo_webp_quality', 'webp_quality' );
+function webp_quality( $quality ) {
+    // Add the value you want to adjust as Webp image quality.
+    $quality = 90;
+
+    return $quality;
+}
