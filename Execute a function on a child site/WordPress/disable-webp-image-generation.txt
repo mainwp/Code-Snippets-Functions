@@ -1,0 +1,1 @@
+add_filter( 'wp_upload_image_mime_transforms', '__return_empty_array' );
