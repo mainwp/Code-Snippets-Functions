@@ -1,0 +1,1 @@
+add_filter( 'rocket_cache_search', '__return_true' );
