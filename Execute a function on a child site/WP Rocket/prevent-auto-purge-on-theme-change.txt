@@ -1,0 +1,1 @@
+remove_action( 'upgrader_process_complete', 'rocket_clean_cache_theme_update', 10, 2 ); 
