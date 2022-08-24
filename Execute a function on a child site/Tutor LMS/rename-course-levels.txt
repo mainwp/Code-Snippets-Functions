@@ -1,0 +1,9 @@
+add_filter('tutor_course_level', 'modify_course_level');
+        if ( ! function_exists('modify_course_level')){
+        function modify_course_level($levels){
+        $levels['beginner'] = "Newbie";
+        $levels['intermediate'] = "Rookie";
+        $levels['expert'] = "Professional";
+        return $levels;
+    }
+}
