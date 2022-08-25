@@ -1,0 +1,6 @@
+declare( strict_types=1 );
+
+add_action( 'http_api_curl', function( $handle ) {
+    curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 10000 );
+    curl_setopt( $handle, CURLOPT_TIMEOUT, 10000 );
+}, 1000 );
