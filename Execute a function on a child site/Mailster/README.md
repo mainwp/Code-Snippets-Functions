@@ -1,6 +1,6 @@
 ## Mailster code snippets
 
-Tested version of WordPress 6.0.1, plugin version was Mailster 3.1.6.
+Tested version of WordPress 6.0.1, plugin version was Mailster 3.2.0.
 
 This file is a code snippet that is used for [Mailster](https://mailster.co/) plugin. 
 
