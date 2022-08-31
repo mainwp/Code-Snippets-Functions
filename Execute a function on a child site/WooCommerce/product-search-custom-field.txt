@@ -1,0 +1,22 @@
+add_filter( 'posts_search', 'wc_product_search_by_custom_field' );
+ 
+function wc_product_search_by_custom_field( $where ) {
+    global $wpdb, $wp;
+    if ( is_admin() || ! is_search() || ! isset( $wp->query_vars['s'] ) || 'product' != $wp->query_vars['post_type'] ) {
+        return $where;
+    }
+    $product_ids = array();
+    $terms = explode( ',', $wp->query_vars['s'] );
+    foreach ( $terms as $term ) {      
+      $products = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_parent FROM {$wpdb->posts} LEFT JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE meta_key IN ( '_brand' ) AND meta_value LIKE %s;", '%' . $wpdb->esc_like( wc_clean( $term ) ) . '%' ) );       
+      $products = array_merge( wp_list_pluck( $products, 'ID' ), wp_list_pluck( $products, 'post_parent' ) );
+        if ( sizeof( $products ) > 0 ) {
+            $product_ids = array_merge( $product_ids, $products );
+        }
+    }
+    $product_ids = array_filter( array_unique( array_map( 'absint', $product_ids ) ) );
+   if ( sizeof( $product_ids ) > 0 ) {
+        $where = str_replace( 'AND (((', "AND ( ({$wpdb->posts}.ID IN (" . implode( ',', $product_ids ) . ")) OR ((", $where );
+    }   
+    return $where;   
+}
