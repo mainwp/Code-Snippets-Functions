@@ -1,0 +1,1 @@
+	add_filter( 'gform_display_add_form_button', '__return_false' );
