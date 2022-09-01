@@ -1,0 +1,9 @@
+function rucss_cron_interval( $cron_interval ) {   
+     
+     // change this value, default is 60 seconds:
+     $cron_interval = 120; 
+     
+     return $cron_interval;
+ }
+	 
+add_filter( 'rocket_rucss_pending_jobs_cron_interval', 'rucss_cron_interval'  );
