@@ -1,0 +1,11 @@
+add_filter( 'generate_blog_image_attributes', function( $atts ) {
+    // Set up our conditional
+    if ( is_post_type_archive( 'portfolio' ) ) {
+        $atts[ 'width' ] = 300;
+        $atts[ 'height' ] = 300;
+        $atts[ 'crop' ] = true;
+    }
+
+    // Return our options
+    return $atts;
+} );
