@@ -1,0 +1,4 @@
+add_action('init', 'jetpack_support_remove_woo_publicize');
+function jetpack_support_remove_woo_publicize() {
+  remove_post_type_support( 'product', 'publicize' );
+}
