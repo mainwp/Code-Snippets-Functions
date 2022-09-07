@@ -1,0 +1,1 @@
+define( 'TRIBE_HIDE_UPSELL', true );
