@@ -1,0 +1,11 @@
+add_action( 'pre_get_posts', 'my_search_exclude_filter' );
+function my_search_exclude_filter( $query ) {
+    if ( ! $query->is_admin && $query->is_search && $query->is_main_query() ) {
+        $searchable_post_types = get_post_types( array( 'exclude_from_search' => false ) );
+        $post_type_to_remove = 'tribe_events';
+        if( is_array( $searchable_post_types ) && in_array( $post_type_to_remove, $searchable_post_types ) ) {
+            unset( $searchable_post_types[ $post_type_to_remove ] );
+            $query->set( 'post_type', $searchable_post_types );
+        }
+    }
+}
