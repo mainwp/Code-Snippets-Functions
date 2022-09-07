@@ -1,0 +1,1 @@
+define('TRIBE_DISABLE_TOOLBAR_ITEMS', true);
