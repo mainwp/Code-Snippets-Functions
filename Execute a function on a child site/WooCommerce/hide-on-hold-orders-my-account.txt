@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_my_account_my_orders_query', 'wc_exclude_status, 9999 );
+ 
+function wc_exclude_status( $args ) {
+   $statuses = wc_get_order_statuses();
+   unset( $statuses['wc-on-hold'] ); // wc-completed, wc-processing, etc.
+   $args['status'] = array_keys( $statuses );
+   return $args;
+}
