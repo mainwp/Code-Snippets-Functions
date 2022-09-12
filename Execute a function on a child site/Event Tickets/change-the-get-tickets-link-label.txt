@@ -1,0 +1,23 @@
+add_filter( 'gettext_with_context', 'tribe_change_get_tickets', 20, 4 );
+function tribe_change_get_tickets( $translation, $text, $context = "" , $domain) {
+ 
+  if ( $domain != 'default'
+       && strpos( $domain, 'event-' ) !== 0
+  ) {
+    return $translation;
+  }
+ 
+  $ticket_text = [
+    // Get Tickets on List View
+    'Get %s'      => 'Register Now!',
+    // Get Tickets Form - Single View
+    'Get Tickets' => 'Register Now!',
+  ];
+ 
+  // If we don't have replacement text, bail.
+  if ( empty( $ticket_text[ $text ] ) ) {
+    return $translation;
+  }
+ 
+  return $ticket_text[ $text ];
+}
