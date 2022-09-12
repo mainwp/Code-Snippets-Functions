@@ -1,0 +1,1 @@
+	add_filter( 'tribe_tickets_get_ticket_max_purchase', function() { return 1; } );
