@@ -1,0 +1,10 @@
+function sv_move_jp_sharing( $content ) {
+	
+	if ( is_singular( 'post' ) && function_exists( 'sharing_display' ) ) {
+		remove_filter( 'the_content', 'sharing_display', 19 );
+		$content = sharing_display() . $content;
+	}
+	
+	return $content;
+}
+add_filter( 'the_content', 'sv_move_jp_sharing' );
