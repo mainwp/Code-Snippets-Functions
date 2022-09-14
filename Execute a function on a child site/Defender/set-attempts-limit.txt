@@ -1,0 +1,4 @@
+add_filter('wd_2fa_attempt_limit', 'custom_defender_filter');
+function custom_defender_filter( $attempt_limit ){
+	return 3;
+}
