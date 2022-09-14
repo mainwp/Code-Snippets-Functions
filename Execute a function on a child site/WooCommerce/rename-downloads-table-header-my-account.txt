@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_account_downloads_columns', 'wc_rename_downloads_page_columns' );
+ 
+function wc_rename_downloads_page_columns( $cols ) {
+   $cols['download-remaining'] = 'New Title';
+   return $cols;
+}
