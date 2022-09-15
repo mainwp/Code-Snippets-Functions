@@ -1,0 +1,1 @@
+add_filter( 'metorik_show_ui', '__return_false' );
