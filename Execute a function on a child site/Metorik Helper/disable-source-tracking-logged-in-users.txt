@@ -1,0 +1,6 @@
+add_action( 'wp_print_scripts', 'mtk_helper_dequeue_scripts' );
+function mtk_helper_dequeue_scripts() {
+    if (is_user_logged_in()) {
+        wp_dequeue_script('metorik-js');
+    }
+}
