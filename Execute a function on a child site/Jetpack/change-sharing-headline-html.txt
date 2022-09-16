@@ -1,0 +1,10 @@
+function jetpackcom_custom_heading( $headline, $label, $module ) {
+        if ( 'sharing' == $module ) {
+                $headline = sprintf(
+                        '<h1>%s</h1>',
+                        $label
+                );
+        }
+        return $headline;
+}
+add_filter( 'jetpack_sharing_headline_html', 'jetpackcom_custom_heading', 10, 3 );
