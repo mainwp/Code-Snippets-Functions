@@ -1,0 +1,4 @@
+add_filter('wd_2fa_time_limit', 'custom_defender_filter');
+function custom_defender_filter( $time_limit ){
+	return 120;
+}
