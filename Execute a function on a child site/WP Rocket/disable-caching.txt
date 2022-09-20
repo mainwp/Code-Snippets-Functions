@@ -1,0 +1,2 @@
+add_filter( 'do_rocket_generate_caching_files', '__return_false' );
+add_filter( 'rocket_generate_advanced_cache_file', '__return_false' );
