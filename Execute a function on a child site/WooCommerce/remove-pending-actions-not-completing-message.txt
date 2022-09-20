@@ -1,0 +1,1 @@
+add_filter( 'action_scheduler_pastdue_actions_check_pre', '__return_false' );
