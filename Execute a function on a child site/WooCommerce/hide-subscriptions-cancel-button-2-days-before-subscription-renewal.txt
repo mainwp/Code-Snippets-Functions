@@ -1,0 +1,22 @@
+function wc_remove_cancel_button( $actions, $subscription_id ) {
+
+    // Gets the subscription object on subscription id
+    $subscription = new WC_Subscription( $subscription_id );
+  
+    $next_payment_date = $subscription->get_date( 'next_payment', 'site' );
+
+    $nt = strtotime($next_payment_date);
+    $local_time  = current_datetime();
+    $ct = $local_time->getTimestamp() + $local_time->getOffset();
+  
+    // Get the difference in date
+    $diff = $ct - $nt;
+    $final = abs(round($diff / 86400));
+    // Change the number (days) according to your choice
+    if ($final <= "2") {
+        unset( $actions['cancel'] );
+    }
+  
+    // Return the actions
+    return $actions;
+} add_filter( 'wcs_view_subscription_actions', 'wc_remove_cancel_button', 100, 2);
