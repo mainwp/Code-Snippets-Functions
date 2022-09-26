@@ -1,0 +1,14 @@
+function my_pmpro_add_payment_type_to_order( $order ) {
+
+	// Bail if payment gateway isn't check.
+	if ( 'check' != $order->gateway ) {
+		return;
+	}
+
+	if ( isset( $_REQUEST['payment_type']) && 'other' !== $_REQUEST['payment_type'] ) {
+		$order->payment_type = esc_attr( $_REQUEST['payment_type'] );
+	}
+
+	$order->saveOrder();
+}
+add_action( 'pmpro_added_order', 'my_pmpro_add_payment_type_to_order' );
