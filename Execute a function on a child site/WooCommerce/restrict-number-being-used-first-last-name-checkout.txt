@@ -1,0 +1,10 @@
+add_action('woocommerce_after_checkout_validation', function ( $fields, $errors ) {
+
+    if (!preg_match('/^[a-zA-Z]+$/', $fields['billing_first_name'])) {
+        $errors->add('billing_first_name', 'First name must contain only alphabetic characters');
+    }
+
+    if (!preg_match('/^[a-zA-Z]+$/', $fields['billing_last_name'])) {
+        $errors->add('billing_last_name', 'Last name must contain only alphabetic characters');
+    }
+}, 10, 2);
