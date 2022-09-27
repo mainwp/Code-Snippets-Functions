@@ -1,6 +1,6 @@
 ## UpdraftPlus code snippets
 
-Tested version of WordPress 6.0.2, plugin version was UpdraftPlus 1.22.20.
+Tested version of WordPress 6.0.2, plugin version was UpdraftPlus 1.22.22.
 
 This file is a code snippet that is used for [UpdraftPlus](https://wordpress.org/plugins/updraftplus/) plugin. 
 
