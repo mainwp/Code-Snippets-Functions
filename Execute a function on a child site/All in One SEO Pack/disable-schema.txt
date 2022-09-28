@@ -1,0 +1,5 @@
+add_filter( 'aioseo_schema_disable', 'aioseo_disable_schema' );
+
+function aioseo_disable_schema( $disabled ) {
+   return true;
+}
