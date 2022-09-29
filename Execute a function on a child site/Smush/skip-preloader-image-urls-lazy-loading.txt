@@ -1,0 +1,4 @@
+add_filter('smush_skip_image_from_lazy_load', function( $skip, $src, $image ){
+	//compare the $src here and return true to skip
+	return $skip || strpos( $src, '/preloader.png' );
+}, 99, 3);
