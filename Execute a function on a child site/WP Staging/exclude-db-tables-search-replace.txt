@@ -1,0 +1,5 @@
+function wpstg_searchreplace_excl_tables($default){
+$tables = array('_woocommerce_sessions', '_actionscheduler_logs'); 
+return array_merge($default, $tables);
+}
+add_filter('wpstg_searchreplace_excl_tables','wpstg_searchreplace_excl_tables');
