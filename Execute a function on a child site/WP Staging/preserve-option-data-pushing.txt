@@ -1,0 +1,5 @@
+function wpstg_push_options_excl($options){
+       $newOptions = array('siteurl', 'home');
+       return array_merge($options, $newOptions);
+}
+add_filter('wpstg_preserved_options','wpstg_push_options_excl');
