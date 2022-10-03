@@ -1,0 +1,5 @@
+function wpstg_clone_excluded_files($default)
+{
+    $files = array('custom-file', '*LOG-*', '*.logs');
+    return array_merge($default, $files);
+}
