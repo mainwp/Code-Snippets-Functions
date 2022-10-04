@@ -1,6 +1,6 @@
 ## Advanced Custom Fields code snippets
 
-Tested version of WordPress 6.0.2, plugin version was Advanced Custom Fields 6.0.1.
+Tested version of WordPress 6.0.2, plugin version was Advanced Custom Fields 6.0.2.
 
 This file is a code snippet that is used for [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) plugin. 
 
