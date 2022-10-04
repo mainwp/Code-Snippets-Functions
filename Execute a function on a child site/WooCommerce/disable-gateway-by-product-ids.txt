@@ -1,0 +1,43 @@
+add_filter('woocommerce_available_payment_gateways', 'wc_payment_methods_by_product_ids');
+
+function wc_payment_methods_by_product_ids($gateways) {
+
+    // do nothing in /wp-admin
+    if (is_admin()) {
+        return $gateways;
+    }
+
+    // Add product IDs you would like to unset payment gateways for
+    $product_ids = array(
+        2422,
+        2423,
+        2424,
+        2425
+    );
+
+    $cod_product_ids = array(3197);
+    // do nothing on "Pay for order" page
+    if (is_wc_endpoint_url('order-pay')) {
+        return $gateways;
+    }
+
+    foreach (WC()->cart->get_cart_contents() as $key => $cart_item) {
+        // count number of items if needed (optional) 
+        if (in_array($cart_item['data']->get_id(), $product_ids)) {
+            if (isset($gateways['stripe'])) {
+                unset($gateways['stripe']);
+                break; // exit the loop if the specific product is found
+            }
+        }
+        if (in_array($cart_item['data']->get_id(), $cod_product_ids)) {
+            if (isset($gateways['cod'])) {
+                unset($gateways['cod']);
+            }
+            if (isset($gateways['bacs'])) {
+                unset($gateways['bacs']);
+            }
+        }
+    }
+
+    return $gateways;
+}
