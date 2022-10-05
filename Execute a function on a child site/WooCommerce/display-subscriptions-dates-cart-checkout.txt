@@ -1,0 +1,41 @@
+// -----------------------------------------
+// 1. Function to return subscription period
+ 
+function wc_subscription_period_order_item_meta( $product, $order_date = '' ) {
+   if ( is_a( $product, 'WC_Product_Subscription' ) || is_a( $product, 'WC_Product_Subscription_Variation' ) ) {
+      if ( ! $order_date ) {
+         $order_date = date( 'M d' );
+      } else $order_date = date( 'M d', $order_date );
+      $period = WC_Subscriptions_Product::get_period( $product );
+      $interval = WC_Subscriptions_Product::get_interval( $product );
+      if ( date( 't', strtotime( $order_date ) ) == date( 'd', strtotime( $order_date ) ) || date( "m", strtotime( $order_date ) ) != date( "m", strtotime( $order_date ." +1 month" ) ) - 1 ) {
+         $end = date( 'M d Y', strtotime( '-1 day', strtotime( 'last day of ' . $interval . ' ' . $period, strtotime( $order_date ) ) ) );
+      } else {
+         $end = date( 'M d Y', strtotime( $interval . ' ' . $period . ' -1 day', strtotime( $order_date ) ) );
+      }
+      return '<p><small>Subscription period: ' . $order_date . ' - ' . $end . '</small></p>';
+   }
+   return '';
+}
+ 
+// -----------------------------------------
+// 2. Display interval @ Cart, Checkout, Order
+ 
+add_action( 'woocommerce_after_cart_item_name', 'wc_echo_subscription_period_cart_item_meta', 9999, 2 );
+ 
+function wc_echo_subscription_period_cart_item_meta( $cart_item, $cart_item_key ) {
+   echo wc_subscription_period_order_item_meta( $cart_item['data'] );
+}
+ 
+add_filter( 'woocommerce_checkout_cart_item_quantity', 'wc_return_subscription_period_checkout_item_meta', 9999, 3 );
+ 
+function wc_return_subscription_period_checkout_item_meta( $html, $cart_item, $cart_item_key ) {
+   return $html . wc_subscription_period_order_item_meta( $cart_item['data'] );
+}
+ 
+add_action( 'woocommerce_order_item_meta_start', 'wc_echo_subscription_period_order_item_meta', 9999, 4 );
+ 
+function wc_echo_subscription_period_order_item_meta( $item_id, $item, $order, $bool ) {
+   $product = $item->get_product();
+   echo wc_subscription_period_order_item_meta( $product, strtotime( $order->get_date_completed() ) );
+}
