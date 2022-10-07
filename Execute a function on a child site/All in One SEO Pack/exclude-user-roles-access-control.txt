@@ -1,0 +1,7 @@
+add_filter( 'aioseo_access_control_excluded_roles', 'aioseo_filter_access_control_excluded_roles' );
+function aioseo_filter_access_control_excluded_roles( $roles ) {
+	if ( ( $key = array_search( 'shop_manager', $roles ) ) !== false ) {
+		unset( $roles[ $key ] );
+	}
+	return $roles;
+}
