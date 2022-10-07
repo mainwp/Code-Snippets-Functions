@@ -1,0 +1,5 @@
+add_filter( 'aioseo_show_seo_news', 'aioseo_disable_dashboard_widget' );
+
+function aioseo_disable_dashboard_widget( $enabled ) {
+   return false;
+}
