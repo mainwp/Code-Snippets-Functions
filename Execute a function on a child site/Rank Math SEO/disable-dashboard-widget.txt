@@ -1,0 +1,6 @@
+function remove_rankmath_dashboard_widget() {
+    global $wp_meta_boxes;
+    unset($wp_meta_boxes['dashboard']['normal']['high']['rank_math_dashboard_widget']);
+}
+
+add_action('wp_dashboard_setup', 'remove_rankmath_dashboard_widget', 11 );
