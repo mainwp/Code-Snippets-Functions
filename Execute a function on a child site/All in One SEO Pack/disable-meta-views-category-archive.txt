@@ -1,0 +1,8 @@
+add_filter( 'aioseo_meta_views', 'aioseo_filter_meta_views' );
+
+function aioseo_filter_meta_views( $views ) {
+   if ( is_category() ) {
+      return [];
+   }
+   return $views;
+}
