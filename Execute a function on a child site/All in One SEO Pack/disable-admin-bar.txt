@@ -1,0 +1,5 @@
+add_filter( 'aioseo_show_in_admin_bar', 'aioseo_disable_admin_bar' );
+
+function aioseo_disable_admin_bar( $enabled ) {
+   return false;
+}
