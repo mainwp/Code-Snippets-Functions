@@ -1,0 +1,10 @@
+add_filter( 'aioseo_breadcrumbs_trail', 'aioseo_breadcrumbs_trail' );
+function aioseo_breadcrumbs_trail( $crumbs ) {
+	foreach ( $crumbs as $key => $crumb ) {
+		if ( is_a( $crumb['reference'], 'WP_Term' ) && 'uncategorized' === $crumb['reference']->slug ) {
+			unset( $crumbs[ $key ] );
+		}
+	}
+
+	return $crumbs;
+}
