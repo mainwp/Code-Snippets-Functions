@@ -1,6 +1,6 @@
 ## Download Monitor code snippets
 
-Tested version of WordPress 6.0.2, plugin version was Download Monitor 4.5.99.
+Tested version of WordPress 6.0.2, plugin version was Download Monitor 4.6.5.
 
 This file is a code snippet that is used for [Download Monitor](https://wordpress.org/plugins/download-monitor/) plugin. 
 
