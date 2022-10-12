@@ -1,0 +1,10 @@
+function remove_wc_currency_symbol( $currency_symbol, $currency ) {
+    {
+        $currency_symbol = '';
+        if ( is_cart() || is_checkout()) {
+            $currency_symbol = '$';
+        }
+        return $currency_symbol;
+    } 
+}
+add_filter('woocommerce_currency_symbol', 'remove_wc_currency_symbol', 10, 2);
