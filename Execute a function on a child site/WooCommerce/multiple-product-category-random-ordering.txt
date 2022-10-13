@@ -1,0 +1,19 @@
+function custom_catalog_ordering_args_8( $args ) {
+  $product_categories_random_order = array(
+    'here I put category name',
+    'here you put another category name'
+  );
+
+  if ( ! is_product_category( $product_categories_random_order ) )
+    return $args;
+
+  // Set default ordering to 'date ID', so "Newness"
+  $args['orderby'] = 'rand';
+
+  if ( $args['orderby'] == 'date ID' )
+    $args['order'] = 'DESC'; // Set order by DESC
+
+  return $args;
+}    
+
+add_filter( 'woocommerce_get_catalog_ordering_args', 'custom_catalog_ordering_args_8', 20, 1 );
