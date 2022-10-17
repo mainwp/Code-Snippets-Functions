@@ -1,0 +1,4 @@
+add_action( 'plugins_loaded', 'eddwp_disable_blocks', 499 );
+function eddwp_disable_blocks() {
+	remove_action( 'plugins_loaded', 'EDD\Blocks\init_core_blocks', 500 );
+}
