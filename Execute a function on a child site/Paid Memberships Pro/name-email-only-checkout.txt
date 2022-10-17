@@ -1,0 +1,92 @@
+function simple_checkout_hide_account_information_section( $skip_account_fields, $current_user ) {
+	if ( empty( $current_user->ID ) ) {
+		$skip_account_fields = 1;
+	}
+	return $skip_account_fields;
+}
+add_filter( 'pmpro_skip_account_fields', 'simple_checkout_hide_account_information_section', 10, 2 );
+
+/**
+ * Don't load any of the Billing Information fields
+ */
+function simple_checkout_remove_billing_address_fields( $include ) {
+	return false;
+}
+add_filter( 'pmpro_include_billing_address_fields', 'simple_checkout_remove_billing_address_fields' );
+
+/**
+ * Don't require some Account Information fields
+ */
+function simple_checkout_unset_required_user_fields( $pmpro_required_user_fields ) {
+	unset( $pmpro_required_user_fields['username'] );
+	unset( $pmpro_required_user_fields['password'] );
+	unset( $pmpro_required_user_fields['password2'] );
+	unset( $pmpro_required_user_fields['bconfirmemail'] );
+
+	return $pmpro_required_user_fields;
+}
+add_filter( 'pmpro_required_user_fields', 'simple_checkout_unset_required_user_fields', 10, 2 );
+
+/**
+ * Add the required User Fields
+ */
+function simple_checkout_name_email_only_signup_pmpro_init() {
+	// Return early if the user is logged in.
+	if ( is_user_logged_in() ) {
+		return;
+	}
+
+	// Don't break if PMPro is out of date or not loaded.
+	if ( ! function_exists( 'pmpro_add_user_field' ) ) {
+		return false;
+	} 
+	
+	// Store our field settings in an array.
+	$fields = array();
+	$fields[] = new PMPro_Field(
+		'bfirstname',
+		'text',
+		array(
+			'label' => 'First Name',
+			'profile' => false,
+			'required' => true
+		)
+	);
+	$fields[] = new PMPro_Field(
+		'blastname',
+		'text',
+		array(
+			'label' => 'Last Name',
+			'profile' => false,
+			'required' => true
+		)
+	);
+	$fields[] = new PMPro_Field(
+		'bemail',
+		'text',
+		array(
+			'label' => 'Email Address',
+			'profile' => false
+		)
+	);
+	$fields[] = new PMPro_Field(
+		'bconfirmemail_copy',
+		'hidden',
+		array(
+			'label' => '&nbsp;',
+			'value' => '1',
+		)
+	);
+
+	// Add a field group to put our fields into.
+	pmpro_add_field_group( 'Account Information' );
+
+	//add the fields into a new checkout_boxes are of the checkout page
+	foreach ( $fields as $field ) {
+		pmpro_add_user_field(
+			'Account Information',
+			$field
+		);
+	}
+}
+add_action( 'init', 'simple_checkout_name_email_only_signup_pmpro_init' );
