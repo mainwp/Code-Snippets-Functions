@@ -1,0 +1,5 @@
+add_action( 'enqueue_block_assets', 'eddwp_disable_block_styles', 9 );
+function eddwp_disable_block_styles() {
+	remove_action( 'enqueue_block_assets', 'EDD\Blocks\Styles\add_to_global_styles' );
+	remove_filter( 'edd_button_color_class', 'EDD\Blocks\Styles\update_button_color_class' );
+}
