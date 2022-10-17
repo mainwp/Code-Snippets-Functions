@@ -1,6 +1,6 @@
 ## Flatsome code snippets
 
-Tested version of WordPress 6.0.1, theme version was Flatsome 3.15.7.
+Tested version of WordPress 6.0.2, theme version was Flatsome 3.16.1.
 
 This file is a code snippet that is used for [Flatsome](https://themeforest.net/item/flatsome-multipurpose-responsive-woocommerce-theme/5484319) theme. 
 
