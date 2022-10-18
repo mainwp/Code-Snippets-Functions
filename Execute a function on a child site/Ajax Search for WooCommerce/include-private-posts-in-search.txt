@@ -1,0 +1,7 @@
+add_filter( 'dgwt/wcas/search_query/args', function ( $args ) {
+	if ( current_user_can( 'manage_options' ) ) {
+		$args['post_status'] = [ 'publish', 'private' ];
+	}
+   
+   return $args;
+} );
