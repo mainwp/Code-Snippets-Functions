@@ -1,0 +1,5 @@
+add_action( 'woocommerce_widget_shopping_cart_buttons', 'wc_remove_view_cart_minicart', 1 );
+
+function wc_remove_view_cart_minicart() {
+	remove_action( 'woocommerce_widget_shopping_cart_buttons', 'woocommerce_widget_shopping_cart_button_view_cart', 10 );
+}
