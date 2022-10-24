@@ -1,0 +1,1 @@
+add_filter( 'charitable_disable_admin_access', '__return_false' );
