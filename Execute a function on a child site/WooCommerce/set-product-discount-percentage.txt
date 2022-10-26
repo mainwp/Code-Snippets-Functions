@@ -1,0 +1,56 @@
+add_action( 'woocommerce_product_options_pricing', 'wc_set_percentage_discount' );
+ 
+function wc_set_percentage_discount() {
+   global $product_object;
+   woocommerce_wp_select(
+      array(
+         'id' => '_pc_discount',
+         'value' => get_post_meta( $product_object->get_id(), '_pc_discount', true ),
+         'label' => 'Discount %',
+         'options' => array(
+            '0' => '0',
+            '10' => '10',
+            '25' => '25',
+            '50' => '50',
+         ),
+      )
+   );
+}
+ 
+add_action( 'save_post_product', 'wc_save_percentage_discount' );
+   
+function wc_save_percentage_discount( $product_id ) {
+    global $typenow;
+    if ( 'product' === $typenow ) {
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+      if ( isset( $_POST['_pc_discount'] ) ) {
+            update_post_meta( $product_id, '_pc_discount', $_POST['_pc_discount'] );
+        }
+    }
+}
+  
+add_filter( 'woocommerce_get_price_html', 'wc_alter_price_display', 9999, 2 );
+  
+function wc_alter_price_display( $price_html, $product ) {
+    if ( is_admin() ) return $price_html;
+    if ( '' === $product->get_price() ) return $price_html;
+    if ( get_post_meta( $product->get_id(), '_pc_discount', true ) && get_post_meta( $product->get_id(), '_pc_discount', true ) > 0 ) {
+        $orig_price = wc_get_price_to_display( $product );
+        $price_html = wc_format_sale_price( $orig_price, $orig_price * ( 100 - get_post_meta( $product->get_id(), '_pc_discount', true ) ) / 100 );
+    }
+    return $price_html;
+}
+  
+add_action( 'woocommerce_before_calculate_totals', 'wc_alter_price_cart', 9999 );
+  
+function wc_alter_price_cart( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) return;
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        $product = $cart_item['data'];
+      if ( get_post_meta( $product->get_id(), '_pc_discount', true ) && get_post_meta( $product->get_id(), '_pc_discount', true ) > 0 ) {
+           $price = $product->get_price();
+           $cart_item['data']->set_price( $price * ( 100 - get_post_meta( $product->get_id(), '_pc_discount', true ) ) / 100 );
+      }
+    }
+}
