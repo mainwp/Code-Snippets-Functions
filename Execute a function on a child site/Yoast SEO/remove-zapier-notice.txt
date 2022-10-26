@@ -1,0 +1,7 @@
+add_action( 'init', 'wp_remove_yoast_zapier_free_publishbox_text' );
+function wp_remove_yoast_zapier_free_publishbox_text() {
+	if ( class_exists( 'Yoast\WP\SEO\Integrations\Third_Party\Zapier_Free' ) ) {
+		$zapier_free = YoastSEO()->classes->get( Yoast\WP\SEO\Integrations\Third_Party\Zapier_Free::class );
+		remove_action( 'wpseo_publishbox_misc_actions', [ $zapier_free, 'add_publishbox_text' ] );
+	}
+}
