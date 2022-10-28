@@ -1,0 +1,18 @@
+function init_custom_woocommerce_product_loop_tags() {
+ if ( class_exists( 'Kadence\Theme' ) ) {
+    $kadence_theme_class = Kadence\Theme::instance();
+    remove_action( 'woocommerce_shop_loop_item_title', array( $kadence_theme_class->components['woocommerce'], 'archive_title_with_link' ) );
+    add_action( 'woocommerce_shop_loop_item_title', 'custom_kadence_archive_title' );
+ }
+}
+add_action( 'init', 'init_custom_woocommerce_product_loop_tags' );
+
+/**
+ * Show the product title in the product loop.
+ */
+function custom_kadence_archive_title() {
+ global $product;
+
+ $link = apply_filters( 'woocommerce_loop_product_link', get_the_permalink(), $product );
+ echo '<h3 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '"><a href="' . esc_url( $link ) . '" class="woocommerce-LoopProduct-link-title woocommerce-loop-product__title_ink">' . get_the_title() . '</a></h3>';
+}
