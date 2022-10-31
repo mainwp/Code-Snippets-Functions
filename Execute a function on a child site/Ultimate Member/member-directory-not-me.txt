@@ -1,0 +1,14 @@
+function um_pre_users_query_notme( $directory ) {
+	if ( is_user_logged_in() ) {
+		$directory->where_clauses[] = 'u.ID != ' . get_current_user_id();
+	}
+}
+add_action( 'um_pre_users_query', 'um_pre_users_query_notme', 20 );
+
+function um_prepare_user_query_args_notme( $query_args ) {
+	if ( is_user_logged_in() ) {
+		$query_args['exclude'] = get_current_user_id();
+	}
+	return $query_args;
+}
+add_filter( 'um_prepare_user_query_args', 'um_prepare_user_query_args_notme', 20 );
