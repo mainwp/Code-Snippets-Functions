@@ -1,0 +1,21 @@
+add_action( 'um_after_user_updated',function( $user_id, $args, $to_update  ){
+ob_start();
+?>
+<table>
+	<tbody>
+		<?php foreach( $to_update as $metakey => $metavalue ): ?>
+		<tr>
+			<th><?php echo $metakey; ?>:</th>
+			<td><?php echo $metavalue; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+<?php
+$contents = ob_get_contents();
+ob_end_clean();
+
+$admin_email = UM()->options()->get( ‘admin_email’ );
+wp_mail( $admin_email,'Profile updated', $contents );
+
+},9,3);
