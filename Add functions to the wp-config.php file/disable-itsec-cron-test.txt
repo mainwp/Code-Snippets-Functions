@@ -1,0 +1,1 @@
+define( 'ITSEC_DISABLE_CRON_TEST', true );
