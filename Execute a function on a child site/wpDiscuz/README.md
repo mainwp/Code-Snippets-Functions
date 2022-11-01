@@ -1,6 +1,6 @@
 ## wpDiscuz code snippets
 
-Tested version of WordPress 6.0, plugin version was wpDiscuz 7.3.19.
+Tested version of WordPress 6.0.3, plugin version was wpDiscuz 7.5.
 
 This file is a code snippet that is used for [wpDiscuz](https://wordpress.org/plugins/wpdiscuz/) plugin. 
 
