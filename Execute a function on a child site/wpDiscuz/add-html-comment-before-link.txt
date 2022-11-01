@@ -1,0 +1,4 @@
+add_filter("wpdiscuz_before_comment_link", function ($html, $comment, $user, $currentUser) {
+    $html .= "Custom Message";
+    return $html;
+}, 10, 4);
