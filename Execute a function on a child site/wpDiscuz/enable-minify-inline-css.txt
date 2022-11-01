@@ -1,0 +1,3 @@
+add_filter("wpdiscuz_minify_inline_css", function ($minify) {
+    return true;
+}); 
