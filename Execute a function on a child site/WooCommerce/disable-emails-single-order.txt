@@ -1,0 +1,35 @@
+add_action( 'woocommerce_admin_order_data_after_order_details', 'wc_disable_order_emails', 9999 );
+ 
+function wc_disable_order_emails( $order ) {
+   woocommerce_wp_checkbox( array( 
+      'id' => '_disable_order_emails', 
+      'label' => '<b>Disable Order Emails</b>',
+      'description' => 'Check this if you wish to disable emails when order status changes',
+      'wrapper_class' => 'form-field-wide',
+      'style' => 'width:auto',
+   ));
+}
+ 
+add_action( 'save_post_shop_order', 'wc_save_disable_order_emails' );
+   
+function wc_save_disable_order_emails( $order_id ) {
+   global $pagenow, $typenow;
+   if ( 'post.php' !== $pagenow || 'shop_order' !== $typenow ) return;
+   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+   if ( isset( $_POST['_disable_order_emails'] ) ) {
+      update_post_meta( $order_id, '_disable_order_emails', $_POST['_disable_order_emails'] );
+   } else delete_post_meta( $order_id, '_disable_order_emails' );
+}
+ 
+add_filter( 'woocommerce_email_recipient_customer_on_hold_order', 'wc_disable_customer_emails_if_disabled', 9999, 2 );
+add_filter( 'woocommerce_email_recipient_customer_processing_order', 'wc_disable_customer_emails_if_disabled', 9999, 2 );
+add_filter( 'woocommerce_email_recipient_customer_completed_order', 'wc_disable_customer_emails_if_disabled', 9999, 2 );
+
+function wc_disable_customer_emails_if_disabled( $recipient, $order ) {
+    $page = $_GET['page'] = isset( $_GET['page'] ) ? $_GET['page'] : '';
+    if ( 'wc-settings' === $page ) {
+        return $recipient; 
+    }
+    if ( get_post_meta( $order->get_id(), '_disable_order_emails', true ) ) $recipient = '';
+    return $recipient;
+}
