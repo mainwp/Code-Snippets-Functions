@@ -1,0 +1,3 @@
+add_filter("wpdiscuz_gravatars_cache_limit", function ($limit) {
+    return 15;
+});
