@@ -1,0 +1,5 @@
+function disable_classic_theme_styles() {
+    wp_deregister_style('classic-theme-styles');
+    wp_dequeue_style('classic-theme-styles');
+}
+add_filter('wp_enqueue_scripts', 'disable_classic_theme_styles', 100);
