@@ -1,0 +1,18 @@
+add_action( 'um_registration_complete', 'um_072522_redirect_to_previous_after_register', 10, 2 );
+function um_072522_redirect_to_previous_after_register( $user_id, $args ){
+
+    if( 5 == $args['form_id'] ){
+        $previous_page_url = $_COOKIE['um_previous_page'];
+        if( ! empty( $previous_page_url ) ){
+            setcookie('um_previous_page', null, strtotime('-1 day'));
+            wp_redirect( $previous_page_url ); exit;
+        }
+    }
+}
+
+add_action('init', function() {
+    if ( ! um_is_core_page("register") && ! is_user_logged_in() ) {
+        $current_url = UM()->permalinks()->get_current_url();
+        setcookie('um_previous_page', $current_url, strtotime('+1 day'));
+    }
+});
