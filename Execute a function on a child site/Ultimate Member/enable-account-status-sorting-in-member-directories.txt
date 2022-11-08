@@ -1,0 +1,20 @@
+add_action("um_user_before_query","um_052422_orderby_profile_photo", 999999999, 2 );
+function um_052422_orderby_profile_photo( $query_args, $obj ) {
+   			
+	$obj->query_args['meta_query'][ ] = array(
+			'relation' => 'OR',
+			'wxo_featured_clause' => array(
+				'key' => 'account_status',
+				'compare' => 'awaiting_admin_review'
+			),
+			array(
+				"key" => 'account_status',
+			),
+			
+	);
+
+	$obj->query_args['orderby'] = array(
+		'wxo_featured_clause' => 'DESC',
+                'user_registered'     => 'DESC',
+	); 
+}
