@@ -1,6 +1,6 @@
 ## Classic Editor code snippet for changing the default option set
 
-Tested version of WordPress 5.8.1, plugin version was Classic Editor 1.6.2.
+Tested version of WordPress 6.1, plugin version was Classic Editor 1.6.2.
 
 This file is a code snippet that is used for [Classic Editor](https://wordpress.org/plugins/classic-editor/) plugin. 
 
