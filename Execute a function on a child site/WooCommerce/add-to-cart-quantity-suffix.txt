@@ -1,0 +1,5 @@
+add_action( 'woocommerce_after_quantity_input_field', 'wc_echo_qty_front_add_cart' );
+  
+function wc_echo_qty_front_add_cart() {
+   echo '<span class="qty-suff">liters</span>'; 
+}
