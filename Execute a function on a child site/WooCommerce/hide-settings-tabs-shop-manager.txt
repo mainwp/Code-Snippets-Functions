@@ -1,0 +1,35 @@
+add_filter( 'woocommerce_settings_tabs_array', 'remove_woocommerce_setting_tabs', 200, 1 );
+function remove_woocommerce_setting_tabs( $array ) {
+    // Declare the tabs we want to hide
+    $tabs_to_hide = array(
+        'tax' => 'Tax',
+        'checkout' => 'Checkout',
+        'email' => 'Emails',
+        'api' => 'API',
+        'account' => 'Accounts',
+        );
+
+    // Get the current user
+    $user = wp_get_current_user();
+
+    // Check if user is a shop_manager
+    if ( isset( $user->roles[0] ) && $user->roles[0] == 'shop_manager' ) {
+
+        // Remove the tabs we want to hide from the array
+        $array = array_diff_key($array, $tabs_to_hide);
+
+        // Loop through the tabs we want to remove and hook into their settings action
+        foreach($tabs_to_hide as $tabs => $tab_title) {
+            add_action( 'woocommerce_settings_' . $tabs , 'redirect_from_tab_page');
+        }
+    }
+
+    return $array;
+}
+
+function redirect_from_tab_page() {
+    // Get the Admin URL and then redirect to it
+    $admin_url = get_admin_url();
+    wp_redirect($admin_url);
+    exit;
+}
