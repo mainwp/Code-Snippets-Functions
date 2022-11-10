@@ -1,6 +1,6 @@
 ## SEOPress code snippets
 
-Tested version of WordPress 6.0.2, plugin version was SEOPress 5.8.0.3.
+Tested version of WordPress 6.1, plugin version was SEOPress 6.1.1.
 
 This file is a code snippet that is used for [SEOPress](https://wordpress.org/plugins/wp-seopress/) plugin. 
 
