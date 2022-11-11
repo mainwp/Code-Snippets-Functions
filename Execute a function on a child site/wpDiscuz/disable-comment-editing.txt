@@ -1,0 +1,3 @@
+add_filter("wpdiscuz_is_comment_editable", function ($isEditable, $comment) {
+    return false;
+}, 10, 2);
