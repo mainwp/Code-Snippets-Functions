@@ -1,6 +1,6 @@
 ## GDPR Cookie Consent code snippets
 
-Tested version of WordPress 6.0.1, plugin version was GDPR Cookie Consent 2.1.2.
+Tested version of WordPress 6.1, plugin version was GDPR Cookie Consent 3.0.5.
 
 This file is a code snippet that is used for [GDPR Cookie Consent](https://wordpress.org/plugins/cookie-law-info/) plugin. 
 
