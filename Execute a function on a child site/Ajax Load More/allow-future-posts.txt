@@ -1,0 +1,1 @@
+add_filter( 'alm_allow_future_posts', '__return_true' );
