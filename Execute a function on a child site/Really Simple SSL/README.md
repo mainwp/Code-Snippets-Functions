@@ -1,6 +1,6 @@
 ## Really Simple SSL code snippets
 
-Tested version of WordPress 6.1, plugin version was Really Simple SSL 6.0.5.
+Tested version of WordPress 6.1.1, plugin version was Really Simple SSL 6.0.9.
 
 This file is a code snippet that is used for [Really Simple SSL](https://wordpress.org/plugins/really-simple-ssl/) plugin. 
 
