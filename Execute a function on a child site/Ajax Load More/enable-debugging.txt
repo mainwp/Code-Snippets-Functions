@@ -1,0 +1,1 @@
+add_filter( 'alm_debug', '__return_true' );
