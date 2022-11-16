@@ -1,0 +1,17 @@
+add_action( 'woocommerce_order_status_pending', 'wc_cancel_failed_pending_order_event' );
+  
+function wc_cancel_failed_pending_order_event( $order_id ) {
+   if ( ! wp_next_scheduled( 'wc_cancel_failed_pending_order_after_one_hour', array( $order_id ) ) ) {
+      wp_schedule_single_event( time() + 3600, 'wc_cancel_failed_pending_order_after_one_hour', array( $order_id ) );
+   }
+}
+ 
+add_action( 'wc_cancel_failed_pending_order_after_one_hour', 'wc_cancel_order' );
+ 
+function wc_cancel_order( $order_id ) {
+   $order = wc_get_order( $order_id );
+   wp_clear_scheduled_hook( 'wc_cancel_failed_pending_order_after_one_hour', array( $order_id ) );
+   if ( $order->has_status( array( 'pending' ) ) ) { 
+      $order->update_status( 'cancelled', 'Pending order cancelled after 1 hour' );
+   }
+}
