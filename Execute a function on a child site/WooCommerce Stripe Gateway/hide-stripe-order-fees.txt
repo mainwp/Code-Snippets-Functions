@@ -1,0 +1,5 @@
+//Hides the Stripe fee
+add_filter( 'wc_stripe_hide_display_order_fee','__return_false');
+
+//Hides the net total of the transaction without the charges of Stripe.
+add_filter( 'wc_stripe_hide_display_order_payout','__return_false');
