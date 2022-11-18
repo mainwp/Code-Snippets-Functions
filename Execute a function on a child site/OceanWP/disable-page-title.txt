@@ -1,0 +1,4 @@
+function prefix_page_header_heading( $return ) {
+   $return = false;    
+}
+add_filter(  'ocean_display_page_header_heading',  'prefix_page_header_heading'  );
