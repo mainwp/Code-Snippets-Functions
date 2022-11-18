@@ -1,0 +1,5 @@
+function my_woo_outofstock_text( $text ) {
+	$text = __( 'MY CUSTOM TEXT', 'oceanwp' );
+	return $text;
+}
+add_filter( 'ocean_woo_outofstock_text', 'my_woo_outofstock_text', 20 );
