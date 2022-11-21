@@ -1,0 +1,3 @@
+add_filter( 'slim_seo_meta_box_post_types', function( $post_types ) {
+    return array_diff( $post_types, ['event', 'page'] );
+} );
