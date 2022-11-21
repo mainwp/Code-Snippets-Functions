@@ -1,0 +1,6 @@
+add_filter( 'slim_seo_breadcrumbs_links', function( $links ) {
+    if ( is_singular( 'post' ) ) {
+        unset( $links[1] ); // $link[0] = Home, $link[1] = Blog, $link[2] = Category, $link[3] = Post.
+    }
+    return $links;
+} );
