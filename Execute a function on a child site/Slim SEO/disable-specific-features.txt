@@ -1,0 +1,5 @@
+add_action( 'slim_seo_init', function( $plugin ) {
+    $plugin->disable( 'auto_redirection' );
+    $plugin->disable( 'cleaner' );
+    $plugin->disable( 'feed' );
+} );
