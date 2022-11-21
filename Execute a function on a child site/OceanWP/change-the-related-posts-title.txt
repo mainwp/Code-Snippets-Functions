@@ -1,0 +1,5 @@
+function myprefix_related_posts_title() {
+	$my_txt = esc_html__( 'Related Posts', 'oceanwp');
+	return $my_txt;
+}
+add_filter( 'ocean_single_related_posts', 'myprefix_related_posts_title' );
