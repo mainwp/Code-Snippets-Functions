@@ -1,0 +1,12 @@
+add_filter( 'aws_search_results_products', 'my_aws_search_results_products' );
+function my_aws_search_results_products( $products ) {
+    usort($products, function ($item1, $item2) {
+        $a = strtolower( $item1['title'] );
+        $b = strtolower( $item2['title'] );
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
+    });
+    return $products;
+}
