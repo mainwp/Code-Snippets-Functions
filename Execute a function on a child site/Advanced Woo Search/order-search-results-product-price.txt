@@ -1,0 +1,12 @@
+add_filter( 'aws_search_results_products', 'my_aws_search_results_products' );
+function my_aws_search_results_products( $products ) {
+    usort($products, function ($item1, $item2) {
+        $a = intval( $item1['f_price'] * 100 );
+        $b = intval( $item2['f_price'] * 100 );
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
+    });
+    return $products;
+}
