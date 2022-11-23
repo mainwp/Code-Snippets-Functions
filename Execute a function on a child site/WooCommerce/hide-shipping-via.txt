@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_order_shipping_to_display_shipped_via', '__return_empty_string' );
