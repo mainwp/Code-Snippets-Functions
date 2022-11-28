@@ -1,0 +1,1 @@
+add_filter( 'wc_google_analytics_send_pageview', '__return_false' );
