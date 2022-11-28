@@ -1,0 +1,1 @@
+add_filter( 'srm_redirect_only_on_404', '__return_true' );
