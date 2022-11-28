@@ -1,0 +1,1 @@
+add_filter( 'srm_check_for_possible_redirect_loops', '__return_true' );
