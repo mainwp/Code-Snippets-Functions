@@ -1,0 +1,3 @@
+add_action( 'current_screen', function() {
+    remove_filter( 'admin_post_thumbnail_html', 'wc_product_post_thumbnail_html' );
+});
