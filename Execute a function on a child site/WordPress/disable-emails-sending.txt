@@ -1,0 +1,4 @@
+add_filter('pre_wp_mail', 'wp_disable_emails');
+function wp_disable_emails() {
+    return false;
+}
