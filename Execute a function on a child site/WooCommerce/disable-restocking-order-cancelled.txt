@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_can_restore_order_stock', '__return_false' );
