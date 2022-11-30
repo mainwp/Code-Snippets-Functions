@@ -1,0 +1,31 @@
+function rlv_koko_weight( int $post_id ) : float {
+	global $relevanssi_koko_weights;
+
+	if ( empty( $relevanssi_koko_weights ) ) {
+		global $wpdb;
+		$stats = $wpdb->get_results( "SELECT id, SUM(visitors) AS visits FROM {$wpdb->prefix}koko_analytics_post_stats GROUP BY id" );
+		foreach ( $stats as $post_stats ) {
+			$relevanssi_koko_weights[ $post_stats->id ] = $post_stats->visits;
+		}
+		$max_visits = max( $relevanssi_koko_weights );
+		$factor     = $max_visits / 1000; // This controls the normalization.
+		foreach ( $relevanssi_koko_weights as $post_id => $visits ) {
+			$weight = $visits / $factor;
+			if ( $weight < 1 ) {
+				$weight = 1;
+			}
+
+			$relevanssi_koko_weights[ $post_id ] = $weight;
+		}
+	}
+	return $relevanssi_koko_weights[ $post_id ] ?? 1;
+}
+
+add_filter( 'relevanssi_results', 'rlv_koko_weights' );
+
+function rlv_koko_weights( $post_weights ) {
+	foreach ( $post_weights as $post_id => $weight ) {
+		$post_weights[ $post_id ] = rlv_koko_weight( intval( $post_id ) ) * $weight;
+	}
+	return $post_weights;
+}
