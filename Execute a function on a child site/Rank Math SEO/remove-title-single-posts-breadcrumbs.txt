@@ -1,0 +1,6 @@
+add_filter( 'rank_math/frontend/breadcrumb/items', function( $crumbs, $class ) {
+	if(is_single()){
+		array_pop($crumbs);
+	}
+	return $crumbs;
+}, 10, 2);
