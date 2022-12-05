@@ -1,0 +1,61 @@
+function advads_add_edd_order_table_columns( $columns ){
+	$columns['products'] = __( 'Products', 'easy-digital-report' );
+	$columns['country'] = __( 'Country', 'easy-digital-report' );
+	return $columns;
+}
+add_filter( 'edd_payments_table_columns', 'advads_add_edd_order_table_columns' );
+
+/**
+ * Fill table column content
+ *
+ * @param $value
+ * @param $ID
+ * @param $column_name
+ *
+ * @return mixed|string|void
+ */
+function advads_add_edd_order_table_column_content( $value, $ID, $column_name ){
+	switch( $column_name ){
+		case 'products':
+			return advadsd_edd_prepare_products( edd_get_payment_meta_cart_details( $ID ) );
+		case 'country':
+			$user_info = edd_get_payment_meta_user_info( $ID );
+			return isset( $user_info['address']['country'] ) ? __( advads_edd_get_country_name( $user_info['address']['country'] ), 'easy-digital-downloads' ) : '[not given]';
+	}
+	return $value;
+}
+add_filter( 'edd_payments_table_column', 'advads_add_edd_order_table_column_content', 10, 3 );
+
+/**
+ * Gather product information to display them on the Payment history list
+ *
+ * @param $cart_details
+ * @return string
+ */
+function advadsd_edd_prepare_products( $cart_details ){
+	$products = "";
+	foreach ( $cart_details as $product ){
+		if( isset( $product['item_number']['options']['is_renewal'] ) AND $product['item_number']['options']['is_renewal'] == 1 ){
+			$products .= __("Renewal: ", 'easy-digital-report') . $product['name'] . PHP_EOL;
+		} else if ( isset( $product['item_number']['options']['is_upgrade'] ) AND $product['item_number']['options']['is_upgrade'] == 1 ){
+			$products .= __("Upgrade: ", 'easy-digital-report') . $product['name'] . PHP_EOL;
+		} else {
+			$products .= $product['name'] . "\r\n";
+			if( ! empty( $product['item_number']['options']['price_id'] ) ){
+				$products .= ' (' . edd_get_price_option_name( $product['id'], $product['item_number']['options']['price_id'] ) . ")\r\n";
+			}
+		}
+		// show, if this item is not recurring
+	}
+	return $products;
+}
+
+/**
+ * Convert country codes to their english equivalent
+ *
+ * @return void
+ */
+function advads_edd_get_country_name( $code ){
+	$names = edd_get_country_list();
+	return $names[$code];
+}
