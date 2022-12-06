@@ -1,0 +1,2 @@
+remove_action( 'wp_insert_post', 'relevanssi_insert_edit', 99 );
+remove_action( 'wp_after_insert_post', 'relevanssi_insert_edit', 99 ); 
