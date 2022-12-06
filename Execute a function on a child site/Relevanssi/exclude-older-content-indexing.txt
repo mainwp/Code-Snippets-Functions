@@ -1,0 +1,7 @@
+add_filter( 'relevanssi_indexing_restriction', 'rlv_exclude_old_posts' );
+function rlv_exclude_old_posts( $restriction ) {
+	global $wpdb;
+	$restriction['mysql']  .= " AND YEAR(post.post_date) >= 2021 ";
+	$restriction['reason'] .= ' Post too old';
+	return $restriction;
+}
