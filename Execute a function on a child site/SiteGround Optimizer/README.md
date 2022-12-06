@@ -1,6 +1,6 @@
 ## SiteGround Optimizer Security code snippets
 
-Tested version of WordPress 6.0.3, plugin version was SiteGround Optimizer 7.2.5.
+Tested version of WordPress 6.1.1, plugin version was SiteGround Optimizer 7.2.9.
 
 This file is a code snippet that is used for [SiteGround Optimizer](https://wordpress.org/plugins/sg-cachepress/) plugin. 
 
