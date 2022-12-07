@@ -1,0 +1,52 @@
+add_filter( 'woocommerce_general_settings', 'wc_additional_store_addresses_admin', 9999 );
+ 
+function wc_additional_store_addresses_admin( $settings ) {
+    
+   $new_settings = array(
+    
+      array(
+         'title' => 'Warehouse Address',
+         'type'  => 'title',
+         'id'    => 'wh_address',
+      ),
+ 
+      array(
+         'title'    => __( 'Address line 1', 'woocommerce' ),
+         'id'       => 'woocommerce_wh_address',
+         'type'     => 'text',
+      ),
+ 
+      array(
+         'title'    => __( 'Address line 2', 'woocommerce' ),
+         'id'       => 'woocommerce_wh_address_2',
+         'type'     => 'text',
+      ),
+ 
+      array(
+         'title'    => __( 'City', 'woocommerce' ),
+         'id'       => 'woocommerce_wh_city',
+         'type'     => 'text',
+      ),
+ 
+      array(
+         'title'    => __( 'Country / State', 'woocommerce' ),
+         'id'       => 'woocommerce_wh_country',
+         'type'     => 'single_select_country',
+      ),
+ 
+      array(
+         'title'    => __( 'Postcode / ZIP', 'woocommerce' ),
+         'id'       => 'woocommerce_wh_postcode',
+         'type'     => 'text',
+      ),
+ 
+      array(
+         'type' => 'sectionend',
+         'id'   => 'wh_address',
+      ),
+ 
+   );
+    
+   return array_merge( array_slice( $settings, 0, 7 ), $new_settings, array_slice( $settings, 7 ) );
+    
+}
