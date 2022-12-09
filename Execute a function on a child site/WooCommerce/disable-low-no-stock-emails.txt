@@ -1,0 +1,5 @@
+add_action( 'woocommerce_email', 'wc_disable_stock_emails' );
+function wc_disable_stock_emails( $email_class ) {
+		remove_action( 'woocommerce_low_stock_notification', array( $email_class, 'low_stock' ) );
+		remove_action( 'woocommerce_no_stock_notification', array( $email_class, 'no_stock' ) );
+}
