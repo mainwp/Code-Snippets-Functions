@@ -1,0 +1,1 @@
+add_filter( 'llms_allow_subscription_cancellation', '__return_false' );
