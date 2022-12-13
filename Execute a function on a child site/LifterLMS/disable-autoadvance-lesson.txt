@@ -1,0 +1,1 @@
+add_filter( 'lifterlms_autoadvance', '__return_false' );
