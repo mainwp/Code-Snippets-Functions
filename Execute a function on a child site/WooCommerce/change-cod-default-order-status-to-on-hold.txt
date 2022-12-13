@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_bacs_process_payment_order_status', 'set_process_payment_order_status_on_hold', 10 );
+add_filter( 'woocommerce_cod_process_payment_order_status', 'set_process_payment_order_status_on_hold', 10 );
+ 
+function set_process_payment_order_status_on_hold( $status ) {
+    return 'on-hold';
+}
