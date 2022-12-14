@@ -1,0 +1,10 @@
+add_filter( 'author_link', function ( $link ) {
+    return home_url( 'about' );
+});
+ 
+add_action( 'template_redirect', function () {
+    if ( is_author() ) {
+        wp_redirect( home_url( 'about' ) );
+        exit;
+    }
+});
