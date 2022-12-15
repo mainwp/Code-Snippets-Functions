@@ -1,0 +1,4 @@
+add_filter( 'rank_math/metabox/values', function( $args = [] ) {
+    $args['autoSuggestKeywords'] = false;
+    return $args;
+} );
