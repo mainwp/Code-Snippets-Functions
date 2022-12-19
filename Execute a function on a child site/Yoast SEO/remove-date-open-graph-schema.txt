@@ -1,0 +1,9 @@
+add_filter(
+    'wpseo_frontend_presenter_classes'
+    , function($filter) {
+        return array_diff($filter, [
+            'Yoast\WP\SEO\Presenters\Open_Graph\Article_Published_Time_Presenter',
+            'Yoast\WP\SEO\Presenters\Open_Graph\Article_Modified_Time_Presenter',
+        ]);
+    }
+);
