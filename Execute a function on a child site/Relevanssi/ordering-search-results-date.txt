@@ -1,0 +1,6 @@
+add_filter( 'relevanssi_modify_wp_query', 'rlv_asc_date' );
+function rlv_asc_date( $query ) {
+    $query->set( 'orderby', 'post_date' );
+    $query->set( 'order', 'ASC' );
+    return $query;
+}
