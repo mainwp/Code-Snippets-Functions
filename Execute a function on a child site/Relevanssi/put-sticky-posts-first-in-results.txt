@@ -1,0 +1,15 @@
+add_filter( 'relevanssi_hits_filter', 'rlv_sticky_first' );
+function rlv_sticky_first( $hits ) {
+	$sticky          = array();
+	$nonsticky       = array();
+	$sticky_post_ids = get_option( 'sticky_posts' );
+	foreach( $hits[0] as $hit ) {
+		if ( in_array( $hit->ID, $sticky_post_ids ) ) {
+			$sticky[] = $hit;
+		} else {
+			$nonsticky[] = $hit;
+		}
+	}
+	$hits[0] = array_merge( $sticky, $nonsticky );
+	return $hits;
+}
