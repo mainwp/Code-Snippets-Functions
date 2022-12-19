@@ -1,0 +1,1 @@
+add_filter( 'relevanssi_proximity_sorting', '__return_true' );
