@@ -1,0 +1,6 @@
+function rlv_disable_infinite_scroll() {
+	if ( is_search() ) return false;
+	return current_theme_supports( 'infinite-scroll' );
+}
+ 
+add_filter( 'infinite_scroll_archive_supported', 'rlv_disable_infinite_scroll' );
