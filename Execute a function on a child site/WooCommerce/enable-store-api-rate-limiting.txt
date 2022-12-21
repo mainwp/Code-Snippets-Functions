@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_store_api_rate_limit_options', function() {
+
+	return [
+		'enabled' => defined('STORE_API_RATE_LIMITING_ENABLED') ? STORE_API_RATE_LIMITING_ENABLED : true, // enables/disables Rate Limiting
+		'proxy_support' => defined('STORE_API_RATE_LIMITING_PROXY_SUPPORT') ? STORE_API_RATE_LIMITING_PROXY_SUPPORT : false, //enables/disables Proxy support. Default:false
+		'limit' => defined('STORE_API_RATE_LIMITING_LIMIT') ? STORE_API_RATE_LIMITING_LIMIT : 25, // limit of request per timeframe. Default: 25
+		'seconds' => defined('STORE_API_RATE_LIMITING_SECONDS') ? STORE_API_RATE_LIMITING_SECONDS : 10, // timeframe in seconds. Default: 10
+	];
+} );
