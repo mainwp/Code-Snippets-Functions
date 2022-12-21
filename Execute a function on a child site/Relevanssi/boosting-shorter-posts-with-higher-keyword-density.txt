@@ -1,0 +1,14 @@
+add_filter( 'relevanssi_match', 'rlv_inverse_document_length', 10, 2 );
+function rlv_inverse_document_length( $match, $idf ) {
+    $current_post_object = get_post( $match->doc );
+    $minimum_doc_length  = 5000; // in characters
+    if ( ! $current_post_object ) {
+        $idl = 1;
+    } else {
+        $post_length = max( $minimum_doc_length, strlen( $current_post_object->post_content ) );
+        $idl         = $minimum_doc_length / $post_length;
+    }
+    $match_multiplier = $match->weight / ( $match->tf * $idf );
+    $match->weight    = $match_multiplier * $match->tf * $idf * $idl;
+    return $match;
+}
