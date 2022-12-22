@@ -1,0 +1,32 @@
+function wc_remove_billing_address_fields_for_free_checkout( $fields ) { 
+
+    $cart_total = floatval( WC()->cart->get_total( 'edit' ) );
+
+    if( ! WC()->cart->needs_shipping() && 0.0 === $cart_total ) {
+
+        /**
+         * Fields to remove if Order total is 0.00
+         *
+         * @since 1.0.1
+         * @param array   $fields    The billing fields we are removing
+         * @return array
+         */
+        $fields_to_remove = (array) apply_filters( 'wc_billing_fields_to_remove_for_free_checkout', array( 
+            'billing_address_1',
+            'billing_address_2',
+            'billing_city',
+            'billing_state',
+            'billing_postcode',
+            'billing_country',
+            'billing_phone',
+        ) );
+
+        foreach ( $fields_to_remove as $field ) {
+            if( isset( $fields[$field] ) ) unset( $fields[$field] );
+        }
+
+    }
+
+    return $fields;
+}
+add_filter( 'woocommerce_billing_fields', 'wc_remove_billing_address_fields_for_free_checkout' );
