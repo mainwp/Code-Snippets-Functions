@@ -1,0 +1,6 @@
+add_action( 'woocommerce_checkout_process', 'custom_checkout_field_validation', 10, 2 );
+function custom_checkout_field_validation( $data, $errors ) {
+    if ( ! preg_match( '/^[a-zA-Z0-9@.-,]*$/', $data['billing_first_name'] ) ) {
+        $errors->add( 'validation_error', __( 'Error: Only a-z, A-Z, 0-9, @, hyphens, full-stops and commas are allowed in the field.', 'woocommerce' ) );
+    }
+}
