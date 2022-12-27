@@ -1,0 +1,16 @@
+add_filter( 'woocommerce_cart_total', 'custom_cart_total_html', 10, 2 );
+
+function custom_cart_total_html( $total_html, $cart ) {
+    $regular_price_total = 0;
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        $product = $cart_item['data'];
+        if ( $product->is_on_sale() ) {
+            $regular_price = wc_get_price_to_display( $product, array( 'price' => $product->get_regular_price() ) );
+            $regular_price_total += $regular_price * $cart_item['quantity'];
+        }
+    }
+    if ( $regular_price_total > 0 ) {
+        $total_html = '<del>' . wc_price( $regular_price_total ) . '</del> ' . $total_html;
+    }
+    return $total_html;
+}
