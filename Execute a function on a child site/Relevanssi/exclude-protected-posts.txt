@@ -1,0 +1,7 @@
+add_filter( 'relevanssi_indexing_restriction', 'rlv_exclude_protected' );
+function rlv_exclude_protected( $restriction ) {
+	global $wpdb;
+	$restriction['mysql']  .= " AND post.post_password = ''";
+	$restriction['reason'] .= ' Has a password';
+	return $restriction;
+}
