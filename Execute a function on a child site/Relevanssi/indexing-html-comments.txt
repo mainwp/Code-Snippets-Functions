@@ -1,0 +1,5 @@
+add_filter( 'relevanssi_remove_punctuation', 'rlv_keep_comments', 9 );
+function rlv_keep_comments( $string ) {
+	$string = str_replace( '<!', '', $string );
+	return $string;
+}
