@@ -1,0 +1,1 @@
+add_filter("rank_math/snippet/rich_snippet_article_entity", function ( $entity ) { if ( isset( $entity['author'] ) ) { unset( $entity['author'] ); return $entity; } return $entity; });
