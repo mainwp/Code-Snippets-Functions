@@ -1,0 +1,27 @@
+add_filter( 'relevanssi_content_to_index', 'rlv_add_attachment_excerpts', 10, 2 );
+/**
+ * Indexes attachment excerpts for the parent post.
+ *
+ * This function reads in the attachment excerpts from the database and
+ * adds it to the parent post content.
+ *
+ * @global $wpdb The WordPress database interface.
+ *
+ * @param string $content The added content.
+ * @param object $post    The indexed post object.
+ *
+ * @return string The added content.
+ */
+function rlv_add_attachment_excerpts( $content, $post ) {
+    global $wpdb;
+    $results = $wpdb->get_col(
+        $wpdb->prepare(
+            "SELECT post_excerpt FROM $wpdb->posts WHERE post_parent = %d",
+            $post->ID
+        )
+    );
+    foreach ( $results as $excerpt ) {
+        $content .= " $excerpt";
+    }
+    return $content;
+}
