@@ -1,0 +1,3 @@
+add_filter( 'slim_seo_feed_text', function( $text ) {
+    return 'Read the post';
+} );
