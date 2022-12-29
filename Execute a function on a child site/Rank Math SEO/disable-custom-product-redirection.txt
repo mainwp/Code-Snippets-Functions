@@ -1,0 +1,1 @@
+add_filter( 'rank_math/woocommerce/product_redirection', '__return_false' );
