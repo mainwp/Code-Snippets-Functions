@@ -1,0 +1,12 @@
+add_filter( 'woocommerce_cart_needs_shipping', 'remove_virtual_product_shipping_methods' );
+function remove_virtual_product_shipping_methods( $needs_shipping ){
+    //Loop trough cart items
+    foreach ( WC()->cart->get_cart() as $item ) {
+        //If a product in cart is a vritual product remove all shipping
+        if ( $item['data']->is_virtual() ) {
+            $needs_shipping = false;
+            break;
+        }
+    }
+    return $needs_shipping;
+}
