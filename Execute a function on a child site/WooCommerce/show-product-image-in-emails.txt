@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_email_order_items_args', 'wc_order_with_product_images', 9999 );
+ 
+function wc_order_with_product_images( $args ) {
+   $args['show_image'] = true;
+   return $args;
+}
