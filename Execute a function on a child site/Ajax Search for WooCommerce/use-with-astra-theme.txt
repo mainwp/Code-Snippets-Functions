@@ -1,0 +1,6 @@
+add_filter( 'dgwt/wcas/form/html', function($html) {
+  if ( is_checkout() || is_cart() ) {
+    $html = str_replace( " woocommerce ", " ", $html );
+  }
+  return $html;
+} );
