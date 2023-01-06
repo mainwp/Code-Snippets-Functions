@@ -1,0 +1,1 @@
+add_filter( 'bp_enqueue_assets_in_bp_pages_only', '__return_true' );
