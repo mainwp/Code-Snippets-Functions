@@ -1,0 +1,6 @@
+add_filter('tutor_dashboard/nav_items', 'remove_some_links_dashboard');
+function remove_some_links_dashboard($links){
+	unset($links['reviews']);
+	unset($links['wishlist']);
+	return $links;
+}
