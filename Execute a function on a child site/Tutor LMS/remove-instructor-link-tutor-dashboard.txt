@@ -1,0 +1,5 @@
+add_filter('tutor_dashboard/instructor_nav_items', 'remove_some_links');
+function remove_some_links($links) {
+	unset($links['assignments']);
+	return $links;
+}
