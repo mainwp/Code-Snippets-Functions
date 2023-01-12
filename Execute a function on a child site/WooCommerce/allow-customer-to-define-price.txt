@@ -1,0 +1,41 @@
+add_action( 'woocommerce_before_add_to_cart_button', 'wc_product_price_input', 9 );
+  
+function wc_product_price_input() {
+   global $product;
+   if ( 241982 !== $product->get_id() ) return;
+   woocommerce_form_field( 'set_price', array(
+      'type' => 'text',
+      'required' => true,
+      'label' => 'Set price ' . get_woocommerce_currency_symbol(),
+   ));
+}
+  
+add_filter( 'woocommerce_add_to_cart_validation', 'wc_product_add_on_validation', 9999, 3 );
+  
+function wc_product_add_on_validation( $passed, $product_id, $qty ) {
+   if ( isset( $_POST['set_price'] ) && sanitize_text_field( $_POST['set_price'] ) == '' ) {
+      wc_add_notice( 'Set price is a required field', 'error' );
+      $passed = false;
+   }
+   return $passed;
+}
+  
+add_filter( 'woocommerce_add_cart_item_data', 'wc_product_add_on_cart_item_data', 9999, 2 );
+  
+function wc_product_add_on_cart_item_data( $cart_item, $product_id ) {
+   if ( 241982 !== $product_id ) return $cart_item;    
+   $cart_item['set_price'] = sanitize_text_field( $_POST['set_price'] );
+   return $cart_item;
+}
+ 
+add_action( 'woocommerce_before_calculate_totals', 'wc_alter_price_cart', 9999 );
+  
+function wc_alter_price_cart( $cart ) {
+   if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+   if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) return;
+   foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+      $product = $cart_item['data'];
+      if ( 241982 !== $product->get_id() ) continue;
+      $cart_item['data']->set_price( $cart_item['set_price'] );
+   } 
+}
