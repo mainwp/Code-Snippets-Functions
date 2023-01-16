@@ -1,0 +1,1 @@
+remove_action( 'edd_insert_user', 'edd_new_user_notification', 10, 2 );
