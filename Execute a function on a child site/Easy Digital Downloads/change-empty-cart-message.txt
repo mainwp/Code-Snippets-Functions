@@ -1,0 +1,7 @@
+function my_custom_empty_cart_message($message) {
+	return '
+' . $message . ' Please buy something.
+
+';
+}
+add_filter('edd_empty_cart_message', 'my_custom_empty_cart_message');
