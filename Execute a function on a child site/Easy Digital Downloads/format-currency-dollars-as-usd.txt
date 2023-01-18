@@ -1,0 +1,5 @@
+function pw_edd_custom_currency_format( $formatted, $currency, $price ) {
+	return $price . ' USD';
+}
+add_filter( 'edd_usd_currency_filter_before', 'pw_edd_custom_currency_format', 10, 3 );
+add_filter( 'edd_usd_currency_filter_after', 'pw_edd_custom_currency_format', 10, 3 );
