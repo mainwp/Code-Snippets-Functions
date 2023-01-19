@@ -1,0 +1,3 @@
+add_filter( 'autoptimize_filter_css_bodyreplacementpayload', function( $html ){
+    return str_replace( '/>', '>' . PHP_EOL , $html );
+});
