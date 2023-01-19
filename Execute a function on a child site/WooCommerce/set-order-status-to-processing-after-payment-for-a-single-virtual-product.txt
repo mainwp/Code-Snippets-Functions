@@ -1,0 +1,40 @@
+function virtual_product_woocommerce_order_status( $order_id ) {
+    if( ! $order_id ) return;
+
+
+    $order = wc_get_order( $order_id );
+
+    $order_items = $order->get_items();
+
+    $is_virtual_found = false;
+    $order_product_ids = array();
+    $specific_product_id = 1342;
+
+    foreach ( $order_items as $item ) {
+        
+        // Get product id
+        $product = wc_get_product( $item['product_id'] );
+        
+        // Add the product IDS to the list
+        $order_product_ids[] = $item['product_id'];
+        // Is virtual
+        $is_virtual = $product->is_virtual();
+
+        // Is_downloadable
+        $is_downloadable = $product->is_downloadable();
+        
+        // Backorders allowed
+        $backorders_allowed = $product->backorders_allowed();
+
+        if( $is_virtual && $is_downloadable && $backorders_allowed ) {
+            $is_virtual_found = true;
+            break;
+        }
+    }
+
+    // true
+    if( $is_virtaul_found && in_array($specific_product_id, $order_product_ids) ) {
+        $order->update_status( 'processing' );
+    }
+}
+add_action('woocommerce_thankyou', 'virtual_product_woocommerce_order_status', 10, 1 );
