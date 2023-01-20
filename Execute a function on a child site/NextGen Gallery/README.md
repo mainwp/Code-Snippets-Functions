@@ -1,6 +1,6 @@
 ## NextGEN Gallery code snippets
 
-Tested version of WordPress 6.0.3 plugin version was NextGEN Gallery 3.30.
+Tested version of WordPress 6.1.1 plugin version was NextGEN Gallery 3.33.
 
 This file is a code snippet that is used for [NextGEN Gallery](https://wordpress.org/plugins/nextgen-gallery/) plugin. 
 
