@@ -1,0 +1,57 @@
+add_action( 'woocommerce_checkout_order_review', function() {
+    ?>
+    <style>
+        #order_review_heading {
+            display: none; 
+        }
+        #order_review_toggle {
+            display: inline-block;
+            padding: 1em;
+            font-size: 18px;
+            line-height: 1;
+            width: 100%;
+        }
+        #order_review_toggle .dashicons {
+            font-size: 18px;
+        }
+        #order_review_toggle .dashicons-cart {
+            margin-right: 0.5em;
+        }
+        #order_review_toggle .dashicons-arrow-up-alt2,
+        #order_review_toggle .dashicons-arrow-down-alt2 {
+            float: right;
+            cursor: pointer;
+        }
+        #order_review_toggle .dashicons-arrow-up-alt2 {
+            display: none;
+        }
+        .woocommerce-checkout-review-order-table tr:not(.order-total) {
+            display: none;
+        }
+    </style>
+
+    <script>
+        jQuery( function( $ ) {
+            $('#order_review_toggle .dashicons-arrow-down-alt2').on( 'click', function() {
+                let $orderReviewTable = $(this).closest('#order_review').find( '.woocommerce-checkout-review-order-table' );
+                $orderReviewTable.find('tr').show();
+                $(this).siblings('.dashicons-arrow-up-alt2').show();
+                $(this).hide();
+            });
+            $('#order_review_toggle .dashicons-arrow-up-alt2').on( 'click', function() {
+                let $orderReviewTable = $(this).closest('#order_review').find( '.woocommerce-checkout-review-order-table' );
+                $orderReviewTable.find('tr').not('.order-total').hide();
+                $(this).siblings('.dashicons-arrow-down-alt2').show();
+                $(this).hide();
+            });
+        });
+    </script>
+    <?php
+    printf( '<div id="order_review_toggle"><span class="dashicons dashicons-cart"></span><span>%s</span><span class="dashicons dashicons-arrow-up-alt2"></span><span class="dashicons dashicons-arrow-down-alt2"></span></div>', __( 'Your order', 'woocommerce' ) );
+}, 1 );
+
+add_action( 'wp_enqueue_scripts', function() {
+    if ( is_checkout() ) {
+        wp_enqueue_style('dashicons');
+    }
+} );
