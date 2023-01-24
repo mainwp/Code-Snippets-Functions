@@ -1,6 +1,6 @@
 ## OceanWP code snippets
 
-Tested version of WordPress 6.1.1, theme version was OceanWP 3.3.6.
+Tested version of WordPress 6.1.1, theme version was OceanWP 3.4.1.
 
 This file is a code snippet that is used for [OceanWP](https://wordpress.org/themes/oceanwp/) theme. 
 
