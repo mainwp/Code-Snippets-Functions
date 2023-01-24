@@ -1,0 +1,5 @@
+add_filter( 'tec_views_v2_subscribe_links', function( $subscribe_links ) {
+    $subscribe_links['gcal']->set_visibility( false );
+ 
+    return $subscribe_links;
+}, 12 );
