@@ -1,0 +1,1 @@
+	add_filter( 'tribe_template_pre_html:events/v2/day/event/venue', '__return_false' );
