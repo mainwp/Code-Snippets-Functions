@@ -1,0 +1,9 @@
+add_filter( 'aioseo_robots_meta', 'aioseo_filter_robots_meta' );
+
+function aioseo_filter_robots_meta( $attributes ) {
+   if ( is_singular() ) {
+      $attributes['noindex']  = 'index';
+      $attributes['nofollow'] = 'nofollow';
+   }
+   return $attributes;
+}
