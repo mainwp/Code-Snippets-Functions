@@ -1,6 +1,6 @@
 ## Easy Digital Downloads code snippets
 
-Tested version of WordPress 6.1.1, plugin version was Easy Digital Downloads 3.1.0.4.
+Tested version of WordPress 6.1.1, plugin version was Easy Digital Downloads 3.1.0.5.
 
 This file is a code snippet that is used for [Easy Digital Downloads](https://wordpress.org/plugins/easy-digital-downloads/) plugin. 
 
