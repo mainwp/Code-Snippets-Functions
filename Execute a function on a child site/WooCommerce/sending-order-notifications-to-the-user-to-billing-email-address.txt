@@ -1,0 +1,13 @@
+function custom_woocommerce_email_recipient( $recipient, $object, $email ) {
+    // Only target "new order" email notifications
+    if ( $email->id === 'new_order' ) {
+        // Get the user's billing email address
+        $billing_email = $object->get_billing_email();
+        // Get the user's customer profile email address
+        $profile_email = $object->get_user()->user_email;
+        // Add the customer profile email address to the recipient list
+        $recipient .= ',' . $profile_email;
+    }
+    return $recipient;
+}
+add_filter( 'woocommerce_email_recipient', 'custom_woocommerce_email_recipient', 10, 3 );
