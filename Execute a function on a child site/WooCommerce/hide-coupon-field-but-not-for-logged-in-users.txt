@@ -1,0 +1,7 @@
+function hide_coupon_field_on_cart( $enabled ) {
+    if( !is_user_logged_in() ){
+          return false;
+    }
+    return $enabled;
+}
+add_filter( 'woocommerce_coupons_enabled', 'hide_coupon_field_on_cart' ); 
