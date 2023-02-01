@@ -1,0 +1,34 @@
+add_filter( 'woocommerce_is_purchasable', 'wc_not_purchasable_after_daily_limit', 9999, 2 );
+ 
+function wc_not_purchasable_after_daily_limit( $is_purchasable, $product ) {
+ 
+   $limit_product_id = 12345; // SET YOUR PRODUCT ID HERE
+    
+   if ( $product->get_id() !== $limit_product_id ) return $is_purchasable;
+    
+   // GET TODAYS ORDERS AND LOOP
+   $all_orders = wc_get_orders(
+      array(
+         'limit' => -1,
+         'date_created' => date( 'Y-m-d' ),
+         'return' => 'ids',
+      )
+   );
+   $count = 0;
+   foreach ( $all_orders as $all_order ) {
+      $order = wc_get_order( $all_order );
+      $items = $order->get_items();
+      foreach ( $items as $item ) {
+         $product_id = $item->get_product_id();
+         if ( $product_id && $product_id == $limit_product_id ) {
+            $count = $count + absint( $item['qty'] ); 
+         }
+      }
+   }
+    
+   // LIMIT 3 DAILY SALES
+   if ( $count >= 3 ) return false;
+    
+   return $is_purchasable;
+    
+}
