@@ -1,0 +1,1 @@
+apply_filters( 'display_rocketcdn_cta', '__return_false' );
