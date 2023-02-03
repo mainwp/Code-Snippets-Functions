@@ -1,0 +1,1 @@
+add_filter('autoptimize_filter_compatibility_revslider_active', '__return_false');
