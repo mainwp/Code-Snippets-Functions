@@ -1,0 +1,16 @@
+add_filter( 'alm_modify_query_args', function( $args ) {
+    global $rlv_is_offset_query;
+    $args['relevanssi'] = true;
+    if ( $args['offset'] ) {
+        $rlv_is_offset_query = true;
+    }
+    return $args;
+} );
+
+add_filter( 'relevanssi_ok_to_log', function( $ok, $query ) {
+    global $rlv_is_offset_query;
+    if ( $rlv_is_offset_query ) {
+        $ok = false;
+    }
+    return $ok;
+}, 10, 2 );
