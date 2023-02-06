@@ -1,0 +1,7 @@
+function hide_downloadable_quantity_field_cart( $product_quantity, $cart_item_key, $cart_item ) {
+    if ( isset( $cart_item['data'] ) && $cart_item['data']->is_downloadable() ) {
+        $product_quantity = '';
+    }
+    return $product_quantity;
+}
+add_filter( 'woocommerce_cart_item_quantity', 'hide_downloadable_quantity_field_cart', 10, 3 );
