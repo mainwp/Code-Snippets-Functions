@@ -1,0 +1,6 @@
+add_filter('autoptimize_js_include_inline', function( $state ) {
+  if ( is_page( 'YOUR_PAGE_SLUG_HERE' ) ) {
+    return false;
+  }
+return true;
+});
