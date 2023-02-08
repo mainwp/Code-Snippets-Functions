@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_display_product_attributes', 'wc_exclude_attribute_from_attribute_table', 9999, 2 );
+ 
+function wc_exclude_attribute_from_attribute_table( $product_attributes, $product ) {
+   if ( isset( $product_attributes[ 'attribute_pa_color' ] ) ) unset( $product_attributes[ 'attribute_pa_color' ] );
+   return $product_attributes;
+}
