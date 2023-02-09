@@ -1,0 +1,1 @@
+add_action( 'tribe_events_integrations_should_load_freemius', '__return_false', 100 );
