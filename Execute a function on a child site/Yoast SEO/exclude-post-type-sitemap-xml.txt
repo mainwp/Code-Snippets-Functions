@@ -1,0 +1,5 @@
+function sitemap_exclude_post_type( $excluded, $post_type ) {
+    return $post_type === 'recipes';
+}
+
+add_filter( 'wpseo_sitemap_exclude_post_type', 'sitemap_exclude_post_type', 10, 2 );
