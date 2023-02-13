@@ -1,0 +1,7 @@
+add_filter('wpseo_breadcrumb_single_link', 'remove_breadcrumb_title' );
+function remove_breadcrumb_title( $link_output) {
+	if(strpos( $link_output, 'breadcrumb_last' ) !== false ) {
+		$link_output = '';
+	}
+   	return $link_output;
+}
