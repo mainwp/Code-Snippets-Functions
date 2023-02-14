@@ -1,0 +1,1 @@
+add_filter('shortpixel/image/filecheck', function () { return true; }); 
