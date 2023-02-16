@@ -1,0 +1,4 @@
+function my_wfls_registration_blocked_message() {
+	return '<strong>REGISTRATION BLOCKED</strong>: Registration could not be completed. Please visit our <a href="/contact/">contact page</a> for help.';
+}
+add_filter('wfls_registration_blocked_message', 'my_wfls_registration_blocked_message');
