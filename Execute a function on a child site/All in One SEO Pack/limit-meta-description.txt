@@ -1,0 +1,8 @@
+add_filter( 'aioseo_description', 'aioseo_truncate_description' );
+
+function aioseo_truncate_description( $description ) {
+    if ( function_exists( 'mb_substr') ) {
+		return mb_substr( $description, 0, 160 );
+	}
+	return substr( $description, 0, 160 );
+}
