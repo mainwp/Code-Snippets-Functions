@@ -1,0 +1,15 @@
+add_action('astra_masthead', 'astra_logo_change_url');
+add_action('astra_mobile_header_bar_top', 'astra_logo_change_url');
+function astra_logo_change_url(){
+	remove_action( 'astra_masthead_content', 'astra_site_branding_markup', 8 );
+	add_filter( 'home_url', 'astra_logo_custom_url' );
+	add_action( 'astra_masthead_content', 'astra_site_branding_markup', 8 );
+}
+function astra_logo_custom_url( $url ) {
+	return 'https://sitedomain.com';
+}
+add_filter('astra_logo','astra_remove_logo_custom_url');
+function astra_remove_logo_custom_url( $html ){
+	remove_filter( 'home_url', 'astra_logo_custom_url' );
+	return $html;
+}
