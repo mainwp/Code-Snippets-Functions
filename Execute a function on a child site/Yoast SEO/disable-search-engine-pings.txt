@@ -1,0 +1,1 @@
+add_filter( 'wpseo_allow_xml_sitemap_ping', '__return_false' );
