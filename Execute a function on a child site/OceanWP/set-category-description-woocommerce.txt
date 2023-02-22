@@ -1,0 +1,9 @@
+function oceanwp_woocommerce_taxonomy_archive_description() {
+    if ( is_tax( array( 'product_cat', 'product_tag' ) ) && get_query_var( 'paged' ) != 0 ) {
+        $description = wc_format_content( term_description() );
+        if ( $description ) {
+             echo wp_kses_post( $description );
+        }
+    }
+}
+add_action( 'woocommerce_archive_description', 'oceanwp_woocommerce_taxonomy_archive_description');
