@@ -1,6 +1,6 @@
 ## Genesis Blocks code snippets
 
-Tested version of WordPress 6.1, plugin version was Genesis Blocks 1.5.3.
+Tested version of WordPress 6.1.1, plugin version was Genesis Blocks 1.5.4.
 
 This file is a code snippet that is used for [Genesis Blocks](https://wordpress.org/plugins/genesis-blocks/) plugin. 
 
