@@ -1,0 +1,4 @@
+function jetpack_email_sharing_customize_subject() {
+    return 'Check this great post I just found!';
+}
+add_filter( 'wp_sharing_email_send_post_subject', 'jetpack_email_sharing_customize_subject' );
