@@ -1,0 +1,36 @@
+add_action( 'add_meta_boxes', 'wc_new_meta_box_single_prod' );
+ 
+function wc_new_meta_box_single_prod() {
+   add_meta_box(
+      'custom_product_meta_box',
+      'Product third description',
+      'wc_add_custom_content_meta_box',
+      'product',
+      'normal',
+      'default'
+   );
+}
+ 
+function wc_add_custom_content_meta_box( $post ){
+   $third_desc = get_post_meta( $post->ID, '_third_desc', true ) ? get_post_meta( $post->ID, '_third_desc', true ) : '';   
+   wp_editor( $third_desc, '_third_desc' );
+}
+ 
+add_action( 'save_post_product', 'wc_save_custom_content_meta_box', 10, 1 );
+ 
+function wc_save_custom_content_meta_box( $post_id ) {
+   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+   if ( ! isset( $_POST['_third_desc'] ) ) return;
+   update_post_meta( $post_id, '_third_desc', $_POST['_third_desc'] );
+}
+ 
+add_action( 'woocommerce_after_single_product_summary' , 'wc_third_desc_bottom_single_product', 99 );
+   
+function wc_third_desc_bottom_single_product() {
+   global $product;
+   $third_desc = get_post_meta( $product->get_id(), '_third_desc', true ) ? get_post_meta( $product->get_id(), '_third_desc', true ) : '';
+   if ( ! $third_desc ) return;
+   echo '<div>';
+   echo $third_desc;
+   echo '</div>';
+}
