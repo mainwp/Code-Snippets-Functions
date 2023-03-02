@@ -1,0 +1,12 @@
+add_filter('woocommerce_order_get_total', 'exclude_account_funds_payment', 10, 2);
+
+function exclude_account_funds_payment($total, $order){
+   // Get the payment method used for the order
+   $payment_method = $order->get_payment_method();
+
+   // Exclude the order total for Account Funds payment method
+   if($payment_method == 'account_funds') {
+      $total = $total - $order->get_total_paid();
+   }
+   return $total;
+}
