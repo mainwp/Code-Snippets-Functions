@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_date_format', 'wc_woocommerce_date_format' );
+
+function wc_woocommerce_date_format() {
+   return 'F d, Y';
+}
