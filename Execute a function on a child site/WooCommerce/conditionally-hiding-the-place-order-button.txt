@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_order_button_html', 'remove_place_order_button' );
+function remove_place_order_button( $button_html ) {
+    if ( ! WC()->cart->needs_shipping() || ! WC()->cart->needs_payment() ) {
+        $button_html = '';
+    }
+    return $button_html;
+}
