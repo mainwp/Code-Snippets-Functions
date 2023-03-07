@@ -1,0 +1,23 @@
+add_filter( 'aioseo_schema_output', 'aioseo_filter_schema_output' );
+
+function aioseo_filter_schema_output( $schema ) {
+	foreach ( $schema as $index => $graphData ) {
+		if ( empty( $graphData['@type'] ) ) {
+			continue;
+		}
+
+		$type = strtolower( $graphData['@type'] );
+		switch ( $type ) {
+			case 'article':
+			case 'blogposting':
+			case 'newsarticle':
+				unset( $schema[ $index ]['datePublished'] );
+				unset( $schema[ $index ]['dateModified'] );
+				break;
+			default:
+				break;
+		}
+	}
+
+	return $schema;
+}
