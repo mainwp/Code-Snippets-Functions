@@ -1,0 +1,8 @@
+add_filter( 'the_title', 'wc_capitalize_single_prod_title', 9999, 2 );
+ 
+function wc_capitalize_single_prod_title( $post_title, $post_id ) {
+   if ( ! is_admin() && 'product' === get_post_type( $post_id ) ) {
+      $post_title = ucwords( strtolower( $post_title ) );
+   }
+   return $post_title;
+}
