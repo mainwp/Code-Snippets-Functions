@@ -1,0 +1,38 @@
+add_action( 'woocommerce_email_after_order_table', 'wc_add_product_grid_specific_email', 20, 4 );
+   
+function wc_add_product_grid_specific_email( $order, $sent_to_admin, $plain_text, $email ) {
+    
+   if ( $email->id == 'customer_processing_order' ) {
+       
+      $related = array();
+      foreach ( $order->get_items() as $item_id => $item ) {         
+         $related = array_merge( wc_get_related_products( $item->get_product_id() ), $related );
+      }
+      if ( ! $related ) return;
+      shuffle( $related );
+      $related = array_unique( $related );
+       
+      echo '<h2>Related Products</h2>';
+       
+      $html = '';
+      $col = 1;
+      $cols = 3;
+      $limit = 6;
+      $html .= '<div><table style="table-layout:fixed;width:100%;"><tbody>';      
+      foreach ( array_slice( $related, 0, $limit ) as $product_id ) {
+         $product = wc_get_product( $product_id );
+         $html .= ( $col + $cols - 1 ) % $cols === 0 ? '<tr>' : '';
+         $html .= '<td style="text-align:center;vertical-align:bottom">';
+         $html .= $product->get_image();
+         $html .= '<h3 style="text-align:center">' . $product->get_title() . '</h3>';
+         $html .= '<p>' . $product->get_price_html() . '</p>';
+         $html .= '<p><a href="' . get_permalink( $product_id ) . '">' . __( 'Read more', 'woocommerce' ) . '</a></p></td>';
+         $html .= $col % $cols === 0 ? '</tr>' : '';
+         $col++;
+      }
+      $html .= '</tbody></table></div>';
+       
+      echo $html;
+       
+   }
+}
