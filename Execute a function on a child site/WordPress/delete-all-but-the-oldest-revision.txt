@@ -1,0 +1,17 @@
+add_filter(
+        'wp_save_post_revision_revisions_before_deletion',
+        function( $revisions, $post_id ) {
+                $original_revision = get_transient( 'original_revision_for_post_' . $post_id );
+                if ( $original_revision ) {
+                        // Always remove the oldest revision from the array of revisions to potentially delete.
+                        unset( $revisions[ $original_revision ] );
+                } else {
+                        // Set the oldest revision in a transient, so we can verify that it is always ignored.
+                        $original_revision = array_key_first( $revisions );
+                        set_transient( 'original_revision_for_post_' . $post_id, $original_revision );
+                }
+                return $revisions;
+        },
+        10,
+        2
+);
