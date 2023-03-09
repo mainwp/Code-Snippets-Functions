@@ -1,0 +1,5 @@
+function my_plugin_disable_tabs_by_default( $settings ) {
+    $settings['blockInspectorTabs'] = array( 'default' => false );
+    return $settings;
+}
+add_filter('block_editor_settings_all', 'my_plugin_disable_tabs_by_default');
