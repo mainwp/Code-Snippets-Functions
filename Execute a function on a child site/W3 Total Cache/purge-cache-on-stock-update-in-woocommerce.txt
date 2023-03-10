@@ -1,0 +1,6 @@
+add_action( 'woocommerce_product_set_stock', 'w3tc_flush_all_custom', 999 );
+add_action( 'woocommerce_variation_set_stock', 'w3tc_flush_all_custom', 999 );
+
+function w3tc_flush_all_custom() {
+    w3tc_flush_all();
+}
