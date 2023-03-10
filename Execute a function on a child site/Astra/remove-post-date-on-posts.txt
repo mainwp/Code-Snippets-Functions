@@ -1,0 +1,30 @@
+/**
+ * Function to get Date of Post without published date.
+ */
+if ( ! function_exists( 'astra_post_date' ) ) {
+
+	/**
+	 * Function to get Date of Post
+	 *
+	 * @return html                Markup.
+	 */
+	function astra_post_date() {
+
+		$output        = '';
+		$format        = apply_filters( 'astra_post_date_format', '' );
+		$time_string   = esc_html( get_the_date( $format ) );
+		$modified_date = esc_html( get_the_modified_date( $format ) );
+		$posted_on     = sprintf(
+			esc_html( '%s' ),
+			$time_string
+		);
+		$modified_on   = sprintf(
+			esc_html( '%s' ),
+			$modified_date
+		);
+		$output       .= '<span class="posted-on">';
+		$output       .= '<span class="updated" itemprop="dateModified"> ' . $modified_on . '</span>';
+		$output       .= '</span>';
+		return apply_filters( 'astra_post_date', $output );
+	}
+}
