@@ -1,6 +1,6 @@
 ## Ultimate Member code snippets
 
-Tested version of WordPress 6.1.1, plugin version was Ultimate Member 2.5.3.
+Tested version of WordPress 6.1.1, plugin version was Ultimate Member 2.5.4.
 
 This file is a code snippet that is used for [Ultimate Member](https://wordpress.org/plugins/ultimate-member/) plugin. 
 
