@@ -1,0 +1,1 @@
+add_filter( 'mailster_inline_editor', '__return_false' );
