@@ -1,0 +1,22 @@
+add_action( 'woocommerce_external_add_to_cart', 'wc_external_product_stock', 29 );
+ 
+function wc_external_product_stock() {
+   global $product;
+   $stock_status = get_post_meta( $product->get_id(), 'extstock', true );
+   if ( ! $stock_status ) return;
+   if ( $stock_status == 1 ) {
+      $availability = __( 'In stock', 'woocommerce' );
+      $class = 'in-stock';
+   } else {
+      $availability = __( 'Out of stock', 'woocommerce' );
+      $class = 'out-of-stock';
+   }
+   wc_get_template(
+      'single-product/stock.php',
+      array(
+         'product'      => $product,
+         'class'        => $class,
+         'availability' => $availability,
+      )
+   );
+}
