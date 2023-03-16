@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_product_related_products_heading', 'wc_rename_related_products' );
+ 
+function wc_rename_related_products() {
+   return "Customers also viewed";
+}
