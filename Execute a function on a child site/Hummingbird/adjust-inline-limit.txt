@@ -1,0 +1,4 @@
+add_filter( 'wphb_inline_limit_kb', 'adjust_inline_limits' );
+function adjust_inline_limits( $value ) {
+return 50.0; // Set any value in Kb.
+}
