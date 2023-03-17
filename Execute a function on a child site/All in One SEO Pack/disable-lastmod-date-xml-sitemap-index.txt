@@ -1,0 +1,1 @@
+add_filter( 'aioseo_sitemap_lastmod_disable', '__return_true' );
