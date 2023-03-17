@@ -1,0 +1,22 @@
+add_action( 'woocommerce_checkout_process', 'wc_custom_checkout_process_for_virtual_products' );
+
+function wc_custom_checkout_process_for_virtual_products() {
+
+    // Check if the cart contains virtual products only
+    $virtual_products_only = true;
+    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+        if ( ! $cart_item['data']->is_virtual() ) {
+            $virtual_products_only = false;
+            break;
+        }
+    }
+
+    // If the cart contains virtual products only, remove email notifications
+    if ( $virtual_products_only ) {
+        add_action( 'woocommerce_email', 'unhook_those_pesky_emails' );
+        function unhook_those_pesky_emails( $email_class ) {
+            remove_action( 'woocommerce_order_status_pending_to_processing_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_pending_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
+        }
+    }
+}
