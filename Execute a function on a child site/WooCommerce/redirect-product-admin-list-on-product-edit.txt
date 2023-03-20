@@ -1,0 +1,15 @@
+add_action( 'save_post', 'wc_redirect_to_products_after_saving_product', 9999, 3 );
+
+function wc_redirect_to_products_after_saving_product( $post_id, $post, $update ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+    if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || 'product' !== $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+    if ( ! $update ) {
+        return;
+    }
+    wp_safe_redirect( admin_url( 'edit.php?post_type=product' ) );
+    exit;
+}
