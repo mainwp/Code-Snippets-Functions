@@ -1,0 +1,9 @@
+function custom_product_name_in_cart( $product_name, $cart_item, $cart_item_key ) {
+    if ( $cart_item['product_id'] === YOUR_PRODUCT_ID ) {
+
+        // Overwrite name
+        $product_name = 'Custom Product Name';
+    }
+    return $product_name;
+}
+add_filter( 'woocommerce_cart_item_name', 'custom_product_name_in_cart', 10, 3 );
