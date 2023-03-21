@@ -1,0 +1,4 @@
+function wc_as_retention_period() {
+	return DAY_IN_SECONDS;
+}
+add_filter( 'action_scheduler_retention_period', 'wc_as_retention_period' );
