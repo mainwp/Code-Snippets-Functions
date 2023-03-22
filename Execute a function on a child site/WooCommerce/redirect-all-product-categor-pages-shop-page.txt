@@ -1,0 +1,8 @@
+add_action( 'wp', 'wc_redirect_cats_to_shop' );
+ 
+function wc_redirect_cats_to_shop() {
+   if ( is_product_category() ) {
+      wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
+      exit;
+   }
+}
