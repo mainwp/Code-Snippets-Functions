@@ -1,0 +1,1 @@
+add_filter('seopress_pro_significant_kw_disable_shortcode', '__return_true');
