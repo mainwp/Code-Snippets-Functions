@@ -1,0 +1,1 @@
+add_filter( "aioseo_user_profile_tab_disable", "__return_true" );
