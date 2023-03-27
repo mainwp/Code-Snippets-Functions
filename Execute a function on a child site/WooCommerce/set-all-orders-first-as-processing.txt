@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_order_item_needs_processing', '__return_true' );
