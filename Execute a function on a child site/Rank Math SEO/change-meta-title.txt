@@ -1,0 +1,1 @@
+add_filter(‘rank_math/frontend/title’, ‘blog_multipage_title’,100,1);
