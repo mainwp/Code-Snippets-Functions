@@ -1,0 +1,1 @@
+add_filter( 'rank_math/opengraph/pre_set_default_image', '__return_true' );
