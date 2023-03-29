@@ -1,0 +1,28 @@
+add_action( 'admin_init', 'wc_trigger_customer_order_emails_admin' );
+   
+function wc_trigger_customer_order_emails_admin() {
+   if ( isset( $_REQUEST['cust-email'] ) && ! empty( $_REQUEST['cust-email'] ) ) {
+      if ( ! current_user_can( 'manage_woocommerce' ) ) {
+         wp_die( 'You do not have permission to bulk edit products' );
+      }
+      $email = sanitize_email( $_REQUEST['cust-email'] );
+      if ( is_email( $email ) && email_exists( $email ) ) {
+         global $wpdb;
+         $result = $wpdb->get_col( $wpdb->prepare(
+            "SELECT p.ID FROM {$wpdb->posts} AS p
+            INNER JOIN {$wpdb->postmeta} AS pm ON p.ID = pm.post_id
+            WHERE p.post_status = 'wc-completed'
+            AND pm.meta_key = '_billing_email'
+            AND pm.meta_value = %s",
+            $email
+         ));         
+         $result = array_map( 'absint', $result );
+         if ( $result ) {
+            foreach ( $result as $order_id ) {
+               $order = wc_get_order( $order_id );
+               WC()->mailer()->emails['WC_Email_Customer_Completed_Order']->trigger( $order_id, $order );
+            }
+         } 
+      }
+   }
+}
