@@ -1,0 +1,9 @@
+function w3tc_flush_on_plugin_update( $upgrader_object, $options ) {
+    if ( function_exists( 'w3tc_flush_all' ) ) {
+        w3tc_flush_all();
+        echo '<script>console.log("W3 Total Cache flushed.")</script>';
+    } else {
+        echo '<script>console.log("W3 Total Cache is not installed.")</script>';
+    }
+}
+add_action( 'upgrader_process_complete', 'w3tc_flush_on_plugin_update', 10, 2 );
