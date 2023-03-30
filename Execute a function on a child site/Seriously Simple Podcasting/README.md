@@ -1,6 +1,6 @@
 ## Seriously Simple Podcasting code snippets
 
-Tested version of WordPress 6.1.1, plugin version was Seriously Simple Podcasting 2.19.1.
+Tested version of WordPress 6.2, plugin version was Seriously Simple Podcasting 2.20.3.
 
 This file is a code snippet that is used for [Seriously Simple Podcasting](https://wordpress.org/plugins/seriously-simple-podcasting/) plugin. 
 
