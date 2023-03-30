@@ -1,0 +1,10 @@
+add_action( 'woocommerce_widget_shopping_cart_total', 'wc_minicart_custom_text', 15 );
+
+function wc_minicart_custom_text() {
+    if ( ! WC()->cart ) return;
+    if ( WC()->cart->get_cart_contents_count() > 2 ) {
+        echo '<p class="mini_cart_text">TEXT TWO</p>';
+    } else {
+        echo '<p class="mini_cart_text">TEXT ONE</p>';
+    }
+}
