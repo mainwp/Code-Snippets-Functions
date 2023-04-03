@@ -1,0 +1,118 @@
+class CWPAI_Shipping_Tracking {
+    public function __construct() {
+        add_action( 'add_meta_boxes', array( $this, 'add_metabox' ) );
+        add_action( 'admin_footer', array( $this, 'add_js' ) );
+        add_action( 'woocommerce_email_after_order_table', array( $this, 'add_tracking_info_to_email' ) );
+        add_action( 'woocommerce_view_order', array( $this, 'add_tracking_info_to_order_page' ) );
+    }
+    
+    public function add_metabox() {
+        add_meta_box(
+            'cwpai_shipping_tracking',
+            __( 'Shipping Tracking', 'cwpai' ),
+            array( $this, 'metabox_content' ),
+            'shop_order',
+            'side',
+            'default'
+        );
+    }
+    
+    public function metabox_content() {
+        global $post;
+        $tracking_number = get_post_meta( $post->ID, '_cwpai_tracking_number', true );
+        $carrier_name = get_post_meta( $post->ID, '_cwpai_carrier_name', true );
+        ?>
+        <p>
+            <label for="cwpai_tracking_number"><?php _e( 'Tracking Number', 'cwpai' ); ?></label>
+            <input type="text" name="cwpai_tracking_number" id="cwpai_tracking_number" value="<?php echo esc_attr( $tracking_number ); ?>" />
+        </p>
+        <p>
+            <label for="cwpai_carrier_name"><?php _e( 'Carrier Name', 'cwpai' ); ?></label>
+            <select name="cwpai_carrier_name" id="cwpai_carrier_name">
+                <option value=""><?php _e( 'Select a carrier', 'cwpai' ); ?></option>
+                <option value="fedex" <?php selected( $carrier_name, 'fedex' ); ?>><?php _e( 'FedEx', 'cwpai' ); ?></option>
+                <option value="ups" <?php selected( $carrier_name, 'ups' ); ?>><?php _e( 'UPS', 'cwpai' ); ?></option>
+                <option value="usps" <?php selected( $carrier_name, 'usps' ); ?>><?php _e( 'USPS', 'cwpai' ); ?></option>
+                <option value="custom" <?php selected( $carrier_name, 'custom' ); ?>><?php _e( 'Custom', 'cwpai' ); ?></option>
+            </select>
+        </p>
+        <?php
+    }
+    
+    public function add_js() {
+        global $post_type;
+        if ( 'shop_order' !== $post_type ) {
+            return;
+        }
+        ?>
+        <script type="text/javascript">
+            jQuery( function( $ ) {
+                $( '#cwpai_carrier_name' ).select2();
+            } );
+        </script>
+        <?php
+    }
+    
+    public function add_tracking_info_to_email( $order ) {
+        $tracking_number = get_post_meta( $order->get_id(), '_cwpai_tracking_number', true );
+        $carrier_name = get_post_meta( $order->get_id(), '_cwpai_carrier_name', true );
+        if ( ! $tracking_number || ! $carrier_name ) {
+            return;
+        }
+        ?>
+        <h2><?php _e( 'Tracking Information', 'cwpai' ); ?></h2>
+        <p>
+            <strong><?php _e( 'Tracking Number:', 'cwpai' ); ?></strong>
+            <?php echo esc_html( $tracking_number ); ?>
+        </p>
+        <p>
+            <strong><?php _e( 'Carrier:', 'cwpai' ); ?></strong>
+            <?php echo esc_html( $carrier_name ); ?>
+        </p>
+        <?php
+        if ( in_array( $carrier_name, array( 'fedex', 'ups', 'usps' ) ) ) {
+            echo $this->get_tracking_url( $carrier_name, $tracking_number );
+        }
+    }
+    
+    public function add_tracking_info_to_order_page( $order_id ) {
+        $tracking_number = get_post_meta( $order_id, '_cwpai_tracking_number', true );
+        $carrier_name = get_post_meta( $order_id, '_cwpai_carrier_name', true );
+        if ( ! $tracking_number || ! $carrier_name ) {
+            return;
+        }
+        ?>
+        <h2><?php _e( 'Tracking Information', 'cwpai' ); ?></h2>
+        <p>
+            <strong><?php _e( 'Tracking Number:', 'cwpai' ); ?></strong>
+            <?php echo esc_html( $tracking_number ); ?>
+        </p>
+        <p>
+            <strong><?php _e( 'Carrier:', 'cwpai' ); ?></strong>
+            <?php echo esc_html( $carrier_name ); ?>
+        </p>
+        <?php
+        if ( in_array( $carrier_name, array( 'fedex', 'ups', 'usps' ) ) ) {
+            echo $this->get_tracking_url( $carrier_name, $tracking_number );
+        }
+    }
+    
+    private function get_tracking_url( $carrier_name, $tracking_number ) {
+        switch ( $carrier_name ) {
+            case 'fedex':
+                $url = 'https://www.fedex.com/apps/fedextrack/?tracknumbers=' . $tracking_number;
+                break;
+            case 'ups':
+                $url = 'https://www.ups.com/track?loc=en_US&tracknum=' . $tracking_number;
+                break;
+            case 'usps':
+                $url = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' . $tracking_number;
+                break;
+            default:
+                return '';
+        }
+        return '<p><a href="' . esc_url( $url ) . '" target="_blank">' . __( 'Click here to track your shipment', 'cwpai' ) . '</a></p>';
+    }
+}
+
+new CWPAI_Shipping_Tracking();
