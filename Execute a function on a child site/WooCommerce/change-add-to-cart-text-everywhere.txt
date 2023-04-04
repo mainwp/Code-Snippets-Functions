@@ -1,0 +1,24 @@
+// Change button text on single product page
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_add_cart_button_single_product', 9998 );
+function custom_add_cart_button_single_product( $label ) {
+    if ( isset( $_SESSION['product_in_cart'] ) && $_SESSION['product_in_cart'] ) {
+        $label = 'Go To Cart';
+    }
+    return $label;
+}
+
+// Change button text on shop pages
+add_filter( 'woocommerce_product_add_to_cart_text', 'custom_add_cart_button_shop_page', 9998 );
+add_filter( 'woocommerce_product_archive_add_to_cart_text', 'custom_add_cart_button_shop_page', 9998 );
+function custom_add_cart_button_shop_page( $label ) {
+    if ( isset( $_SESSION['product_in_cart'] ) && $_SESSION['product_in_cart'] ) {
+        $label = 'Go To Cart';
+    }
+    return $label;
+}
+
+// Set session variable when product is added to cart
+add_action( 'woocommerce_add_to_cart', 'set_product_in_cart_session_variable', 10, 6 );
+function set_product_in_cart_session_variable( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+    $_SESSION['product_in_cart'] = true;
+}
