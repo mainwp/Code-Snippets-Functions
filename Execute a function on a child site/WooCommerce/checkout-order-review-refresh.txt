@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_checkout_fields', 'wc_checkout_fields_trigger_refresh', 9999 );
+  
+function wc_checkout_fields_trigger_refresh( $fields ) {
+   $fields['billing']['billing_company']['class'][] = 'update_totals_on_change';
+    
+   // ADD AS MANY FIELDS AS YOU LIKE, SAME FORMAT, SEE LIST BELOW
+   // E.G. $fields['account']['account_password']['class'][] = 'update_totals_on_change';
+ 
+   return $fields;
+}
