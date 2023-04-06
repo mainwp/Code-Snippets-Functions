@@ -1,0 +1,22 @@
+// Deactivate the Stats module.
+add_filter(
+	'jetpack_active_modules',
+	function ( $modules ) {
+		$stats_index = array_search( 'stats', $modules, true );
+		if ( false !== $stats_index ) {
+			unset( $modules[ $stats_index ] );
+		}
+		return $modules;
+	},
+	11
+);
+
+// Remove the Stats module from the list of available modules.
+add_filter(
+	'jetpack_get_available_modules',
+	function ( $modules ) {
+		unset( $modules['stats'] );
+		return $modules;
+	},
+	11
+);
