@@ -1,0 +1,22 @@
+add_filter( 'woocommerce_product_get_price', 'apply_half_price_for_active_subscribers', 10, 2 );
+add_filter( 'woocommerce_product_get_regular_price', 'apply_half_price_for_active_subscribers', 10, 2 );
+function apply_half_price_for_active_subscribers( $price, $product ) {
+    if ( has_active_subscription() && WC()->cart->cart_contents_count > 0 ) {
+        // Get the total quantity of products in the cart for the current user
+        $user_id = get_current_user_id();
+        $product_count = 0;
+        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+            if ( $cart_item['data']->get_id() != $product->get_id() && $cart_item['data']->is_purchasable() ) {
+                $product_user_id = $cart_item['data']->get_meta( '_customer_user', true );
+                if ( empty( $product_user_id ) || $product_user_id == $user_id ) {
+                    $product_count += $cart_item['quantity'];
+                }
+            }
+        }
+        // Apply half price discount for additional products purchased
+        if ( $product_count > 0 ) {
+            $price = $price / 2;
+        }
+    }
+    return $price;
+}
