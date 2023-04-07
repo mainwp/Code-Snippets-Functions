@@ -1,0 +1,7 @@
+add_filter( 'elementor/utils/get_the_archive_title','archive_callback' );
+function archive_callback( $title ) {
+ if ( is_search() ) { 
+   return 'Your Custom Message Here: ' . get_search_query() ; 
+ } 
+   return $title; 
+}
