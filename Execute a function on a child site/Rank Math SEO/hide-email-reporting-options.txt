@@ -1,0 +1,1 @@
+add_filter( 'rank_math/analytics/hide_email_report_options', '__return_true' );
