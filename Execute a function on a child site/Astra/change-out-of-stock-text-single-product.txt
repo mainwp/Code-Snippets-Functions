@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_get_availability', 'change_out_of_stock_text_woocommerce', 1, 2 );
+function change_out_of_stock_text_woocommerce( $availability, $product_to_check ) {
+// Change Out of Stock Text
+if ( ! $product_to_check->is_in_stock() ) {
+    $availability['availability'] = __('SOLD', 'woocommerce');
+}
+return $availability;
+}
