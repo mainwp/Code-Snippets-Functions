@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'wc_override_external_button_label', 9999, 2 );
+add_filter( 'woocommerce_product_add_to_cart_text', 'wc_override_external_button_label', 9999, 2 );
+ 
+function wc_override_external_button_label( $text, $product ) {
+   if ( $product->is_type( 'external' ) ) $text = 'Buy Now &rarr;';
+   return $text;
+}
