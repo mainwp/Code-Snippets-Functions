@@ -1,0 +1,6 @@
+add_filter( 'ngettext', 'wc_modify_n_customer_reviews', 9999, 5 );
+
+function wc_modify_n_customer_reviews( $translation, $single, $plural, $number, $domain ) {
+    $translation = preg_replace( '%s customer reviews', '%s reviews', $translation );
+    return $translation;
+}
