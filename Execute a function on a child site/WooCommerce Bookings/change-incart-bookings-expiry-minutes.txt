@@ -1,0 +1,4 @@
+function change_incart_bookings_expiry_minutes_20170825( $minutes ) {
+	return 30;
+}
+add_filter( 'woocommerce_bookings_remove_inactive_cart_time', 'change_incart_bookings_expiry_minutes_20170825' );
