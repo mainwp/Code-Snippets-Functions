@@ -1,0 +1,1 @@
+add_filter( 'wc_bookings_calendar_default_to_current_date', '__return_false' );
