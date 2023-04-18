@@ -1,0 +1,4 @@
+add_filter('rank_math/researches/tests', function ($tests, $type) {
+	unset($tests['hasContentAI']);
+	return $tests;
+}, 10, 2);
