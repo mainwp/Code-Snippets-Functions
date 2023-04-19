@@ -1,0 +1,9 @@
+add_filter( 'post_class', 'wc_disable_admin_orders_table_row_link' );
+ 
+function wc_disable_admin_orders_table_row_link( $classes ) {
+   if ( is_admin() ) {
+      $current_screen = get_current_screen();
+      if ( $current_screen->base == 'edit' && $current_screen->post_type == 'shop_order' ) $classes[] = 'no-link';
+   }
+   return $classes;
+}
