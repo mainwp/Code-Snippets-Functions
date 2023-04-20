@@ -1,0 +1,4 @@
+add_filter( 'woocommerce_product_add_to_cart_text', 'your_slug_add_to_cart_text', 10, 2 );
+function your_slug_add_to_cart_text( $text, $product ) {
+    return sprintf( '%s - %s', $text,  strip_tags( wc_price( wc_get_price_to_display( $product ) ) ) );
+}
