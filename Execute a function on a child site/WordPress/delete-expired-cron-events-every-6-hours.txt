@@ -1,0 +1,21 @@
+function modify_delete_expired_transients_schedule() {
+    // Check if the cron event is scheduled
+    if ( ! wp_next_scheduled( 'delete_expired_transients' ) ) {
+        return;
+    }
+    // Unschedule the event
+    wp_unschedule_event( wp_next_scheduled( 'delete_expired_transients' ), 'delete_expired_transients' );
+    // Schedule the event to run every 6 hours
+    wp_schedule_event( time(), 'six_hours', 'delete_expired_transients' );
+}
+add_action( 'init', 'modify_delete_expired_transients_schedule' );
+
+function add_six_hours_interval( $schedules ) {
+    // Add a new interval for every 6 hours
+    $schedules['six_hours'] = array(
+        'interval' => 21600, // 6 hours in seconds
+        'display'  => __( 'Every 6 Hours' ),
+    );
+    return $schedules;
+}
+add_filter( 'cron_schedules', 'add_six_hours_interval' );
