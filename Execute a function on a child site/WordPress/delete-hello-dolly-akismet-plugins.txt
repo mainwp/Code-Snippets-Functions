@@ -1,0 +1,17 @@
+add_action( 'admin_init', 'delete_hello_dolly_and_akismet' );
+function delete_hello_dolly_and_akismet() {
+    if ( file_exists( WP_PLUGIN_DIR . '/hello-dolly/hello.php' ) ) {
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        require_once( ABSPATH . 'wp-admin/includes/misc.php' );
+        deactivate_plugins( 'hello-dolly/hello.php' );
+        delete_plugins( array( 'hello-dolly/hello.php' ) );
+    }
+    if ( file_exists( WP_PLUGIN_DIR . '/akismet/akismet.php' ) ) {
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        require_once( ABSPATH . 'wp-admin/includes/misc.php' );
+        deactivate_plugins( 'akismet/akismet.php' );
+        delete_plugins( array( 'akismet/akismet.php' ) );
+    }
+}
