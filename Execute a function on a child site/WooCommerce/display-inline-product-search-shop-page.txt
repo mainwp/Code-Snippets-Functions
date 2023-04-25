@@ -1,0 +1,12 @@
+add_action( 'woocommerce_before_shop_loop', 'add_inline_search', 20 );
+
+function add_inline_search() {
+    ?>
+    <form role="search" method="get" class="woocommerce-product-search">
+        <label class="screen-reader-text" for="woocommerce-product-search-field"><?php echo esc_html_x( 'Search for:', 'label', 'woocommerce' ); ?></label>
+        <input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="<?php echo esc_attr_x( 'Search products&hellip;', 'placeholder', 'woocommerce' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
+        <button type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>"><i class="fa fa-search"></i></button>
+        <input type="hidden" name="post_type" value="product" />
+    </form>
+    <?php
+}
