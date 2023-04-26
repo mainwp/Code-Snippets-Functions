@@ -1,0 +1,5 @@
+function move_short_description() {
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+    add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 9 );
+}
+add_action( 'woocommerce_single_product_summary', 'move_short_description' );
