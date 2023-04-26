@@ -1,0 +1,10 @@
+remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );
+
+add_filter( 'woocommerce_get_price_suffix', 'wc_add_price_suffix_sale', 9999, 4 );
+   
+function wc_add_price_suffix_sale( $html, $product, $price, $qty ) {
+    if ( ! is_admin() && is_object( $product ) && $product->is_on_sale() ) {
+      $html .= wc_get_template_html( 'single-product/sale-flash.php' );
+    }
+    return $html;
+}
