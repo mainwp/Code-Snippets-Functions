@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_quantity_input_min', 'hide_woocommerce_quantity_input', 10, 2 );
+add_filter( 'woocommerce_quantity_input_max', 'hide_woocommerce_quantity_input', 10, 2 );
+function hide_woocommerce_quantity_input( $quantity, $product ) {
+    // only on the product page
+    if ( ! is_product() ) {
+        return $quantity;
+    }
+    return 1;
+}
