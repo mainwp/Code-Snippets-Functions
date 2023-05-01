@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_settings_tabs_array', 'remove_advanced_tab', 100 );
+function remove_advanced_tab( $tabs ) {
+    unset( $tabs['advanced'] );
+    return $tabs;
+}
