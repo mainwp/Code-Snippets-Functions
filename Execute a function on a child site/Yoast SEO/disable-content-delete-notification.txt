@@ -1,0 +1,4 @@
+add_filter('Yoast\WP\SEO\enable_notification_post_trash', '__return_false' );
+add_filter('Yoast\WP\SEO\enable_notification_post_slug_change', '__return_false' );
+add_filter('Yoast\WP\SEO\enable_notification_term_delete', '__return_false' );
+add_filter('Yoast\WP\SEO\enable_notification_term_slug_change', '__return_false' );
