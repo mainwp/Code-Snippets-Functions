@@ -1,0 +1,11 @@
+add_filter( 'facetwp_wpdb_sql', function( $sql, $facet ) {
+
+  if ( 'my_autocomplete' == $facet['name'] ) { // Replace 'my_autocomplete' with the name of your Autocomplete facet
+    global $wpdb;
+    $sql = $wpdb->remove_placeholder_escape( $sql );
+    $sql = str_replace(" LIKE '", " = '", $sql);
+    $sql = str_replace("%", "", $sql);
+  }
+
+  return $sql;
+}, 10, 2 );
