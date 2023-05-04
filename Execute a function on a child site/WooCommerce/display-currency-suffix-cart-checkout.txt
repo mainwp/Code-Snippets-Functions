@@ -1,0 +1,18 @@
+add_filter( 'woocommerce_price_format', 'add_currency_suffix', 10, 2 );
+
+function add_currency_suffix( $price, $currency_symbol ) {
+
+  // Only add the suffix on cart and checkout pages
+  if ( is_cart() || is_checkout() ) {
+
+    // Get the current currency code
+    $currency = get_woocommerce_currency();
+
+    // Add the suffix to the price
+    $price .= ' ' . $currency;
+
+  }
+
+  return $price;
+
+}
