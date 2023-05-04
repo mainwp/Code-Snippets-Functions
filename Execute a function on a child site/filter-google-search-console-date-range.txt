@@ -1,0 +1,8 @@
+add_filter('seopress_search_console_date_range', 'sp_search_console_date_range');
+function sp_search_console_date_range($dateRange) {
+	//default values
+	//- 7 days,- 28 days,- 3 months,- 6 months,- 12 months,- 16 months';
+	$dateRange = '- 28 days';
+
+	return $dateRange;
+}
