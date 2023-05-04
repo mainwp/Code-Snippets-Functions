@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_email_order_items_args', 'remove_product_image_from_order_email' );
+
+function remove_product_image_from_order_email( $args ) {
+    $args['show_image'] = false;
+    return $args;
+}
