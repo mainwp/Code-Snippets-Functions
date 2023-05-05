@@ -1,0 +1,7 @@
+add_action( 'woocommerce_product_set_stock_status', function( $product_id ) {
+    relevanssi_insert_edit( $product_id );
+} );
+
+add_action( 'woocommerce_variation_set_stock_status', function( $product_id ) {
+    relevanssi_insert_edit( $product_id );
+} );
