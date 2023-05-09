@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_recently_viewed_product_cookie_lifetime', 'disable_recently_viewed_cookie' );
+
+function disable_recently_viewed_cookie( $lifetime ) {
+    return 0;
+}
