@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_sale_flash', 'wc_sale_end_date', 9999, 3 );
+ 
+function wc_sale_end_date( $html, $post, $product ) {
+   if ( $product->get_date_on_sale_to() ) return $html . ' (ends ' . gmdate( 'd M', $product->get_date_on_sale_to()->getTimestamp() ) . ')'; 
+   return $html;
+}
