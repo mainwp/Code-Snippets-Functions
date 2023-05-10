@@ -1,0 +1,18 @@
+// Add new column(s) to the "My Orders" table in the account.
+function filter_woocommerce_account_orders_columns( $columns ) {
+    $columns['coupon-codes'] = __( 'Coupons', 'woocommerce' );
+
+    return $columns;
+}
+add_filter( 'woocommerce_account_orders_columns', 'filter_woocommerce_account_orders_columns', 10, 1 );
+
+// Adds data to the custom column in "My Account > Orders"
+function action_woocommerce_my_account_my_orders_column_coupon_codes( $order ) {
+    // Get codes
+    $coupon_codes = $order->get_coupon_codes();
+        
+    if ( ! empty( $coupon_codes ) ) {
+        echo implode( ', ', $coupon_codes );
+    }
+}
+add_action( 'woocommerce_my_account_my_orders_column_coupon-codes', 'action_woocommerce_my_account_my_orders_column_coupon_codes', 10, 1 );
