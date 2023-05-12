@@ -1,0 +1,4 @@
+add_filter('woocommerce_register_post_type_product', function( $args ) {
+    unset( $args['template'] );
+    return $args;
+});
