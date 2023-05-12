@@ -1,6 +1,6 @@
 ## Charitable code snippets
 
-Tested version of WordPress 6.1.1, plugin version was Charitable 1.7.0.10.
+Tested version of WordPress 6.2, plugin version was Charitable 1.7.0.11.
 
 This file is a code snippet that is used for [Charitable](https://wordpress.org/plugins/charitable/) plugin. 
 
