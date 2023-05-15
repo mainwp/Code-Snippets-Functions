@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_single_product_image_thumbnail_html', 'disable_data_src_loading', 10, 2 );
+function disable_data_src_loading( $html, $attachment_id ) {
+    $html = str_replace( 'data-src', 'src', $html );
+    return $html;
+}
