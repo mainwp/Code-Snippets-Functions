@@ -1,0 +1,5 @@
+function remove_data_src_attribute( $params, $attachment_id, $image_size, $main_image ) {    
+unset( $params['data-src'] );    
+return $params;
+}
+add_filter('woocommerce_gallery_image_html_attachment_image_params', 'remove_data_src_attribute', 10, 4 );
