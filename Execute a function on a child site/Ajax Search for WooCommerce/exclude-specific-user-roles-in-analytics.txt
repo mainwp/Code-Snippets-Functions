@@ -1,0 +1,6 @@
+add_filter( 'dgwt/wcas/analytics/exclude_roles', function () {
+    return array(
+        'administrator',
+        'shop_manager'
+    );
+} );
