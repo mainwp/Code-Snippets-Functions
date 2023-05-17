@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_structured_data_product', 'wc_set_gtin_from_sku', 9999, 2 );
+ 
+function wc_set_gtin_from_sku( $markup, $product ) {
+   $markup['gtin8'] = str_replace( '-', '', $markup['sku'] );
+   return $markup;
+}
