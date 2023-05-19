@@ -1,0 +1,8 @@
+function extend_auth_cookie_expiration( $expiration, $user_id, $remember ) {
+    // Set the desired cookie expiration time (48 hours in this example)
+    $cookie_expire = 2 * DAY_IN_SECONDS;
+
+    // Return the new expiration time
+    return $cookie_expire;
+}
+add_filter( 'auth_cookie_expiration', 'extend_auth_cookie_expiration', 10, 3 );
