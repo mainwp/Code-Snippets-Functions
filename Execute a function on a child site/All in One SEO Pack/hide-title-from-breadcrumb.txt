@@ -1,0 +1,9 @@
+// Hide the last crumb if it's a page.
+add_filter( 'aioseo_breadcrumbs_show_current_item', 'aioseo_breadcrumbs_show_current_item', 10, 3 );
+function aioseo_breadcrumbs_show_current_item( $showCurrentItem, $type, $reference ) {
+	if ( is_singular( 'page' ) ) {
+		$showCurrentItem = false;
+	}
+
+	return $showCurrentItem;
+}
