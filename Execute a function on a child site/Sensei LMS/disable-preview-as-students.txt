@@ -1,0 +1,1 @@
+add_filter( 'sensei_feature_preview_students', '__return_false' );
