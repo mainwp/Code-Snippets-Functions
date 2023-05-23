@@ -1,6 +1,6 @@
 ## Elementor code snippets
 
-Tested version of WordPress 6.2, plugin version was Elementor 3.13.2.
+Tested version of WordPress 6.2.2, plugin version was Elementor 3.13.3.
 
 This file is a code snippet that is used for [Elementor](https://wordpress.org/plugins/elementor/) plugin. 
 
