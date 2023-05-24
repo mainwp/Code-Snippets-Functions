@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_thankyou_order_received_text', 'custom_thankyou_order_received_text', 20, 2 );
+function custom_thankyou_order_received_text( $thankyou_text, $order ){
+    // Loop through order items
+    foreach ( $order->get_items() as $item ) {
+        // Get the Product ID from WC_Order_Item_Product order item
+        $product_id = $item->get_product_id();
+
+        // We check for 'media' product category on each order item
+        if ( has_term( 'media', 'product_cat', $product_id ) ) {
+            $thankyou_text = __( 'Your custom message goes here.', 'woocommerce' );
+            break; // We can stop the loop now.
+        }
+    }
+    return $thankyou_text;
+}
