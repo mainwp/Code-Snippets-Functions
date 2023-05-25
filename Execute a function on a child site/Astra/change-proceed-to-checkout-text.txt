@@ -1,0 +1,7 @@
+function change_proceed_to_checkout_text( $translated_text, $text, $domain ) {
+    if ( 'woocommerce' === $domain && 'Proceed to checkout' === $text ) {
+        $translated_text = 'Your Custom Text';
+    }
+    return $translated_text;
+}
+add_filter( 'gettext', 'change_proceed_to_checkout_text', 20, 3 );
