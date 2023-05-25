@@ -1,0 +1,12 @@
+add_action( 'init', 'custom_wc_maybe_reduce_stock_levels', 10 );
+function custom_wc_maybe_reduce_stock_levels(){
+    // remove_action( 'woocommerce_order_status_completed', 'wc_maybe_reduce_stock_levels' );
+
+    remove_action( 'woocommerce_payment_complete', 'wc_maybe_reduce_stock_levels' );
+    remove_action( 'woocommerce_order_status_processing', 'wc_maybe_reduce_stock_levels' );
+    remove_action( 'woocommerce_order_status_on-hold', 'wc_maybe_reduce_stock_levels' );
+    
+    add_action( 'woocommerce_payment_complete', 'wc_maybe_increase_stock_levels' );
+    add_action( 'woocommerce_order_status_processing', 'wc_maybe_increase_stock_levels' );
+    add_action( 'woocommerce_order_status_on-hold', 'wc_maybe_increase_stock_levels' );
+}
