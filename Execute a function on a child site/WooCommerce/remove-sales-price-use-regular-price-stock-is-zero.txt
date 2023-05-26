@@ -1,0 +1,11 @@
+// Remove sale price and use regular price when stock is 0
+function remove_sale_price_on_zero_stock( $price, $product ) {
+    // Check if the product is on sale and has stock
+    if ( $product->is_on_sale() && $product->get_stock_quantity() <= 0 ) {
+        $regular_price = $product->get_regular_price();
+        $price = wc_price( $regular_price ); // Use regular price instead of sale price
+    }
+    return $price;
+}
+add_filter( 'woocommerce_product_get_price', 'remove_sale_price_on_zero_stock', 10, 2 );
+add_filter( 'woocommerce_product_get_regular_price', 'remove_sale_price_on_zero_stock', 10, 2 );
