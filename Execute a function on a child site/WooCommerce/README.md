@@ -1,6 +1,6 @@
 ## WooCommerce code snippets
 
-Tested version of WordPress 6.2.2, plugin version was WooCommerce 7.7.0.
+Tested version of WordPress 6.2.2, plugin version was WooCommerce 7.7.1.
 
 This file is a code snippet that is used for [WooCommerce](https://wordpress.org/plugins/woocommerce/) plugin. 
 
