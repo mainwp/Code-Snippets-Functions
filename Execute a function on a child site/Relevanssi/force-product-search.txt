@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_modify_wp_query', function( $query ) {
+  $query->set( 'post_type', 'product' );
+  return $query;
+} );
