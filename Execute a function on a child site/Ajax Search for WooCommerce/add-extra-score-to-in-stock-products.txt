@@ -1,0 +1,10 @@
+// Add extra score to in stock products
+add_filter( 'dgwt/wcas/search_results/product/score', function ( $score, $keyword, $post ) {    
+	$woo_product = wc_get_product( $post );
+
+	if ( $woo_product->is_in_stock() ) {
+		$score += 500;
+	}
+			
+	return $score;
+}, 10, 3 );
