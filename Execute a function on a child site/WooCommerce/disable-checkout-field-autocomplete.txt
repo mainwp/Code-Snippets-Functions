@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_checkout_fields', 'wc_disable_autocomplete_checkout_fields' );
+   
+function wc_disable_autocomplete_checkout_fields( $fields ) {
+    $fields['billing']['billing_phone']['autocomplete'] = false;
+    return $fields;
+}
