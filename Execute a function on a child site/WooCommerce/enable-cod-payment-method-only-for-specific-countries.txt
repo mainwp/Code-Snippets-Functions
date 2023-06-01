@@ -1,0 +1,12 @@
+add_filter( 'woocommerce_available_payment_gateways', 'countries_based_payment_gateway_cod' );
+function countries_based_payment_gateway_cod( $available_gateways ) {
+    if ( is_admin() ) return $available_gateways; // Only on frontend
+
+    // HERE define the allowed country codes  below (array of coma separated strings)
+    $allowed_countries = array( 'AE' ); // United Arab Emirates country code
+
+    if ( isset( $available_gateways['cod'] ) && ! in_array( WC()->customer->get_shipping_country(), $allowed_countries ) ) {
+        unset( $available_gateways['cod'] );
+    } 
+    return $available_gateways;
+}
