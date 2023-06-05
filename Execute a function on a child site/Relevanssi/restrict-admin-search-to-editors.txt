@@ -1,0 +1,3 @@
+add_filter( 'relevanssi_admin_search_capability', function( $cap ) {
+  return 'edit_others_posts';
+} );
