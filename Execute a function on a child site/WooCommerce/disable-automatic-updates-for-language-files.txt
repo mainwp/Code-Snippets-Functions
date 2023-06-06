@@ -1,0 +1,12 @@
+function prevent_plugin_language_file_update($update, $plugin, $language) {
+    // Specify the plugin folder name for which you want to prevent language file updates
+    $plugin_folder = 'woocommerce';
+
+    // Check if the plugin being updated matches the specified folder name
+    if (strpos($plugin, $plugin_folder) !== false) {
+        $update = false; // Disable automatic language file updates for the specified plugin
+    }
+
+    return $update;
+}
+add_filter('auto_update_translation', 'prevent_plugin_language_file_update', 10, 3);
