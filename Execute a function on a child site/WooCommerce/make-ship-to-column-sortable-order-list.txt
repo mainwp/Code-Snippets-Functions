@@ -1,0 +1,25 @@
+// Make existing "Ship to" column sortable on admin orders list
+add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' );
+function shop_order_column_meta_field_sortable( $columns )
+{
+    $meta_key = '_shipping_address_1';
+    return wp_parse_args( array('shipping_address' => $meta_key), $columns );
+}
+
+// Make "Ship to" sorting properly (by numerical values)
+add_action('pre_get_posts', 'shop_order_column_meta_field_sortable_orderby' );
+function shop_order_column_meta_field_sortable_orderby( $query ) {
+    global $pagenow;
+
+    // Targeting WooCommerce admin orders list only
+    if ( 'edit.php' === $pagenow && isset($_GET['post_type']) && 'shop_order' === $_GET['post_type'] ){
+
+        $orderby  = $query->get( 'orderby');
+        $meta_key = '_shipping_address_1';
+
+        if ('_shipping_address_1' === $orderby){
+          $query->set('meta_key', $meta_key);
+          $query->set('orderby', 'meta_value_num'); // Or using 'meta_value'
+        }
+    }
+}
