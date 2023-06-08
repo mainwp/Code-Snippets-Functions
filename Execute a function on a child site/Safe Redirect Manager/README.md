@@ -1,6 +1,6 @@
 ## Safe Redirect Manager code snippets
 
-Tested version of WordPress 6.1.1, plugin version was Safe Redirect Manager 1.11.1.
+Tested version of WordPress 6.2.2, plugin version was Safe Redirect Manager 2.0.1.
 
 This file is a code snippet that is used for [Safe Redirect Manager](https://wordpress.org/plugins/safe-redirect-manager/) plugin. 
 
