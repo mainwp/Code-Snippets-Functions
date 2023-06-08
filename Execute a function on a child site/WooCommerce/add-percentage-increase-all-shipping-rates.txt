@@ -1,0 +1,29 @@
+add_filter('woocommerce_package_rates', 'increase_shipping_costs', 10, 2);
+function increase_shipping_costs( $rates, $package ) {
+    $rate_multiplier = 1.65; //  65% increase cost
+    
+    // Loop through shipping rates
+    foreach ( $rates as $rate_key => $rate ) {
+        
+        if ( 'free_shipping' !== $rate->method_id && $rate->cost > 0 ) {
+            $has_taxes = false; // Initializing
+            $taxes     = array(); // Initializing
+
+            $rates[$rate_key]->cost = $rate->cost * $rate_multiplier; // Set new rate cost
+            
+            // Loop through taxes array (change taxes rate cost if enabled)
+            foreach ($rate->taxes as $key => $tax){
+                if( $tax > 0 ){
+                    $taxes[$key] = $tax * $rate_multiplier; // Set the new tax cost in the array
+                    $has_taxes   = true; // Enabling tax changes
+                }
+            }
+            // set array of shipping tax cost
+            if( $has_taxes ) {
+                $rates[$rate_key]->taxes = $taxes;
+            }
+        }
+    }
+    // For a filter hook, always return the main argument
+    return $rates; 
+}
