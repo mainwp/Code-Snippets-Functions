@@ -1,0 +1,59 @@
+// Prepend the parent term name to the term name output
+function prepend_parent_term_name( $term, $sep = ' > ' ) {
+    if (isset($term->parent) && $term->parent > 0) {
+        $parent_name = get_term_by('id', $term->parent, $term->taxonomy)->name;
+        return esc_html( $parent_name ) . $sep . esc_html( $term->name );
+    } else {
+        return esc_html( $term->name );
+    }
+}
+
+// Replace WooCommerce Admin Coupon product categories restictions section with a custom one
+add_action( 'woocommerce_coupon_options_usage_restriction', 'action_coupon_options_usage_restriction', 10, 2 );
+function action_coupon_options_usage_restriction( $coupon_id, $coupon ) {
+    echo '<div class="options_group">';
+
+    // Categories.
+    ?>
+    <p class="form-field">
+        <label for="product_categories2"><?php _e( 'Product categories', 'woocommerce' ); ?></label>
+        <select id="product_categories2" name="product_categories[]" style="width: 50%;"  class="wc-enhanced-select" multiple="multiple" data-placeholder="<?php esc_attr_e( 'Any category', 'woocommerce' ); ?>">
+            <?php
+            $category_ids = $coupon->get_product_categories( 'edit' );
+            $categories   = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+
+            if ( $categories ) {
+                foreach ( $categories as $cat ) {
+                    echo '<option value="' . esc_attr( $cat->term_id ) . '"' . wc_selected( $cat->term_id, $category_ids ) . '>' . prepend_parent_term_name( $cat ) . '</option>';
+                }
+            }
+            ?>
+        </select> <?php echo wc_help_tip( __( 'Product categories that the coupon will be applied to, or that need to be in the cart in order for the "Fixed cart discount" to be applied.', 'woocommerce' ) ); ?>
+    </p>
+
+    <?php // Exclude Categories. ?>
+    <p class="form-field">
+        <label for="exclude_product_categories2"><?php _e( 'Exclude categories', 'woocommerce' ); ?></label>
+        <select id="exclude_product_categories2" name="exclude_product_categories[]" style="width: 50%;"  class="wc-enhanced-select" multiple="multiple" data-placeholder="<?php esc_attr_e( 'No categories', 'woocommerce' ); ?>">
+            <?php
+            $category_ids = $coupon->get_excluded_product_categories( 'edit' );
+            $categories   = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+
+            if ( $categories ) {
+                foreach ( $categories as $cat ) {
+                    echo '<option value="' . esc_attr( $cat->term_id ) . '"' . wc_selected( $cat->term_id, $category_ids ) . '>' . prepend_parent_term_name( $cat ) . '</option>';
+                }
+            }
+            ?>
+        </select>
+        <?php echo wc_help_tip( __( 'Product categories that the coupon will not be applied to, or that cannot be in the cart in order for the "Fixed cart discount" to be applied.', 'woocommerce' ) ); ?>
+    </p>
+    <?php // Removing default product categories restrictions html  ?>
+    <script>
+    jQuery(function($){
+        $('#product_categories').parent().parent().remove();
+    });
+    </script>
+    <?php 
+    echo '</div>';
+}
