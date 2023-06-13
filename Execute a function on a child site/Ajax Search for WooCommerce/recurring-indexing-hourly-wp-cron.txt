@@ -1,0 +1,9 @@
+add_action( 'init', function() {
+  add_action( 'fibosearch_rebuild_index_cron', 'fibosearch_rebuild_index' );
+  if (! wp_next_scheduled ( 'fibosearch_rebuild_index_cron' )) {
+    wp_schedule_event( time(), 'hourly', 'fibosearch_rebuild_index_cron' );
+  }
+}, 20 );
+function fibosearch_rebuild_index() {
+  do_action( 'dgwt/wcas/indexer/build' );
+}
