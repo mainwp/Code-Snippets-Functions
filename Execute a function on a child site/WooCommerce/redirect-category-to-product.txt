@@ -1,0 +1,8 @@
+add_action( 'wp', 'wc_redirect_cat_to_product' );
+  
+function wc_redirect_cat_to_product() {
+   if ( is_product_category( 'tables' ) ) {
+      wp_safe_redirect( get_permalink( 123 ) ); // PRODUCT ID
+      exit;
+   }
+}
