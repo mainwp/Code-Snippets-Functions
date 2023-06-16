@@ -1,0 +1,17 @@
+add_filter( 'woocommerce_get_script_data', function( $script_data, $handle ) {
+ 
+     if ( 'wc-cart-fragments' === $handle ) {
+ 
+         if ( is_woocommerce() || is_cart() || is_checkout() ) {
+ 
+             return $script_data;
+ 
+         }
+ 
+        return null;
+ 
+      } 
+ 
+      return $script_data;
+ 
+ }, 10, 2 );
