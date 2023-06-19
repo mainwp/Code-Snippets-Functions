@@ -1,0 +1,19 @@
+add_filter( 'manage_edit-product_columns', 'add_admin_products_shipping_class_column', 999 );
+function add_admin_products_shipping_class_column( $columns ){
+   $columns['shipping_class'] = __('Shipping Class', 'woocommerce');
+   return $columns;
+}
+ 
+add_action( 'manage_product_posts_custom_column', 'get_admin_products_shipping_class_column_content', 10, 2 );
+function get_admin_products_shipping_class_column_content( $column, $product_id ){
+    if ( $column === 'shipping_class' ) {
+        global $post, $product;
+
+        if( is_a( $product, 'WC_Product' ) ) {
+            $shipping_class_id = (int) $product->get_shipping_class_id();
+            $shipping_class    = get_term($shipping_class_id, 'product_shipping_class');
+            
+            echo ! is_wp_error($shipping_class) ? $shipping_class->name : '<em>n/a</em>';
+        }
+    }
+}
