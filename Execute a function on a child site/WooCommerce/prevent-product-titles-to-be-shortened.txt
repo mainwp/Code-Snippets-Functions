@@ -1,0 +1,7 @@
+add_filter( 'the_title', 'shorten_woo_product_title', 10, 2 );
+function shorten_woo_product_title( $title, $id ) {
+    if ( ! is_admin() && ! is_singular( array( 'product' ) ) && get_post_type( $id ) === 'product' ) {
+        $title = wp_trim_words( $title, 4, '...' ); // change last number to the number of words you want
+    }
+    return $title;
+}
