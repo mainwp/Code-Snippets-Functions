@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_product_related_posts_shuffle', '__return_false' );
+add_filter( 'woocommerce_output_related_products_args', 'wc_sort_related_products' );
+ 
+function wc_sort_related_products( $args ) {
+   $args['orderby'] = 'id';
+   return $args;
+}
+ 
+// alternatively, use 'title', 'date', 'modified', 'menu_order' or 'price', see wc_products_array_orderby()
