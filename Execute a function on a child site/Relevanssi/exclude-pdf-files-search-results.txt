@@ -1,0 +1,7 @@
+add_filter( 'relevanssi_indexing_restriction', 'rlv_no_pdf_attachments' );
+function rlv_no_pdf_attachments( $restriction ) {
+    global $wpdb;
+    $restriction['mysql']  .= " AND post.ID NOT IN (SELECT ID FROM $wpdb->posts WHERE post_type = 'attachment' AND (post_mime_type = 'application/pdf' OR post_parent = 0) ) ";
+    $restriction['reason'] .= ' No PDFs';
+    return $restriction;
+}
