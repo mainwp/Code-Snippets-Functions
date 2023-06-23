@@ -1,6 +1,6 @@
 ## Customer Reviews for WooCommerce code snippets
 
-Tested version of WordPress 6.2, plugin version was Customer Reviews for WooCommerce 5.22.2.
+Tested version of WordPress 6.2.2, plugin version was Customer Reviews for WooCommerce 5.29.3.
 
 This file is a code snippet that is used for [Customer Reviews for WooCommerce](https://wordpress.org/plugins/customer-reviews-woocommerce/) plugin. 
 
