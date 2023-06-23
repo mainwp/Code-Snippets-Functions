@@ -1,0 +1,1 @@
+add_filter( 'facebook_for_woocommerce_integration_pixel_enabled', '__return_false' );
