@@ -1,0 +1,89 @@
+add_action( 'wp_footer', 'cod_confirmation_popup_script' );
+
+function cod_confirmation_popup_script() {
+    if( is_checkout() && ! is_wc_endpoint_url() ) :
+    ?>
+    <script>
+    jQuery(function($) {
+        var billingPhone    = $("#billing_phone").val(), // ?? Not used
+            paymentSel      = 'input[name="payment_method"]',
+            chosenPayment   = $(paymentSel+':checked').val(),
+            confirmInput    = '<input type="hidden" name="confirm_cod" value="1">',
+            inputConfirmSel = 'input[name="confirm_cod"]';
+
+        function loadCodModal() {
+            if ($('.confirmation-modal').length === 0 ) {
+                var confirmationModal   = '<div class="confirmation-modal">' +
+                    '<div class="modal-content">' +
+                    '<p>Are you sure you want to place the order with Cash on Delivery?</p>' +
+                    '<button class="confirm-button">Confirm</button>' +
+                    '<button class="cancel-button">Cancel</button>' +
+                    '</div>' +
+                    '</div>';
+
+                $('body').append(confirmationModal);
+                $('form.checkout').append(confirmInput);
+
+                $('.confirm-button').on('click', function() {
+                    $('.confirmation-modal').remove();
+                    $(inputConfirmSel).val('1');
+                });
+
+                $('.cancel-button').on('click', function() {
+                    $('.confirmation-modal').remove();
+                    $(inputConfirmSel).val('0');
+                });
+            }
+        };
+        
+        if ( chosenPayment === 'cod' ) {
+            loadCodModal();
+        }
+
+        $('form.checkout').on('change', 'input[name="payment_method"]', function(e) {
+            chosenPayment = $(this).val();
+            
+            if( chosenPayment === 'cod') {
+                loadCodModal();
+            }
+
+            if ($(inputConfirmSel).length !== 0 ) {
+                $(inputConfirmSel).remove();
+            }
+        });
+
+    });      
+    </script>
+    <?php
+    endif;
+}
+
+add_action( 'wp_head', 'cod_confirmation_popup_style' );
+
+function cod_confirmation_popup_style() {
+    if( is_checkout() && ! is_wc_endpoint_url() ) :
+    ?>
+    <style>
+      .confirmation-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 9999;
+      }
+
+      .modal-content {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 4px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+    <?php
+    endif;
+}
