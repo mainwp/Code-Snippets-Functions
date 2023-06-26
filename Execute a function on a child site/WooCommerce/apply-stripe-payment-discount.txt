@@ -1,0 +1,16 @@
+// 
+add_action('woocommerce_cart_calculate_fees', 'apply_stripe_discount');
+function apply_stripe_discount() {
+    if (is_admin() && !defined('DOING_AJAX')) {
+        return;
+    }
+
+    // Check if Stripe is the selected payment gateway
+    if (WC()->session->get('chosen_payment_method') === 'stripe') {
+        $cart_total = WC()->cart->get_cart_contents_total();
+        $discount_amount = $cart_total * 0.03; // 3% discount
+
+        // Add discount
+        WC()->cart->add_fee('Stripe Discount', -$discount_amount, true);
+    }
+}
