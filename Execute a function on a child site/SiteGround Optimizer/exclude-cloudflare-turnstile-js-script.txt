@@ -1,0 +1,6 @@
+add_filter( 'sgo_javascript_combine_excluded_external_paths', 'js_combine_exclude_external_script' );
+function js_combine_exclude_external_script( $exclude_list ) {
+    $exclude_list[] = 'challenges.cloudflare.com';
+
+    return $exclude_list;
+}
