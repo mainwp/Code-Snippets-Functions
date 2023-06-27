@@ -1,0 +1,4 @@
+function remove_wpseo_wincher_dashboard_widget() {
+    remove_meta_box('wpseo-wincher-dashboard-overview', 'dashboard', 'normal');
+}
+add_action('wp_dashboard_setup', 'remove_wpseo_wincher_dashboard_widget');
