@@ -1,0 +1,1 @@
+add_filter( 'rank_math/podcast/enhance_all_feeds', '__return_false' );
