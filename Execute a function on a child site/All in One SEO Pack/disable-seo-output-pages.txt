@@ -1,0 +1,8 @@
+add_filter( 'aioseo_disable', 'aioseo_disable_page_output' );
+
+function aioseo_disable_page_output( $disabled ) {
+   if ( is_page() ) {
+      return true;
+   }
+   return false;
+}
