@@ -1,0 +1,20 @@
+function um_validate_email_domain( $args ) {
+
+	// Change allowed email domains here
+	$allowed_email_domains = apply_filters( 'um_allowed_email_domains', array(
+			'gmail.com',
+			'yahoo.com',
+			'hotmail.com'
+			) );
+
+	// Change error message here
+	$message = __( 'You can not use this email domain for registration', 'ultimate-member' );
+
+	if ( isset( $args['user_email'] ) && is_email( $args['user_email'] ) ) {
+		$email_domain = array_pop( explode( '@', trim( $args['user_email'] ) ) );
+		if ( !in_array( $email_domain, $allowed_email_domains ) ) {
+			UM()->form()->add_error( 'user_email', $message );
+		}
+	}
+}
+add_action( 'um_submit_form_errors_hook__registration', 'um_validate_email_domain', 20 );
