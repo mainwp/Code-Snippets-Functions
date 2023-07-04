@@ -1,0 +1,14 @@
+add_filter( 'woocommerce_add_notice', 'change_woocommerce_notice' );
+function change_woocommerce_notice( $message ) {
+    // The partial text of the notice to find
+    $partial_text = "has been removed from your basket because it can no longer be purchased. Please contact us if you need assistance.";
+
+    if ( $message strpos( $message, $partial_text ) !== false ) {
+        // Extract the product name (if you want to use it)
+        $product_name = str_replace( $partial_text, '', $message );
+
+        // Your replacement message
+        $message = __("This is your replacement message", "woocommerce");
+    }   
+    return $message;
+}
