@@ -1,0 +1,1 @@
+add_filter( 'alm_disable_noscript_', '__return_true' )
