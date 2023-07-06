@@ -1,0 +1,24 @@
+// Hook into the 'woocommerce_checkout_process' action
+add_action( 'woocommerce_checkout_process', 'restrict_gateway_orders_per_day' );
+
+function restrict_gateway_orders_per_day() {
+    // Set the maximum number of orders allowed per day
+    $max_orders_per_day = 20;
+
+    // Get the current date
+    $current_date = date( 'Y-m-d' );
+
+    // Get the total number of orders for the specific gateway on the current date
+    $orders = wc_get_orders( array(
+        'status'        => array( 'completed', 'processing' ), // Include only completed and processing orders
+        'date_created'  => '>=' . strtotime( $current_date . ' 00:00:00' ),
+        'payment_method'=> 'paypal', // Replace 'paypal' with your desired gateway
+    ) );
+
+    $order_count = count( $orders );
+
+    // If the maximum number of orders has been reached, display an error message
+    if ( $order_count >= $max_orders_per_day ) {
+        wc_add_notice( __( 'Sorry, we have reached the maximum number of orders for today.', 'woocommerce' ), 'error' );
+    }
+}
