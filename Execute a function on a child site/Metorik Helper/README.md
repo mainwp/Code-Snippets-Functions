@@ -1,6 +1,6 @@
 ## Metorik Helper code snippets
 
-Tested version of WordPress 6.2, plugin version was Metorik Helper 1.6.2.
+Tested version of WordPress 6.2.2, plugin version was Metorik Helper 1.6.3.
 
 This file is a code snippet that is used for [Metorik Helper](https://wordpress.org/plugins/metorik-helper/) plugin. 
 
