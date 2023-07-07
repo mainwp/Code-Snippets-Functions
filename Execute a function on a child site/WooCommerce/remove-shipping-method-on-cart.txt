@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'remove_delivery_method_label', 10, 2 );
+function remove_delivery_method_label( $label, $method ) {
+    if ( $method->cost > 0 ) {
+        $label = '';
+        $label .= wc_price( $method->cost );
+    }
+    return $label;
+}
