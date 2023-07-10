@@ -1,0 +1,8 @@
+add_filter( 'wc_get_template', 'hide_order_recieved_customer_details', 10 , 1 );
+function hide_order_recieved_customer_details( $template_name ) {
+    // Targeting thankyou page and the customer details
+    if( is_wc_endpoint_url( 'order-received' ) && strpos($template_name, 'order-details-customer.php') !== false ) {
+        return false;
+    }
+    return $template_name;
+}
