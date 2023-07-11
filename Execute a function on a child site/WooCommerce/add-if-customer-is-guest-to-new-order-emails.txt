@@ -1,0 +1,8 @@
+add_action( 'woocommerce_email_customer_details', 'add_guest_label_to_email', 5, 4 );
+function add_guest_label_to_email( $order, $sent_to_admin, $plain_text, $email ) {   
+    // Check if customer is a guest
+    if ( ! $order->get_user_id() ) {
+        $guest_label = '<p><strong>Guest</strong></p>';
+        echo $guest_label;
+    }
+}
