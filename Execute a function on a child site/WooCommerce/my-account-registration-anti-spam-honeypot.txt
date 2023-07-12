@@ -1,0 +1,14 @@
+add_action( 'woocommerce_register_form', 'wc_register_form_honeypot', 9999 );
+ 
+function wc_register_form_honeypot() {
+    echo '<p style="opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1;"><input type="text" name="wc_reg_hp" value="" tabindex="-1" autocomplete="off"></p>';
+}
+ 
+add_filter( 'woocommerce_registration_errors', 'wc_register_form_honeypot_check', 9999, 3 );
+ 
+function wc_register_form_honeypot_check( $errors, $username, $email ) {
+    if ( isset( $_POST['bb_reg_hp'] ) && ! empty( $_POST['wc_reg_hp'] ) ) {
+        $errors->add( 'registration-error-invalid-honeypot', 'Sorry, our system flagged this registration attempt as non-human.' );
+    }
+    return $errors;
+}
