@@ -1,0 +1,76 @@
+// For simple products price
+add_filter( 'woocommerce_get_price_html', 'onsale_simple_product_price_saving_percentage', 10, 2 );
+function onsale_simple_product_price_saving_percentage( $price_html, $product ) {
+    // Only on sale products on frontend and excluding min/max price on variable products
+    if ($product->is_on_sale() && !is_admin() && $product->is_type('simple')) {
+        // Get product prices to display
+        $regular_price = (float) $product->get_regular_price(); // Regular price
+        $active_price = (float) $product->get_price(); // Active price (the "Sale price" when on-sale)
+
+        // "Saving Percentage" calculation and formatting
+        $saving_percentage = round(100 - ($active_price / $regular_price * 100), 0) . '%';
+
+        $price_html = str_replace('</ins>', '<p class="nuolaida">'.$saving_percentage.'</p></ins>', $price_html);
+    }
+    return $price_html;
+}
+
+// For product variations price
+add_filter( 'woocommerce_available_variation', 'onsale_variation_price_saving_percentage', 10, 3 );
+function onsale_variation_price_saving_percentage( $data, $product, $variation ) {
+    // Only on sale variations
+    if( ! $variation->is_on_sale() ) {
+        return $data;
+    }
+
+    $saving_percentage = round( 100 - ( $data['display_price'] / $data['display_regular_price']* 100 ), 0 ) . '%';
+
+    $data['price_html'] = str_replace('</ins>', '<p class="nuolaida">'.$saving_percentage.'</p></ins>', $data['price_html']);
+
+    return $data;
+}
+
+// On sale badge with saving percentage, for simple, variable and grouped products
+add_filter( 'woocommerce_sale_flash', 'add_saving_percentage_to_sale_badge', 20, 3 );
+function add_saving_percentage_to_sale_badge( $html, $post, $product ) {
+    $percentages = array(); // Initializing
+
+    if ($product->is_type('variable')) {
+        $prices      = $product->get_variation_prices();
+
+        // Loop through variation prices
+        foreach ( $prices['price'] as $key => $price ) {
+            $regular_price = (float) $prices['regular_price'][$key];
+            $active_price  = (float) $price;
+            // Only on sale variations
+            if ( $regular_price > $active_price )  {
+                // Calculate and set in the array the percentage for each variation on sale
+                $percentages[] = ( $regular_price - $active_price ) / $regular_price * 100;
+            }
+        }
+        $percentage = round( max($percentages), 0 ) . '%'; // We keep the highest value  <===  Missing round()
+    } 
+    elseif ($product->is_type('grouped')) {
+        // Get all children products
+        $children_products  = array_filter( array_map( 'wc_get_product', $product->get_children() ), 'wc_products_array_filter_visible_grouped' );
+
+        // Loop through children products
+        foreach ($children_products as $child_product) {
+            if( $child_product->is_on_sale() ) {
+                $regular_price = (float) $child_product->get_regular_price();
+                $active_price    = (float) $child_product->get_sale_price();
+                $percentages[] = 100 - ($active_price / $regular_price * 100); // Add Calculated percentage to the array
+            }
+        }
+        // We keep the highest value
+        $percentage = round( max($percentages), 0 ) . '%';
+    } else {
+        $regular_price = (float) $product->get_regular_price();
+        $sale_price    = (float) $product->get_sale_price();
+
+        if ($sale_price != 0 || !empty($sale_price)) {
+            $percentage    = round(100 - ($sale_price / $regular_price * 100)) . '%';
+        } 
+    }
+    return sprintf('<span class="onsale">%s %s</span>', esc_html__('SALE', 'woocommerce'), $percentage );
+}
