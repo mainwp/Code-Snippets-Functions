@@ -1,39 +1,26 @@
-function update_product_prices_and_totals($cart_object) {
-    if (is_admin() && !defined('DOING_AJAX')) {
+add_action('woocommerce_before_calculate_totals', 'update_product_prices_and_totals' );
+function update_product_prices_and_totals( $cart ) {
+    if ( is_admin() && ! defined('DOING_AJAX') )
         return;
-    }
 
-    if (is_checkout() && isset($_POST['payment_method']) && $_POST['payment_method'] === 'invoice') {
-        // Set subtotal, tax, and total to 0
-        $subtotal = 0;
-        $total = 0;
-        $included_products = array(338991, 353754); // Array of product IDs to include
+    if (  is_checkout() && ! is_wc_endpoint_url() && WC()->session->get('chosen_payment_method') === 'invoice') {
+        // Define here the array of targeted product IDs
+        $targeted_ids = array(338991, 353754);
 
-        // Loop through the products in the cart
-        foreach ($cart_object->get_cart() as $cart_item_key => $cart_item) {
-            $product_id = $cart_item['product_id'];
-
-            // Check the product IDs
-            if (in_array($product_id, $included_products)) {
-                // Set the price to 0
-                $cart_item['data']->set_price(0);
-
-                // Calculate taxes for this product and subtract from the subtotal
-                $taxes = array_sum($cart_item['line_tax_data']['subtotal']);
-                $subtotal -= $taxes;
-                $total -= $taxes;
-
-                continue; // Skip the iteration for included products
+        // Loop through cart items
+        foreach ( $cart->get_cart() as $cart_item ) {
+            // Check for the targeted product (IDs) to be changed
+            if ( in_array($cart_item['product_id'], $targeted_ids) || in_array($cart_item['variation_id'], $targeted_ids) ) {
+                $cart_item['data']->set_price(0); // Set the price to 0
             }
-
-            // Update the subtotal
-            $subtotal += $cart_item['line_subtotal'];
-            $total += $cart_item['line_subtotal'];
         }
-
-        // Set the updated subtotal and total
-        $cart_object->subtotal = $subtotal;
-        $cart_object->total = $total;
     }
 }
-add_action('woocommerce_cart_calculate_fees', 'update_product_prices_and_totals', 10, 1);
+
+// Refresh checkout on payment method change.
+add_action('woocommerce_checkout_init', 'payment_methods_trigger_update_checkout');
+function payment_methods_trigger_update_checkout() {
+    wc_enqueue_js("$('form.checkout').on('change', 'input[name=payment_method]', function() {
+        $(document.body).trigger('update_checkout');
+    });");
+}
