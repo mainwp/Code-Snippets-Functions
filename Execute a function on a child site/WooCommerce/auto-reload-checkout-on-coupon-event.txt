@@ -1,0 +1,17 @@
+add_action( 'woocommerce_checkout_init', 'autoreload_checkout_on_coupon_event' );
+function autoreload_checkout_on_coupon_event() {
+    // Set the correct timeout value (in milliseconds)
+    $timout1 = 600; // when applying a coupon
+    $timout2 = 1500; // when removing a coupon
+ 
+    wc_enqueue_js( "$.ajaxSetup({
+        beforeSend: function(j, s) {
+            if(s.url === '/?wc-ajax=apply_coupon' || s.url === '/?wc-ajax=remove_coupon') {
+                var time = s.url === '/?wc-ajax=apply_coupon' ? {$timout1} : {$timout2};
+                setTimeout(function(){
+                    location.reload();
+                }, time);
+            }
+        }
+    });");
+}
