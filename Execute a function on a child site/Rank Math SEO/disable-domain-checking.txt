@@ -1,0 +1,1 @@
+add_filter( 'rank_math/registration/do_url_check', '__return_false' );
