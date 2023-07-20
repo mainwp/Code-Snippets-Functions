@@ -1,0 +1,19 @@
+// Update checkout on payment method change (jQuery)
+add_action( 'woocommerce_checkout_init', 'trigger_update_checkout_on_payment_method_change' );
+function trigger_update_checkout_on_payment_method_change(){
+    wc_enqueue_js("$('form.checkout').on( 'change', 'input[name=payment_method]', function(){
+        $(document.body).trigger('update_checkout');
+    });");
+}
+
+// Change the displayed text on the checkout submit button based on payment methods
+add_filter( 'woocommerce_order_button_html', 'custom_place_order_button_html', 900 );
+function custom_place_order_button_html( $button_html ) {
+    $original_text  = __( 'Place order', 'woocommerce' ); // Default button text
+    $custom_text    = __( 'Request a Quote', 'woocommerce' ); // For "COD" payment method
+
+    if( WC()->session->get('chosen_payment_method') === 'cod' && ! is_wc_endpoint_url() ) {
+        $button_html = str_replace( $original_text, $custom_text, $button_html );
+    }
+    return $button_html;
+}
