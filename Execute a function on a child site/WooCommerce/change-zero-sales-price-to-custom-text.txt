@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_get_price_html', 'custom_formatted_sale_price_html', 10, 2 );
+function custom_formatted_sale_price_html( $price_html, $product ) {
+    if ( $product->is_on_sale() && $product->get_price() == 0 ) {
+        $regular_price   = wc_get_price_to_display( $product, array( 'price' => $product->get_regular_price() ) );
+        $sale_price_text = $regular_price > 0 ? __( 'Free only for members!', 'woocommerce' ) : __( 'Free!', 'woocommerce' );
+ 
+        return '<del aria-hidden="true">' . wc_price( $regular_price ) . '</del> <span class="sale-text">' .  $sale_price_text . '</span>';
+    }
+    return $price_html;
+}
