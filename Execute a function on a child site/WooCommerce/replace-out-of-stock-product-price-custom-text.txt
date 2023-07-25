@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_get_price_html', 'custom_displayed_out_of_stock', 10, 2 );
+function modify_price_out_of_stock_items( $price_html, $product ) {
+    if ( ! is_admin() && ! $product->is_in_stock() ) {
+        return sprintf( __('Last ticketed at %s in %s', 'woocommerce'), 
+            wc_price( wc_get_price_to_display( $product ) ), 
+            $product->get_attribute('Year') 
+        );
+    }
+    return $price_html;
+}
