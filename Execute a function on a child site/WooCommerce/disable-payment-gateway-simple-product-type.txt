@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_available_payment_gateways', 'wc_disable_payment_by_product_type' );
+  
+function wc_disable_payment_by_product_type( $available_gateways ) {
+   if ( ! WC()->cart ) return $available_gateways;
+   $types = array();
+   foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+      $product = $cart_item['data'];
+      $types[] = $product->get_type() ? $product->get_type() : null;
+   }
+   $types = array_unique( $types );
+   if ( in_array( 'simple', $types ) && isset( $available_gateways['paypal'] ) ) {
+      unset( $available_gateways['paypal'] );
+   }
+   return $available_gateways;
+}
