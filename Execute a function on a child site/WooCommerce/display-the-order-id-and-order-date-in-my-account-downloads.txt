@@ -1,0 +1,24 @@
+add_action( 'woocommerce_account_downloads_column_download-product', 'display_product_image_on_account_downloads' );
+function display_product_image_on_account_downloads( $download ) {
+    // Targeting view order pages only
+    if ( ! is_wc_endpoint_url( 'downloads' ) ) return;
+
+    if ( $download['product_id'] > 0 ) {
+        $product = wc_get_product( $download['product_id'] ); 
+        $image   = $product->get_image( array(324, 194) ); // The product image
+
+        if ( $download['product_url'] ) {
+            echo $image . '<a href="' . esc_url( $download['product_url'] ) . '">' . esc_html( $download['product_name'] ) . '</a>';
+
+            // Here you get the order ID
+            if ( $download['order_id'] > 0 ) {
+                // Get an instance of the WC_Order object
+                $order = wc_get_order( $download['order_id'] );
+
+                echo '<p>' . esc_attr( $download['order_id'] ) . '</p>'; 
+                echo '<p>' . esc_html( wc_format_datetime( $order->get_date_created() ) ) . '</p>'; 
+        } else {
+            echo $image . esc_html( $download['product_name'] );
+        }
+    }
+}
