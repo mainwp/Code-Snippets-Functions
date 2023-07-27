@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_coupons_enabled', 'disable_coupon_field_for_specific_products' );
+function disable_coupon_field_for_specific_products( $enabled ) {
+    if ( ( is_checkout() && !is_wc_endpoint_url() ) || is_cart() ) {
+        // here define your product IDs in the array
+        $product_ids = array(240790, 240792, 240795, 240798);
+        
+        // Loop through cart items
+        foreach( WC()->cart->get_cart() as $item ) {
+            if ( count( array_intersect( [$item['product_id'], $item['variation_id']], $product_ids ) ) > 0 ) {
+                return false;
+            }
+        }
+    }
+    return $enabled;
+}
