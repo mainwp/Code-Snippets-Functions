@@ -1,0 +1,16 @@
+add_filter( 'woocommerce_checkout_show_terms', 'remove_terms_and_conditions_for_specific_unique_item' );
+function remove_terms_and_conditions_for_specific_unique_item( $show_terms ) {
+    // Replace "123" with the desired product ID
+    $targeted_id = 123;
+    $cart_items = WC()->cart->get_cart(); // get cart items
+
+    // Check if there is only one item in cart
+    if( count($cart_items) > 1 ) {
+        return $show_terms;
+    }        
+    // Check if the targeted product ID is the only item in cart
+    if ( reset($cart_items)['product_id'] == $targeted_id ) {
+        return false; // Remove terms and conditions field
+    }
+    return $show_terms;
+}
