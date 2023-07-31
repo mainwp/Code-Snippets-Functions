@@ -1,0 +1,33 @@
+add_action('woocommerce_checkout_process', 'wh_alphaCheckCheckoutFields');
+function wh_alphaCheckCheckoutFields() {
+
+    $billing_first_name = filter_input(INPUT_POST, 'billing_first_name');
+    $billing_last_name = filter_input(INPUT_POST, 'billing_last_name');
+    $shipping_first_name = filter_input(INPUT_POST, 'shipping_first_name');
+    $shipping_last_name = filter_input(INPUT_POST, 'shipping_last_name');
+    $ship_to_different_address = filter_input(INPUT_POST, 'ship_to_different_address');
+    $billing_address_1 = filter_input(INPUT_POST, 'billing_address_1');
+    $billing_address_2 = filter_input(INPUT_POST, 'billing_address_2');
+    $shipping_address_1 = filter_input(INPUT_POST, 'shipping_address_1');
+    $shipping_address_2 = filter_input(INPUT_POST, 'shipping_address_2');
+
+    if (empty(trim($billing_first_name)) || !ctype_alpha($billing_first_name)) {
+        wc_add_notice(__('Only alphabets are allowed in <strong>Billing First Name</strong>.'), 'error');
+    }
+    if (empty(trim($billing_last_name)) || !ctype_alpha($billing_last_name)) {
+        wc_add_notice(__('Only alphabets are allowed in <strong>Billing Last Name</strong>.'), 'error');
+    }
+    if (empty(trim($billing_address_1)) || !ctype_alpha($billing_address_1)) {
+        wc_add_notice(__('Only alphabets are allowed in <strong>Billing Address 1</strong>.'), 'error');
+    }
+    if (empty(trim($billing_address_2)) || !ctype_alpha($billing_address_2)) {
+        wc_add_notice(__('Only alphabets are allowed in <strong>Billing Address 2</strong>.'), 'error');
+    }
+
+    // If the ‘Ship to a different address’ option is selected, validate the shipping fields.
+    if (!empty($ship_to_different_address)) {
+        if (empty(trim($shipping_first_name)) || !ctype_alpha($shipping_first_name)) {
+            wc_add_notice(__('Only alphabets are allowed in <strong>Shipping First Name</strong>.'), 'error');
+        }
+        if (empty(trim($shipping_last_name)) || !ctype_alpha($shipping_last_name)) {
+            wc_add_notice(__('Only alphabets are allowed in <strong>Shipping Last Name</strong>.'), 'error');
