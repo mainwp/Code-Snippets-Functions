@@ -1,0 +1,1 @@
+add_filter( 'relevanssi_live_search_add_result_div', '__return_false' );
