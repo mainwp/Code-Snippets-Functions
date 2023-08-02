@@ -1,0 +1,9 @@
+add_action( 'woocommerce_after_single_product_summary' , 'wc_related_product_cats_single_product', 21 );
+ 
+function wc_related_product_cats_single_product() {
+   global $product;
+   $cat_ids = $product->get_category_ids();
+   echo '<section class="related categories"><h2>Related Categories</h2>';
+   echo do_shortcode( '[product_categories ids="' . implode( ",", $cat_ids ) . '"]' );
+   echo '</section>';
+}
