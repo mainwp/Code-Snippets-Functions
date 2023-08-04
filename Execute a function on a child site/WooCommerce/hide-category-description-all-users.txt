@@ -1,0 +1,6 @@
+add_action('woocommerce_archive_description', 'remove_category_archive_description', 2 );
+function remove_category_archive_description(){
+    if( is_product_category() ) {
+        remove_action('woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+    }
+}
