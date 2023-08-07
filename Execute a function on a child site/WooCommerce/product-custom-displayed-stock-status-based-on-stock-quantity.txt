@@ -1,0 +1,23 @@
+add_filter('woocommerce_get_stock_html', 'filter_wc_get_stock_html', 10, 2 )
+function filter_wc_get_stock_html($html, $product) {
+    $current_stock = $product->get_stock_quantity();
+    $manage_stock  = $product->get_manage_stock();
+    $stock_status  = $product->get_stock_status();
+
+    if ( $manage_stock ) {
+        if ( $current_stock <= 0 ) {
+        $new_html = __('Out of stock', 'txtdomain');
+        } else if ($current_stock < 20) {
+            $new_html = sprintf('Less than 20 %s', __('in stock', 'txtdomain'));
+        } else if ($current_stock > 19) {
+            $new_html = sprintf('Up to 20 %s', __('in stock', 'txtdomain'));
+        }
+    } else {
+        if ( $stock_status === 'outofstock' ) {
+            $new_html = __('Out of stock', 'txtdomain');
+        } else {
+            $new_html = __('In stock', 'txtdomain');
+        }
+    }
+    return sprintf('<p class="stock">%s</p>', $new_html);
+}
