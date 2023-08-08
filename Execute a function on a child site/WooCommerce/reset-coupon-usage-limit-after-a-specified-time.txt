@@ -1,0 +1,15 @@
+add_action( 'woocommerce_coupon_options_save', 'trigger_coupon_schedule_single_event', 10, 2 );
+function trigger_coupon_schedule_single_event( $post_id, $coupon ) {
+    // Check that some usage limit has been activated for the current coupon
+    if ( $coupon->get_usage_limit() || $coupon->get_usage_limit_per_user() ) {
+        // Create a shedule event on 'coupon_schedule_reset_restrictions' custom hook
+        wp_schedule_single_event( time() + 60, 'coupon_schedule_reset_restrictions', array( $coupon ) );
+    }
+}
+
+add_action( 'coupon_schedule_reset_restrictions', 'coupon_reset_restrictions' );
+function coupon_reset_restrictions( $coupon ){
+    $coupon->set_usage_limit(null);
+    $coupon->set_usage_limit_per_user(null);
+    $coupon->save();
+}
