@@ -1,0 +1,11 @@
+add_action('woocommerce_order_status_pending_to_cancelled', 'restore_stock_levels_on_pending_to_cancel', 10, 2);
+function restore_stock_levels_on_pending_to_cancel( $order_id, $order ) {
+    // Restore stock levels
+    wc_maybe_increase_stock_levels( $order_id );
+
+    // Getting WC_emails objects
+    $email_notifications = WC()->mailer()->get_emails();
+
+    // Sending the cancelled order email
+    $email_notifications['WC_Email_Cancelled_Order']->trigger( $order_id );
+}
