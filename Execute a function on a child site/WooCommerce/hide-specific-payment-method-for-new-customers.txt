@@ -1,0 +1,7 @@
+add_filter('woocommerce_available_payment_gateways', 'cheque_payment_gateway_only_for_paying_customers');
+function cheque_payment_gateway_only_for_paying_customers($gateways) {
+    if ( ! WC()->customer->get_is_paying_customer() && isset($gateways['cheque']) ) {
+        unset($gateways['cheque']); // Unset 'cheque' payment option
+    }
+    return $gateways;
+}
