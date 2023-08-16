@@ -1,0 +1,4 @@
+add_filter( 'woocommerce_checkout_cart_item_quantity', 'wtwh_echo_qty_front_add_checkout' );
+function wtwh_echo_qty_front_add_checkout( $quantity_html ) {
+    return $quantity_html . ' <span class="qty-suff">(Tonnes)</span>'; 
+}
