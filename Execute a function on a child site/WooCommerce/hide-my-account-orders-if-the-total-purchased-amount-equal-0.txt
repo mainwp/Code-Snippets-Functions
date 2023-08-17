@@ -1,0 +1,25 @@
+// Get customer purchases total amount
+function get_customer_purchases_total_amount(){
+    global $wpdb;
+
+    return (float) $$wpdb->get_var( $wpdb->prepare( "
+        SELECT SUM(pm.meta_value)
+        FROM {$wpdb->prefix}posts as p
+        INNER JOIN {$wpdb->prefix}postmeta as pm ON p.ID = pm.post_id
+        INNER JOIN {$wpdb->prefix}postmeta as pm2 ON p.ID = pm2.post_id
+        WHERE p.post_type = 'shop_order'
+        AND p.post_status IN ('wc-processing','wc-completed')
+        AND pm.meta_key = '_order_total'
+        AND pm2.meta_key = '_customer_user'
+        AND pm2.meta_value = %d
+    ", get_current_user_id() ) );
+}
+
+// Hide My account Orders section conditionally
+add_filter( 'woocommerce_account_menu_items', 'hide_customer_account_orders_conditionally', 100, 1 );
+function hide_customer_account_orders_conditionally( $items ) {
+    if ( get_customer_purchases_total_amount() == 0 ) {
+        unset( $items['orders'] );
+    }
+    return $items;
+}
