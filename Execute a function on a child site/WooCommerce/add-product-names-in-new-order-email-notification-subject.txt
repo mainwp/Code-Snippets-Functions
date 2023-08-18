@@ -1,0 +1,20 @@
+add_filter('woocommerce_email_subject_new_order', 'change_email_subject_new_order', 10, 2);
+function change_email_subject_new_order( $formatted_subject, $order ) {
+    $products = array(); // Initializing
+
+    // Loop through order items
+    foreach( $order->get_items() as $item ){
+        // Add formatted product name and quantity to the array
+        $products[] = sprintf( '%s &times; %d', $item->get_name(), $item->get_quantity() );
+    }
+
+    $count    = count($products); // Products count
+    $products = implode(', ', $products); // Convert the array to a string
+
+    return sprintf( 
+        __('[%s] New Customer Order (# %s), %s, from %s %s', 'woocommerce'), 
+        wp_specialchars_decode(get_option('blogname'), ENT_QUOTES), $order->get_order_number(), 
+        sprintf( _n('Product (%s)', 'Products (%s)', $count, 'woocommerce'), $products, $products ),
+        $order->get_billing_first_name(), $order->get_billing_last_name() 
+    );
+}
