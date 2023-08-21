@@ -1,0 +1,4 @@
+// Remove related products from their default location
+remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+// Add back related products in a different location
+add_action('woocommerce_after_add_to_cart_button', 'woocommerce_output_related_products', 10); 
