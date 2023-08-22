@@ -1,0 +1,38 @@
+add_action( 'woocommerce_after_register_post_type', 'auto_cancel_old_processing_orders_daily' );
+function auto_cancel_old_processing_orders_daily() {
+    // Run it once a day only
+    if ( get_option('auto_cancel_processing_orders') != date('Y-m-d') ) {
+        update_option('auto_cancel_processing_orders', date('Y-m-d') );
+
+        // Get old processing orders (more than 30 days old)
+        $processing_orders = wc_get_orders( array(
+            'limit'         => -1, // 
+            'status'        => 'processing', 
+            'date_created'  => '<' . date("Y-m-d", strtotime("-30 days")),
+        ) );
+
+        $orders_count = count($processing_orders); // Count
+        
+        if( $orders_count > 0 ) {
+            $processed_orders = ''; // Initializing
+
+            // Loop through old processing orders
+            foreach( $processing_orders as $order ) {
+                $order->update_status('wc-cancelled', 'Cancelled via automated daily process'); // Set as cancelled
+
+                $processed_orders .= sprintf('<li><a href="%s">Order #%s</a></li>', 
+                    admin_url('post.php?post='.$order->get_id().'&action=edit'), $order->get_order_number());
+            }
+    
+            // Send an email to the admin with all cancelled orders (linked)
+            if( ! empty($processed_orders) ) {
+                $subject   = sprintf('Auto cancelled processing orders report (%d order(s) cancelled)', $orders_count); 
+                $recipient = sanitize_email( get_option( 'woocommerce_email_from_address' ) );
+                $content   = sprintf('<p>The following old processing orders have been auto cancelled (%d):<p>
+                <ul>%s<ul>', $orders_count, $processed_orders);
+                $headers   = "Content-Type: text/html\r\n";
+                WC()->mailer()->send( $recipient, $subject, $content, $headers );
+            }
+        }
+    }
+}
