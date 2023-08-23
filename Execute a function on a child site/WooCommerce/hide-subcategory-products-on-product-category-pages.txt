@@ -1,0 +1,21 @@
+add_action( 'woocommerce_product_query', 'wc_hide_products_subcategory', 9999 );
+    
+function wc_hide_products_subcategory( $q ) {
+    
+   if ( ! is_product_category() ) return;
+    
+   $parent_id = get_queried_object_id();
+   $subcats = woocommerce_get_product_subcategories( $parent_id );
+   if ( empty( $subcats ) ) return;
+    
+   $tax_query = (array) $q->get( 'tax_query' );
+   $tax_query[] = array(
+      'taxonomy' => 'product_cat',
+      'field' => 'slug',
+      'terms' => array_column( $subcats, 'slug' ),
+      'operator' => 'NOT IN'
+   );
+    
+   $q->set( 'tax_query', $tax_query, true );
+    
+}
