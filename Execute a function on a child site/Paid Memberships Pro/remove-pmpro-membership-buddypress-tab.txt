@@ -1,0 +1,11 @@
+function my_pmprobp_remove_nav_item_membership() {
+
+	// Let's first check if PMPro is active and the BuddyPress nav item function exists.
+	if ( ! function_exists( 'pmpro_hasMembershipLevel' ) || ! function_exists( 'pmpro_bp_custom_user_nav_item' ) ) {
+		return;
+	}
+
+	// Remove the membership item from the BuddyPress navigation bar.
+	bp_core_remove_nav_item( 'membership_account' );
+}
+add_action( 'bp_setup_nav', 'my_pmprobp_remove_nav_item_membership', 100 );
