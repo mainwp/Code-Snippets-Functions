@@ -1,0 +1,17 @@
+add_action('wp_head', 'ajax_added_to_cart_js', 99999);
+function ajax_added_to_cart_js() {
+    if( ( is_woocommerce() && ! is_account_page() ) || is_cart() ) :
+    // Removing "View cart" button and "added" class.
+    wc_enqueue_js("$('body').on('added_to_cart', function(){
+        setTimeout( function(){
+            $('a.ajax_add_to_cart').each( function(i){
+                if ( $(this).hasClass('added') ) {
+                    $(this).removeClass('added').parent().find('a.added_to_cart.wc-forward').remove();
+                }
+            });
+        }, 5 );
+    });");
+    ?>
+    <style>.added_to_cart.wc-forward{display:none;}</style>
+    <?php endif;
+}
