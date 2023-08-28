@@ -1,0 +1,13 @@
+add_filter( 'woocommerce_package_rates', 'hide_local_pickup_for_free_orders', 10, 2 );
+function hide_local_pickup_for_free_orders( $rates, $package ) {
+    // If cart subtotal is equal to zero
+    if( $package['contents_cost'] == 0 ) {
+        foreach( $rates as $rate_key => $rate ) {
+            // Hide Local Pickup shipping method(s)
+            if ( $rate->method_id === 'local_pickup' ) {
+                unset($rates[$rate_key]);
+            }
+        }
+    }
+    return $rates;
+}
