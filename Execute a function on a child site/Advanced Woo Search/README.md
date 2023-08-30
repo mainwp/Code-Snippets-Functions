@@ -1,6 +1,6 @@
 ## Advanced Woo Search code snippets
 
-Tested version of WordPress 6.3, plugin version was Advanced Woo Search 2.85.
+Tested version of WordPress 6.3.1, plugin version was Advanced Woo Search 2.86.
 
 This file is a code snippet that is used for [Advanced Woo Search](https://wordpress.org/plugins/advanced-woo-search/) plugin. 
 
