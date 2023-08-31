@@ -1,0 +1,44 @@
+add_action('woocommerce_before_account_orders', 'filter_myaccount_orders');
+function filter_myaccount_orders($has_orders){   
+    if ($has_orders || isset($_GET['start_date']) || isset($_GET['end_date']) ) {
+        $start_date = $end_date = ''; // Initializing;
+        if ( isset($_GET['start_date']) && ! empty($_GET['start_date']) ) {
+            $start_date = esc_attr($_GET['start_date']);
+        }
+        if ( isset($_GET['end_date']) && ! empty($_GET['end_date']) ) {
+            $end_date = esc_attr($_GET['end_date']);
+        }
+
+        echo  '</form>
+        <form action="#" method="get">          
+        <input type="date" name="start_date" value="'.$start_date.'">
+        <input type="date" name="end_date" value="'.$end_date.'">
+        <input type="submit" value="' . esc_attr__( 'Filter by date', 'your-text-domain' ) . '">';
+        if( isset($_GET['start_date']) || isset($_GET['end_date']) ) {
+            $myaccount_orders_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . 'orders/';
+            echo '<a class="button reset" href="'.$myaccount_orders_url.'">'.__('Reset').'</a>';
+        }
+        echo '</form>';       
+    }
+}
+
+add_filter( 'woocommerce_my_account_my_orders_query', 'custom_my_account_orders', 10, 1 );
+function custom_my_account_orders( $args ) {
+    $start_date = $end_date = '';// Initializing;
+        
+    if ( isset($_GET['start_date']) && ! empty($_GET['start_date']) ) {
+        $start_date = esc_attr($_GET['start_date']);
+    }
+    if ( isset($_GET['end_date']) && ! empty($_GET['end_date']) ) {
+        $end_date = esc_attr($_GET['end_date']);
+    }
+
+    if ( $start_date && ! $end_date ) {
+        $args['date_created'] = '>='.$start_date;
+    } elseif ( ! $start_date && $end_date ) {
+        $args['date_created'] = '<='.$end_date;
+    } elseif ( $start_date && $end_date ) {
+        $args['date_created'] = $start_date.'...'.$end_date;
+    }
+    return $args;
+}
