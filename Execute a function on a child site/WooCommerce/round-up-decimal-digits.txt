@@ -1,0 +1,15 @@
+add_filter( 'raw_woocommerce_price', 'wp_raw_woocommerce_price_filter', 10, 2 );
+
+/**
+ * Function for `raw_woocommerce_price` filter-hook.
+ * 
+ * @param float        $raw_price      Raw price.
+ * @param float|string $original_price Original price as float, or empty string. Since 5.0.0.
+ *
+ * @return float
+ */
+function wp_raw_woocommerce_price_filter( $raw_price, $original_price ){
+
+    // converto non-decimal number
+    return intval($raw_price);
+}
