@@ -1,0 +1,7 @@
+add_filter("um_profile_edit_menu_items","um_101521_menu_items");
+add_filter("um_myprofile_edit_menu_items","um_101521_menu_items");
+function um_101521_menu_items( $items ){
+
+    unset( $items['editprofile'] );
+    return $items;
+}
