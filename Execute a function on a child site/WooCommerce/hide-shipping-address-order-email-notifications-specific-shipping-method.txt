@@ -1,0 +1,14 @@
+add_filter('woocommerce_order_needs_shipping_address', 'local_pickup_hide_shipping_address', 10, 3 );
+function local_pickup_hide_shipping_address( $needs_address, $hide, $order ) {
+    // Define below the shipping method slug that hides shipping address
+    $shipping_method_id = 'local_pickup'; 
+
+    // Loop through shipping methods for the current order
+    foreach ( $order->get_shipping_methods() as $shipping_method ) {
+        if( $shipping_method->get_method_id() === $shipping_method_id ) {
+            $needs_address = false; // Hide
+            break; // Stop the loop
+        }
+    }
+    return $needs_address;
+}
