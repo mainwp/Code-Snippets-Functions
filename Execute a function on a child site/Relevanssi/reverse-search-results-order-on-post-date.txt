@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_modify_wp_query', function( $query ) {
+  $query->set( 'orderby', array( 'relevance' => 'desc', 'post_date' => 'asc' ) );
+  return $query;
+} );
