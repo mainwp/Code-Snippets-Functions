@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_get_tax_location', 'bbloomer_customer_default_tax_location', 9999, 3 );
+ 
+function bbloomer_customer_default_tax_location( $location, $tax_class, $customer ) {
+    if ( $customer && ! $customer->get_billing_country() ) {
+        return array( 'US', '', '', '' );
+    }
+    return $location;
+}
