@@ -1,0 +1,32 @@
+// Utility function to get the GTIN code from the product object
+function get_product_gtin_code( $product ) {
+    return $product->get_meta('hwp_product_gtin');
+}
+
+// Utility function to get the GTIN label name
+function get_gtin_label() {
+    $label = get_option('hwp_gtin_text');
+    return esc_html__( $label ? $label : 'GTIN');
+}
+
+// Save Product GTIN as custom order item and display it on orders (items) and emails
+add_action( 'woocommerce_checkout_create_order_line_item', 'save_and_display_gtin_everywhere', 10, 4 );
+function save_and_display_gtin_everywhere( $item, $item_key, $values, $order ) {
+    if ( $gtin_code = get_product_gtin_code($values['data']) ) {
+        $item->add_meta_data( 'gtin_code', $gtin_code );
+    }
+}
+
+// Add readable "meta key" label name replacement
+add_filter('woocommerce_order_item_display_meta_key', 'filter_wc_order_item_display_meta_key', 10, 3 );
+function filter_wc_order_item_display_meta_key( $display_key, $meta, $item ) {
+    if( $item->get_type() === 'line_item' && $meta->key === 'gtin_code' ) {
+        $display_key = get_gtin_label();
+    }
+    return $display_key;
+}
+
+// Utility function to get the GTIN code from the order item object
+function get_order_item_gtin_code( $item ) {
+    return $item->get_meta('gtin_code');
+}
