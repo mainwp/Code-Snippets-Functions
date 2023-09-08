@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_product_get_price', 'products_custom_price', 10, 2 );
+add_filter( 'woocommerce_product_variation_get_price', 'products_custom_price', 10, 2 );
+add_filter( 'woocommerce_product_get_regular_price', 'products_custom_price', 10, 2 );
+// add_filter( 'woocommerce_product_get_sale_price', 'products_custom_price', 10, 2 );
+function products_custom_price( $price, $product ){
+    if ( is_user_logged_in() && ! is_admin() ) {
+        return $price * 0.03;
+    }
+    return $price;
+}
