@@ -1,0 +1,14 @@
+add_filter( 'wcs_new_order_created', 'customize_renewal_cod_order_status', 10, 3 );
+function customize_renewal_cod_order_status( $order, $subscription, $type ) {
+    $parent_order = $subscription->get_related_orders('all', 'parent');
+    $parent_order = reset($parent_order);
+
+    if ( $type === 'renewal_order' && $parent_order->get_payment_method() === 'cod' && $order->has_status('on-hold') ) {
+        $order->set_status('wc-processing');
+        $order->save();
+
+        $subscription->set_status('wc-active'); // Optional
+        $subscription->save(); // Optional
+    }
+    return $order;
+}
