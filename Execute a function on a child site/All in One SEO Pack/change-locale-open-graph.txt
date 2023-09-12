@@ -1,0 +1,9 @@
+add_filter( 'aioseo_facebook_tags', 'aioseo_filter_og_locale' );
+
+function aioseo_filter_og_locale( $facebookMeta ) {
+   if ( isset( $facebookMeta['og:locale'] ) {
+       $facebookMeta['og:locale'] = 'en_US';
+   }
+
+   return $facebookMeta;
+}
