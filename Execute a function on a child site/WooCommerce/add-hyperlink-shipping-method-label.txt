@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'bbloomer_shipping_method_suffix' );
+ 
+function bbloomer_shipping_method_suffix( $label ) {
+   return $label . ' (<a href="">shipping FAQ</a>)';
+}
