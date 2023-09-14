@@ -1,0 +1,21 @@
+// Conditional function: Check if cart has a subscription
+function has_subscription_product( $cart_contents ) {
+    foreach ( $cart_contents as $item ) {
+        if ( $item['data']->is_type( array('subscription', 'subscription_variation') ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Hide shipping  method conditionally
+add_filter( 'woocommerce_package_rates', 'filter_package_shipping_rates', 10, 2 );
+function filter_package_shipping_rates( $rates, $package ) {
+    $targeted_id = 'chrono13'; // Here define the targeted shipping method rate ID
+
+    // If there is a subscription in cart
+    if( has_subscription_product( WC()->cart->get_cart() ) && isset($rates[$targeted_id]) ) {
+        unset($rates[$targeted_id]); // Hide the shipping method
+    }
+    return $rates;
+}
