@@ -1,0 +1,4 @@
+// Remove the hook that displays the "clear cache" message.
+add_action( 'admin_notices', function() {
+    remove_action( 'admin_notices', 'rocket_warning_plugin_modification' );
+}, 1 );
