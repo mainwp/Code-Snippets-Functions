@@ -1,0 +1,7 @@
+add_filter( 'posts_where', 'bbloomer_no_private_products_posts_frontend_administrator' );
+ 
+function bbloomer_no_private_products_posts_frontend_administrator( $where ) {
+    if ( is_admin() ) return $where;
+    global $wpdb;
+    return " $where AND {$wpdb->posts}.post_status != 'private' ";
+}
