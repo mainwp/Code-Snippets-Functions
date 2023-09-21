@@ -1,6 +1,6 @@
 ## Rank Math SEO code snippets
 
-Tested version of WordPress 6.3.1, plugin version was Rank Math SEO 1.0.201.1.
+Tested version of WordPress 6.3.1, plugin version was Rank Math SEO 1.0.202.
 
 This file is a code snippet that is used for [Rank Math SEO](https://wordpress.org/plugins/seo-by-rank-math/) plugin. 
 
