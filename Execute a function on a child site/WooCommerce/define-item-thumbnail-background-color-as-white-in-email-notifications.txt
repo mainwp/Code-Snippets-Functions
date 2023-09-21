@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_email_styles', 'custom_wc_email_styles', 20 );
+function custom_wc_email_styles( $css ) {
+    $css .= '.order_item > td > img { background-color: #ffffff; }';
+    return $css;
+}
