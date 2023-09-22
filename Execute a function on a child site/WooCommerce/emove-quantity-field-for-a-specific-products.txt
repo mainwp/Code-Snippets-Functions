@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_is_sold_individually', 'remove_all_qty_fields_on_specific_product', 10, 2 );
+function remove_all_qty_fields_on_specific_product( $sold_individually, $product ) {
+    // Here define the desired product Id(s)
+    $targeted_product_ids = array( 90 );
+    if ( count(array_intersect([$product->get_id(), $product->get_parent_id()], $targeted_product_ids) ) > 0 ) {
+        return true;
+    }
+    return $sold_individually;
+}
