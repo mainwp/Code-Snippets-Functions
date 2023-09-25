@@ -1,0 +1,8 @@
+add_action( 'admin_menu', 'disable_admin_woocommerce_home_for_user_role', 999 );
+function disable_admin_woocommerce_home_for_user_role() {
+    $targeted_role = 'shop_manager'; // Here define the user role
+
+    if (current_user_can( $targeted_role ) && ! isset($_GET['path'])) {
+        remove_submenu_page( 'woocommerce', 'wc-admin' );
+    }
+}
