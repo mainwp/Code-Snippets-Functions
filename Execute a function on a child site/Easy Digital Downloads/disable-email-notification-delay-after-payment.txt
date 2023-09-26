@@ -1,0 +1,1 @@
+add_filter( 'edd_use_after_payment_actions', '__return_false' );
