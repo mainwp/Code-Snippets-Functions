@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_order_number', 'bbloomer_order_number_prefix', 9999, 2 );
+ 
+function bbloomer_order_number_prefix( $order_id, $order ) {
+   return 'Prefix-' . $order_id . '-suffix';
+}
