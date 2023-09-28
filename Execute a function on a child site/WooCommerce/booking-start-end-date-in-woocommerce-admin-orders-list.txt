@@ -1,0 +1,39 @@
+// Add custom column to WooCommerce admin orders page
+add_filter('manage_edit-shop_order_columns', 'add_custom_column_booking_dates', 20 );
+function add_custom_column_booking_dates( $columns ) {
+    $columns['booking_dates'] = __('Booking Dates', 'text-domain');
+    return $columns;
+}
+
+// Custom column displayed content
+add_action( 'manage_shop_order_posts_custom_column', 'display_custom_column_booking_dates_content', 20, 2 );
+function display_custom_column_booking_dates_content( $column, $post_id ) {
+    if ( 'booking_dates' === $column ) {
+        global $post, $the_order;
+
+        $order = is_a($the_order, 'WC_Order') ? $the_order : wc_get_order( $post->ID ); // Get WC_Order Object
+        $found = false;
+
+        // Loop through order items
+        foreach ( $order->get_items() as $item_id => $item ) {
+            $booking_ids = WC_Booking_Data_Store::get_booking_ids_from_order_item_id( $item_id );
+
+            if ( $booking_ids ) {
+                $found = true;
+                foreach ( $booking_ids as $booking_id ) {
+                    $booking       = new WC_Booking( $booking_id ); // Get booking object
+                    $booking_start = date_i18n( wc_date_format(), $booking->get_start());
+                    $booking_end   = date_i18n( wc_date_format(), $booking->get_end());
+                
+                    // Display Booking Start and End dates for each booking
+                    echo '<strong>' . __('Booking #', 'text-domain') . $booking_id . '</strong><br>';
+                    echo __('Start Date:', 'text-domain') . ' ' . esc_html($booking_start) . '<br>';
+                    echo __('End Date:', 'text-domain') . ' ' . esc_html($booking_end) . '<br>';
+                }
+            }
+        }
+        if ( ! $found ) {
+            echo __('No booking data', 'text-domain');
+        }
+    }
+}
