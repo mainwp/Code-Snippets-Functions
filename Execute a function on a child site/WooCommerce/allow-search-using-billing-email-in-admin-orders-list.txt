@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_shop_order_search_fields', 'extending_admin_orders_search_field', 10, 1 );
+function extending_admin_orders_search_field( $meta_keys ){
+    $meta_keys[] = '_billing_email';
+    $meta_keys[] = '_billing_phone';
+    $meta_keys[] = '_payment_method_title';
+
+    return $meta_keys;
+}
