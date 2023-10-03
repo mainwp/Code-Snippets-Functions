@@ -1,0 +1,18 @@
+add_filter( 'wd_login_forbidden_slugs', 'custom_defender_method' );
+function custom_defender_method( $slugs ) {
+    $forbidden = [
+        'login',
+        'wp-admin',
+        'admin',
+        'dashboard',
+        'wp-login',
+        'wp-login.php',
+        'wp-login-php',
+    ];
+	foreach ( $slugs as $key => $slug ){
+		if ( in_array( $slug, $forbidden, true ) ) {
+			unset( $slugs[ $key ] );
+		}
+	}
+	return $slugs;
+}
