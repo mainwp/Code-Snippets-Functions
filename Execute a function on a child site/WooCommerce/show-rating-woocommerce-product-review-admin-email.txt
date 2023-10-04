@@ -1,0 +1,10 @@
+add_filter( 'comment_moderation_text', 'bbloomer_add_stars_woocommerce_moderate_comment_email', 9999, 2 );
+ 
+function bbloomer_add_stars_woocommerce_moderate_comment_email( $notify_message, $comment_id ) {
+   $review = get_comment( $comment_id );
+   if ( $review && 'product' === get_post_type( $review->comment_post_ID ) ) {
+      $rating = intval( get_comment_meta( $comment_id, 'rating', true ) );
+      $notify_message .= "\r\n" . sprintf( 'Product review rating: %s / 5', $rating ) . "\r\n";
+   }  
+   return $notify_message;
+}
