@@ -1,6 +1,6 @@
 ## WP Migrate code snippets
 
-Tested version of WordPress 6.3, plugin version was WP Migrate 2.6.9.
+Tested version of WordPress 6.3.1, plugin version was WP Migrate 2.6.10.
 
 This file is a code snippet that is used for [WP Migrate](https://deliciousbrains.com/wp-migrate-db-pro/) plugin. 
 
