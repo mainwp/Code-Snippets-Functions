@@ -1,0 +1,13 @@
+add_action( 'woocommerce_after_shop_loop_item', 'custom_loop_product_meta', 50 );
+function custom_loop_product_meta() {
+    global $product;
+
+    if( ! is_object($product) ) { 
+        $product = wc_get_product( get_the_id() );
+    } 
+    
+    if( $product->is_type('variable') ) {
+        printf( '<div class="pa-style-block">%s: <span class="pa-style-text">%s</span></div>',
+            esc_html( pll__('Sizes') ), $product->get_attribute('pa_size') );
+    }
+}
