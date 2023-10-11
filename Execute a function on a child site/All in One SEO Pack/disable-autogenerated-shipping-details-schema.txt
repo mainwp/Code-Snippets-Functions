@@ -1,0 +1,1 @@
+	add_filter( 'aioseo_schema_woocommerce_shipping_disable', '__return_true' );
