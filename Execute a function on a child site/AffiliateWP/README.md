@@ -1,6 +1,6 @@
 ## AffiliateWP code snippets
 
-Tested version of WordPress 6.3.1, plugin version was AffiliateWP 2.16.3.
+Tested version of WordPress 6.3.1, plugin version was AffiliateWP 2.17.1.
 
 This file is a code snippet that is used for [AffiliateWP](https://affiliatewp.com/) plugin. 
 
