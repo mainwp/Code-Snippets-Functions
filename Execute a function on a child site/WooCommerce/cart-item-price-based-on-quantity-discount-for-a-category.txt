@@ -1,0 +1,56 @@
+// Utility function: Get specific category discount based on quantity
+function get_category_custom_discount( $cart, $category ) {
+    $calculated_qty = 0; // Initializing
+
+    foreach( $cart->get_cart() as $cart_item ) {
+        if( has_term( $category, 'product_cat', $cart_item['product_id'] ) ) {
+            $calculated_qty   += $cart_item["quantity"]; 
+        }
+    }
+
+    if ( $calculated_qty >= 200 ) {
+        return 1.5;
+    } else if( $calculated_qty >= 100 ) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+// Change cart item price
+add_action( 'woocommerce_before_calculate_totals', 'category_ferns_set_bulk_discount', 20, 1 );
+function category_ferns_set_bulk_discount( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    $category = 'ferns';
+    $discount = get_category_custom_discount( $cart, $category );
+
+    if ( $discount > 0 ) {
+        foreach($cart->get_cart() as $cart_item) {
+            if( has_term($category, 'product_cat', $cart_item['product_id']) ) {
+                $cart_item['data']->set_price( $cart_item['data']->get_price() - $discount );
+            }
+        }
+    }
+}
+
+// Handle mini cart displayed price
+add_action( 'woocommerce_cart_item_price', 'category_ferns_display_bulk_discount', 20, 2 );
+function category_ferns_display_bulk_discount( $price_html, $cart_item ) {
+    $cart     = WC()->cart;
+    $category = 'ferns';
+    $discount = get_category_custom_discount( $cart, $category );
+
+    if( $discount > 0 && has_term($category, 'product_cat', $cart_item['product_id']) ) {
+        $args = array( 'price' => floatval( $cart_item['data']->get_price() - $discount ) ); 
+
+        if ( $cart->display_prices_including_tax() ) {
+            $product_price = wc_get_price_including_tax( $cart_item['data'], $args );
+        } else {
+            $product_price = wc_get_price_excluding_tax( $cart_item['data'], $args );
+        }
+        return wc_price( $product_price );
+    }
+    return $price_html;
+}
