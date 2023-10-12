@@ -1,0 +1,7 @@
+function change_no_shipping_method_error_text( $error ) {
+    if( 'No shipping method has been selected. Please double check your address, or contact us if you need any help.' == $error ) {
+        $error = 'New error message';
+    }
+    return $error;
+}
+add_filter( 'woocommerce_add_error', 'change_no_shipping_method_error_text' );
