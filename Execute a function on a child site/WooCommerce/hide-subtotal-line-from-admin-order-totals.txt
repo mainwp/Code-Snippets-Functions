@@ -1,0 +1,9 @@
+add_action('admin_head', 'admin_head_shop_order_inline_css' );
+function admin_head_shop_order_inline_css() {
+    global $pagenow, $typenow;
+
+    // Targeting WooCommerce admin single orders
+    if ( in_array( $pagenow, ['post.php', 'post-new.php'] ) && $typenow === 'shop_order' ) :
+    ?><style>table.wc-order-totals tr:first-child{display:none;}</style><?php
+    endif;
+}
