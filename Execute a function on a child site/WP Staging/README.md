@@ -1,6 +1,6 @@
 ## WP Staging code snippets
 
-Tested version of WordPress 6.3.1, plugin version was WP Staging 3.0.4.
+Tested version of WordPress 6.3.2, plugin version was WP Staging 3.0.6.
 
 This file is a code snippet that is used for [WP Staging](https://wordpress.org/plugins/wp-staging/) plugin. 
 
