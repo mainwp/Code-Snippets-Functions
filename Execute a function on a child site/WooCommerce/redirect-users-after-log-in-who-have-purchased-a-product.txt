@@ -1,0 +1,22 @@
+function ts_redirect_login( $redirect) {
+    if( isset($_POST['username']) && !empty($_POST['username']) ){
+        $user_data = get_user_by(is_email( $_POST['username'] ) ? 'email' : 'login', $_POST['username']);
+        $user_id = $user_data->data->ID;
+        $customer_orders = get_posts( array(
+            'numberposts' => -1,
+            'meta_key'    => '_customer_user',
+            'meta_value'  => $user_id,
+            'post_type'   => 'shop_order',
+            'post_status' => array('wc-completed','wc-processing')
+        ) );
+        if($customer_orders){
+            // Purchased user
+            $redirect = get_permalink(37); // replace with your page link
+        }else{
+            // Non purchased user
+            $redirect = get_permalink(271); // replace with your page link
+        }
+    }
+    return $redirect;
+}
+add_filter( 'woocommerce_login_redirect', 'ts_redirect_login' );
