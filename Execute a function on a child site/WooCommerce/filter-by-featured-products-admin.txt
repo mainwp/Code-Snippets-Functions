@@ -1,6 +1,6 @@
 add_filter( 'woocommerce_products_admin_list_table_filters', 'bbloomer_featured_filter' );
  
-function bbloomer_featured_filter( $filters ) {
+function wc_featured_filter( $filters ) {
    $filters['featured_choice'] = 'bbloomer_filter_by_featured';
    return $filters;
 }
