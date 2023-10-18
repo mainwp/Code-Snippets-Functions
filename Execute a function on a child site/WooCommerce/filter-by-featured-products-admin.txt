@@ -18,7 +18,7 @@ function bbloomer_filter_by_featured() {
    echo $output;
 }
  
-add_filter( 'parse_query', 'bbloomer_featured_products_query' );
+add_filter( 'parse_query', 'wc_featured_products_query' );
  
 function bbloomer_featured_products_query( $query ) {
     global $typenow;
