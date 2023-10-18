@@ -5,7 +5,7 @@ function wc_featured_filter( $filters ) {
    return $filters;
 }
  
-function bbloomer_filter_by_featured() {
+function wc_filter_by_featured() {
    $current_featured_choice = isset( $_REQUEST['featured_choice'] ) ? wc_clean( wp_unslash( $_REQUEST['featured_choice'] ) ) : false;
    $output = '<select name="featured_choice" id="dropdown_featured_choice"><option value="">Filter by featured status</option>';
    $output .= '<option value="onlyfeatured" ';
