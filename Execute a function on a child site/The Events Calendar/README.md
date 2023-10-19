@@ -1,6 +1,6 @@
 ## The Events Calendar code snippets
 
-Tested version of WordPress 6.3.1, plugin version was The Events Calendar 6.2.3.2.
+Tested version of WordPress 6.3.2, plugin version was The Events Calendar 6.2.4.
 
 This file is a code snippet that is used for [The Events Calendar](https://wordpress.org/plugins/the-events-calendar/) plugin. 
 
