@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_variation_is_visible', 'hide_out_of_stock_variations', 10, 4 );
+function hide_out_of_stock_variations( $is_visible, $variation_id, $product_id, $variation ) {
+    if ( ! $variation->is_in_stock() ) {
+        $is_visible = false;
+    }
+    return $is_visible;
+}
