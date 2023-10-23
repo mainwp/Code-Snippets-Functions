@@ -1,6 +1,6 @@
 ## Ajax Load More code snippets
 
-Tested version of WordPress 6.3.1, plugin version was Ajax Load More 6.2.0.
+Tested version of WordPress 6.3.2, plugin version was Ajax Load More 6.2.0.1.
 
 This file is a code snippet that is used for [Ajax Load More](https://wordpress.org/plugins/ajax-load-more/) plugin. 
 
