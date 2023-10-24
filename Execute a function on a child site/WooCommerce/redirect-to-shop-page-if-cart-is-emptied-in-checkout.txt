@@ -1,0 +1,12 @@
+add_action( 'template_redirect', 'redirect_empty_checkout_to_shop' );
+function redirect_empty_checkout_to_shop() {
+    // Targetting empty cart on cart and checkout pages
+    if ( ( ( is_checkout() && ! is_wc_endpoint_url() ) || is_cart() ) && WC()->cart->is_empty() ) {
+        // Clear and add notices before the redirection function
+        wc_clear_notices();
+        // Argument "info" doesn't work with wc_add_notice() function
+        wc_add_notice( __( 'The checkout is not available when your cart is empty. Happy shopping!', 'woocommerce' ), 'notice' ); 
+        wp_safe_redirect( wc_get_page_permalink( 'shop') );
+        exit(); // Always use exit after a wp redirect
+    }
+}
