@@ -1,0 +1,11 @@
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'custom_cart_shipping_method_full_label', 10, 2 );
+function custom_cart_shipping_method_full_label($label, $method){
+    $chosen_methods = WC()->session->get('chosen_shipping_methods');
+    $chosen_method = explode(':', reset($chosen_methods) );
+    $chosen_method = reset($chosen_method); // Get the chosen shipping method
+
+    if ( $method->get_method_id() !== 'local_pickup' && $chosen_method === 'local_pickup' && $method->cost > 0 ) {
+        $label = $method->get_label();
+    }
+    return $label;
+}
