@@ -1,0 +1,25 @@
+add_filter( 'woocommerce_add_cart_item_data', 'filter_add_cart_item_data' );
+function filter_add_cart_item_data( $cart_item_data ) {
+    if ( ! isset($cart_item_data['unique_key']) ) {
+        $cart_item_data['unique_key'] = md5(microtime().rand());
+    }
+    return $cart_item_data;
+}
+
+
+add_action( 'woocommerce_add_to_cart', 'split_cart_items_by_quantity', 10, 6 );
+function split_cart_items_by_quantity( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+    if ( $quantity == 1 ) return;
+        
+    // Keep the product but set its quantity to 1
+    WC()->cart->set_quantity($cart_item_key, 1);
+
+    // Loop through each unit of item quantity
+    for ( $i = 1; $i <= $quantity -1; $i++ ) {
+        // Make each quantity item unique and separated
+        $cart_item_data['unique_key'] = md5(microtime().rand());
+
+        // Add each item quantity as a separated cart item
+        WC()->cart->add_to_cart( $product_id, 1, $variation_id, $variation, $cart_item_data );
+    }
+}
