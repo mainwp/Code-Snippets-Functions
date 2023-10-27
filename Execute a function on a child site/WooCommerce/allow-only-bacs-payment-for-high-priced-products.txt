@@ -1,0 +1,15 @@
+add_filter('woocommerce_available_payment_gateways', 'restrict_bacs_for_high_value_items', 99, 1);
+function restrict_bacs_for_high_value_items( $available_gateways ) {
+    // Only on frontend and if BACS payment method is enabled
+    if ( ! is_admin() && isset($available_gateways['bacs']) ) {
+        // Loop through cart items
+        foreach ( WC()->cart->get_cart() as $item ) {
+            // If an item has a price up to 100
+            if ( $item['data']->get_price() >= 100 ) {
+                // Only BACS payment allowed
+                return ['bacs' => $available_gateways['bacs']]; 
+            }
+        }
+    }
+    return $available_gateways;
+}
