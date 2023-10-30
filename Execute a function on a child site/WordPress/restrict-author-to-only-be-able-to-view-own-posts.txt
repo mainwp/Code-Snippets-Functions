@@ -1,0 +1,10 @@
+function wp_authors_posts_view( $wp_query ) {
+    if ( strpos( $_SERVER[ 'REQUEST_URI' ], '/wp-admin/edit.php' ) !== false ) {
+        if ( !current_user_can( 'edit_others_posts' ) ) {
+            global $current_user;
+            $wp_query->set( 'author', $current_user->id );
+        }
+    }
+}
+
+add_filter('parse_query', 'wp_authors_posts_view' );
