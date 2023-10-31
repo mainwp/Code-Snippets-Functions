@@ -1,0 +1,10 @@
+function wp_send_email_on_role_change( $user_id, $new_role ) {
+    $user = get_userdata( $user_id );
+    $email = $user->user_email;
+    $subject = 'Your role has changed on ' . get_bloginfo('name');
+    $message = 'Hello ' . $user->display_name . ', your role has changed to ' . $new_role;
+
+    wp_mail($email, $subject, $message);
+}
+
+add_action( 'set_user_role', 'wp_send_email_on_role_change', 10, 2);
