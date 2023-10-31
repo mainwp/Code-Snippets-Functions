@@ -1,6 +1,6 @@
 ## WooCommerce Bookings code snippets
 
-Tested version of WordPress 6.3.1, plugin version was WooCommerce Bookings 2.0.3.
+Tested version of WordPress 6.3.2, plugin version was WooCommerce Bookings 2.0.5.
 
 This file is a code snippet that is used for [WooCommerce Bookings](https://woocommerce.com/products/woocommerce-bookings/) plugin. 
 
