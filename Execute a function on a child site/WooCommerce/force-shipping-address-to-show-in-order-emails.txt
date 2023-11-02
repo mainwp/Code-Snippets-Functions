@@ -1,0 +1,10 @@
+add_action( 'woocommerce_new_order', 'add_back_shipping_address_1', 20, 2 );
+function add_back_shipping_address_1( $order_id, $order ) {
+    // Below, replace 'custom_field_key' with the correct key
+    $shipping_address_1 = $order->get_meta('custom_field_key');
+
+    if( ! empty($shipping_address_1) ) {
+        $order->set_shipping_address_1($shipping_address_1);
+        $order->save();
+    }
+}
