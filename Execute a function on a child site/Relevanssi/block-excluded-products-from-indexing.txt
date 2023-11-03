@@ -1,0 +1,7 @@
+add_filter( 'relevanssi_woocommerce_indexing', 'rlv_woocommerce_filter' );
+function rlv_woocommerce_filter( $blocks ) {
+    $blocks['outofstock']           = true;
+    $blocks['exclude-from-catalog'] = true;
+    $blocks['exclude-from-search']  = true;
+    return $blocks;
+}
