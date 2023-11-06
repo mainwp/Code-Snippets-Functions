@@ -1,0 +1,25 @@
+// Add a new custom column to WooCommerce admin products list
+add_filter('manage_edit-product_columns', 'add_column_product_ean');
+function add_column_product_ean( $columns ) {
+    $new_columns = array();
+
+    foreach ($columns as $key => $label) {
+        $new_columns[$key] = $label;
+       
+        if ( $key === 'sku' ) {
+            // Add "EAN" column after "SKU" column
+            $new_columns['ean'] = __('EAN','woocommerce');
+        }
+    }
+    return $new_columns;
+}
+
+// Populate the new column with custom metadata
+add_action('manage_product_posts_custom_column', 'populate_column_product_ean');
+function populate_column_product_ean($column) {
+    global $product;
+
+    if ( $column === 'ean' ) {
+        echo $product->get_meta('ean');
+    }
+}
