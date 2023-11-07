@@ -1,0 +1,9 @@
+function display_digital_product_notice() {
+    global $product;
+
+    if ( is_a( $product, 'WC_Product' ) && $product->is_downloadable() ) {
+        echo '<div class="digital-product-notice">This is a digital product.</div>';
+    }
+}
+
+add_action( 'woocommerce_before_single_product', 'display_digital_product_notice' );
