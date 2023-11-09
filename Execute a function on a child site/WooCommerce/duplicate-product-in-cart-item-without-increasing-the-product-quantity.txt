@@ -1,0 +1,33 @@
+add_filter('woocommerce_update_cart_action_cart_updated', 'on_action_cart_updated');
+
+function on_action_cart_updated( $cart_updated ) {
+
+    if ( WC()->cart ) {
+
+        $cart_items = WC()->cart->get_cart();
+
+        foreach ( $cart_items as $key => $cart_item ) {
+            if ( $cart_item && 5 <= $cart_item['quantity'] ) {
+                $unique_key = md5( microtime().rand() );
+                $duplicate_item = $cart_item;
+                $duplicate_item['key'] = $unique_key;
+                $duplicate_item['quantity'] = 1;
+
+                $item_object = $cart_item['data'];
+                $item_object->add_meta_data('duplicated','yes');
+
+                $_product = wc_get_product( $cart_item );
+                error_log( $_product->get_type() );
+//                $product =  new WC_Product_Simple();
+//                $product->set_title('')
+//                //$item_object->get_meta_data('duplicated');
+//
+//                WC()->cart->add_to_cart( $cart_item['product_id'], 1, 0, 0, [], $unique_key);
+                WC()->cart->add_to_cart($cart_item['product_id'],1);
+//                WC()->cart->cart_contents[$unique_key] = $duplicate_item;
+            }
+        }
+    }
+
+    return $cart_updated;
+}
