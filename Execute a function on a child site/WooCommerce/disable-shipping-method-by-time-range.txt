@@ -1,0 +1,35 @@
+
+If you want to show the shipping method from 7 pm Monday to Friday and hide it at other times, you need to adjust your code to reflect this logic. Here's an updated version of your code:
+
+ add_filter( 'woocommerce_package_rates', 'disable_shipping_method_based_on_day_and_time', 10, 2 );
+
+function disable_shipping_method_based_on_day_and_time( $rates, $package ) {
+    // Set the default timezone (http://php.net/manual/en/timezones.php)
+    date_default_timezone_set( 'Europe/Madrid' );
+
+    // Set the shipping rate IDs
+    $shipping_rate_ids = array( 
+        'advanced_flat_rate_shipping:12945',
+        'advanced_flat_rate_shipping:12947',
+        'advanced_flat_rate_shipping:12956',
+        'advanced_flat_rate_shipping:12959',
+    );
+
+    foreach ( $shipping_rate_ids as $shipping_rate_id ) {
+        // If the shipping rate ID is in the array and it is Monday to Friday and (before 3:00 pm or after 7:00 pm)...
+        if ( array_key_exists( $shipping_rate_id, $rates ) 
+            && ( date( 'N' ) >= 1 && date( 'N' ) <= 5 ) // Monday to Friday
+            && ( date( 'H' ) < 15 || date( 'H' ) >= 19 ) ) { // Before 3:00 pm or after 7:00 pm
+            // Enable the shipping method.
+            continue;
+        } 
+        // If it is Saturday or Sunday...
+        elseif ( array_key_exists( $shipping_rate_id, $rates ) 
+            && ( date( 'N' ) == 6 || date( 'N' ) == 7 ) ) { // Saturday or Sunday
+            // Disable the shipping method.
+            unset( $rates[$shipping_rate_id] );
+        }
+    }
+
+    return $rates;
+}
