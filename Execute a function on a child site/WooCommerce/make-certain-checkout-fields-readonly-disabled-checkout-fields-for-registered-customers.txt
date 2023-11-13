@@ -1,0 +1,16 @@
+add_filter('woocommerce_checkout_fields', 'customer_readonly_checkout_billing_fields');
+function customer_readonly_checkout_billing_fields( $fields ) {
+    global $current_user;
+
+    // Billing Country (select field)
+    if ( ! empty($current_user->billing_country) ) {
+        $fields['billing']['billing_country']['custom_attributes'] = array( 'disabled' => 'disabled' );
+    }
+
+    // Billing City (input field)
+    if ( ! empty($current_user->billing_city) ) {
+        $fields['billing']['billing_city']['custom_attributes'] = array( 'readonly' => 'readonly' );
+    }
+
+    return $fields;
+}
