@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_form_field' , 'remove_checkout_required_asterisk_field', 10, 4 );
+function remove_checkout_required_asterisk_field( $field, $key, $args, $value ) {
+    // Only on checkout page and billing email field
+    if( is_checkout() && ! is_wc_endpoint_url() && $key === 'billing_email' ) {
+        $required = '&nbsp;<abbr class="required" title="required">*</abbr>';
+        $field = str_replace( $required, '', $field );
+    }
+    return $field;
+}
