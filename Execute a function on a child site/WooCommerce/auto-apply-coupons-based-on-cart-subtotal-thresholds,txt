@@ -1,0 +1,35 @@
+add_action( 'woocommerce_before_calculate_totals' , 'discount_based_on_cart_items_subtotal' );
+function discount_based_on_cart_items_subtotal( $cart ) { 
+    if ( is_admin() && !defined('DOING_AJAX') )
+        return;
+    
+    $subtotal = 0; // Initializing
+
+    // Loop through cart items to get the subtotal excluding taxes
+    foreach ( $cart->get_cart() as $item ) {
+        $subtotal += $item['line_subtotal'];
+    }
+    
+    if ( $subtotal >= 100 && $subtotal < 200 ) { 
+        if ( ! $cart->has_discount('black10') ) {
+            $cart->apply_coupon( 'black10' );
+            $notice = __('10% OFF for '.wc_price(100).' or more - Discount Applied!');
+        }
+        if ( $cart->has_discount('black20') ) {
+            $cart->remove_coupon( 'black20' );
+        }
+    } elseif ( $subtotal >= 200 ) {
+        if ( ! $cart->has_discount('black20') ) {
+            $cart->apply_coupon( 'black20' );
+            $notice = __('20% OFF for '.wc_price(200).' or more - Discount Applied!');
+        }
+        if ( $cart->has_discount('black10') ) {
+            $cart->remove_coupon( 'black10' );
+        }
+    }
+    
+    if ( isset($notice) ) {
+        wc_clear_notices();
+        wc_add_notice( $notice, 'notice' );
+    }
+}
