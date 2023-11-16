@@ -1,0 +1,49 @@
+// Define variation price with fee
+add_filter( 'woocommerce_add_cart_item_data', 'define_variation_price_with_fee', 10, 3 );
+function define_variation_price_with_fee( $cart_item_data, $product_id, $variation_id ) {   
+    // Only for product variations
+    if ( $variation_id > 0 ) {
+        // Define the fee amount to be added
+        $variation_fee = 20; 
+        // Get an instance of the product variation object
+        $variation     = wc_get_product( $variation_id ); 
+        // Add price with fee as custom cart item data
+        $cart_item_data['price_with_fee'] = $variation->get_price() + $variation_fee;
+    }
+    return $cart_item_data;
+}
+
+
+// Display variation price with fee html (cart, mini-cart and checkout)
+add_filter( 'woocommerce_cart_item_price', 'display_variation_price_with_fee', 10, 2 );
+function display_variation_price_with_fee($price, $cart_item) {
+    // Check item for the price with fee
+    if ( isset($cart_item['price_with_fee']) ) {
+        // Set the price with fee in arguments
+        $args = array('price' => floatval($cart_item['price_with_fee']));
+
+        if ('incl' === get_option('woocommerce_tax_display_cart')) {
+            $product_price = wc_get_price_including_tax($cart_item['data'], $args);
+        } else {
+            $product_price = wc_get_price_excluding_tax($cart_item['data'], $args);
+        }
+        return wc_price($product_price);
+    }
+    return $price;
+}
+
+// Set variation price with fee (when order is submitted)
+add_action( 'woocommerce_before_calculate_totals' , 'set_variation_price_with_fee' );
+function set_variation_price_with_fee( $cart ) { 
+    if ( is_admin() && !defined('DOING_AJAX') )
+        return;
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) {
+        // Check items for the price with fee
+        if ( isset($item['price_with_fee']) ) {
+            // Set the price with fee
+            $item['data']->set_price($item['price_with_fee']);
+        }
+    }
+}
