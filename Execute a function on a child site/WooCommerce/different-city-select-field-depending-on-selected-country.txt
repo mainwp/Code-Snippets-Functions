@@ -1,0 +1,135 @@
+// Add custom city select fields
+add_filter( 'woocommerce_checkout_fields' , 'add_custom_checkout_city_dropdowns' );
+function add_custom_checkout_city_dropdowns( $fields ) {
+    $fields['billing']['billing_city']['class'][] = 'update_totals_on_change hidden'; 
+
+    $fields['billing']['billing_city_ua'] = array(
+        'label'         => __('City', 'woocommerce'),
+        'placeholder'   => _x('billing_city_ua', 'Select your city', 'woocommerce'),
+        'required'      => false,
+        'class'         => array('form-row-wide cities-select update_totals_on_change hidden'),
+        'clear'         => true,
+        'type'          => 'select',
+        'priority'      => 88,
+        'options'       => array(
+            ''          => __('Select city', 'woocommerce' ),
+            'City1'     => __('City1', 'woocommerce' ),
+            'City2'     => __('City2', 'woocommerce' ),
+            'City3'     => __('City3', 'woocommerce' ),
+            'City4'     => __('City4', 'woocommerce' ),
+        ),
+    );
+
+    $fields['billing']['billing_city_pl'] = array(
+        'label'         => __('City', 'woocommerce'),
+        'placeholder'   => _x('billing_city_pl', 'Select your city', 'woocommerce'),
+        'required'      => false,
+        'class'         => array('form-row-wide cities-select update_totals_on_change hidden'),
+        'clear'         => true,
+        'type'          => 'select',
+        'priority'      => 89, 
+        'options'       => array(
+            ''          => __('Select city', 'woocommerce' ),
+            'City1'     => __('City1', 'woocommerce' ),
+            'City2'     => __('City2', 'woocommerce' ),
+            'City3'     => __('City3', 'woocommerce' ),
+            'City4'     => __('City4', 'woocommerce' ),
+        ),
+    );
+    return $fields;
+}
+
+// Custom inline CSS
+add_action('wp_head', 'checkout_city_dropdowns_css');
+function checkout_city_dropdowns_css() {
+    if ( is_checkout() && ! is_wc_endpoint_url() ) : ?>
+    <style>
+        .cities-select.hidden {display:none;}
+        #billing_city_field.hidden {display:none !important;}
+    </style>
+    <?php endif;
+}
+
+// PHP: Remove "(optional)" from some non required fields
+add_filter( 'woocommerce_form_field' , 'remove_checkout_optional_fields_label', 10, 4 );
+function remove_checkout_optional_fields_label( $field, $key, $args, $value ) {
+    // Only on checkout page
+    if( is_checkout() && ! is_wc_endpoint_url() && in_array($key, ['billing_city_ua', 'billing_city_pl']) ) {
+        $optional = '&nbsp;<span class="optional">(' . esc_html__( 'optional', 'woocommerce' ) . ')</span>';
+        $field = str_replace( $optional, '', $field );
+    }
+    return $field;
+}
+
+// JavaScript: Show/hide City Select fields
+add_action( 'woocommerce_checkout_init' , 'checkout_city_dropdowns_js' );
+function checkout_city_dropdowns_js() {
+    $country  = WC()->customer->get_billing_country();
+    $city     = WC()->customer->get_billing_city();
+
+    wc_enqueue_js("
+        const city   = '#billing_city',       cityUA  = '#billing_city_ua', 
+            cityPL = '#billing_city_pl',    country = '#billing_country';
+
+        var countryVal = '{$country}', 
+            cityVal    = '{$city}';
+
+        function showHideCityFields( city, cityUA, cityPL, cityVal, countryVal ) {
+            if ( countryVal === 'UA' ) {
+                $(city).val(cityVal).closest('p').addClass('hidden');
+                $(cityUA).val('').closest('p').removeClass('hidden');
+                $(cityPL).val(cityVal).closest('p').addClass('hidden');
+            } else if ( countryVal === 'PL' ) {
+                $(city).val(cityVal).closest('p').addClass('hidden');
+                $(cityUA).val(cityVal).closest('p').addClass('hidden');
+                $(cityPL).val('').closest('p').removeClass('hidden');
+            } else {
+                $(city).val(cityVal).closest('p').removeClass('hidden');
+                $(cityPL).val('').closest('p').addClass('hidden');
+                $(cityUA).val('').closest('p').addClass('hidden');
+            }
+        }
+
+        // On Start: Get country value
+        if( $(country).val() != '' && $(country).val() != undefined ) {
+            countryVal = $(country).val();
+        }
+
+        // On Start: Get city value
+        if( $(city).val() != '' && $(city).val() != undefined ) {
+            cityVal = $(city).val();
+            if ( countryVal === 'UA' ) {
+                $(cityUA).val(cityVal).change();
+            } else if ( countryVal === 'PL' ) {
+                $(cityPL).val(cityVal).change();
+            }
+        }
+
+        // On start: Enable WooCommerce Select2 for custom select fields
+        $(cityUA+','+cityPL).selectWoo();
+
+        // On start: Remove '(optional)' from label
+        $(document.body).on('update_checkout', function(){
+            $(cityUA+'_field label > .optional').remove();
+            $(cityPL+'_field label > .optional').remove();
+        });
+
+        // On start: Show/Hide city fields
+        showHideCityFields( city, cityUA, cityPL, cityVal, countryVal );
+
+        // On Country change: Show/Hide city fields
+        $('form.woocommerce-checkout').on('change', country, function() {
+            showHideCityFields( city, cityUA, cityPL, '', $(this).val() );
+        });
+
+        // For country 'UA', on city change
+        $('form.woocommerce-checkout').on('change', cityUA, function() {
+            $(city).val($(this).val());
+        });
+
+        // For country 'PL', on city change
+        $('form.woocommerce-checkout').on('change', cityPL, function() {
+            $(city).val($(this).val());
+        });
+    ");
+}
