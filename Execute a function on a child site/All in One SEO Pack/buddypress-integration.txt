@@ -1,0 +1,38 @@
+add_action( 'bp_template_redirect', function () {
+    if ( is_buddypress() ) {
+        add_filter( 'aioseo_disable_title_rewrites', '__return_true' );
+    }
+} );
+
+add_filter( 'aioseo_description', function ( $desc ) {
+    if ( bp_is_blog_page() || bp_is_directory() ) {
+        return $desc;
+    }
+
+    if ( bp_is_user() ) {
+        $desc = sprintf( ' %s\'s Profile & Recent activities on %s ', bp_get_displayed_user_fullname(), get_bloginfo( 'name' ) );
+    }
+
+    if ( bp_is_active( 'groups' ) && bp_is_group() ) {
+        $desc = bp_get_group_description( groups_get_current_group() );
+    }
+
+    return $desc;
+} );
+
+add_filter( 'document_title_parts', function ( $title ) {
+    if ( ! bp_is_members_directory() ) {
+        return $title;
+    }
+
+    $member_type = bp_get_current_member_type();
+    if ( ! $member_type ) {
+        return $title;
+    }
+
+    $type_object = bp_get_member_type_object( $member_type );
+    $sep = apply_filters( 'document_title_separator', '-' );
+    $title['title'] = $title['title'] . ' ' . $sep . ' ' . $type_object->labels['name'];
+
+    return $title;
+}, 1000 );
