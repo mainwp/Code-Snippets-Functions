@@ -1,0 +1,20 @@
+add_action( 'woocommerce_calculate_totals', 'disable_checkout_submit_button' );
+function disable_checkout_submit_button() {
+    $package = WC()->shipping->get_packages()[0];
+    if( is_cart() && isset($package['destination']['country']) && isset($package['contents']) ){
+        // Load your settings
+        $data = your_country_shipping_settings();
+
+        // If matching allowed countries ==> We Exit
+        if( in_array( $package['destination']['country'], $data['countries'] ) )
+            return; // Exit
+
+        $product_names = get_items_names( $data['matching'], $package, $data['type'] );
+
+        if( count($product_names) > 0 ){
+            remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+            wc_clear_notices();
+            wc_add_notice( __( 'Some products are shipping to US And Canada exclusively.', 'woocommerce' ), "error" );
+        }
+    }
+}
