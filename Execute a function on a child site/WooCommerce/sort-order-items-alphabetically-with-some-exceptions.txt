@@ -1,0 +1,21 @@
+add_filter( 'woocommerce_order_get_items', function( $items, $order ) {
+    
+    $prioritizedItems = ['PO#', 'Terms', 'Discount']; // Items which needs to be displayed first
+
+    uasort($items, function($a, $b) use ($prioritizedItems) {
+        // Check if either item is in the prioritized list
+        $a_priority = in_array($a['name'], $prioritizedItems);
+        $b_priority = in_array($b['name'], $prioritizedItems);
+
+        // If both or neither of them are prioritized, then you can sort alphabetically
+        if ($a_priority === $b_priority) {
+            return strnatcmp($a['name'], $b['name']);
+        }
+
+        // If a single one is prioritized, it should come first
+        return $a_priority ? -1 : 1;
+    });
+
+    return $items;
+
+}, 10, 2 );
