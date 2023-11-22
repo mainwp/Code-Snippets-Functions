@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_cart_updated_notice_type', '__return_false' );
