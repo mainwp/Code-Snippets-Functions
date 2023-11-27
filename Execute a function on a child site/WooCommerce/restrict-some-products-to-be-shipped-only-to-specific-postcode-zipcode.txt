@@ -1,0 +1,49 @@
+// Trigger "update checkout" on postcode change
+add_action( 'woocommerce_checkout_init', 'postcode_field_update_checkout_js' );
+function postcode_field_update_checkout_js() {
+    wc_enqueue_js( "
+        // On postcode change
+        $('form.woocommerce-checkout').on('change', '#billing_postcode, #shipping_postcode', function() {
+            $(document.body).trigger('update_checkout')
+        });
+    ");
+}
+
+add_action( 'woocommerce_calculate_totals', 'check_cart_items_for_customer_postcode' );
+function check_cart_items_for_customer_postcode( $cart ) {
+    $targeted_postcodes = array('713102'); // The allowed postcodes
+    $targeted_product_ids = array( 15, 16, 17, 18, 25); // The product Ids for that postcode
+    $product_names = []; // Initializing
+
+    // Get customer postcode
+    $postcode = WC()->customer->get_shipping_postcode();
+    $postcode = empty($postcode) ? WC()->customer->get_billing_postcode() : $postcode;
+    $postcode_match = in_array( $postcode, $targeted_postcodes );
+
+    // Exit if postcode is not yet defined or if it match
+    if ( empty($postcode) || in_array( $postcode, $targeted_postcodes ) ) return; 
+
+    // Loop through cart items to collect targeted products
+    foreach($cart->get_cart() as $item ) {
+        if( in_array( $item['product_id'], $targeted_product_ids ) ) { 
+            $product_names[] = $item['data']->get_name(); // Add the product name
+        }
+    }
+
+    if( count($product_names) > 0 ) {
+        if ( is_cart() ) {
+            remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        } elseif ( is_checkout() && ! is_wc_endpoint_url() ) {
+            add_filter('woocommerce_order_button_html', 'disabled_place_order_button_html');
+        }
+        wc_clear_notices(); // Clear other existing notices
+        // Avoid checkout displaying an error notice
+        wc_add_notice( sprintf( __('The products %s can not be shipped to %s postcode.', 'woocommerce'), 
+            implode(', ', $product_names), $postcode ), 'error' );
+    }
+}
+
+function disabled_place_order_button_html() {
+    $order_button_text = __('Place order', 'woocommerce');
+    echo '<button type="button" class="button alt disabled" id="place_order_disabled">' . $order_button_text . '</button>';
+}
