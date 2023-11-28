@@ -1,0 +1,24 @@
+// Allow local pickup only for specific product Ids
+add_action( 'woocommerce_package_rates', 'show_hide_local_pickup_shipping_methods', 10, 2 );
+function show_hide_local_pickup_shipping_methods( $rates, $package ) {
+
+    // HERE BELOW the product Ids in the array allowing local pickup
+    $product_ids   = array(12, 34, 56);
+    $product_found = false;
+
+    // Loop through cart items
+    foreach( $package['contents'] as $item ){
+        if( count( array_intersect($product_ids, [$item['variation_id'], $item['product_id']]) ) > 0 ) {
+            $product_found = true;
+            break;
+        }
+    }
+
+    // Loop through shipping methods
+    foreach( $rates as $rate_key => $rate ) {
+        if( 'local_pickup' === $rate->method_id && ! $product_found ) {
+            unset($rates[$rate_key]);
+        }
+    }
+    return $rates;
+}
