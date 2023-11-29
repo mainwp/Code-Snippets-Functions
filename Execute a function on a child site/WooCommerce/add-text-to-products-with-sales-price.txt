@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_get_price_html', 'cw_change_product_price_display', 100, 2 );
+add_filter( 'woocommerce_cart_item_price', 'cw_change_product_price_display', 100, 2 );
+function cw_change_product_price_display( $price_html, $mixed ) {
+    $product = is_a($mixed, 'WC_product') ? $mixed : $mixed['data'];
+
+    if ( $product->is_on_sale() ) {
+        $price_html = sprintf('<span>%s:</span> <br>%s', __('Your sale price is', 'woocommerce'), $price_html);
+    }
+    return $price_html;
+}
