@@ -1,0 +1,3 @@
+add_filter( 'relevanssi_remote_addr', function( $ip ) {
+  return $_SERVER['HTTP_X_FORWARDED_FOR'];
+} );
