@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_checkout_fields' , 'conditional_checkout_billing_email_placeholder', 20, 1 );
+
+function conditional_checkout_billing_email_placeholder( $fields ) {
+    $billing_email = WC()->customer->get_billing_email();
+
+    if ( empty($billing_email) ) {
+        $fields['billing']['billing_email']['placeholder'] = __('Your Email Address');
+    }
+    return $fields;
+}
