@@ -1,6 +1,6 @@
 ## AMP code snippets
 
-Tested version of WordPress 6.3, plugin version was AMP 2.4.2.
+Tested version of WordPress 6.4.1, plugin version was AMP 2.5.0.
 
 This file is a code snippet that is used for [AMP](https://wordpress.org/plugins/amp/) plugin. 
 
