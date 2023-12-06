@@ -1,0 +1,18 @@
+add_filter( 'woocommerce_available_payment_gateways', 'hide_cod_payment_gateway_based_on_categories', 20 );
+function hide_cod_payment_gateway_based_on_categories( $payment_gateways ) {
+    // Only for checkout page
+    if ( ! ( is_checkout() && ! is_wc_endpoint_url() ) )
+        return $payment_gateways;
+
+    // Here define your product categories term Ids, slugs or names.
+    $targeted_terms = array('hoodies');
+
+    // Loop through cart items
+    foreach ( WC()->cart->get_cart() as $item ) {
+        if ( isset($payment_gateways['cod']) && has_term($targeted_terms, 'product_cat', $item['product_id']) ) {
+            unset($payment_gateways['cod']);
+            break;
+        }
+    }
+    return $payment_gateways;
+}
