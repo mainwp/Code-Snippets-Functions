@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_orderby', 'rlv_fix_order' );
+function rlv_fix_order( $orderby ) {
+  return array( 'relevance' => 'desc' );
+}
