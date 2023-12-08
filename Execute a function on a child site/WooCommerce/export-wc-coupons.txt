@@ -1,0 +1,108 @@
+// Function to handle AJAX request
+add_action("admin_footer", "add_export_coupons_button");
+
+function add_export_coupons_button()
+{
+    global $current_screen;
+
+    if ($current_screen->post_type != "shop_coupon") {
+        return;
+    }?>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            var exportButton = document.createElement('button');
+            exportButton.innerHTML = 'Export Coupons';
+            exportButton.id = 'export-coupons';
+            exportButton.classList.add('page-title-action');
+            exportButton.style.marginLeft = '10px';
+            exportButton.addEventListener('click', function () {
+                var buttonText = this.innerHTML;
+                var spinner = document.createElement('span');
+                spinner.classList.add('spinner', 'is-active');
+                this.innerHTML = '';
+                this.appendChild(spinner);
+                this.appendChild(document.createTextNode(' Loading...'));
+                this.disabled = true;
+
+                $.ajax({
+                    url: ajaxurl,
+                    data: {
+                        action: 'export_coupons_as_csv'
+                    },
+                    success: function (response) {
+                        alert("Coupons exported successfully!");
+                        exportButton.innerHTML = buttonText;
+                        exportButton.disabled = false;
+                    }
+                });
+            });
+
+            var pageActions = document.querySelector('.page-title-action');
+            pageActions.parentNode.insertBefore(exportButton, pageActions.nextSibling);
+        });
+    </script>
+    <?php
+}
+
+// Include necessary WordPress files
+require_once ABSPATH . "wp-load.php";
+require_once ABSPATH . "wp-admin/includes/file.php";
+require_once ABSPATH . "wp-admin/includes/media.php";
+
+function export_coupons_as_csv()
+{
+    // Get all WooCommerce Coupons
+    $args = [
+        "posts_per_page" => -1,
+        "post_type" => "shop_coupon",
+        "post_status" => "publish",
+    ];
+
+    $coupons = get_posts($args);
+    $csv_data = [];
+
+    // Prepare data for CSV
+    foreach ($coupons as $coupon) {
+        $coupon_meta = get_post_meta($coupon->ID);
+        $csv_data[] = [
+            "ID" => $coupon->ID,
+            "post_title" => $coupon->post_title,
+            "discount_type" => $coupon_meta["discount_type"][0],
+            "coupon_amount" => $coupon_meta["coupon_amount"][0],
+            "expiry_date" => $coupon_meta["date_expires"][0],
+        ];
+    }
+
+    // Convert array to CSV
+    $upload_dir = wp_upload_dir();
+    $csv_file_path =
+        $upload_dir["path"] .
+        "/coupons_" .
+        count($csv_data) .
+        "_" .
+        time() .
+        ".csv";
+    $fp = fopen($csv_file_path, "w");
+
+    foreach ($csv_data as $fields) {
+        fputcsv($fp, $fields);
+    }
+
+    fclose($fp);
+
+    $filetype = wp_check_filetype(basename($csv_file_path), null);
+    $filetitle = preg_replace('/\.[^.]+$/', "", basename($csv_file_path));
+    $attachment = [
+        "post_mime_type" => $filetype["type"],
+        "post_title" => $filetitle,
+        "post_content" => "",
+        "post_status" => "inherit",
+    ];
+
+    $attach_id = wp_insert_attachment($attachment, $csv_file_path);
+    require_once ABSPATH . "wp-admin/includes/image.php";
+    $attach_data = wp_generate_attachment_metadata($attach_id, $csv_file_path);
+    wp_update_attachment_metadata($attach_id, $attach_data);
+}
+
+add_action("wp_ajax_export_coupons_as_csv", "export_coupons_as_csv");
