@@ -1,0 +1,16 @@
+// Add custom order data to make it accessible in Order preview template
+add_filter( 'woocommerce_admin_order_preview_get_order_details', 'admin_order_preview_add_order_total', 10, 2 );
+function admin_order_preview_add_order_total( $data, $order ) {
+    $data['order_total'] = strip_tags( wc_price( $order->get_total(), array( 'currency' => $order->get_currency() ) ) );
+    return $data;
+}
+
+// Display The data in Order preview
+add_action( 'woocommerce_admin_order_preview_end', 'display_order_total_in_admin_order_preview' );
+function display_order_total_in_admin_order_preview(){
+    // Call the stored value and display it
+    echo '<div><table cellspacing="0" class="wc-order-preview-table"><thead><tr>
+        <th class="wc-order-preview-table__column--total">' . __('Total') . '</th>
+        <td class="wc-order-preview-table__column--total-amount">{{{data.order_total}}}</td>
+    </tr></thead></table></div>';
+}
