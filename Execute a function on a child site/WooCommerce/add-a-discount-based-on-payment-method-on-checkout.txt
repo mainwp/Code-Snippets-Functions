@@ -1,0 +1,22 @@
+add_action( 'woocommerce_checkout_init', 'payment_method_change_trigger_update_checkout_js' );
+function payment_method_change_trigger_update_checkout_js() {
+    wc_enqueue_js("$('form.checkout').on( 'change', 'input[name=payment_method]', function(){
+        $(document.body).trigger('update_checkout');
+    });");
+}
+
+add_filter( 'woocommerce_cart_calculate_fees', 'discount_based_on_payment_method', 10, 1 );
+function discount_based_on_payment_method( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    if ( ! ( is_checkout() && ! is_wc_endpoint_url() ) )
+        return;
+    
+    $targeted_payment_method = 'cheque'; // Here define the desired payment method
+    
+    if( WC()->session->get('chosen_payment_method') === $targeted_payment_method ) {
+        $discount = $cart->subtotal * 0.10; // 10% discount
+        $cart->add_fee( 'Cash Discount', -$discount);
+    }
+}
