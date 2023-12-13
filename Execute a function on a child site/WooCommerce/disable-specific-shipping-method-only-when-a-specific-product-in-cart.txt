@@ -1,0 +1,19 @@
+add_filter( 'woocommerce_package_rates', 'custom_hide_shipping_for_shipping_class', 900, 2 );
+function custom_hide_shipping_for_shipping_class( $rates, $package ) {
+    $targeted_shipping_class  = 569; // shipping class ID
+    $targeted_shipping_method = 'free_shipping:8'; // shipping method rate ID
+
+    $found = false;
+
+    foreach ( $package['contents'] as $item ) {
+        if ( $item['data']->get_shipping_class_id() == $targeted_shipping_class ) {
+            $found = true;
+        } else {
+            return $rates;
+        }
+    }
+    if ( $found && isset($rates[$targeted_shipping_method]) ) {
+        unset($rates[$targeted_shipping_method]);
+    }
+    return $rates;
+}
