@@ -1,0 +1,10 @@
+add_filter( 'relevanssi_post_ok', 'relevanssi_memberpress_compatibility', 10, 2 );
+
+function relevanssi_memberpress_compatibility( $post_ok, $post_id ) {
+	$post = get_post( $post_id );
+	if ( MeprRule::is_locked( $post ) ) {
+		$post_ok = false;
+	}
+
+	return $post_ok;
+}
