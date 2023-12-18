@@ -1,0 +1,13 @@
+add_filter( 'manage_edit-shop_order_columns', 'add_customer_orders_count_column' );
+function add_customer_orders_count_column( $columns ) {
+    $new_columns = array();
+
+    foreach ( $columns as $column_key => $column_label ) {
+        if ( 'order_total' === $column_key ) {
+            $new_columns['order_count'] = __('Count', 'woocommerce');
+        }
+
+        $new_columns[$column_key] = $column_label;
+    }
+    return $new_columns;
+}
