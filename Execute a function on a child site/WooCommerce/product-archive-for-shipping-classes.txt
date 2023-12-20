@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_taxonomy_args_product_shipping_class', 'bbloomer_taxonomy_args_product_shipping_class' );
+ 
+function bbloomer_taxonomy_args_product_shipping_class( $args ) {
+   $args['query_var'] = true;
+   $args['rewrite'] = array(
+      'slug' => 'vendor', // SLUG_BASE
+   );
+   return $args;
+}
