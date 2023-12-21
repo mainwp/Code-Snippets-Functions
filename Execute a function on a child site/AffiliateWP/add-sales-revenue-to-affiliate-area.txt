@@ -1,0 +1,32 @@
+/**
+ * Adds a section showing the total sales earned by the affiliate to the AffiliateWP affiliate area's statistics tab.
+ */
+add_action( 'affwp_affiliate_dashboard_after_earnings', function( $affiliate_id ) {
+
+	// You can add or remove statuses here. Any status shown in this array will be included in the calculation.
+	// Supported statuses are paid, unpaid, pending, and rejected.
+	$statuses = [ 'paid', 'unpaid', 'pending', ];
+
+	// This will retrieve the sales total number.
+	$revenue = affiliate_wp()->referrals->sales->get_revenue_by_referral_status( $statuses, $affiliate_id );
+
+	// This will convert the number into a readable format.
+	$revenue = affwp_currency_filter( affwp_format_amount( $revenue ) );
+
+	// This HTML is based on how the markup is written in affiliate-wp/templates/dashboard-tab-stats.php
+	?>
+	<table class="affwp-table affwp-table-responsive">
+		<thead>
+		<tr>
+			<th>Distributed Sales</th>
+		</tr>
+		</thead>
+
+		<tbody>
+		<tr>
+			<td data-th="Revenue"><?php echo $revenue; ?></td>
+		</tr>
+		</tbody>
+	</table>
+	<?php
+} );
