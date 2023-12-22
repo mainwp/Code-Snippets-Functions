@@ -1,0 +1,4 @@
+add_filter( 'learndash_stripe_purchase_button_text', function() {
+    // Default is 'Use a Credit Card'
+    return 'Use Stripe';
+} );
