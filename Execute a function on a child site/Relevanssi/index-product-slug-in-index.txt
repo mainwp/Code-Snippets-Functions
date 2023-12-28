@@ -1,0 +1,5 @@
+add_filter( 'relevanssi_content_to_index', 'rlv_index_slug', 10, 2 );
+function rlv_index_slug( $content, $post ) {
+    $slug_with_spaces = str_replace( '-', ' ', $post->post_name );
+    return $content . ' ' . $slug_with_spaces;
+}
