@@ -1,0 +1,14 @@
+// For products shortcode (Home page?)
+add_filter( 'woocommerce_shortcode_products_query', 'shortcode_product_query_excl_pending_status', 50, 3 );
+function shortcode_product_query_excl_pending_status( $query_args, $atts, $loop_name ){
+    $query_args['post_status'] = 'publish';
+    return $query_args;
+}
+
+// For WooCommerce Archive pages
+add_action( 'woocommerce_product_query', 'product_query_excl_pending_status', 50, 2 );
+function product_query_excl_pending_status( $q, $query ) { 
+    if ( ! is_admin() && $q->is_main_query() && $q->is_archive() ) { 
+        $q->set('post_status', 'publish');
+    }
+} 
