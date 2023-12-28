@@ -1,0 +1,37 @@
+/**
+ * Add a checkbox to the coupon data panel to mark the coupon as "Admin Only".
+ */
+add_action('woocommerce_coupon_options', 'cwpai_add_coupon_option_field', 10, 2);
+function cwpai_add_coupon_option_field($coupon_id, $coupon) {
+    woocommerce_wp_checkbox(array(
+        'id'          => '_cwpai_admin_only_coupon',
+        'label'       => __('Admin Only Coupon?', 'woocommerce'),
+        'description' => __('If enabled, this coupon can only be applied manually by an administrator in the backend.', 'woocommerce'),
+    ));
+}
+
+/**
+ * Save the "Admin Only" checkbox value when the coupon is saved.
+ */
+add_action('woocommerce_coupon_options_save', 'cwpai_save_coupon_option_field', 10, 2);
+function cwpai_save_coupon_option_field($post_id, $coupon) {
+    update_post_meta($post_id, '_cwpai_admin_only_coupon', isset($_POST['_cwpai_admin_only_coupon']) ? 'yes' : 'no');
+}
+
+/**
+ * Restrict the usage of the coupon based on the "Admin Only" setting.
+ */
+add_filter('woocommerce_coupon_is_valid', 'cwpai_restrict_coupon_for_customers', 10, 3);
+function cwpai_restrict_coupon_for_customers($valid, $coupon, $discounts) {
+    if (get_post_meta($coupon->get_id(), '_cwpai_admin_only_coupon', true) === 'yes') {
+        // Check if it's the admin area or if the current user can manage WooCommerce (i.e., an admin).
+        if (is_admin() && current_user_can('manage_woocommerce')) {
+            return $valid; // Allow admins in the backend.
+        } else {
+            throw new Exception(__('This coupon is for admin use only.', 'woocommerce'));
+            return false;
+        }
+    }
+
+    return $valid;
+}
