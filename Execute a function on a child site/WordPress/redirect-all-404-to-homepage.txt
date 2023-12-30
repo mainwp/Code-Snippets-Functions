@@ -1,0 +1,7 @@
+function wp_redirect_404_to_homepage() {
+    if (is_404()) {
+        wp_redirect(home_url(), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'wp_redirect_404_to_homepage');
