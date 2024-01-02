@@ -1,0 +1,41 @@
+if ( ! class_exists( 'WC_Session' ) ) {
+    return;
+}
+
+class WC_Clear_Cart_After_Time {
+
+    protected $cart_cleared;
+
+    public function __construct() {
+        $this->cart_cleared = false;
+        add_action( 'init', array( $this, 'clear_cart_after_time' ) );
+    }
+
+    public function clear_cart_after_time() {
+        if ( ! $this->cart_cleared && is_user_logged_in() ) {
+            $last_activity = get_user_meta( get_current_user_id(), '_wc_last_activity', true );
+            $now = time();
+
+            if ( ! empty( $last_activity ) && $now - $last_activity >= 300 ) {
+                WC()->cart->empty_cart();
+                $this->cart_cleared = true;
+            }
+
+            update_user_meta( get_current_user_id(), '_wc_last_activity', $now );
+        } elseif ( ! $this->cart_cleared && ! is_user_logged_in() ) {
+            if ( isset( $_COOKIE['woocommerce_cart_last_activity'] ) ) {
+                $last_activity = $_COOKIE['woocommerce_cart_last_activity'];
+                $now = time();
+
+                if ( $now - $last_activity >= 300 ) {
+                    WC()->cart->empty_cart();
+                    $this->cart_cleared = true;
+                }
+            }
+
+            setcookie( 'woocommerce_cart_last_activity', time(), time() + 3600 * 24 );
+        }
+    }
+}
+
+new WC_Clear_Cart_After_Time();
