@@ -1,6 +1,6 @@
 ## Hello Elementor code snippets
 
-Tested version of WordPress 6.2.2, theme version was Hello Elementor 2.8.1..
+Tested version of WordPress 6.4.2, theme version was Hello Elementor 3.0.0.
 
 This file is a code snippet that is used for [Hello Elementor](https://wordpress.org/themes/hello-elementor/) theme. 
 
