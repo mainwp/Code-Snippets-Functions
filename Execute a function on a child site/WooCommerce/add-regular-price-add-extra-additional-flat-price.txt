@@ -1,0 +1,11 @@
+add_action( 'woocommerce_admin_process_product_object', 'woocommerce_admin_process_product_object_callback' );
+add_action( 'woocommerce_admin_process_variation_object', 'woocommerce_admin_process_product_object_callback' );
+function woocommerce_admin_process_product_object_callback( $product ) {
+    if ( $product->get_meta('_flat_amount_added') !== 'yes' && isset($_POST['_regular_price']) ) {
+        $flat_amount = 5; // Define the flat amount to be added to the regular price
+
+        $regular_price = (float) $product->get_regular_price('edit');
+        $product->set_regular_price($regular_price + $flat_amount);
+        $product->add_meta_data('_flat_amount_added', 'yes', true);
+    }
+}
