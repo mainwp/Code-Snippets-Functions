@@ -1,0 +1,27 @@
+add_action('woocommerce_before_calculate_totals', 'action_before_cart_calculate_totals');
+function action_before_cart_calculate_totals( $cart ) {
+    if ((is_admin() && !defined('DOING_AJAX')))
+        return;
+
+    $targeted_product_id = 67; // Define the targeted product ID
+    $linked_product_id   = 15; // Define the linked product ID that should be added (complementary)
+    $linked_item_key = $targeted_found = false; // Initialized variables
+
+    // Check cart items
+    foreach ( $cart->get_cart() as $item_key => $item ) {
+        // Check if our targeted product is in cart
+        if ( $item['product_id'] == $targeted_product_id ) {
+            $targeted_found = true;
+        } 
+        // Check if the complementary product is in cart
+        elseif ( $item['product_id'] == $linked_product_id ) {
+            $linked_item_key = $item_key;
+        }
+    }
+
+    if ( $targeted_found && ! $linked_item_key ) {
+        $cart->add_to_cart( $linked_product_id ); // Add to cart the complementary product
+    } elseif ( ! $targeted_found && $linked_item_key ) {
+        $cart->remove_cart_item($linked_item_key); // Remove from cart the complementary product
+    }
+}
