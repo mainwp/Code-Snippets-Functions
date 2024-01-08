@@ -1,0 +1,9 @@
+add_filter( 'relevanssi_indexing_restriction', 'non_product_attachments' );
+function non_product_attachments( $restriction ) {
+	global $wpdb;
+	$restriction['mysql']  .= " AND post.ID NOT IN (
+      SELECT ID FROM $wpdb->posts
+      WHERE post_type = 'attachment' AND post_parent NOT IN ( SELECT ID FROM $wpdb->posts WHERE post_type = 'product' ) ) ";
+	$restriction['reason'] .= ' Non-product attachment';
+	return $restriction;
+}
