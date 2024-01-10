@@ -1,0 +1,10 @@
+function remove_backorder_from_item_meta( $html, $item, $args ){
+
+    if ( strpos( $html, 'Backordered:') !== false ){
+        return str_replace( '<li><strong class="wc-item-meta-label">Backordered:</strong> <p>', '<li><p>', $html );
+    }
+
+	return $html;
+}
+
+add_filter( 'woocommerce_display_item_meta', 'remove_backorder_from_item_meta', 10, 3);
