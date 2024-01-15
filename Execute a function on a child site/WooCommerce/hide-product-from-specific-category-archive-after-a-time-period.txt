@@ -1,0 +1,40 @@
+// Add a custom action to schedule a job when a product is published
+add_action( 'woocommerce_admin_process_product_object', 'schedule_product_category_unassign', 10, 1 );
+function schedule_product_category_unassign( $product ) {
+    // Make sure that is a new product
+    if ( $product->get_meta('_unassign_task') ) 
+        return;
+
+    $schedule_time = strtotime('+15 days'); // Schedule the job to run in 15 days
+    $schedule_time = strtotime('+5 minutes'); // For testing on 5 minutes (to be removed or commented)
+    $schedule_hook = 'unassign_new_arrival_product_category'; // Custom schedule hook
+
+    if ( as_schedule_single_action( $schedule_time, $schedule_hook, array( $product->get_id() ) ) ) {
+        $product->update_meta_data('unassign_cat', 'pending'); // Tag the product
+    } else {
+        $product->update_meta_data('unassign_cat', 'failed'); // Tag the product
+    }
+}
+
+// Hook to run when the scheduled job is triggered
+add_action( 'unassign_new_arrival_product_category', 'unassign_new_arrival_product_category_callback', 10, 1 );
+function unassign_new_arrival_product_category_callback( $product_id )
+{
+    $product  = wc_get_product($product_id); // Get the product object
+    $taxonomy = 'product_cat'; // Product category taxonomy
+    $term_ids = $product->get_category_ids('edit'); // Get product categories
+
+    if( empty($term_ids) ) return; // Be sure that there are product categories
+
+    // Loop through assigned product categories
+    foreach( $term_ids as $key => $term_id ) {
+        // Check if the product is in the "New Arrival" category
+        if ( term_exists('new-arrival', $taxonomy) && 'new-arrival' === get_term_by('term_id', $term_id, $taxonomy)->slug ) {
+            unset($term_ids[$key]); // Remove 'new-arrival' category ID from the array
+
+            $product->set_category_ids($term_ids); // Update product categories
+            $product->update_meta_data('unassign_cat', 'complete'); // Update tagged product
+            return $product->save(); // Save product changes
+        }
+    }
+}
