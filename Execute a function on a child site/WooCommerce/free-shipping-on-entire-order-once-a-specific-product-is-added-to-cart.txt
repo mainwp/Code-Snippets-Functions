@@ -1,0 +1,30 @@
+add_filter( 'woocommerce_package_rates', 'hide_other_shipping_when_free_is_available', 100, 2 );
+function hide_other_shipping_when_free_is_available( $rates, $package ) {
+    $free = array();
+
+    // Loop through shipping rates
+    foreach ( $rates as $rate_id => $rate ) {
+        // If free shipping is available
+        if ( 'free_shipping' === $rate->method_id ) {
+            $free[ $rate_id ] = $rate;
+            break;
+        }
+    }
+    return ! empty( $free ) ? $free : $rates;
+}
+
+add_filter( 'woocommerce_shipping_free_shipping_is_available', 'filter_free_shipping_is_available', 100, 3 );
+function filter_free_shipping_is_available( $is_available, $package, $shipping_method ) {
+ 
+    // Here set the product IDs that will enable free shipping
+    $targeted_product_ids = array( 560 );
+
+    // Loop through items for the current shipping package
+    foreach ( $package['contents'] as $item ) {
+        // Check if any targeted product is in cart
+        if( in_array( $item['product_id'], $targeted_product_ids ) ) {
+            return true;
+        }
+    }
+    return $is_available;
+}
