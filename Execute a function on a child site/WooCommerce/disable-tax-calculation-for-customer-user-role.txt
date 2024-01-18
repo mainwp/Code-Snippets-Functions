@@ -1,0 +1,11 @@
+add_action( 'template_redirect', 'set_customer_user_role_vat_exempt' );
+function set_customer_user_role_vat_exempt(){
+    global $current_user;
+    if ( ! is_user_logged_in() ) 
+        return; 
+
+    // Set "customer" user role "Vat exempt" if is not set yet
+    if ( in_array( 'customer', $current_user->roles ) && ! WC()->customer->is_vat_exempt() ) {
+        WC()->customer->set_is_vat_exempt( true );
+    }   
+}
