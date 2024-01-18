@@ -1,0 +1,3 @@
+add_action( 'revision_applied', function( $published, $revision ) {
+    relevanssi_remove_doc( $revision->ID );
+}, 10, 2 );
