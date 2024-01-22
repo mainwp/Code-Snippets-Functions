@@ -1,0 +1,14 @@
+add_filter( 'relevanssi_hits_filter', function( $hits ) {
+  $featured        = array();
+  $everything_else = array();
+  foreach ( $hits[0] as $_post ) {
+    $post_object = relevanssi_get_an_object( $_post )['object'];    
+    if ( has_term( 'featured', 'product_tag', $post_object->ID ) {
+      $featured[] = $_post;
+    } else {
+      $everything_else[] = $_post;
+    }
+  }
+  $hits[0] = array_merge( $featured, $everything_else );
+  return $hits;
+} );
