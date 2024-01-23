@@ -1,6 +1,6 @@
 ## MailPoet code snippets
 
-Tested version of WordPress 6.4.2, the plugin version was MailPoet 4.41.3.
+Tested version of WordPress 6.4.2, the plugin version was MailPoet 4.42.0.
 
 This file is a code snippet that is used for [MailPoet](https://wordpress.org/plugins/mailpoet/) plugin. 
 
