@@ -1,0 +1,18 @@
+add_action( 'woocommerce_cart_calculate_fees', 'add_ticket_concierge_fee' );
+function add_ticket_concierge_fee( $cart ) {
+    $terms = array( 33 ); // Here, set the targeted category(ies) id(s), slug(s) or name(s)
+    $fee_amount = 5; // Here, set the flat fee amount (per item quantity)
+    $term_count = 0; // Initializing variable
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) {
+        // Check if the current item belongs to the targeted category(ies)
+        if( has_term($terms, 'product_cat', $item['product_id']) ) {
+            $term_count++;
+        } 
+    }
+
+    if($term_count > 0 ) {
+        $cart->add_fee( 'Ticket Concierge Charge', $fee_amount * $term_count, true );
+    }
+}
