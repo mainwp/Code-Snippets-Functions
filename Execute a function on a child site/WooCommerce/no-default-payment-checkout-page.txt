@@ -1,0 +1,20 @@
+add_action( 'woocommerce_before_checkout_form', 'bbloomer_uncheck_default_payment_gateway' );
+ 
+function bbloomer_uncheck_default_payment_gateway() {
+   wc_enqueue_js( "
+ 
+      // ONLY RUN ON CHECKOUT PAGE LOAD
+      $( document.body ).on( 'updated_checkout', function() {
+          
+         // ONLY RUN IF MORE THAN 1 PAYMENT OPTION
+         if ( $( '.woocommerce-checkout' ).find( 'input[name=\'payment_method\']' ).length === 1 ) return false;
+ 
+         // UNCHECK CHECKED PAYMENT METHOD
+         $('input[name=\'payment_method\']').prop('checked', false);
+          
+         // CLOSE CHECKED PAYMENT DESCRIPTION BOX
+         $('div.payment_box').hide();
+ 
+      });
+   " );
+}
