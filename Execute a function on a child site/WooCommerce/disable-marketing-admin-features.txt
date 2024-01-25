@@ -1,0 +1,8 @@
+add_filter('woocommerce_admin_features', 'disable_marketing_feature');
+function disable_marketing_feature($features){
+    $key = array_search('marketing', $features);
+    if ( ! empty($key) ) {
+        unset($features[$key]);
+    }
+    return $features;
+}
