@@ -1,0 +1,13 @@
+add_filter( 'woocommerce_package_rates', 'disable_free_shipping_until_specific_date', 10, 2 );
+function disable_free_shipping_until_specific_date( $rates, $package ) {
+    $threshold_date = '2024-02-25'; // Threshold date until free shipping is disabled
+
+    // Loop through shipping rates for the current shipping package
+    foreach ( $rates as $rate_key => $rate ) {
+        // Targeting free shipping and specific date
+        if ( 'free_shipping' === $rate->method_id && time() <= strtotime($threshold_date) ) {
+            unset($rates[$rate_key]); // Remove shipping rate
+        }
+    }
+    return $rates;
+}
