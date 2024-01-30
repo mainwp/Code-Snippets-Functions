@@ -1,0 +1,17 @@
+add_filter( 'woocommerce_email_recipient_customer_completed_order', 'product_tag_avoid_completed_email_notification', 10, 2 );
+function product_tag_avoid_completed_email_notification( $recipient, $order ) {
+    if ( is_a( $order, 'WC_Order' ) ) {
+        // HERE set your product tags (comma-separated term names, slugs or Ids)
+        $targeted_terms    = array('special-promo', 'regular');
+        $targeted_taxonomy = 'product_tag';
+
+        // Loop through order items
+        foreach ( $order->get_items() as $item ) {
+            // Check for matching product tags 
+            if ( has_term( $targeted_terms, $targeted_taxonomy, $item->get_product_id() ) ) {
+                return ''; // return empty recipient avoiding this email notification
+            }
+        }
+    }
+    return $recipient;
+}
