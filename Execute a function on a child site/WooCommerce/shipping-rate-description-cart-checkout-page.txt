@@ -1,0 +1,7 @@
+add_action( 'woocommerce_after_shipping_rate', 'wc_shipping_rate_description' );
+  
+function wc_shipping_rate_description( $method ) {
+   if ( $method->id === 'free_shipping:6' ) {
+      echo '<p>Some HTML in here where you can explain the benefits of choosing this shipping rate</p>';
+   }
+}
