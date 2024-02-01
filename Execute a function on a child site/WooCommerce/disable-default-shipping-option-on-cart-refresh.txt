@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99);
+
+add_filter( 'woocommerce_shipping_method_chosen', 'cart_no_shipping_method_chosen', 99);
+function cart_no_shipping_method_chosen( $chosen_method ) {
+    return is_cart() ? false : $chosen_method;
+}
