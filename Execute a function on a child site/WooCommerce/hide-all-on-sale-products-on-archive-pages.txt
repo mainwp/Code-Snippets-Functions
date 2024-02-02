@@ -1,0 +1,7 @@
+add_action( 'woocommerce_product_query', 'not_on_sale_products_product_query' );
+function not_on_sale_products_product_query( $q ) {
+    // On product archive pages only
+    if ( is_shop() || is_product_category() || is_product_tag() ) {
+        $q->set( 'post__not_in', array_merge( array( 0 ), wc_get_product_ids_on_sale() ) );
+    }
+}
