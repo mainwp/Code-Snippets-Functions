@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_product_add_to_cart_text', 'replace_loop_add_to_cart_button_text', 20, 2 );
+function replace_loop_add_to_cart_button_text( $text, $product ) {
+    if ( $product->is_type( 'variable' ) && $product->is_purchasable() ) {
+        $text = __( 'Options', 'woocommerce' );
+    }
+    return $text;
+}
