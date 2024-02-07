@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_sale_flash', 'wc_no_sale_badge_if_out_of_stock', 9999, 3 );
+ 
+function wc_no_sale_badge_if_out_of_stock( $html, $post, $product ) {
+   if ( ! $product->is_in_stock() ) return;
+   return $html;
+}
