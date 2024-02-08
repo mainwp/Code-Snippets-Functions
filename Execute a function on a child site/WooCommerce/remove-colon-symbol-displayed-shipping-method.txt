@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'display_only_shipping_method_price', 10, 2 );
+function display_only_shipping_method_price( $label, $method ) {
+    // HERE define your targeted rate id
+    $targeted_rate_id = 'flat_rate:4';
+
+    if ( $method->id === $targeted_rate_id && 0 < $method->cost ) {
+        $label = str_replace( $method->label . ': ', '', $label);
+    }
+    return $label;
+}
