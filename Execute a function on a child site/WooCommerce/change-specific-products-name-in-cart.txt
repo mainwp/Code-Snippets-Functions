@@ -1,0 +1,15 @@
+add_action( 'woocommerce_before_calculate_totals', 'change_specific_cart_item_name' );
+function change_specific_cart_item_name( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    $targeted_id = 134443; // HERE set the targeted product ID
+    $new_name    = "The new product name"; // HERE set the desired new product name
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $cart_item ) {
+        if ( $cart_item['product_id'] == $targeted_id ) {
+            $cart_item['data']->set_name($new_name);
+        }
+    }
+}
