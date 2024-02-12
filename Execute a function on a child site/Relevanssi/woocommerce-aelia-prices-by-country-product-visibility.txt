@@ -1,0 +1,17 @@
+add_filter( 'relevanssi_post_ok', 'relevanssi_aelia_compatibility', 10, 2 );
+function relevanssi_aelia_compatibility( $post_ok, $post_id ) {
+	$post       = get_post( $post_id ); 
+	$post_type  = $post->post_type; 
+	$product_id = $post->ID;
+
+	if ( 'product' === $post_type && function_exists( 'wc_get_product' ) ) {
+		// Get the product object.
+		$product = wc_get_product( $product_id );
+
+		// Check if the product is purchasable.
+		if ( $product && ! $product->is_purchasable() ) {
+			$post_ok = false;
+		}
+	} 
+	return $post_ok;
+}
