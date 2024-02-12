@@ -1,6 +1,6 @@
 ## Relevanssi code snippets
 
-Tested version of WordPress 6.4.2, plugin version was Relevanssi 4.22.0.
+Tested version of WordPress 6.4.3, plugin version was Relevanssi 4.22.1.
 
 This file is a code snippet that is used for [Relevanssi](https://wordpress.org/plugins/relevanssi/) plugin. 
 
