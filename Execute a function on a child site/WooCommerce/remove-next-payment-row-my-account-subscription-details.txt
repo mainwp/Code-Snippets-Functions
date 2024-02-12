@@ -1,0 +1,7 @@
+add_filter( 'wcs_subscription_details_table_dates_to_display', 'filter_subscription_details_table_dates' );
+function filter_subscription_details_table_dates( $table_dates ) {
+    if ( is_wc_endpoint_url('view-subscription') && isset($table_dates['next_payment']) ) {
+        unset($table_dates['next_payment']); // Remove "Next payment" row.
+    }
+    return $table_dates;
+}
