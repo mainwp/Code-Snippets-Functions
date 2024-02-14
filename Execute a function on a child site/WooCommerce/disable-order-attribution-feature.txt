@@ -1,0 +1,5 @@
+// Check if WooCommerce plugin is active and installed
+if (is_plugin_active('woocommerce/woocommerce.php')) {
+    // Set the option
+    update_option('woocommerce_feature_order_attribution_enabled', 'no');
+}
