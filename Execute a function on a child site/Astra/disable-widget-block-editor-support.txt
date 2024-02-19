@@ -1,0 +1,4 @@
+add_action( 'after_setup_theme', 'astra_remove_theme_support' );
+function astra_remove_theme_support() {
+remove_theme_support( 'widgets-block-editor' );
+}
