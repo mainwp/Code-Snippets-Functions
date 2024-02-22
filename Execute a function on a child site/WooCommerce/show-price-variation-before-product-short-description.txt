@@ -1,0 +1,5 @@
+// Remove the action from its original hook
+remove_action( 'woocommerce_after_single_product_summary', array( 'Ni_wooCommerce_After_Single_Product_Summary', 'ni_woocommerce_after_single_product_summary' ) );
+
+// Add the action to the desired hook with the specified priority
+add_action( 'woocommerce_single_product_summary', array( 'Ni_wooCommerce_After_Single_Product_Summary', 'ni_woocommerce_after_single_product_summary' ), 55 );
