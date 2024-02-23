@@ -1,0 +1,49 @@
+function jeherve_custom_mastodon_message( $message, $post ) {
+    /*
+     * Let's build some basic information about the post.
+     * Post title, link, excerpt.
+     */
+    $post_title   = get_the_title( $post );
+    $post_link    = get_permalink( $post );
+    $post_excerpt = get_the_excerpt( $post );
+ 
+    /*
+     * Let's build an array of tags.
+     * We'll massage the output a bit to add hashtags in front of each tag.
+     * We'll capitalize the first letter of each word, for better accessibility.
+     */
+    $post_tags_array = get_the_tags( $post );
+    if ( ! $post_tags_array ) {
+        $post_tags_array = array();
+    } else {
+        $post_tags_array = array_map(
+            function ( $tag ) {
+                // Camel case the tag name and remove spaces as well as apostrophes.
+                $tag = preg_replace( '/\s+|\'/', '', ucwords( $tag->name ) );
+ 
+                // Return with a '#' prepended.
+                return '#' . $tag;
+            },
+            $post_tags_array
+        );
+    }
+    // Build a string of tags.
+    $post_tags = implode( ', ', $post_tags_array );
+ 
+    /*
+     * And now we build our final message.
+     * This is of course just an example, you can build any output you want.
+     *
+     * For example, once Mastodon supports Markdown,
+     * you could use Markdown to build a really fancy-looking message.
+     * @see https://github.com/mastodon/mastodon/issues/18958
+     */
+    return sprintf(
+        'I just came across %1$s. Here is an excerpt: %2$s -- Read more at %3$s %4$s',
+        esc_html( $post_title ),
+        esc_html( $post_excerpt ),
+        esc_url( $post_link ),
+        esc_html( $post_tags )
+    );
+}
+add_filter( 'jetpack_sharing_mastodon_default_message', 'jeherve_custom_mastodon_message', 10, 2 );
