@@ -1,0 +1,43 @@
+function force_logout_idle_users() {
+    // Set the idle time limit (in seconds)
+    $idle_time_limit = 3 * 60 * 60; // 3 hours
+
+    // Get the current user
+    $user = wp_get_current_user();
+
+    // Check if the user is logged in
+    if (is_user_logged_in()) {
+        $last_activity = get_user_meta($user->ID, 'last_activity', true);
+
+        // Check if last activity time is set
+        if (!empty($last_activity)) {
+            $current_time = time();
+
+            // Calculate idle time
+            $idle_time = $current_time - $last_activity;
+
+            // If the user has been idle for more than the limit, log them out
+            if ($idle_time >= $idle_time_limit) {
+                wp_logout();
+            }
+        }
+    }
+}
+
+// Hook the function to run on WordPress init action
+add_action('init', 'force_logout_idle_users');
+
+// Update last activity time on every page load
+function update_last_activity_time() {
+    // Get the current user
+    $user = wp_get_current_user();
+
+    // Check if the user is logged in
+    if (is_user_logged_in()) {
+        // Update last activity time
+        update_user_meta($user->ID, 'last_activity', time());
+    }
+}
+
+// Hook the function to run on WordPress init action
+add_action('init', 'update_last_activity_time');
