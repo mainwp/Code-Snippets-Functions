@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_account_downloads_columns', 'custom_downloads_columns', 10, 1 ); // Orders and account
+add_filter( 'woocommerce_email_downloads_columns', 'custom_downloads_columns', 10, 1 ); // Email notifications
+function custom_downloads_columns( $columns ) {
+    // Removing "Product" column
+    if( isset($columns['download-product']) ) {
+        unset($columns['download-product']);
+    }
+    // Moving "Downloads" column as the first column
+    if( isset($columns['download-file']) ) {
+        $download_file = $columns['download-file'];
+        unset($columns['download-file']);
+        $columns = array_merge( array('download-file' => $download_file), $columns);
+    }    
+    return $columns;
+}
