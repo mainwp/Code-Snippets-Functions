@@ -1,0 +1,4 @@
+add_filter( 'aws_index_cron_runner_time_limit', 'my_aws_index_cron_runner_time_limit' );
+function my_aws_index_cron_runner_time_limit( $num ) {
+    return 1000;
+}
