@@ -1,0 +1,22 @@
+add_filter( 'woocommerce_add_to_cart_validation', 'only_one_downloadable_product_allowed', 10, 4 );
+function only_one_downloadable_product_allowed( $passed, $product_id, $quantity, $variation_id = null ) {
+    // Get the current product object
+    $product  = wc_get_product( $variation_id > 0 ? $variation_id : $product_id );
+
+    // Initializing downloadable product count
+    $count_dl = $product->is_downloadable() ? 1 : 0; 
+
+    // Loop through cart items
+    foreach ( WC()->cart->get_cart() as $item ) {
+        // Check for downloadable products in cart
+        if ( $item['data']->is_downloadable() ) {
+            $count_dl++;
+        }
+    }
+
+    if ( $count_dl > 1 ) {
+        wc_add_notice( __( "Only one downloadable product is allowed at the time.", "woocommerce" ), 'error' );
+        $passed = false;
+    }
+    return $passed;
+}
