@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_countries_inc_tax_or_vat', '__return_empty_string' );
