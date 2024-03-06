@@ -1,0 +1,6 @@
+add_filter( 'woocommerce_product_get_shipping_class_id', 'wc_default_product_shipping_class', 9999, 2 );
+  
+function wc_default_product_shipping_class( $value, $product ) {
+   $value = $value ? $value : 44; // default to shipping class ID = 44
+   return $value;
+}
