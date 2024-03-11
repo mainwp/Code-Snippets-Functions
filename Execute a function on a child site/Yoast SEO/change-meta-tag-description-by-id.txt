@@ -1,0 +1,7 @@
+function prefix_filter_description_example( $description ) {
+  if ( is_page( 12345 ) ) {
+    $description = 'My custom custom meta description';
+  }
+  return $description;
+}
+add_filter( 'wpseo_metadesc', 'prefix_filter_description_example' );
