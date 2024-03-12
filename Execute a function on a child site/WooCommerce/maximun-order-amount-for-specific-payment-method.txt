@@ -1,0 +1,18 @@
+dd_filter( 'woocommerce_available_payment_gateways' , 'max_order_amount_for_payment_gateways', 100 );
+function max_order_amount_for_payment_gateways( $payment_gateways ){
+    if( is_admin() ) {
+        return $payment_gateways; // Not in backend (admin)
+    }
+    
+    $targeted_payment_ids = array('cheque'); // Here define the affected payment method IDs
+    $threshold_amount  = 100; // Here define the desired subtotal amount threshold 
+    $cart_subtotal = WC()->cart->subtotal;
+
+    // Loop through available payment IDs
+    foreach ( $payment_gateways as $payment_id => $values ) {
+        if( in_array($payment_id, $targeted_payment_ids) && $cart_subtotal >= $threshold_amount ){
+            unset($payment_gateways[$payment_id]); // Hide payment method
+        }
+    }
+    return $payment_gateways;
+}
