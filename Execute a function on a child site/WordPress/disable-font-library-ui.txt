@@ -1,0 +1,6 @@
+function disable_font_library_ui( $editor_settings ) { 
+   	 $editor_settings['fontLibraryEnabled'] = false;
+   	 return $editor_settings; 
+}
+
+add_filter( 'block_editor_settings_all', 'disable_font_library_ui' );
