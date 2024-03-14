@@ -1,6 +1,6 @@
 ## WooCommerce Xero Integration code snippets
 
-Tested version of WordPress 6.4.2, plugin version was WooCommerce Xero Integration 1.8.2.
+Tested version of WordPress 6.4.3, plugin version was WooCommerce Xero Integration 1.8.4.
 
 This file is a code snippet that is used for [WooCommerce Xero Integration](https://woocommerce.com/products/xero/) plugin. 
 
