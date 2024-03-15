@@ -1,0 +1,4 @@
+add_action( 'init', function() {
+   	 unregister_post_type( 'wp_font_family' );
+   	 unregister_post_type( 'wp_font_face' );
+} );
