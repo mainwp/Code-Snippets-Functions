@@ -1,6 +1,6 @@
 ## iThemes Security code snippets
 
-Tested version of WordPress 6.4.2, plugin version was iThemes Security 9.2.0.
+Tested version of WordPress 6.4.3, plugin version was iThemes Security 9.3.1.
 
 This file is a code snippet that is used for [iThemes Security](https://wordpress.org/plugins/better-wp-security/) plugin. 
 
