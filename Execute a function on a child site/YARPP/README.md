@@ -1,6 +1,6 @@
 ## Yet Another Related Posts Plugin (YARPP) code snippets
 
-Tested version of WordPress 6.3, plugin version was Yet Another Related Posts Plugin (YARPP) 5.30.6.
+Tested version of WordPress 6.4.3, plugin version was Yet Another Related Posts Plugin (YARPP) 5.30.10.
 
 This file is a code snippet that is used for [Yet Another Related Posts Plugin (YARPP)](https://wordpress.org/plugins/yet-another-related-posts-plugin/) plugin. 
 
