@@ -1,0 +1,8 @@
+add_filter( 'relevanssi_hits_filter', function( $hits ) {
+    $pinned_post_id = 1234;
+    if ( ! in_array( $pinned_post_id, array_column( $hits[0], 'ID' ), false ) ) {
+        $pinned_post = get_post( $pinned_post_id );
+        array_unshift( $hits[0], $pinned_post );
+    }
+    return $hits;
+}, 11 );
