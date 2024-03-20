@@ -1,0 +1,6 @@
+function rankmath_disable_features() {
+	if ( is_singular( 'page' ) ) {
+		remove_all_actions( 'rank_math/head' );
+	}
+}
+add_action( 'wp_head', 'rankmath_disable_features', 1 );
