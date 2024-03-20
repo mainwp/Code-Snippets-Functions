@@ -1,0 +1,19 @@
+function restrict_admin_access() {
+    // Check if the user is logged in
+    if ( is_user_logged_in() ) {
+        // Get the current user's role
+        $current_user = wp_get_current_user();
+        $roles = $current_user->roles;
+        
+        // Define an array of roles that should have access to the admin area
+        $allowed_roles = array( 'administrator', 'editor' ); // Add any additional allowed roles here
+        
+        // Check if the current user's role is not in the allowed roles array
+        if ( array_intersect( $roles, $allowed_roles ) == false ) {
+            // Redirect the user to the homepage
+            wp_redirect( home_url() );
+            exit;
+        }
+    }
+}
+add_action( 'admin_init', 'restrict_admin_access' );
