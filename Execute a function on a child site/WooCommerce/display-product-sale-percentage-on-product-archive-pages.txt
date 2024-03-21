@@ -1,0 +1,41 @@
+// Utility function: Get an array of discount percentages from the variations
+function get_variations_discount_percentage( $product ) {
+    $prices = $product->get_variation_prices( true );
+    $percentages = array();
+
+    foreach( $prices['regular_price']  as $key_id => $price ) {
+        if( $price != $prices['price'][$key_id] ) {
+            $reg_price  = floatval($price);
+            $sale_price = floatval($prices['price'][$key_id]);
+            $percentages[] = round( ($reg_price - $sale_price) / $reg_price * 100);
+        }
+    }
+    return array_unique($percentages);
+}
+
+// Displays On Sale product discount percentage
+add_action( 'woocommerce_before_shop_loop_item_title', 'display_products_on_sale_percentage', 25 );
+function display_products_on_sale_percentage() {
+    global $product;
+
+    if ( ! $product->is_on_sale() ) return; // Only "On sale" products
+
+    if ( $product->is_type('variable') ) {
+        $percentages = get_variations_discount_percentage( $product );
+
+        if ( count($percentages) > 1 ) {
+            // Display the discount percentages range
+            printf( '<span class="sale-percentage">From %d%% to %d%% off</span>', min($percentages), max($percentages) );
+        } elseif ( count($percentages) === 1 ) {
+            // Display the discount percentage
+            printf( '<span class="sale-percentage">%d%% off</span>', current($percentages) );
+        }
+    } else {
+        $reg_price  = (float) $product->get_regular_price();
+        $sale_price = (float) $product->get_sale_price();
+
+        // Display the discount percentage
+        printf( '<span class="sale-percentage">%d%% off</span>',
+            round( ($reg_price - $sale_price) / $reg_price * 100) );
+    }
+}
