@@ -1,6 +1,6 @@
 ## Jetpack code snippet
 
-Tested version of WordPress 6.4.3, plugin version was Jetpack 13.2.1.
+Tested version of WordPress 6.4.3, plugin version was Jetpack 13.2.2.
 
 This file is a code snippet that is used for [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) plugin. 
 
