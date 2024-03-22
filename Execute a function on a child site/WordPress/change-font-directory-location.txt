@@ -1,0 +1,16 @@
+function filter_default_font_directory( $font_directory ) {
+    $upload_dir = wp_get_upload_dir();
+ 
+    $font_directory = array(
+        'path'    => untrailingslashit( $upload_dir['basedir'] ) . '/fonts',
+        'url'     => untrailingslashit( $upload_dir['baseurl'] ) . '/fonts',
+        'subdir'  => '',
+        'basedir' => untrailingslashit( $upload_dir['basedir'] ) . '/fonts',
+        'baseurl' => untrailingslashit( $upload_dir['baseurl'] ) . '/fonts',
+        'error'   => false,
+    );
+ 
+    return $font_directory;
+}
+ 
+add_filter( 'font_dir', 'filter_default_font_directory' );
