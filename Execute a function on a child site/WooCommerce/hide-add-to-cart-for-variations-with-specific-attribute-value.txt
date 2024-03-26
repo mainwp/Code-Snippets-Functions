@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_variation_is_purchasable', 'hide_add_to_cart_for_specific_attribute_value', 10, 2 );
+function hide_add_to_cart_for_specific_attribute_value( $is_purchasable, $variation ) {
+    $attributes = $variation->get_attributes();
+    $taxonomy   = 'pa_badge-print';
+    
+    if ( isset($attributes[$taxonomy]) && $attributes[$taxonomy] === 'yes' ) {
+        $is_purchasable = false;
+    }
+    return $is_purchasable;
+}
