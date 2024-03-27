@@ -1,0 +1,7 @@
+add_filter( 'imagify_nextgen_images_formats', function( $formats ) {
+    if ( isset( $formats['webp'] ) ) {
+        unset( $formats['webp'] );
+    }
+
+    return $formats;
+} );
