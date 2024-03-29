@@ -1,0 +1,1 @@
+add_filter( 'pre_option_relevanssi_throttle_limit', function( $limit ) { return 250; } );
