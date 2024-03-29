@@ -1,0 +1,22 @@
+// Conditional function: Check if a user has active subscriptions
+function has_active_subscriptions( $user_id = 0 ) {
+    return wcs_user_has_subscription( $user_id > 0?:get_current_user_id(), '', 'active' );
+}
+
+// Conditional function: Check if a user has a subscription product in cart
+function has_subscription_in_cart( $cart_contents = null ) {
+    foreach ( $cart_contents?:WC()->cart->get_cart() as $item ) {
+        if ( $item['data']->is_type( array('subscription', 'subscription_variation') ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Display a notice in checkout conditionally
+add_action( 'template_redirect', 'display_checkout_subscription_notice' );
+function display_checkout_subscription_notice() {
+    if ( is_checkout() && ! is_wc_endpoint_url() && has_active_subscriptions() && has_subscription_in_cart() ) {
+        wc_add_notice( __('By purchasing a new subscription you will cancel your current active one.'), 'notice' );
+    }
+}
