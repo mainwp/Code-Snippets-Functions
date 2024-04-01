@@ -1,0 +1,6 @@
+add_filter('woocommerce_cart_item_name', 'strip_html_tags_from_cart_item_name', 9000, 1 );
+function strip_html_tags_from_cart_item_name( $product_name ) {
+    $product_name = wp_strip_all_tags( $product_name, true );
+
+    return $product_name;
+}
