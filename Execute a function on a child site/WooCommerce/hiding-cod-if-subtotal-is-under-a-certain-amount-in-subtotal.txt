@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_available_payment_gateways', 'ts_disable_cod' );
+function ts_disable_cod( $available_gateways ) {
+    // Target Checkout to avoid warnings or errors
+    if( is_checkout() && ! is_wc_endpoint_url() && WC()->cart ) {
+        if ( WC()->cart->subtotal <= 10 ) {
+            unset( $available_gateways['cod'] );
+        }
+    }
+    return $available_gateways;
+}
