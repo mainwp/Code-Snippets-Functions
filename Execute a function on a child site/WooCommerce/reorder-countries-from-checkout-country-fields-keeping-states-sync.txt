@@ -1,0 +1,23 @@
+// Reorder and customize the country dropdowns
+add_filter( 'woocommerce_checkout_fields', 'reorder_checkout_country_dropdowns' );
+function reorder_checkout_country_dropdowns( $fields ) {
+    // Merge sorted countries, with unsorted ones
+    $countries_array = array_merge( 
+        array(
+            'DE' => 'Germany',
+            'AT' => 'Austria',
+            'CH' => 'Switzerland',
+            '-'  => '------------',
+        ),
+        WC()->countries->get_allowed_countries(), 
+    );
+
+    // Change field type from "country" to "select"
+    $fields['billing']['billing_country']['type'] = $fields['shipping']['shipping_country']['type'] = 'select';
+    // Set sorted countries options
+    $fields['billing']['billing_country']['options'] = $fields['shipping']['shipping_country']['options'] = $countries_array;
+    // Set correct input class for country field
+    $fields['billing']['billing_country']['input_class'] = $fields['shipping']['shipping_country']['input_class'] = ['country_to_state country_select'];
+    
+    return $fields;
+}
