@@ -1,0 +1,5 @@
+add_filter( 'aws_relevance_scores', 'my_aws_relevance_scores' );
+function my_aws_relevance_scores( $relevance_array ) {
+    $relevance_array['title'] = 700;
+    return $relevance_array;
+}
