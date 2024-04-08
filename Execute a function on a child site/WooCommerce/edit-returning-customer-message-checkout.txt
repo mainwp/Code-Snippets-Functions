@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_checkout_login_message', 'wc_return_customer_message' );
+ 
+function wc_return_customer_message() {
+return 'Have you shopped with us before?';
+}
