@@ -1,0 +1,8 @@
+add_filter( 'woocommerce_package_rates', 'wc_disable_shipping_rate_user_role', 9999, 2 );
+     
+function wc_disable_shipping_rate_user_role( $rates, $package ) {
+   if ( wc_current_user_has_role( 'customer' ) ) {
+      if ( isset( $rates['flat_rate:5'] ) ) unset( $rates['flat_rate:5'] );
+   }
+   return $rates;    
+}
