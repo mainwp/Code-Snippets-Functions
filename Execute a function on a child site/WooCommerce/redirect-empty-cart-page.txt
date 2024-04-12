@@ -1,0 +1,9 @@
+add_action( 'template_redirect', 'wc_redirect_empty_cart', 9999 );
+ 
+function wc_redirect_empty_cart() {
+   if ( is_cart() && WC()->cart->is_empty() ) {
+      wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
+      // OR wp_safe_redirect( 'https://example.com' );
+      exit;
+   }
+}
