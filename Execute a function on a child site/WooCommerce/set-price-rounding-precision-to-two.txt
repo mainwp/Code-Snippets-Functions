@@ -1,0 +1,1 @@
+add_filter('woocommerce_internal_rounding_precision', function($precision){ return 2;}, 9999);
