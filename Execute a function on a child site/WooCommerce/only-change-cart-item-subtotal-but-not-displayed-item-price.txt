@@ -1,0 +1,14 @@
+add_filter( 'woocommerce_cart_item_price', 'display_cart_item_price_html', 2000, 2 );
+function display_cart_item_price_html( $price_html, $cart_item ) {
+    if( isset($cart_item['pr_field'])  && ! empty($cart_item['pr_field']) ) ) {
+        $product = wc_get_product($cart_item['variation_id'] > 0 ? : $cart_item['product_id']);
+
+        if ( WC()->cart->display_prices_including_tax() ) {
+            $price = wc_get_price_including_tax($product);
+        } else {
+            $price = wc_get_price_excluding_tax($product);
+        }
+        return wc_price( $price );
+    }
+    return $price_html;
+}
