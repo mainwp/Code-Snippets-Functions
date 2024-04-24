@@ -1,0 +1,5 @@
+add_action( 'woocommerce_review_order_before_payment', 'wc_checkout_payment_options_title' );
+ 
+function wc_checkout_payment_options_title() {
+   echo '<h3>Pay Now</h3>';
+}
