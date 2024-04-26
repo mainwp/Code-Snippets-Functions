@@ -1,0 +1,6 @@
+add_action( 'uagb_delete_uag_asset_dir', 'clear_cache' );
+add_action( 'uagb_delete_page_assets',  'clear_cache' );
+
+function clear_cache(){
+    // purge_cache_function(); Call cache function in your environment
+}
