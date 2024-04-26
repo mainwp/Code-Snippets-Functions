@@ -1,0 +1,1 @@
+add_filter( 'ssp_enable_rss_stylesheet', '__return_false' );
