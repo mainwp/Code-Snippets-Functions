@@ -1,0 +1,3 @@
+add_filter( 'tribe_get_event_website_link_target', function () {
+    return '_blank';
+}, 10, 1 );
