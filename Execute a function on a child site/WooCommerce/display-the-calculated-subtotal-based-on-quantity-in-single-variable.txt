@@ -1,0 +1,39 @@
+add_action( 'woocommerce_after_add_to_cart_button', 'display_product_subtotal_html' );
+function display_product_subtotal_html() {
+    global $product;
+
+    $price    = wc_get_price_to_display( $product );
+    $currency = get_woocommerce_currency_symbol();
+    $variable = $product->is_type('variable');
+
+    echo '<div id="subtot" style="display:inline-block;">Total: <span></span></div>';
+
+    if ( $product->is_type('variable') )
+    wc_enqueue_js("var qty = 1, price = 0, subtotal = 0;  
+    $('[name=quantity]').on('input change', function() { 
+        qty = $(this).val();
+        if ( price > 0 ) {
+            subtotal = price*qty;
+            $('#subtot > span').html('".esc_js($currency)." '+subtotal.toFixed(2));
+        } else {
+            $('#subtot > span').html('');
+        }
+    });
+
+    $('form.variations_form').on('show_variation', function(event, data){
+        price = data.display_price;
+        subtotal = price*qty;
+        $('#subtot > span').html('".esc_js($currency)." '+subtotal.toFixed(2));
+    }).on('hide_variation', function(){
+        $('#subtot > span').html('');
+    });");
+    else
+    wc_enqueue_js("const price = ".floatval($price).";
+    var subtotal = $('[name=quantity]').val()*price;
+    $('#subtot > span').html('".esc_js($currency)." '+subtotal.toFixed(2));
+
+    $('[name=quantity]').on('input change', function() { 
+        subtotal = $(this).val()*price;
+        $('#subtot > span').html('".esc_js($currency)." '+subtotal.toFixed(2));
+    });");
+}
