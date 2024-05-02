@@ -1,0 +1,9 @@
+add_filter( 'woocommerce_order_button_html', 'disable_conditionally_order_button_html', 10, 2 );
+function disable_conditionally_order_button_html( $button_html ) {
+    $allowed_users_ids = array( 1, 2 );
+
+    if ( ! in_array( get_current_user_id(), $allowed_users_ids ) ) {
+        return str_replace(['type="submit"', 'class="button alt'], ['type="button"', 'class="button alt disabled'], $button_html );
+    }
+    return $button_html;
+}
