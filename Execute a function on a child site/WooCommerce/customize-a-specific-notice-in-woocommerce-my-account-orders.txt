@@ -1,0 +1,6 @@
+add_filter( 'gettext', function( $filtered_text, $original_text ){
+    if( is_wc_endpoint_url('orders') && 'No order has been made yet.' === $original_text ) {
+        $filtered_text = esc_html__('My custom text.', 'woocommerce');
+    }
+    return $filtered_text;
+}, 100, 2 );
