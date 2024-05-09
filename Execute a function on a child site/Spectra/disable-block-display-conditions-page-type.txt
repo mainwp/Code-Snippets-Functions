@@ -1,0 +1,8 @@
+add_filter( \'enable_block_condition\', function( $default = true) {
+	if (isset($_REQUEST[\'post_type\']) && \'page\' === $_REQUEST[\'post_type\']) {
+        return false;
+    } elseif (isset($_GET[\'post\']) && \'page\' === get_post_type($_GET[\'post\'])) {
+        return false;
+    }
+	return $default;
+} );
