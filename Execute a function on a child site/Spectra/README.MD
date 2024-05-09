@@ -1,6 +1,6 @@
 ## Spectra code snippets
 
-Tested version of WordPress 6.5.2, plugin version was Spectra 2.13.0.
+Tested version of WordPress 6.5.3, plugin version was Spectra 2.13.1.
 
 This file is a code snippet that is used for [Spectra](https://wordpress.org/plugins/ultimate-addons-for-gutenberg/) plugin. 
 
