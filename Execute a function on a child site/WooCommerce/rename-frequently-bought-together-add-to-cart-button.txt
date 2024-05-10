@@ -1,0 +1,10 @@
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'filter_product_single_add_to_cart_text', 20, 2 );
+function filter_product_single_add_to_cart_text( $add_to_cart_text, $product ) {
+    // Define your targeted product IDs in the array below
+    $targeted_ids = array(22246, 22241, 22227, 22039, 22009, 22004, 21999, 21991);
+    
+    if (in_array($product->get_id(), $targeted_ids)) {
+        $add_to_cart_text = __("PRE ORDER", "woocommerce");
+    }
+    return $add_to_cart_text;
+}
