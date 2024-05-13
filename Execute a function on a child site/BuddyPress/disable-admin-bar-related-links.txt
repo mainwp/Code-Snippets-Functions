@@ -1,0 +1,1 @@
+add_filter('bp_use_wp_admin_bar', __return_false);
