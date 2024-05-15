@@ -1,0 +1,30 @@
+add_action( 'woocommerce_before_add_to_cart_quantity', 'display_product_total_amount_html' );
+function display_product_total_amount_html() {
+    global $product;
+
+    $meters_per_qty  = 0.5;
+    $display_price   = wc_get_price_to_display($product);
+    $formatted_price = '<span class="price-amount">'. number_format($display_price, 2) . '</span>';
+
+    // Output product total price amount
+    $price_string = sprintf( __('Add %s for %s', 'woocommerce'),  
+        '<span class="qty-meters">' . $meters_per_qty . ' meter</span>',
+        str_replace('0.00', $formatted_price, wc_price(0)) );
+
+    // Output product total price amount
+    echo '<div class="total-price_qty" style="margin-bottom:20px;">'.$price_string.'</div>'
+    ?>
+    <script>
+    jQuery(function($){
+        $('input[name=quantity]').on( 'input change', function(){
+            const qty = $(this).val();
+            if ( qty != 0 ) {
+                const lengthTxT = qty > 2 ? ' meters' : ' meter';
+                $('.total-price_qty .price-amount').html( parseFloat(<?php echo $display_price; ?> * qty).toFixed(2) );
+                $('.total-price_qty .qty-meters').html( parseFloat(<?php echo $meters_per_qty; ?> * qty)+lengthTxT );
+            }
+        });
+    });
+    </script>
+    <?php 
+}
