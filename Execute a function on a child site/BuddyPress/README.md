@@ -1,6 +1,6 @@
 ## BuddyPress code snippets
 
-Tested version of WordPress 6.5.3, plugin version was BuddyPress 12.4.1.
+Tested version of WordPress 6.5.3, plugin version was BuddyPress 12.5.0.
 
 This file is a code snippet that is used for [BuddyPress](https://wordpress.org/plugins/buddypress/) plugin. 
 
