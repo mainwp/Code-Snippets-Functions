@@ -1,0 +1,28 @@
+add_action( 'woocommerce_before_order_itemmeta', 'add_admin_order_item_product_permalink', 10, 2 );
+function add_admin_order_item_product_permalink( $item_id, $item ) {
+    if( $item->get_type() !== 'line_item' ) 
+        return;
+
+    $product = $item->get_product();
+
+    // Add a hidden input field with the product permalink
+    printf( '<input type="hidden" name="product-permalink" value="%s">', esc_url($product->get_permalink()));
+}
+
+// Change order items admin product link to the product frontend permalink
+add_filter( 'admin_footer', 'admin_order_items_with_product_permalink_js' );
+function admin_order_items_with_product_permalink_js() {
+    global $pagenow, $typenow; 
+
+    if ( ( $pagenow === 'post.php' && $typenow === 'shop_order' ) 
+    || ( $pagenow === 'admin.php' && isset($_GET['page'])  && isset($_GET['action']) 
+    && $_GET['page'] === 'wc-orders' && $_GET['action'] === 'edit' ) ) :
+    ?>
+    <script>
+    jQuery('#order_line_items tr').each(function(){
+        jQuery(this).find('td.name a').prop('href', jQuery(this).find('input[name=product-permalink]').val());
+    });
+    </script>
+    <?php
+    endif;
+}
