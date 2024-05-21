@@ -1,0 +1,38 @@
+// Utility function: check if product category handle zero rate tax class
+function is_zero_rate_tax_class( $product_id ) {
+    return  has_term( array(28, 29, 30, 32, 34), 'product_cat', $product_id );
+}
+
+// Conditional function: Check if the customer is from specific country code
+function is_from_targeted_country( $country_code ) {
+    return WC()->customer->get_billing_country() === $country_code;
+}
+
+// Alter product tax class
+add_filter( 'woocommerce_product_get_tax_class', 'filter_product_tax_class', 10, 2 );
+add_filter( 'woocommerce_product_variation_get_tax_class', 'filter_product_tax_class', 10, 2 );
+function filter_product_tax_class( $tax_class, $product ) {
+    $product_id = $product->get_parent_id() ?: $product->get_id();
+
+    if ( is_from_targeted_country('AU') && is_zero_rate_tax_class($product_id) ) {
+        return 'zero-rate';
+    }
+    return $tax_class;
+}
+
+// Alter cart items tax class (and order items too)
+add_action( 'woocommerce_before_calculate_totals', 'alter_cart_items_tax_rate', 20, 1 );
+function alter_cart_items_tax_rate( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    if ( ! is_from_targeted_country('AU') ) 
+        return;
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) {
+        if ( is_zero_rate_tax_class($item['product_id']) ) {
+            $item['data']->set_tax_class('zero-rate');
+        }
+    }
+}
