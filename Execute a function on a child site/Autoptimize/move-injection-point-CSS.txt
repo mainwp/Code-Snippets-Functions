@@ -1,0 +1,5 @@
+add_filters( 'autoptimize_filter_css_replacetag', 
+  function(){
+    return array( '</head>", 'before' );
+  }
+);
