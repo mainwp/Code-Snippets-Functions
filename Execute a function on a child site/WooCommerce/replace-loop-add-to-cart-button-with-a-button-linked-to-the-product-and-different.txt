@@ -1,0 +1,42 @@
+// Settings function: Define for each categories, the corresponding button text to display
+function get_category_button_text() {
+    return array(
+        array(
+            'terms' => array('hoodies', 'pants'), // Accept multiple categories term Ids, term slugs or term names
+            'text' => __('Button Text 1', 'woocommerce') // Button text
+        ),
+        array(
+            'terms' => array('tshirts', 'shirts'), 
+            'text' => __('Button Text 2', 'woocommerce')
+        ),
+        array(
+            'terms' => array('accessories'), 
+            'text' => __('Button Text 3', 'woocommerce')
+        ),
+        array(
+            'terms' => array('music', 'video'), 
+            'text' => __('Button Text 4', 'woocommerce')
+        ),
+        array(
+            'terms' => array('furniture'), 
+            'text' => __('Button Text 5', 'woocommerce')
+        ),
+    );
+}
+
+// Replace Loop Add to Cart with a button linked to the product
+add_filter( 'woocommerce_loop_add_to_cart_link', 'replacing_add_to_cart_button', 10, 2 );
+function replacing_add_to_cart_button( $button, $product  ) {
+    $taxonomy    = 'product_cat';
+    $product_id  = $product->get_id();
+    $button_text = __('View product', 'woocommerce'); // The default text
+
+    // Loop through defined category terms / text pairs
+    foreach( get_category_button_text() as $values ) {
+        if ( has_term($values['terms'], $taxonomy, $product_id ) ) {
+            $button_text = $values['text'];
+            break;
+        } 
+    }
+    return sprintf('<a href="%s" class="button addtocartbutton">%s</a>', $product->get_permalink(), $button_text );
+}
