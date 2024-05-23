@@ -1,6 +1,6 @@
 ## Smush code snippets
 
-Tested version of WordPress 6.5.2, plugin version was Smush 3.16.2.
+Tested version of WordPress 6.5.3, plugin version was Smush 3.16.4.
 
 This file is a code snippet that is used for [Smush](https://wordpress.org/plugins/wp-smushit/) plugin. 
 
