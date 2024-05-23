@@ -1,6 +1,6 @@
 ## Tutor LMS code snippets
 
-Tested version of WordPress 6.5.2, plugin version was Tutor LMS 2.7.0.
+Tested version of WordPress 6.5.3, plugin version was Tutor LMS 2.7.1.
 
 This file is a code snippet that is used for [Tutor LMS](https://wordpress.org/plugins/tutor/) plugin. 
 
