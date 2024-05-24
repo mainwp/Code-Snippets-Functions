@@ -1,0 +1,53 @@
+// Filter product button single add to cart text
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'already_in_cart_single_add_to_cart_text', 10, 2 );
+function already_in_cart_single_add_to_cart_text( $add_to_cart_text, $product ) {
+    if (!$product->is_type('simple')) {
+        return $add_to_cart_text;
+    }
+
+    foreach( WC()->cart->get_cart() as $item ) {
+        if( $item['data']->get_id() === $product->get_id() ) {
+            return __('Product already in Cart. Add again?', 'woocommerce');
+        }
+    } 
+    return $add_to_cart_text;
+}
+
+
+// jQuery Ajax: Check dynamically cart items and update add to cart text via Ajax
+add_action( 'woocommerce_before_add_to_cart_button', 'ajax_update_single_add_to_cart_text' );
+function ajax_update_single_add_to_cart_text(){
+    global $product;
+
+    if (!$product->is_type('simple')) return;
+    
+    wc_enqueue_js("$(document.body).on( 'added_to_cart removed_from_cart', function(){
+        $.ajax({
+            type: 'POST',
+            url: '" . admin_url('/admin-ajax.php') . "',
+            data: {
+                'action': 'check_cart_items',
+                'product_id': ".$product->get_id()."
+            },
+            success: function (response) {
+                $('[name=add-to-cart]').html(response)
+            }
+        });
+    });");
+}
+
+// PHP AJAX Receiver: Process the ajax request (check cart items)
+add_action('wp_ajax_check_cart_items', 'check_cart_items_for_single_add_to_cart_text');
+add_action('wp_ajax_nopriv_check_cart_items', 'check_cart_items_for_single_add_to_cart_text');
+function check_cart_items_for_single_add_to_cart_text() {
+    if ( isset($_POST['product_id']) && $_POST['product_id'] > 0 ) {
+        // Loop through cart items
+        foreach( WC()->cart->get_cart() as $item ) {
+            if( $item['data']->get_id() == intval($_POST['product_id']) ) {
+                wp_die( __('Product already in Cart. Add again?', 'woocommerce') );
+            }
+        } 
+        wp_die( __('Add to cart', 'woocommerce') );
+    }
+    wp_die();
+}
