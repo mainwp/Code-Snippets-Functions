@@ -1,0 +1,8 @@
+add_action( 'woocommerce_before_shop_loop_item_title', 'show_product_loop_backorder_badge', 5 );
+function show_product_loop_backorder_badge(){
+    global $product;
+
+    if ( $product->is_on_backorder() ) {
+        printf('<span class="on-backorder">%s</span>', esc_html__('Out of stock', 'woocommerce'));
+    }
+}
