@@ -1,0 +1,51 @@
+// Define a custom schedule time for Cron schedules tasks
+add_filter( 'cron_schedules','hourly_cron_schedule' );
+function hourly_cron_schedule( $schedules ) {
+    if ( ! isset( $schedules["hourly"] ) ) {
+        $schedules["hourly"] = array(
+            'interval' => HOUR_IN_SECONDS,
+            'display' => __( 'Hourly' )
+        );
+    }
+    return $schedules;
+}
+
+// Define the scheduled task
+add_action('init', 'my_custom_schedule_task');
+function my_custom_schedule_task() {
+    // Schedule an action (if it's not already scheduled)
+    if ( ! wp_next_scheduled( 'scheduled_complete_processing_orders' ) ) {
+        wp_schedule_event( time(), 'hourly', 'scheduled_complete_processing_orders' );
+    }
+}
+
+
+// Function to run on the scheduled event
+add_action( 'scheduled_complete_processing_orders', 'complete_processing_orders_with_bookings' );
+function complete_processing_orders_with_bookings() {
+    // Get all processing orders
+    $orders = wc_get_orders( array(
+        'type'        => 'shop_order',
+        'limit'       => -1,
+        'status'      => 'processing', 
+    ) );
+
+    // Lopp through processing orders
+    foreach ( $orders as $order ) {
+        // Get Bookings (IDs) from the order
+        $booking_ids = WC_Booking_Data_Store::get_booking_ids_from_order_id( $order->get_id() );
+
+        // Only orders with bookings
+        if( $booking_ids ) {
+            // Loop through bookings within the order
+            foreach ( $booking_ids as $booking_id ) {
+                $booking = new WC_Booking( $booking_id ); // Get the WC_Booking object
+
+                // If start date has passed 
+                if ( strtotime( $booking->get_start_date() ) > time() ) {
+                    $order->update_status( 'completed' );
+                }
+            }
+        }
+    }
+}
