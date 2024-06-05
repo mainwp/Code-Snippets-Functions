@@ -1,0 +1,14 @@
+add_filter('wcs_view_subscription_actions', 'delay_user_action_cancel_button', 10, 3 );
+
+function delay_user_action_cancel_button( $actions, $subscription, $user_id ) {
+    // Check that 'cancel' action button is active
+    if ( ! isset($actions['cancel']) ) return $actions;
+
+    $start_date = $subscription->get_date('start'); // Get the start date
+    $days_period = 15; // Here define the "designated time limit" in days
+
+    if ( strtotime($start_date) + ( $days_period * DAY_IN_SECONDS ) >= time() ) {
+        unset($actions['cancel']);
+    }
+    return $actions;
+}
