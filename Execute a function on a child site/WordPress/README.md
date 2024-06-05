@@ -1,6 +1,6 @@
 ## WordPress
 
-Tested version of WordPress 6.5.3.
+Tested version of WordPress 6.5.4.
 
 This file is a code snippet that is used for [WordPress](https://wordpress.org/download/).
 
