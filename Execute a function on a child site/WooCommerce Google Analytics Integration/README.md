@@ -1,6 +1,6 @@
 ## WooCommerce Google Analytics Integration code snippets
 
-Tested version of WordPress 6.5.2, plugin version was WooCommerce Google Analytics Integration 2.0.6.
+Tested version of WordPress 6.5.4, plugin version was WooCommerce Google Analytics Integration 2.1.0.
 
 This file is a code snippet that is used for [WooCommerce Google Analytics Integration](https://wordpress.org/plugins/woocommerce-google-analytics-integration/) plugin. 
 
