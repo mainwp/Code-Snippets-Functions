@@ -1,0 +1,16 @@
+add_action( 'woocommerce_init', 'role_based_redirect' );
+function role_based_redirect() {
+    global $pagenow, $current_user;
+
+    // Define allowed users below
+    $non_allowed_users = array("abc", "afi", "asd");
+
+    // Targetting WooCommerce Admin Payments page
+    if ( $pagenow === 'admin.php' && isset($_GET['page'],$_GET['tab']) 
+    && $_GET['page'] === 'wc-settings' && $_GET['tab'] === 'checkout' 
+    && in_array( strtolower($current_user->user_login), $non_allowed_users ) )
+    {
+        wp_redirect( admin_url( 'admin.php?page=wc-settings' ) );
+        exit();
+    }
+}
