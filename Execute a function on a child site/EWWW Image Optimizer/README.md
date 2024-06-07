@@ -1,6 +1,6 @@
 ## EWWW Image Optimizer code snippets
 
-Tested version of WordPress 6.5.2, theme version was EWWW Image Optimizer 7.6.0.
+Tested version of WordPress 6.5.4, theme version was EWWW Image Optimizer 7.7.0.
 
 This file is a code snippet that is used for [EWWW Image Optimizer](https://wordpress.org/plugins/ewww-image-optimizer/) plugin. 
 
