@@ -1,0 +1,11 @@
+add_filter( 'woocommerce_order_item_get_formatted_meta_data', 'hide_specific_order_item_metadata', 10, 2);
+function hide_specific_order_item_metadata($formatted_meta, $item){
+    if( is_admin() ) return $formatted_meta; // Exit if Admin orders
+
+    foreach( $formatted_meta as $key => $meta ){
+        if( $meta->key === 'Backordered' ) {
+            unset($formatted_meta[$key]);
+        }  
+    }
+    return $formatted_meta;
+}
