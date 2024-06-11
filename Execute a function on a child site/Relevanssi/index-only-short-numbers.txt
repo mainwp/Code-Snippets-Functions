@@ -1,0 +1,14 @@
+add_filter( 'relevanssi_remove_punctuation', function( $str) {
+    return implode(
+        ' ',
+        array_filter(
+            explode( ' ', $str ),
+            function( $word ) {
+                if ( relevanssi_strlen( $word ) < 3 ) {
+                    return is_numeric( $word );
+                }
+                return true;
+            }
+        )
+    );
+} );
