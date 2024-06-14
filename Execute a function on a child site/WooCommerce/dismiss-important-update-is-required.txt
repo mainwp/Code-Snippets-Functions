@@ -1,0 +1,5 @@
+add_action('plugins_loaded', function() {
+	global $wpdb;
+
+	$wpdb->query("update {$wpdb->prefix}wc_admin_notes set status='pending' where name='WC-order-attribution-update-June-2024'");
+});
