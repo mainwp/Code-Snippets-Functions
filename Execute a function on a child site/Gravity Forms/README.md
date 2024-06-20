@@ -1,6 +1,6 @@
 ## Gravity Forms code snippets
 
-Tested version of WordPress 6.5.3, plugin version was Gravity Forms 2.8.12.
+Tested version of WordPress 6.5.4, plugin version was Gravity Forms 2.8.12.1.
 
 This file is a code snippet that is used for [Gravity Forms](https://www.gravityforms.com/) plugin. 
 
