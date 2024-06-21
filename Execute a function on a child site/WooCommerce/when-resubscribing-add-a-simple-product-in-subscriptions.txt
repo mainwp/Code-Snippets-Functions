@@ -1,0 +1,27 @@
+add_action( 'woocommerce_checkout_init', 'add_product_with_resubscription' );
+function add_product_with_resubscription() {
+    $cart = WC()->cart;
+
+    $simple_product_id = 18; // Define the simple product ID to be added
+    $subscr_product_id = 138; // Define the targeted product subscription ID
+    $simple_is_in_cart = $is_resubscription = false; // Initializing
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) { 
+        // Check for a specific resubscription
+        if( isset($item['subscription_resubscribe']) 
+        && in_array($subscr_product_id, [$item['product_id'], $item['variation_id']]) ) {
+            $is_resubscription = true;
+        }
+        // Check that the simple product is not yet in cart
+        if( $simple_product_id == $item['product_id'] ) {
+            $simple_is_in_cart = true;
+        }
+    }
+
+    // Add to cart the simple product and recalculate totals
+    if ( $is_resubscription && !$simple_is_in_cart ) {
+        $cart->add_to_cart($simple_product_id);
+        $cart->calculate_totals();
+    }
+}
