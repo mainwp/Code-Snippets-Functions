@@ -1,0 +1,47 @@
+add_action( 'woocommerce_checkout_order_processed', 'split_checkout_order_with_backorder_items', 10, 3 );
+function split_checkout_order_with_backorder_items( $order_id, $posted_data, $order ) {
+    $last_order_id = false; // Initialize
+
+    // Loop through order items
+    foreach ( $order->get_items() as $item_id => $item ) {
+        $product = $item->get_product(); // Get the product object
+
+        // Is item is on backorder?
+        if ( $product->is_on_backorder() ) {
+            // Create new order with the backorder item
+            $sub_order = wc_create_order( array(
+                'customer_id' => $order->get_user_id(),
+                'parent'      => $order_id,
+            ));
+
+            $sub_order->add_product( $product, $item->get_quantity() ); // Add item on newly created order
+            $order->remove_item( $item_id ); // Remove item from current Order
+
+            $last_order_id = $sub_order->get_id(); // Set the sub order ID
+
+            $sub_order->set_currency( $order->get_currency() );
+            $sub_order->set_payment_method( $order->get_payment_method() );
+
+            $sub_order->set_address( $order->get_address('billing'), 'billing' );
+            $sub_order->set_address( $order->get_address('shipping'), 'shipping' );
+
+            $sub_order->add_order_note( sprintf( __('Automated backorder. Created from the original order ID: %d'), $order_id ) );
+
+            // Calculate totals, set status and save
+            $sub_order->calculate_totals();
+            $sub_order->update_status( 'processing' );
+        }
+    }
+
+    // If current order had backordered items
+    if ( $last_order_id ) {
+        // Set the last order ID as user metadata
+        if ( $user_id = $order->get_user_id() ) {
+            update_user_meta( $user_id, '_last_order', $last_order_id );
+        }
+
+        // Recalculate and save current order
+        $order->calculate_totals();
+        $order->save();
+    }
+}
