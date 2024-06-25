@@ -1,0 +1,5 @@
+add_filter( 'relevanssi_punctuation_filter', 'rlv_adjust_punctuation' );
+function rlv_adjust_punctuation( $replacements ) {
+    $replacements['/'] = '';
+    return $replacements;
+}
