@@ -1,0 +1,61 @@
+// Display checkbox(es) for additional product(s)
+add_action('woocommerce_before_add_to_cart_button', 'display_additional_products_checkboxes');
+function display_additional_products_checkboxes() {
+    global $product;
+
+    if ( $bundled_product_ids = $product->get_meta('_bundled_ids') ) {
+        echo '<div class="additional-products">
+        <h3>'. __('Additional Products') .'</h3>';
+
+        foreach ($bundled_product_ids as $_product_id) {
+            $_product = wc_get_product($_product_id);
+
+            if ( is_object($_product) ) {
+                printf('<div class="form-row"><label for="bundled-products-%d">
+                <input type="checkbox" name="bundled_products[]" id="bundled-products-%d" value="%d">
+                &nbsp;%s: %s</label></div>', 
+                $_product_id, $_product_id, $_product_id, $_product->get_name(), $_product->get_price_html() );
+            }
+        }
+
+        echo '</div><br>';
+    }
+}
+
+// Add selected additional product IDs as custom cart item data
+add_filter( 'woocommerce_add_cart_item_data', 'set_bundled_products_as_custom_item_data', 10 );
+function set_bundled_products_as_custom_item_data( $cart_item_data ) {
+    if ( ! isset($cart_item_data['parent_id']) 
+    && isset($_POST['bundled_products']) && ! empty($_POST['bundled_products']) ) {
+        $cart_item_data['bundled_products'] = wc_clean( wp_unslash($_POST['bundled_products']) );
+    }
+    return $cart_item_data;
+}
+
+// Add selected additional products as separated cart items
+add_action( 'template_redirect', 'add_to_cart_bundled_products' );
+function add_to_cart_bundled_products( $cart_item_data ) {
+    if ( isset($_POST['bundled_products']) && ! empty($_POST['bundled_products']) ) {
+        // Get the additional products
+        $bundled_products = wc_clean( wp_unslash($_POST['bundled_products']) );
+
+        // Get the parent bundle product ID
+        $parent_id = isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0 ? intval($_POST['add-to-cart']) : null;
+        $parent_id = isset($_POST['variation_id']) && $_POST['variation_id'] > 0 ? intval($_POST['variation_id']) : $parent_id ;
+
+        // Loop through additional selected product IDs
+        foreach ( $bundled_products as $product_id ) {
+            $product     = wc_get_product($product_id); // Get the product Object
+            $is_variation = $product->is_type('variation'); // Is it a variation
+
+            if ( is_object($product) ) {
+                $variation_id = $is_variation ? $product_id : 0;
+                $product_id = $is_variation ? $product->get_parent_id() : $product_id;
+                $attributes = $is_variation ? $product->get_variation_attributes() : [];
+
+                // Add additional product to cart (with the parent bundle product ID as custom cart item data)
+                WC()->cart->add_to_cart($product_id, 1, $variation_id, $attributes, ['parent_id' => $parent_id ]);
+            }
+        }
+    }
+}
