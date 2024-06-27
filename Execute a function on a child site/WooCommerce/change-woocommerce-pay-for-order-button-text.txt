@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_pay_order_button_text', 'wc_custom_pay_order_button_custom_text' ); 
+
+function wc_custom_pay_order_button_custom_text() {
+    return __( 'Pay Now', 'woocommerce' ); 
+}
