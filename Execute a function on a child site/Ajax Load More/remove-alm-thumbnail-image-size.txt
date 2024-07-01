@@ -1,0 +1,5 @@
+function alm_remove_image_size() {
+   global $ajax_load_more;
+   remove_filter( 'after_setup_theme', array( $ajax_load_more, 'alm_image_sizes' ) );
+}
+add_action( 'after_setup_theme', 'alm_remove_image_size', 1 );
