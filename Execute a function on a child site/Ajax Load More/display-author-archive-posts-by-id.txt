@@ -1,0 +1,10 @@
+get_header();
+ 
+if(is_author()){
+   $author_id = get_the_author_meta('ID');
+   $name = get_the_author_meta('display_name');
+   echo '<h1>'.$name.'</h1>';
+   echo do_shortcode('[ajax_load_more author="'.$author_id.'"]');
+} 
+ 
+get_footer(); 
