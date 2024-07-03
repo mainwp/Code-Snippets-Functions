@@ -1,0 +1,5 @@
+add_filter( 'relevanssi_remove_punctuation', function( $a ) {
+    $a = preg_replace( '/(\w)\.(\w)/', '\1\2', $a );
+    $a = preg_replace( '/(\w)\.(\w)/', '\1\2', $a );
+    return $a;
+}, 8 );
