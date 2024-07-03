@@ -1,3 +1,4 @@
+<?php
 $count = 0;
 $found = false;
 
@@ -48,3 +49,4 @@ $directory = WP_PLUGIN_DIR;
 
         echo 'Scanned: ' . $count . ' files<br/>';
         echo $found ? 'Files are found on the site.' : 'Files are not found on the site.';
+?>
