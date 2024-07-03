@@ -1,0 +1,6 @@
+add_filter( 'cartflows_variation_popup_toggle_text', 'change_variation_toggle_text', 10, 1 );
+
+function change_variation_toggle_text( $text ) {
+
+	return "Add your choice of text here";
+}
