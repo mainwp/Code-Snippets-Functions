@@ -1,0 +1,25 @@
+// Add a custom checkbox to checkout
+add_action( 'woocommerce_review_order_before_submit', 'add_custom_checkout_privacy_policy', 9 ); 
+function add_custom_checkout_privacy_policy() {
+    // Here define the privacy policy link page URL
+    $page_link = site_url('/privacy-policy/');
+
+    $privacy_text = sprintf( __("I have read and agree to the website %s", 'woocommerce'), 
+        '<a href="'. $page_link .'">'. __("returns and refunds policy", 'woocommerce') . '</a>');
+   
+    printf('<p class="form-row privacy validate-required privacy_policy_field">
+    <label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
+        <input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="privacy_policy" id="privacy_policy" %s />
+        <span class="woocommerce-terms-and-conditions-checkbox-text">%s</span>
+        &nbsp;<abbr class="required" title="%s">*</abbr>
+    </label></p>', checked( isset($_POST['privacy_policy']), true, false ), 
+    $privacy_text, esc_attr__( 'required', 'woocommerce' ) );
+}
+
+// Checkbox validation as it's a required field
+add_action( 'woocommerce_checkout_process', 'validate_custom_checkout_privacy_policy' ); 
+function validate_custom_checkout_privacy_policy() {
+    if ( ! isset($_POST['privacy_policy']) ) {
+        wc_add_notice('Please read and accept the returns and refunds policy to proceed with your order.', 'error');
+    }
+}
