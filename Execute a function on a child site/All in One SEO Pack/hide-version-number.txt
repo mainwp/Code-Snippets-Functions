@@ -1,0 +1,1 @@
+	add_filter( 'aioseo_hide_version_number', '__return_true' );
