@@ -1,0 +1,21 @@
+add_action( 'woocommerce_check_cart_items', 'new_order_allowed' );
+function new_order_allowed() {
+    if ( is_user_logged_in() && ( is_cart() || is_checkout() ) ) {
+        $last_order = wc_get_customer_last_order( get_current_user_id() );
+
+        if ( is_a( $last_order, 'WC_Order') ) {
+            $created_timestamp = $last_order->get_date_created()->getTimestamp();
+            $allowed_timestamp = strtotime('-1 year');
+            $remaining_days    = floor(($created_timestamp - $allowed_timestamp) / DAY_IN_SECONDS);
+            $days_passed       = 365 - $remaining_days;
+
+            if ( $created_timestamp >= $allowed_timestamp ) {
+                wc_add_notice( sprintf( 
+                    __('<strong>ONLY ONE PURCHASE IS ALLOWED WITHIN 365 DAYS.</strong><br>Your last order was made %s ago. Please try again when the 365 day period has been reached.'),
+                sprintf( _n( '%s day', '%s days', $days_passed ) ) ), 'error' );
+
+                remove_action( 'woocommerce_proceed_to_checkout','woocommerce_button_proceed_to_checkout', 20);
+            }
+        }
+    }
+}
