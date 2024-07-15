@@ -1,0 +1,6 @@
+add_filter( 'generateblocks_query_loop_args', function( $query_args, $attributes ) {
+	if (! is_admin() && ! empty( $query_args['s'] ) ) {
+		$query_args['relevanssi'] = true;
+	}
+	return $query_args;
+}, 10, 2 );
