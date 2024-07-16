@@ -1,0 +1,7 @@
+jQuery(function($){
+    $('#calc_shipping_city, #calc_shipping_postcode').prop('required', true);
+
+    $(document.body).on('change', 'form.woocommerce-shipping-calculator', function(){
+        $('#calc_shipping_state').prop('required', true);
+    });
+} );
