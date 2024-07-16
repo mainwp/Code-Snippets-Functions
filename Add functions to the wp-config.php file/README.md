@@ -1,6 +1,6 @@
 ## WordPress code snippets for wp-config.php
 
-Tested version of WordPress 6.5.5.
+Tested version of WordPress 6.6.
 
 This file is for code snippets in WordPress to add constants into the sites **wp-config.php** file. 
 
