@@ -1,0 +1,8 @@
+add_action( 'generate_after_entry_header', 'meta_mz' );
+function meta_mz() {
+    if ( is_singular( 'page' ) ) : ?>
+        <div class="entry-meta">
+            <?php generate_posted_on(); ?>
+        </div><!-- .entry-meta -->
+    <?php endif;
+}
