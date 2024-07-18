@@ -1,6 +1,6 @@
 ## Fluent Forms code snippets
 
-Tested version of WordPress 6.5.3, plugin version was Fluent Forms 5.1.18.
+Tested version of WordPress 6.5.5, plugin version was Fluent Forms 5.1.19.
 
 This file is a code snippet that is used for [Fluent Forms](https://wordpress.org/plugins/fluentform/) plugin. 
 
