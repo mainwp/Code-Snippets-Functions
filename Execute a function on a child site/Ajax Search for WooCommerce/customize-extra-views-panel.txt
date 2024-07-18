@@ -1,0 +1,10 @@
+add_filter( 'dgwt/wcas/suggestion_details/product/html', function( $html ) {
+	// Remove dgwt-wcas-details-hr
+	$html = str_replace( '<div class="dgwt-wcas-details-hr"></div>', '', $html );
+	// Remove description
+	$html = preg_replace( '#<div class="dgwt-wcas-details-desc">(.+?)</div>#s', '', $html );
+	// Remove stock status
+	$html = preg_replace( '#<span class="dgwt-wcas-stock[^"]*">(.+?)</span>#s', '', $html );
+
+	return $html;
+}, 10 );
