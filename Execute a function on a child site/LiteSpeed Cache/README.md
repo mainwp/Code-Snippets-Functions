@@ -1,6 +1,6 @@
 ## LiteSpeed Cache code snippets
 
-Tested version of WordPress 6.5.2, plugin version was LiteSpeed Cache 6.2.0.1.
+Tested version of WordPress 6.6, plugin version was LiteSpeed Cache 6.3.
 
 This file is a code snippet that is used for [LiteSpeed Cache](https://wordpress.org/plugins/litespeed-cache/) plugin. 
 
