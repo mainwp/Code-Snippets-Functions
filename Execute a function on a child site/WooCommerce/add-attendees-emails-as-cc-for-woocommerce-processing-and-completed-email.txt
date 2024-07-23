@@ -1,0 +1,18 @@
+add_filter( 'woocommerce_email_headers', 'additional_cc_recipient', 10, 3 );
+function additional_cc_recipient( $headers, $email_id, $order ) {
+    // Only for Processing and Completed order email notifications
+    if( in_array($email_id, ['customer_processing_order', 'customer_completed_order']) ) {
+        if ( $count = $order->get_meta('cstm_items_count') ) {
+            $recipient = []; // initializing
+
+            for ( $i = 1; $i <= $count; $i++ ) {
+                if ( $email = $order->get_meta('cstm_email'.$i) ) {
+                    // Add attendees emails, avoiding duplicates
+                    $recipient[$email] = utf8_decode($order->get_meta('cstm_full_name'.$i) . ' <' . $email . '>');
+                }
+            }
+            $headers .= 'Cc: ' . implode(',', $recipient) . "\r\n";
+        }
+    } 
+    return $headers;
+}
