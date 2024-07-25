@@ -1,0 +1,17 @@
+function ensure_13_digit_sku( $sku ) {
+    return str_pad($sku, 13, '0', STR_PAD_LEFT);
+}
+
+add_action('woocommerce_admin_process_product_object', 'pre_process_product_sku');
+function pre_process_product_sku( $product ) {
+    $sku = isset($_POST['_sku']) ? wc_clean( wp_unslash($_POST['_sku']) ) : '';
+
+    $product->set_sku( ensure_13_digit_sku($sku) );
+}
+
+add_action('woocommerce_admin_process_variation_object', 'pre_process_variation_sku');
+function pre_process_variation_sku( $variation, $i ) {
+    $sku = isset($_POST['variable_sku'][$i]) ? wc_clean( wp_unslash($_POST['variable_sku'][$i]) ) : '';
+
+    $variation->set_sku( ensure_13_digit_sku($sku) );
+}
