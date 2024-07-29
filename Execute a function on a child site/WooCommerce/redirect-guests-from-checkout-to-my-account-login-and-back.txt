@@ -1,0 +1,13 @@
+add_action( 'template_redirect', 'redirect_to_specific_page' );
+function redirect_to_specific_page() {
+    $is_checkout_page = is_checkout() && !is_wc_endpoint_url();
+
+    if ( !is_user_logged_in() && $is_checkout_page ) {
+        global $wp;
+
+        $redirect_to = '/?redirect_to=' . urlencode( site_url( $wp->request ) );
+        
+        wp_redirect( get_permalink( get_option('woocommerce_myaccount_page_id')) . $redirect_to );
+        exit();
+    }
+}
