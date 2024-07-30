@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_get_breadcrumb', 'remove_home_and_shop_crumb', 20, 2 );
+function remove_home_and_shop_crumb( $crumbs, $breadcrumb ){
+    // On single product pages
+    if ( is_product() ) {
+        // Loop through crumps
+        foreach( $crumbs as $key => $crumb ){
+            // Remove "Home" and "Shop"
+            if( in_array($crumb[0], [__('Home', 'Woocommerce'), 'Accueil']) 
+            || in_array($crumb[0], [__('Shop', 'Woocommerce'), 'Boutique']) ) {
+                unset($crumbs[$key]);
+            }
+        }
+    }
+    return array_values($crumbs);
+}
