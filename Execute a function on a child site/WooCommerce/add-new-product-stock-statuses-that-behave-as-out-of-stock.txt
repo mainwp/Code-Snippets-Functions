@@ -1,0 +1,67 @@
+add_filter( 'woocommerce_product_stock_status_options', 'filter_woocommerce_product_stock_status_options', 10, 1 );
+function filter_woocommerce_product_stock_status_options( $status ) {
+    $status['available_soon'] = __( 'Available soon', 'woocommerce' );
+    $status['in_store_only']  = __( 'In-store only', 'woocommerce' );
+
+    return $status;
+}
+
+add_filter( 'woocommerce_get_availability', 'filter_woocommerce_get_availability', 10, 2 );
+function filter_woocommerce_get_availability( $availability, $product ) {
+    // Get stock status
+    switch( $product->get_stock_status() ) {
+        case 'available_soon':
+            $availability['availability'] = __( 'Available soon', 'woocommerce' );
+            $availability['class'] = 'out-of-stock';
+            break;
+
+        case 'in_store_only':
+            $availability['availability'] = __( 'In-store only', 'woocommerce' );
+            $availability['class'] = 'out-of-stock';
+            break;
+    }
+    return $availability; 
+}
+
+add_filter( 'woocommerce_admin_stock_html', 'filter_woocommerce_admin_stock_html', 10, 2 );
+function filter_woocommerce_admin_stock_html( $stock_html, $product ) {
+    // For variable products
+    if ( $product->is_type( 'variable' ) ) {
+        $available_soon = $in_store_only = $other_statuses = 0; // Initializing
+
+        foreach( $product->get_available_variations('objects') as $variation ) {
+            $_stock_status = $variation->get_stock_status(); // Get variation stock status
+
+            // Count statuses
+            if ( $_stock_status === 'available_soon' ) {
+                $available_soon++;
+            } elseif ( $_stock_status === 'in_store_only' ) {
+                $in_store_only++;
+            } else {
+                $other_statuses++;
+            }
+        }
+
+        if ( $available_soon > 0 && $in_store_only === 0 && $other_statuses === 0 ) {
+            $stock_status = 'available_soon';
+        } elseif ( $available_soon === 0 && $in_store_only > 0 && $other_statuses === 0 ) {
+            $stock_status = 'in_store_only';
+        } else {
+            $stock_status = $product->get_stock_status();
+        }
+    } 
+    // Other product types
+    else {
+        $stock_status = $product->get_stock_status();
+    }
+
+    switch( $stock_status ) {
+        case 'available_soon':
+            $stock_html = '<mark class="outofstock">' .  __( 'Available soon', 'woocommerce' ) . '</mark>';
+            break;
+        case 'in_store_only':
+            $stock_html = '<mark class="outofstock">' . __( 'In-store only', 'woocommerce' ) . '</mark>';
+            break;
+    }
+    return $stock_html;
+}
