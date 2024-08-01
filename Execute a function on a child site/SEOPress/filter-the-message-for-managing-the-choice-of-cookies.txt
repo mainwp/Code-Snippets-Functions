@@ -1,0 +1,4 @@
+function sp_rgpd_full_message($user_msg, $edit_cookie_btn) { 
+	return '<div id="my-cookie-bar">'.$user_msg.$edit_cookie_btn.'</div>';
+}
+add_filter('seopress_rgpd_edit_message', 'sp_rgpd_full_message', 10, 2); 
