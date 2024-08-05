@@ -1,0 +1,63 @@
+// Utility function: Get cart total savings amount
+function get_cart_total_savings() {
+    $total_saved = 0; // Initializing
+
+    // Loop through cart items
+    foreach ( WC()->cart->get_cart() as $item ) {
+        $product = $item['data'];
+
+        if ( $product->is_on_sale() ) {
+            $regular_args = array( 'price' => $product->get_regular_price() );
+
+            if ( WC()->cart->display_prices_including_tax() ) {
+                $active_price    = wc_get_price_including_tax( $product );
+                $regular_price   = wc_get_price_including_tax( $product, $regular_args );
+            } else {
+                $active_price    = wc_get_price_excluding_tax( $product );
+                $regular_price   = wc_get_price_excluding_tax( $product, $regular_args );
+            }
+            $total_saved += ( $regular_price - $active_price ) * $item['quantity'];
+        }
+    }
+
+    if ( WC()->cart->display_prices_including_tax() ) {
+        $total_saved += WC()->cart->get_discount_tax();
+    }
+
+    return $total_saved + WC()->cart->get_discount_total();
+}
+
+// Display total savings amount in cart and checkout pages
+add_action( 'woocommerce_cart_totals_after_order_total', 'display_cart_total_savings_amount', 1000 ); // Cart
+add_action( 'woocommerce_review_order_after_order_total', 'display_cart_total_savings_amount', 1000 ); // Checkout
+function display_cart_total_savings_amount() {
+    $total_saved = get_cart_total_savings();
+
+    if ( $total_saved > 0 ) {
+        $label = __('Savings', 'woocommerce');
+
+        printf( '<tr class="total-saved"><th>%s</th><td data-title="%s">-%s</td></tr>', $label, $label, wc_price($total_saved) );
+    }
+}
+
+// Save the total savings amount as custom order metadata
+add_action( 'woocommerce_checkout_create_order', 'add_cart_total_savings_amount_metadata' );
+function add_cart_total_savings_amount_metadata( $order ) {
+    $total_saved = get_cart_total_savings();
+
+    if ( $total_saved > 0 ) {
+        $order->add_meta_data( 'total_saved', $total_saved, true );
+    } 
+}
+
+// Display total savings amount on customer orders and email notifications
+add_filter( 'woocommerce_get_order_item_totals', 'display_total_savings_on_order_item_totals', 10, 3 );
+function display_total_savings_on_order_item_totals( $total_rows, $order, $tax_display ) {
+    if ( $total_saved = $order->get_meta('total_saved') ) {
+        $total_rows['total_saved'] = array(
+            'label' =>__('Savings', 'woocommerce') . ':',
+            'value' => wc_price($total_saved, array( 'currency' => $order->get_currency() )),
+        );
+    }
+    return $total_rows;
+}
