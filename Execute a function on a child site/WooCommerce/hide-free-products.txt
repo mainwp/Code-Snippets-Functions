@@ -1,0 +1,12 @@
+add_action( 'woocommerce_product_query', 'wc_hide_products_0_price', 9999, 2 );
+   
+function wc_hide_products_0_price( $q, $query ) {
+   if ( is_admin() ) return;
+   $meta_query = $q->get( 'meta_query');
+   $meta_query[] = array(
+      'key' => '_regular_price',
+      'value' => 0,
+      'compare' => '>',
+   );
+   $q->set( 'meta_query', $meta_query ); 
+}
