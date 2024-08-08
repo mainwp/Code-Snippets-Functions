@@ -1,0 +1,1 @@
+add_filter( 'jetpack_comment_form_display_greeting', '__return_false' );
