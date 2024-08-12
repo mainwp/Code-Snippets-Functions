@@ -1,0 +1,32 @@
+// Restrict available payment methods based on applied coupons
+add_filter('woocommerce_available_payment_gateways', 'restrict_checkout_available_payment_gateways_conditionally');
+function restrict_checkout_available_payment_gateways_conditionally( $available_gateways ) {
+    $targeted_coupons = array('test123', 'check123'); // Define here the coupon codes
+
+    // Only on checkout and order pay
+    if( is_checkout() ) {
+        if ( is_wc_endpoint_url('order-pay') ) { // Order pay page
+            global $wp;
+            $order_id = absint( $wp->query_vars['order-pay'] );
+            $order = wc_get_order($order_id);
+            $applied_coupons = $order->get_coupon_codes();
+        }  elseif ( ! is_wc_endpoint_url() ) { // Checkout page
+            $applied_coupons = WC()->cart->get_applied_coupons();
+        }
+    
+        // Check if any defined coupon code is used in cart
+        if ( $applied_coupons && array_intersect($targeted_coupons, $applied_coupons ) ) {
+            if ( isset($available_gateways['bacs']) ) {
+                unset($available_gateways['bacs']);
+            }
+            if ( isset($available_gateways['invoice']) ) {
+                unset($available_gateways['invoice']);
+            }
+            // Display message
+            wc_clear_notices();
+            wc_add_notice( sprintf( __('You can only use the <strong>Credit Card</strong> payment method with coupon %s "%s".'), 
+                _n('code', 'codes', count($applied_coupons)), implode( '", "', $applied_coupons) ), 'notice');  
+        }
+    }
+    return $available_gateways;
+}
