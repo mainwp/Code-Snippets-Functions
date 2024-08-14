@@ -1,0 +1,12 @@
+function update_aioseo_options_lite() {
+    // Define the new option value
+    $new_value = array(
+        'advanced' => array(
+            'usageTracking' => false
+        )
+    );
+
+    // Update the option in the database
+    update_option('aioseo_options_lite', $new_value);
+}
+add_action('init', 'update_aioseo_options_lite');
