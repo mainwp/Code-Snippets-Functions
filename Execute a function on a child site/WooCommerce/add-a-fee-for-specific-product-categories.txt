@@ -1,0 +1,23 @@
+add_action( 'woocommerce_cart_calculate_fees', 'add_custom_category_fee', 10, 1 );
+function add_custom_category_fee( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+        return;
+    }
+
+    $targeted_term_ids = array( 600, 650, 700 ); // Targeted category(ies) term ID(s)
+    $fee_by_item = 5; // Define the fee amount by item
+    $fee_total = 0; // Initialize
+    
+    // Loop through cart items
+    foreach( $cart->get_cart() as $item ) {
+        // Increase the total fee amount only for the targeted categories
+        if ( has_term( $targeted_term_ids, 'product_cat', $item['product_id'] ) ) {
+            $fee_total += $fee_by_item;
+        }
+    }
+
+    // Add the Fee
+    if ( $fee_total > 0 ) {
+        $cart->add_fee( __('Additional Charge', 'woocommerce'), $fee_total );
+    }
+}
