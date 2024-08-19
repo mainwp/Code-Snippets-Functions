@@ -1,0 +1,84 @@
+// Change cart item remove link based on quantity
+add_filter( 'woocommerce_cart_item_remove_link', 'change_cart_item_remove_link_based_on_qty', 10, 2 );
+function change_cart_item_remove_link_based_on_qty( $remove_link, $cart_item_key ) {
+    $cart_item    = WC()->cart->cart_contents[ $cart_item_key ];
+    $_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+    $product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+    $product_name = apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key );
+    
+    if ( $cart_item['quantity']> 1 ) {
+        $remove_link = sprintf(
+            '<span class="decrease_qty" aria-label="%s" data-product_id="%s" data-product_sku="%s">&minus;</span>',
+            /* translators: %s is the product name */
+            esc_attr( sprintf( __( 'Decrease quantity for %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
+            esc_attr( $product_id ),
+            esc_attr( $_product->get_sku() )
+        );
+    }
+    return $remove_link;
+}
+
+// Add Inline CSS and Javascript to cart page
+add_action( 'woocommerce_before_cart_contents', 'add_cart_inline_css_and_js', 10, 2 );
+function add_cart_inline_css_and_js() {
+    // CSS
+    ?><style>
+    span.decrease_qty {
+        display: block;
+        width: 1.618em;
+        height: 1.618em;
+        line-height: 1.618;
+        font-weight: 400;
+        text-indent: -9999px;
+        overflow: hidden;
+        position: relative;
+    }
+    span.decrease_qty::before {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: inline-block;
+        cursor:pointer;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 1;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        line-height: inherit;
+        vertical-align: baseline;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        color: #737781;
+        line-height: 1.618;
+        text-indent: 0;
+        text-align: center;
+    }
+    table.cart td.product-remove span.decrease_qty {
+        position: absolute;
+        font-size: 1.41575em;
+        top: -.6180469716em;
+        right: -.6180469716em;
+    }
+    @media (min-width: 768px) {
+        table.cart td.product-remove span.decrease_qty {
+            float: none;
+            position: relative;
+            top: auto;
+            right: auto;
+            font-size: 1em;
+        }
+    }
+    </style><?php
+
+    // Javascript: Decrease the cart item quantity and update cart
+    wc_enqueue_js("$(document.body).on('click', 'span.decrease_qty', function(e) {
+        e.preventDefault();
+        const qtyInput = $(this).closest('tr').find('input.qty');
+        qtyInput.attr('value', qtyInput.val()-1);
+        $('button[name=\"update_cart\"]').removeAttr('disabled').trigger('click');
+    });");
+}
