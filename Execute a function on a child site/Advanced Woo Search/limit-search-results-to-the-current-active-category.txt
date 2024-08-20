@@ -1,0 +1,20 @@
+add_filter( 'aws_search_query_array', 'my_aws_search_query_array' );
+function my_aws_search_query_array( $query ) {
+    if ( isset( $_REQUEST['aws_tax'] ) && $_REQUEST['aws_tax'] === 'product_cat' && isset( $_REQUEST['aws_page'] ) && $_REQUEST['aws_page'] ) {
+        global $wpdb;
+        $term_id = $_REQUEST['aws_page'];
+        $query['search'] .= " AND ( id IN (
+            SELECT object_id FROM $wpdb->term_relationships
+            WHERE term_taxonomy_id IN ( select term_taxonomy_id from $wpdb->term_taxonomy WHERE term_id IN ({$term_id}))
+        ) )";
+    }
+    return $query;
+}
+  
+add_filter( 'aws_searchbox_markup', 'my_aws_searchbox_markup' );
+function my_aws_searchbox_markup( $markup ) {
+    $hidden = '<input type="hidden" name="type_aws" value="true">';
+    $new_fields = '<input type="hidden" name="tax" value="'.get_query_var('taxonomy').'"><input type="hidden" name="page" value="'.get_queried_object_id().'">';
+    $markup = str_replace( $hidden, $hidden . $new_fields, $markup );
+    return $markup;
+}
