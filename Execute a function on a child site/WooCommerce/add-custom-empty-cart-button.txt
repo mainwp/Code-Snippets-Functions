@@ -1,0 +1,24 @@
+add_action( 'woocommerce_proceed_to_checkout', 'wc_empty_cart_button_and_listener', 21 );
+ 
+function wc_empty_cart_button_and_listener() {
+ 
+   // IF YOU ARE USING THE CART BLOCK, REMOVE THE FOLLOWING LINE
+   // AND ADD A BUTTON WITH THE "empty-button" CLASS INSTEAD
+   echo '<a role="button" class="empty-button">Empty Cart</a>';
+ 
+   wc_enqueue_js( "
+      $('.empty-button').click(function(e){
+         e.preventDefault();
+            $.post( '" . '/wp-admin/admin-ajax.php' . "', { action: 'empty_cart' }, function() {
+            location.reload();
+         });
+        });
+   " );
+}
+ 
+add_action( 'wp_ajax_empty_cart', 'wc_empty_cart' );
+add_action( 'wp_ajax_nopriv_empty_cart', 'wc_empty_cart' );
+  
+function wc_empty_cart() { 
+    WC()->cart->empty_cart();
+}
