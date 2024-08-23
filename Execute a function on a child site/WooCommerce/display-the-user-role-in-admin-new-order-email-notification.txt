@@ -1,0 +1,11 @@
+add_action( 'woocommerce_email_after_order_table', 'display_user_roles_to_admin_new_order_email', 10, 4 );
+function display_user_roles_to_admin_new_order_email( $order, $sent_to_admin, $plain_text, $email ) {
+    // Target new order email notification sent to the admin for registered users
+    if ( 'new_order' == $email->id && $order->get_user_id() > 0 ) {
+        // Get the WP_User object
+        $user  = $order->get_user();
+
+        // display the user role(s) after order table
+        printf('<p><strong>%s:</strong> %s</p>', _n('User Role', 'User Roles', count($user->roles) ), implode(', ', $user->roles) );
+    }
+}
