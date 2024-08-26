@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_fuzzy_query', 'rlv_match_beginning' );
+function rlv_match_beginning( $query ) {
+  return "(relevanssi.term LIKE '%#term#') ";
+}
