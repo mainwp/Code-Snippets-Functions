@@ -1,0 +1,12 @@
+add_filter( 'aioseo_breadcrumbs', 'remove_shop_from_breadcrumbs' );
+
+function remove_shop_from_breadcrumbs( $crumbs ) {
+    foreach ( $crumbs as $key => $crumb ) {
+        if ( isset( $crumb['reference'] ) && is_a( $crumb['reference'], 'WP_Term' ) && 'shop' === $crumb['reference']->slug ) {
+            unset( $crumbs[ $key ] );
+        }
+    }
+
+    // Reindex array to prevent issues with missing keys
+    return array_values( $crumbs );
+}
