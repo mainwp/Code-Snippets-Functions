@@ -1,0 +1,15 @@
+add_action( 'admin_footer', 'admin_edit_order_script' );
+function admin_edit_order_script() {
+    global $pagenow, $typenow;
+
+    if ( ( $pagenow === 'post.php' && $typenow === 'shop_order' && isset($_GET['post']) ) 
+    || ( $pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wc-orders'
+    && isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id']) ) ) : ?>
+    <script>
+    jQuery('.woocommerce-Order-customerIP').remove();
+    const orderNumberMeta = jQuery('.woocommerce-order-data__meta.order_number'), 
+    orderNumberMetaHTML = orderNumberMeta.html();
+    orderNumberMeta.html(orderNumberMetaHTML.replace('Customer IP:', ''));
+    </script>
+    <?php endif;
+}
