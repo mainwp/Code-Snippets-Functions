@@ -1,0 +1,28 @@
+// Utility function (Array of dates key / label pairs)
+function shipping_dates_key_labels() {
+    return array(
+        'pickup_date'  => esc_html__('Pickup Date', 'woocommerce'),
+        'dropoff_date' => esc_html__('Dropoff Date', 'woocommerce'),
+    )
+}
+
+// Save custom cart item data as order item meta
+add_action( 'woocommerce_checkout_create_order_line_item', 'save_cart_item_dates_as_order_item_meta', 10, 4 );
+function save_cart_item_dates_as_order_item_meta( $item, $cart_item_key, $values, $order ) {
+    foreach ( array_keys( shipping_dates_key_labels() ) as $date_key ) {
+        if( isset( $values[$date_key] ) ) {
+            $item->add_meta_data( $date_key, date('Y-m-d', strtotime( str_replace('/', '-', $values[$date_key]) ) ) );
+        }
+    }
+}
+
+// Replace custom order item displayed keys with a readable "meta key" label name
+add_filter( 'woocommerce_order_item_display_meta_key', 'filter_order_item_display_meta_key', 10, 3 );
+function filter_order_item_display_meta_key( $display_key, $meta, $item ) {
+    foreach ( shipping_dates_key_labels() as $date_key => $readable_label ) {
+        if( $item->get_type() === 'line_item' && $meta->key === $date_key ) {
+            $display_key = $readable_label;
+        }
+    }
+    return $display_key;
+}
