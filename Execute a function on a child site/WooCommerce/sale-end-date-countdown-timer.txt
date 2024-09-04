@@ -1,0 +1,42 @@
+add_filter( 'woocommerce_sale_flash', 'wc_sale_end_date', 9999, 3 );
+  
+function wc_sale_end_date( $html, $post, $product ) {
+    
+   if ( is_product() && $product->get_date_on_sale_to() ) {
+ 
+      $now = time();
+      $sale_price_dates_to_timestamp = $product->get_date_on_sale_to()->getTimestamp();
+      $datediff = $sale_price_dates_to_timestamp - $now;
+      $days = floor( $datediff / 86400 );
+      $hours = floor( ( $datediff - $days * 86400 ) / 3600 );
+      $mins = floor( ( $datediff - $days * 86400 - $hours * 3600 ) / 60 );    
+      $secs = floor( ( $datediff - $days * 86400 - $hours * 3600 - $mins * 60 ) / 60 );
+ 
+      wc_enqueue_js( "        
+ 
+         var end = new Date( " . $sale_price_dates_to_timestamp * 1000 . " );
+                   
+         setInterval( function() { bbcountdown( end ); }, 1000 );
+          
+         function bbcountdown( endTime ) {            
+            var now = Date.now();
+            var timeLeft = ( endTime - now ) / 1000;
+            var days = Math.floor( timeLeft / 86400 );
+            var hours = Math.floor( ( timeLeft - ( days * 86400 ) ) / 3600 );
+            var mins = Math.floor( ( timeLeft - ( days * 86400 ) - ( hours * 3600 ) ) / 60 );
+            var secs = Math.floor( ( timeLeft - ( days * 86400 ) - ( hours * 3600 ) - ( mins * 60 ) ) );
+            $('.countdown .days').text( days );
+            $('.countdown .hours').text( hours );
+            $('.countdown .mins').text( mins );
+            $('.countdown .secs').text( secs );
+         }        
+ 
+      " );
+       
+      return '<span class="onsale countdown">Sale ends in <span class="days">' . $days . '</span>d <span class="hours">' . $hours . '</span>h <span class="mins">' . $mins . '</span>m <span class="secs">' . $secs . '</span>s</span>'; 
+       
+   }
+ 
+   return $html;
+    
+}
