@@ -1,6 +1,6 @@
 ## Hummingbird code snippets
 
-Tested version of WordPress 6.6.1, plugin version was Hummingbird 3.9.3.
+Tested version of WordPress 6.6.1, plugin version was Hummingbird 3.9.4.
 
 This file is a code snippet that is used for [Hummingbird](https://wordpress.org/plugins/hummingbird-performance/) plugin. 
 
