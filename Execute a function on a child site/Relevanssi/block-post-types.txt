@@ -1,0 +1,6 @@
+add_filter(
+  'relevanssi_forbidden_post_types',
+  function( $post_types ) {
+    return array_merge( $post_types, array( 'product', 'tribe_events' ) );
+  }
+);
