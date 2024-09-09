@@ -1,0 +1,7 @@
+add_filter( 'aws_products_order_by', 'my_aws_products_order_by', 10, 2 );
+function my_aws_products_order_by( $order_by, $query ) {
+    if ( $query->query_vars['orderby'] === 'meta_value_num' ) {
+        $order_by = 'price';
+    }
+    return $order_by;
+}
