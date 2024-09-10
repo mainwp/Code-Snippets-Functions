@@ -1,0 +1,4 @@
+add_filter( 'aws_index_max_cron_attemps', 'my_aws_index_max_cron_attemps' );
+function my_aws_index_max_cron_attemps( $num ) {
+    return 5;
+}
