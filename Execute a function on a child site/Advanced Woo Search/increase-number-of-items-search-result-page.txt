@@ -1,0 +1,4 @@
+add_filter( 'aws_page_results', 'my_aws_page_results' );
+function my_aws_page_results( $num ) {
+    return 500;
+}
