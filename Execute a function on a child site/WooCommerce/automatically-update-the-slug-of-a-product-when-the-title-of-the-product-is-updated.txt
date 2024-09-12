@@ -1,0 +1,35 @@
+/* Update product slug to product title, when product is saved */
+function slug_save_post_callback( $post_ID, $post, $update ) {
+    // Prevent function from running during an autosave. Can cause unnecessary updates.
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // Check if post type is product, if not, exit the function
+    if ( $post->post_type != 'product' ) {
+        return;
+    }
+
+    // Ensures that only users with the appropriate permissions can trigger the function
+    if ( ! current_user_can( 'edit_post', $post_ID ) ) {
+        return;
+    }
+
+    // Generate new slug based on the post title using sanitize_title
+    $new_slug = sanitize_title( $post->post_title, $post_ID );
+    // If new slug is the same as the current slug, exit the function
+    if ( $new_slug == $post->post_name ) {
+        return; // already set
+    }
+
+    // Remove save_post action to prevent infinite looping
+    remove_action( 'save_post', 'slug_save_post_callback', 10, 3 );
+    // Update the post slug with new slug
+    wp_update_post( array(
+        'ID' => $post_ID,
+        'post_name' => $new_slug
+    ));
+    // Re-hook the save_post action to ensure the function is called again
+    add_action( 'save_post', 'slug_save_post_callback', 10, 3 );
+}
+add_action( 'save_post', 'slug_save_post_callback', 10, 3 );
