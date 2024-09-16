@@ -1,0 +1,1 @@
+add_filter( 'autoptimize_filter_cachecheck_maxsize', function(){ return 536870912; } );
