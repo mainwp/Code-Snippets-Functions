@@ -1,0 +1,28 @@
+// Create an order for specific customer
+$order = wc_create_order( array('customer_id' => $currentUserId) );
+
+// Loop through products Ids to be added as order items
+foreach($cartProductInfo as $productIn) {
+    $_product = wc_get_product( $productIn['id'] ); // Get the WC_product object
+    $order->add_product( $_product, $productIn['qty'] ); // Add the product to the order
+}
+
+// Loop through gifted products Ids to be added as order items
+foreach($data['gift'] as $productIn ) { 
+    $free_product = wc_get_product( $productIn['id'] ); // Get the WC_product object
+    $free_product->set_price(0); // Change the product price to zero
+
+    // Add the gifted product (with zero price) to the order
+    if ( $item_id = $order->add_product( $free_product, 1 ) ) {
+        $item = $order->get_item( $item_id ); // Retrieve the order item
+
+        // Add custom metadata to indicate that it's a gift (free)
+        $item->add_meta_data( 'is_free_gift', true, true );
+        $item->add_meta_data( 'offer_type', $productIn['offer_type'], true );
+
+        $item->save();  // Save order item custom metadata
+    }
+} 
+    
+// calculate total and save (The save() method is already included)
+$order->calculate_totals(); 
