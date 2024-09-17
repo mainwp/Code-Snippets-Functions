@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_punctuation_filter', function( $replacements ) {
+  $replacements['_'] = '';
+  return $replacements;
+} );
