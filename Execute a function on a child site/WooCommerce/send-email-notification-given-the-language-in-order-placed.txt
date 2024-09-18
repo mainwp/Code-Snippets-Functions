@@ -1,0 +1,55 @@
+add_filter( 'woocommerce_allow_switching_email_locale', 'set_email_locale_based_on_order', 10, 2 );
+add_action( 'woocommerce_email_footer', 'restore_email_locale' );
+
+function map_language_to_locale( $language_slug ) {
+    // Here we have defined a mapping of language slugs to locale codes.
+    $mapping = array(
+        'de' => 'de_DE',
+        'en' => 'en_US',
+        'pt' => 'pt_BR',
+    );
+
+    return isset($mapping[$language_slug]) ? $mapping[$language_slug] : false;
+}
+
+function get_locale_from_order_id( $order_id ) {
+    if ( function_exists( 'pll_get_post_language' ) ) {
+        $order_language = pll_get_post_language($order_id, 'slug');
+        return map_language_to_locale( $order_language );
+    }
+    return null;
+}
+
+function set_email_locale_based_on_order( $email_locale, $email )
+{
+    // This is to ensure the email object is of type WC_Order.
+    if ( isset( $email->object ) && is_a( $email->object, 'WC_Order' ) ) {
+        $order_id = $email->object->get_id(); // We need to use get_id() method to get the order ID.
+        $locale   = get_locale_from_order_id( $order_id );
+
+        // Add error logging for debugging
+        error_log( 'Order ID: ' . $order_id ); // This is to Log the order ID.
+        error_log( 'Locale: ' . $locale ); // This is to Log the locale.
+
+        if ( $locale ) {
+            global $current_locale;
+            $current_locale = get_locale(); // Here we are saving the current locale.
+            switch_to_locale( $locale ); // Here we are switching to the order's locale.
+
+            // This is to Log the locale switch.
+            error_log( 'Switched to locale: ' . $locale );
+
+            // Here we are using filter on plugin_locale so load_plugin_textdomain loads the correct locale.
+            add_filter( 'plugin_locale', fn() => $locale );
+        }
+    }
+
+    return $email_locale;
+}
+
+function restore_email_locale() {
+    global $current_locale;
+    if ( isset( $current_locale ) ) {
+        switch_to_locale( $current_locale ); // Restore the original locale
+    }
+}
