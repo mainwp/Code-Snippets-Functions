@@ -1,0 +1,8 @@
+add_action( 'woocommerce_after_checkout_validation', 'wc_blacklist_billing_email', 9999, 2 );
+ 
+function wc_blacklist_billing_email( $data, $errors ) {
+   $blacklist = [ 'hello@example.com', 'info@lorem.io', 'me@john.co' ];
+   if ( in_array( $data['billing_email'], $blacklist ) ) {
+      $errors->add( 'blacklist', __( 'Sorry, our website is currently unable to process your request.', 'bbloomer' ) );
+   }
+}
