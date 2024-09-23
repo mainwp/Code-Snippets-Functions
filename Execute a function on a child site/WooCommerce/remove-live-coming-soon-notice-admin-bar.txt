@@ -1,0 +1,4 @@
+add_action( 'admin_bar_menu', 'wc_remove_woocommerce_site_visibility_badge', 999 );
+function wc_remove_woocommerce_site_visibility_badge( $wp_admin_bar ) {
+    $wp_admin_bar->remove_node( 'woocommerce-site-visibility-badge' );
+}
