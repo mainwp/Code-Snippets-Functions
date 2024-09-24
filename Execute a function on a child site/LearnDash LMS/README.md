@@ -1,6 +1,6 @@
 ## LearnDash LMS code snippets
 
-Tested version of WordPress 6.6.2, plugin version was LearnDash LMS 4.16.2.
+Tested version of WordPress 6.6.2, plugin version was LearnDash LMS 4.17.0.
 
 This file is a code snippet that is used for [LearnDash LMS](https://www.learndash.com/) plugin. 
 
