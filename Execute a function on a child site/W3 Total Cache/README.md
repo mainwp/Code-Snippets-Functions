@@ -1,6 +1,6 @@
 ## W3 Total Cache code snippets
 
-Tested version of WordPress 6.4.1, plugin version was W3 Total Cache 2.6.0.
+Tested version of WordPress 6.6.2, plugin version was W3 Total Cache 2.7.6.
 
 This file is a code snippet that is used for [W3 Total Cache](https://wordpress.org/plugins/w3-total-cache/) plugin. 
 
