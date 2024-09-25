@@ -1,6 +1,6 @@
 ## Divi code snippets
 
-Tested version of WordPress 6.5.4, theme version was Divi 4.25.2.
+Tested version of WordPress 6.6.2, theme version was Divi 4.27.1.
 
 This file is a code snippet that is used for [Divi](https://www.elegantthemes.com/) theme. 
 
