@@ -1,0 +1,35 @@
+add_action('woocommerce_order_list_table_restrict_manage_orders', 'add_wc_orders_date_range_filter', 15);
+function add_wc_orders_date_range_filter() {
+    ?>
+    <label for="from_date"><?php esc_html_e('From Date:', 'woocommerce'); ?></label>
+    <input type="date" id="from_date" name="from_date" value="<?php echo isset($_GET['from_date']) ? esc_attr($_GET['from_date']) : ''; ?>" />
+
+    <label for="to_date"><?php esc_html_e('To Date:', 'woocommerce'); ?></label>
+    <input type="date" id="to_date" name="to_date" value="<?php echo isset($_GET['to_date']) ? esc_attr($_GET['to_date']) : ''; ?>" />
+    <?php
+}
+
+add_filter('woocommerce_order_list_table_prepare_items_query_args', 'process_wc_orders_from_date_range_filter');
+function process_wc_orders_from_date_range_filter( $query_args ) {
+    if ( !isset($query_args['date_query']) ) {
+        $query_args['date_query'] = array();
+    }
+
+    if ( isset($_GET['from_date']) && !empty($_GET['from_date']) ) {
+        $query_args['date_query'][] = array(
+            'after'     => esc_attr($_GET['from_date']),
+            'inclusive' => true,
+        );
+    }
+
+    if ( isset($_GET['to_date']) && !empty($_GET['to_date']) ) {
+        // Add one day to the date value
+        $to_date = date('Y-m-d', strtotime( esc_attr($_GET['to_date']) ) + DAY_IN_SECONDS ); 
+
+        $query_args['date_query'][] = array(
+            'before'    => $to_date,
+            'inclusive' => true,
+        );
+    }
+    return $query_args;
+}
