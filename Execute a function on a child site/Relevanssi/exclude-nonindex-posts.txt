@@ -1,0 +1,14 @@
+add_filter( 'relevanssi_indexing_restriction', 'rlv_seoframework_noindex' );
+function rlv_seoframework_noindex( $restriction ) {
+	if ( 'on' !== get_option( 'relevanssi_seo_noindex' ) ) {
+		return $restriction;
+	}
+
+	global $wpdb;
+
+	$restriction['mysql']  .= " AND post.ID NOT IN (SELECT post_id FROM
+		$wpdb->postmeta WHERE meta_key = '_genesis_noindex'
+		AND meta_value = '1' ) ";
+	$restriction['reason'] .= ' SEO Framework';
+	return $restriction;
+}
