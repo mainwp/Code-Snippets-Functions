@@ -1,0 +1,6 @@
+add_filter('seopress_sitemaps_xml_news_name', 'sp_sitemaps_xml_news_name');
+function sp_sitemaps_xml_news_name($name) {
+	$name = 'My Google News Name';
+
+	return $name;
+}
