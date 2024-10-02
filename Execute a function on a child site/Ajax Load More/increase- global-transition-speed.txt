@@ -1,0 +1,3 @@
+add_filter( 'alm_speed', function(){
+	return 100; // 250
+});
