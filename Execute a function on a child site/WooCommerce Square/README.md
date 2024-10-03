@@ -1,6 +1,6 @@
 ## WooCommerce Square code snippets
 
-Tested version of WordPress 6.6.2, plugin version was WooCommerce Square 4.8.0.
+Tested version of WordPress 6.6.2, plugin version was WooCommerce Square 4.8.1.
 
 This file is a code snippet that is used for [WooCommerce Square](https://wordpress.org/plugins/woocommerce-square/) plugin. 
 
