@@ -1,0 +1,3 @@
+add_filter( 'alm_button_label', function(){
+	return esc_attr__( 'Get More Posts!', 'framework' );
+});
