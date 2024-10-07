@@ -1,0 +1,22 @@
+add_filter( 'woocommerce_customer_get_downloadable_products', 'alter_customer_downloads_links', 10, 1 );
+function alter_customer_downloads_links( $downloads ) {
+    // Only on front-end my account downloads, if there are downloads
+    if ( ! is_wc_endpoint_url('downloads') || !$downloads ) { 
+        return $downloads;
+    }
+
+    // Get customer orders
+    $customer_orders = wc_get_orders( array(
+        'limit'         => -1,
+        'customer'      => get_current_user_id(),
+        'status'        => wc_get_is_paid_statuses(),
+    ) );
+
+    $downloads = array(); // Reset downloads
+
+    foreach($customer_orders as $order ) {
+        // Merge downloadable items
+        $downloads = array_merge( $downloads, $order->get_downloadable_items() ); 
+    }
+    return $downloads;
+}
