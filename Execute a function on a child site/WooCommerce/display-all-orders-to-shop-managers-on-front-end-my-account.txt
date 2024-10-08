@@ -1,0 +1,7 @@
+add_filter( 'woocommerce_my_account_my_orders_query', 'show_all_orders_to_shop_manager_role', 20 );
+function show_all_orders_to_shop_manager_role( $args ) {
+    if ( wc_current_user_has_role('shop_manager') && isset($args['customer']) ) {
+        unset($args['customer']);
+    }
+    return $args;
+}
