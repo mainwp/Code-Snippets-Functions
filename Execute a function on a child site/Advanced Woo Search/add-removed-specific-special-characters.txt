@@ -1,0 +1,5 @@
+add_filter( 'aws_special_chars', 'my_aws_special_chars' );
+function my_aws_special_chars( $chars ) {
+    unset( $chars[array_search( '-',$chars )] );
+    return $chars;
+}
