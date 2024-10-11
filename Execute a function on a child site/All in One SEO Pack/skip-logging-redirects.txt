@@ -1,0 +1,7 @@
+add_filter( 'aioseo_redirects_log_skip', 'redirects_log_skip', 10, 2 );
+function redirects_log_skip( $skip, $data ) {
+	if ( 404 === $data['http_code'] ) {
+		$skip = true;
+	}
+	return $skip;
+}
