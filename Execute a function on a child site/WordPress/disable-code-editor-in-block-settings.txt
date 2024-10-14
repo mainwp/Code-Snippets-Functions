@@ -1,0 +1,11 @@
+function example_restrict_block_locking_and_code_editor_to_administrators( $settings, $context ) {
+	$is_administrator = current_user_can( 'edit_theme_options' );
+
+	if ( ! $is_administrator ) {
+		$settings[ 'canLockBlocks' ]      = false;
+		$settings[ 'codeEditingEnabled' ] = false;
+	}
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'example_restrict_block_locking_and_code_editor_to_administrators', 10, 2 );
