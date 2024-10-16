@@ -1,0 +1,14 @@
+ class WC_Loop_Product_Title_No_Link {
+    public function __construct() {
+        add_action( 'init', array( $this, 'remove_link_from_product_title' ) );
+    }
+
+    public function remove_link_from_product_title() {
+        // Close link before product title
+        add_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_link_close', 5 );
+        // Open link after product title
+        add_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_link_open', 20 );
+    }
+}
+
+new WC_Loop_Product_Title_No_Link();
