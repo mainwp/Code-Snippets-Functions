@@ -1,0 +1,30 @@
+add_filter( 'wp_theme_json_data_theme', 'disable_inter_font', 100 );
+function disable_inter_font( $theme_json ) {
+    $theme_data = $theme_json->get_data();
+    $font_data  = $theme_data['settings']['typography']['fontFamilies']['theme'] ?? array();
+
+    // The font name to be removed
+    $font_name = 'Inter';
+
+    // Check if 'Inter' font exists
+    foreach ( $font_data as $font_key => $font ) {
+        if ( isset( $font['name'] ) && $font['name'] === $font_name ) {
+            // Remove the font
+            unset($font_data[$font_key]); 
+            
+            // Update font data
+            $theme_json->update_with( array(
+                'version'  => 1,
+                'settings' => array(
+                    'typography' => array(
+                        'fontFamilies' => array(
+                            'theme' => $font_data,
+                        ),
+                    ),
+                ),
+            ) );
+            break;
+        }
+    }
+    return $theme_json;
+}
