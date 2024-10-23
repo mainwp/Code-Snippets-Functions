@@ -1,0 +1,18 @@
+add_action( 'wp_enqueue_scripts', 'aws_wp_enqueue_scripts', 999 );
+function aws_wp_enqueue_scripts() {
+ 
+    $script = '
+        function aws_show_modal_layout( show, options  ) {
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if ( width <= 1024 ) {
+                return true;
+            }
+            return false;
+        }
+        AwsHooks.add_filter( "aws_show_modal_layout", aws_show_modal_layout );
+    ';
+ 
+    wp_add_inline_script( 'aws-script', $script);
+    wp_add_inline_script( 'aws-pro-script', $script);
+ 
+}
