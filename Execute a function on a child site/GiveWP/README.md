@@ -1,6 +1,6 @@
 ## Give code snippets
 
-Tested version of WordPress 6.6.2, plugin version was Give 3.17.0.
+Tested version of WordPress 6.6.2, plugin version was Give 3.17.1.
 
 This file is a code snippet that is used for [Give](https://wordpress.org/plugins/give/) plugin. 
 
