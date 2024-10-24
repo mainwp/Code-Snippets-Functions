@@ -1,6 +1,6 @@
 ## Kadence theme code snippets
 
-Tested version of WordPress 6.6.1, theme version was Kadence 1.2.7.
+Tested version of WordPress 6.6.2, theme version was Kadence 1.2.10.
 
 This file is a code snippet that is used for [Kadence](https://wordpress.org/themes/kadence/) theme. 
 
