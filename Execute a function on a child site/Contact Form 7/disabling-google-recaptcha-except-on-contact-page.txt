@@ -1,0 +1,7 @@
+add_filter(‘wpcf7_recaptcha_actions’, ‘wpcf7_recaptcha_only_contact‘);
+function wpcf7_recaptcha_only_contact( $actions ) {
+if ( is_page(‘contact’) ) { // Replace ‘contact’ with your contact page slug
+return $actions;
+}
+return array(); // Don’t load it anywhere else
+}
