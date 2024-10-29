@@ -1,0 +1,8 @@
+add_action( 'woocommerce_coupon_code', 'replace_5_char_coupon_code' );
+function replace_5_char_coupon_code( $coupon_code ) {
+    // If the coupon code has exactly 5 characters
+    if ( strlen($coupon_code) === 5 ) {
+        $coupon_code = 'PREDEFINED50'; // coupon code replacement
+    }
+    return $coupon_code;
+}
