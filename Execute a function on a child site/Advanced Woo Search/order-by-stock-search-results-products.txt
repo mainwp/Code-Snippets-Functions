@@ -1,0 +1,15 @@
+add_filter( 'aws_search_results_products', 'aws_search_results_products', 10, 2 );
+function aws_search_results_products( $products, $s ) {
+    usort($products, function ($item1, $item2) {
+        $product1 = wc_get_product( $item1['id'] );
+        $product2 = wc_get_product( $item2['id'] );
+        if ( 'outofstock' !== $product1->get_stock_status() ) {
+            return -1;
+        }
+        if ( 'outofstock' !== $product2->get_stock_status() ) {
+            return 1;
+        }
+        return 0;
+    });
+    return $products;
+}
