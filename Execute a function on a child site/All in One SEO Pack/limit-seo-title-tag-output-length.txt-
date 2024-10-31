@@ -1,0 +1,7 @@
+add_filter( 'aioseo_title', 'aioseo_filter_title' );
+function aioseo_filter_title( $title ) {
+   if ( strlen($title) > 60 ) {
+      $title = substr($title, 0, 60);
+   }
+   return $title;
+}
