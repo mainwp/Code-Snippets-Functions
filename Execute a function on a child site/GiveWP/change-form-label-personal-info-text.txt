@@ -1,0 +1,5 @@
+add_filter('give_checkout_personal_info_text', 'new_personal_info_text');
+
+function new_personal_info_text() {	
+	return __('Tell us about yourself', 'give');
+}
