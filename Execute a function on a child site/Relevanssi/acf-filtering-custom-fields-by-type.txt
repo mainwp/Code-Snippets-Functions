@@ -1,0 +1,10 @@
+add_filter( 'relevanssi_index_custom_fields', function( $fields ) {
+    $indexed_fields = array();
+    foreach( $fields as $field ) {
+        $object = get_field_object( $field );
+        if ( is_array( $object ) && isset( $object['type'] ) && 'text' === $object['type'] ) {
+            $indexed_fields[] = $field;
+        }
+    }
+    return $indexed_fields;
+} );
