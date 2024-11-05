@@ -1,0 +1,1 @@
+add_filter('shortpixel/api/filesizeMargin', function () { return 50; });
