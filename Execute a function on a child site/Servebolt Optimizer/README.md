@@ -1,6 +1,6 @@
 ## Servebolt Optimizer code snippets
 
-Tested version of WordPress 6.4.2, plugin version was Servebolt Optimizer 3.5.28.
+Tested version of WordPress 6.6.2, plugin version was Servebolt Optimizer 3.5.43.
 
 This file is a code snippet that is used for [Servebolt Optimizer](https://wordpress.org/plugins/servebolt-optimizer/) plugin. 
 
