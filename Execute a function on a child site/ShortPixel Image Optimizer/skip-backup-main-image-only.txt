@@ -1,0 +1,8 @@
+function sp_filter_thumbnails($result, $fullPath, $isMainFile ) {
+        $result = true;
+        if ($isMainFile) {
+                $result = false;
+        }
+        return $result;
+}
+add_filter( 'shortpixel/image/skip_backup', 'sp_filter_thumbnails', 10, 3 );
