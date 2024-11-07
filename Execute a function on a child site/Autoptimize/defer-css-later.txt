@@ -1,0 +1,16 @@
+add_filter('autoptimize_filter_css_preload_onload','__return_empty_string');
+add_filter('autoptimize_css_preload_polyfill','defer_iso_preload');
+add_filter('autoptimize_html_after_minify','preload_to_aodeferload');
+add_filter('autoptimize_filter_css_replacetag','inject_css_in_footer');
+
+function defer_iso_preload() {
+  return '<script data-cfasync="false">!function(n){"use strict";n.loadCSS||(n.loadCSS=function(){});var o=loadCSS.relpreload={};o.bindMediaToggle=function(e){var t=e.media||"all";function a(){e.addEventListener?e.removeEventListener("load",a):e.attachEvent&&e.detachEvent("onload",a),e.setAttribute("onload",null),e.media=t}e.addEventListener?e.addEventListener("load",a):e.attachEvent&&e.attachEvent("onload",a),setTimeout(function(){e.rel="stylesheet",e.media="only x"}),setTimeout(a,3e3)},o.poly=function(){for(var e=n.document.getElementsByTagName("link"),t=0;t<e.length;t++){var a=e[t];"aodeferload"!==a.rel||"style"!==a.getAttribute("as")||a.getAttribute("data-loadcss")||(a.setAttribute("data-loadcss",!0),o.bindMediaToggle(a))}},o.poly();var e=n.setInterval(o.poly,500);n.addEventListener?n.addEventListener("load",function(){o.poly(),n.clearInterval(e)}):n.attachEvent&&n.attachEvent("onload",function(){o.poly(),n.clearInterval(e)}),"undefined"!=typeof exports?exports.loadCSS=loadCSS:n.loadCSS=loadCSS}("undefined"!=typeof global?global:this);</script>';
+}
+
+function preload_to_aodeferload($htmlIn) {
+  return str_replace('<link rel="preload"','<link rel="aodeferload"',$htmlIn);
+}
+
+function inject_css_in_footer() {
+  return array('</body>','before');
+}
