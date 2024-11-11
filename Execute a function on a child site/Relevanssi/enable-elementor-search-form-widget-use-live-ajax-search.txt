@@ -1,0 +1,6 @@
+add_filter(
+	'elementor_pro/search_form/before_input',
+	function( $module ) {
+		$module->add_render_attribute( 'input', [ 'data-rlvlive' => 'true'] );
+	}
+);
