@@ -1,6 +1,6 @@
 ## MonsterInsights Lite code snippets
 
-Tested version of WordPress 6.5.2, plugin version was MonsterInsights Lite 8.26.0.
+Tested version of WordPress 6.6.2, plugin version was MonsterInsights Lite 9.2.2.
 
 This file is a code snippet that is used for [Monsterinsights Lite](https://wordpress.org/plugins/google-analytics-for-wordpress/) plugin. 
 
