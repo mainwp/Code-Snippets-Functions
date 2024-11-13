@@ -1,0 +1,4 @@
+add_filter( 'image_editor_output_format', function( $output_format ) {
+    unset( $output_format['image/heic'] );
+    return $output_format;
+} );
