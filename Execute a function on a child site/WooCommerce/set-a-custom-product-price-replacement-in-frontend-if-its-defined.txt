@@ -1,0 +1,89 @@
+/**
+ * Display custom price input field in Admin Product add/edit page
+**/
+ add_action( 'woocommerce_product_options_pricing', 'admin_product_custom_price_input_field' );
+function admin_product_custom_price_input_field() {
+    global $post, $product_object;
+
+    echo '<div class="pricing show_if_simple hidden">'; // Only on simple product
+
+    woocommerce_wp_text_input(  array(
+        'id'        => 'custom_price',
+        'value'     => $product_object->get_meta( '_custom_price' ),
+        'class'     => 'wc_input_price short',
+        'label'     => __( 'Custom Price', 'vg' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+        'data_type' => 'price',
+    ) );
+
+    echo '</div>';
+}
+
+/**
+ * Save/update custom price Admin Product add/edit page
+ *
+ * @param object $product  WC_Product instance object
+**/
+function saves_product_custom_metadata( $product ) {
+    $price_value = isset( $_POST['custom_price'] ) ? wc_clean( wp_unslash( $_POST['custom_price'] ) ) : null;
+    $product->update_meta_data('_custom_price', $price_value );
+}
+add_action( 'woocommerce_admin_process_product_object', 'saves_product_custom_metadata' );
+
+/**
+ * Display formatted custom price on front end 
+ * 
+ * @param string $price_html  Formatted custom price html
+ * @param object $product  WC_Product instance object
+**/
+function custom_get_price_html( $price_html, $product ) {
+    if ( ! $product->is_type('simple') ) {
+        return $price_html;
+    }
+    if ( $custom_price = $product->get_meta( '_custom_price' ) ) {
+        return wc_price( wc_get_price_to_display( $product, array( 'price' => $custom_price ) ) ) 
+            . $product->get_price_suffix();
+    }
+    return $price_html;
+}
+add_filter( 'woocommerce_get_price_html', 'custom_get_price_html', 100, 2 );
+
+/**
+ * Set custom cart item price
+ *
+ * @param object $cart  WC_Cart instance object
+**/ 
+function add_( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) {
+        $product = $item['data'];
+        if ( $custom_price = $product->get_meta( '_custom_price' ) ) {
+            $product->set_price( $custom_price );
+        }
+    }
+}
+add_action( 'woocommerce_before_calculate_totals', 'cart_set_custom_price', 1000 );
+
+/**
+ * Display custom cart item price
+ * 
+ * @param object $cart  WC_Cart instance object
+ * @param array $cart_item  cart item data
+**/
+function filter_cart_item_price( $price, $cart_item ) {
+
+    if ( $custom_price = $cart_item['data']->get_meta( '_custom_price' ) ) {
+        $args = array( 'price' => $custom_price );
+
+        if ( WC()->cart->display_prices_including_tax() ) {
+            $product_price = wc_get_price_including_tax( $cart_item['data'], $args );
+        } else {
+            $product_price = wc_get_price_excluding_tax( $cart_item['data'], $args );
+        }
+        return wc_price( $product_price );
+    }
+    return $price;
+}
+add_filter( 'woocommerce_cart_item_price', 'filter_cart_item_price', 100, 2 );
