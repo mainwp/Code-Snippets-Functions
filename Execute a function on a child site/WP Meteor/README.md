@@ -1,6 +1,6 @@
 ## WP Meteor code snippets
 
-Tested version of WordPress 6.6.1, plugin version was WP Meteor 3.4.5.
+Tested version of WordPress 6.7, plugin version was WP Meteor 3.4.12.
 
 This file is a code snippet that is used for [WP Meteor](https://wordpress.org/plugins/wp-meteor/) plugin. 
 
