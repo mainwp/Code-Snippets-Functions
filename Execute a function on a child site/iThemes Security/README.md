@@ -1,8 +1,8 @@
-## iThemes Security code snippets
+## Solid Security code snippets
 
-Tested version of WordPress 6.6.2, plugin version was iThemes Security 9.3.3.
+Tested version of WordPress 6.7, plugin version was Solid Security 9.3.4.
 
-This file is a code snippet that is used for [iThemes Security](https://wordpress.org/plugins/better-wp-security/) plugin. 
+This file is a code snippet that is used for [Solid Security](https://wordpress.org/plugins/better-wp-security/) plugin. 
 
 ## Things to do
 
