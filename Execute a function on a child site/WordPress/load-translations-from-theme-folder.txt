@@ -1,0 +1,1 @@
+load_theme_textdomain( 'your-theme', WP_LANG_DIR . '/themes' );
