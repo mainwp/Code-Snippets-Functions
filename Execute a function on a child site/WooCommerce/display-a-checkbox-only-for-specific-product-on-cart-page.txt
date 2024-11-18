@@ -1,0 +1,11 @@
+add_action('woocommerce_proceed_to_checkout', 'cart_disclaimer1_test', 10);
+function cart_disclaimer1_test() {
+    // Here, define the targeted product ID
+    $targeted_product_id = 121;
+
+    // Check if the targeted product is in cart
+    if ( in_array( $targeted_product_id, array_column( WC()->cart->get_cart(), 'product_id' ) ) ) {
+        echo '<input type="checkbox" name="disclaimer1" required />';
+        echo '<p>This is a test</p>';
+    }
+}
