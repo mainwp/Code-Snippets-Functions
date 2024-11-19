@@ -1,6 +1,6 @@
 ## Event Tickets code snippets
 
-Tested version of WordPress 6.6.2, plugin version was The Event Tickets 5.16.1.
+Tested version of WordPress 6.7, plugin version was The Event Tickets 5.17.0.
 
 This file is a code snippet that is used for [Event Tickets](https://wordpress.org/plugins/event-tickets/) plugin. 
 
