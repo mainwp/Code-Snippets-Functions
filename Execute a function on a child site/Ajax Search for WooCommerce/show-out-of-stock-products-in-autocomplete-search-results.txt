@@ -1,0 +1,6 @@
+add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', function ( $hide ) {
+    if ( is_search() ) {
+        $hide = 'no';
+    }
+    return $hide;
+} );
