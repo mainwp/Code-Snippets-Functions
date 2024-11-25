@@ -1,0 +1,5 @@
+add_filter( 'relevanssi_add_highlight_and_tracking', function( $value ) {
+  global $relevanssi_tracking_permalink;
+  $relevanssi_tracking_permalink = array();
+  return $value;
+} );
