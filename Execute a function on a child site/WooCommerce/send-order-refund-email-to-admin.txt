@@ -1,0 +1,22 @@
+function send_refund_email_to_admin($order_id) {
+    // Get the order object
+    $order = wc_get_order($order_id);
+
+    // Check if the order exists and has been refunded
+    if ($order) {
+        // Get the admin email address
+        $admin_email = get_option('admin_email');
+
+        // Prepare the email subject and content
+        $subject = 'Refund Processed for Order #' . $order->get_order_number();
+        $message = 'A refund has been processed for Order #' . $order->get_order_number() . ".\n\n";
+        $message .= 'Refund Details: ' . "\n";
+        $message .= 'Refunded Amount: ' . $order->get_total_refunded() . "\n";
+        $message .= 'Refund Reason: ' . $order->get_meta('_refund_reason') . "\n\n";
+        $message .= 'You can view the refund details in the WooCommerce Orders section.';
+
+        // Send the email to the admin
+        wp_mail($admin_email, $subject, $message);
+    }
+}
+add_action('woocommerce_order_refunded', 'send_refund_email_to_admin');
