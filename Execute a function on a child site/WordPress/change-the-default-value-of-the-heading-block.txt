@@ -1,0 +1,14 @@
+function define_editor_heading_levels( $args, $block_type ) {
+    if ( 'core/heading' !== $block_type ) {
+        return $args;
+    }
+
+    // Change default heading level value to 3
+    $args['attributes']['level']['default'] = 3;
+
+    // Keep only H3 level 3 option
+    $args['attributes']['levelOptions']['default'] = [ 3 ];
+    
+    return $args;
+}
+add_filter( 'register_block_type_args', 'define_editor_heading_levels', 10, 2 );
