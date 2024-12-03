@@ -1,0 +1,1 @@
+add_filter( 'wpseo_enable_assessment_markers', '__return_false' );
