@@ -1,0 +1,1 @@
+add_filter( 'aioseo_author_meta', '__return_false' );
