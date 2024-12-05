@@ -1,0 +1,7 @@
+add_filter( 'aioseo_title', 'aioseo_filter_title' );
+function aioseo_filter_title( $title ) {
+   if ( is_singular() ) {
+      return $title . 'some additional title content here';
+   }
+   return $title;
+}
