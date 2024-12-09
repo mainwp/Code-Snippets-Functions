@@ -1,0 +1,15 @@
+add_action( 'woocommerce_order_status_processing', 'shipping_method_update_order_status', 10, 2 );
+function shipping_method_update_order_status( $order_id, $order ) {
+    // Here, define the shipping methods instance IDs in the array
+    $defined_instance_ids = array('25', '26', '27', '28');
+
+    // Loop through order "shipping" items
+    foreach ( $order->get_items('shipping') as $item ) {
+        // Check for any matching shipping method instance ID
+        if ( in_array( $item->get_instance_id(), $defined_instance_ids ) ) {
+            // Update the order status
+            $order->update_status('priority_dispatch'); 
+            break; // Stop the loop
+        }
+    }
+}
