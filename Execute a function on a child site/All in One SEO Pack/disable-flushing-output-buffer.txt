@@ -1,0 +1,1 @@
+add_filter( 'aioseo_flush_output_buffer', '__return_false' );
