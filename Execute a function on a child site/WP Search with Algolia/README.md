@@ -1,6 +1,6 @@
 ## WP Search with Algolia code snippets
 
-Tested version of WordPress 6.5.5, plugin version was WP Search with Algolia 2.8.1.
+Tested version of WordPress 6.7.1, plugin version was WP Search with Algolia 2.8.2.
 
 This file is a code snippet that is used for [WP Search with Algolia](https://wordpress.org/plugins/wp-search-with-algolia/) plugin. 
 
