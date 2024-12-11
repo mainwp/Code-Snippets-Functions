@@ -1,0 +1,5 @@
+function sp_matomo_disable_cookies($html) {
+	$html = "_paq.push(['disableCookies']);\n";
+	return $html;
+}
+add_filter('seopress_matomo_disable_cookies', 'sp_matomo_disable_cookies');
