@@ -1,0 +1,11 @@
+function change_add_coupon_text( $translated_text, $text, $domain ) {
+    // Target only WooCommerce text domain
+    if ( 'woocommerce' === $domain ) {
+        // Change "Add a coupon" on Cart and Checkout
+        if ( 'Add a coupon' === $text ) {
+            $translated_text = 'Apply Discount Code'; // Replace with your custom text
+        }
+    }
+    return $translated_text;
+}
+add_filter( 'gettext', 'change_add_coupon_text', 10, 3 );
