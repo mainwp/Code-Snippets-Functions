@@ -1,6 +1,6 @@
 ## Slim SEO code snippets
 
-Tested version of WordPress 6.6.2, plugin version was Slim SEO 4.0.4.
+Tested version of WordPress 6.7.1, plugin version was Slim SEO 4.2.1.
 
 This file is a code snippet that is used for [Slim SEO](https://wordpress.org/plugins/slim-seo/) plugin. 
 
