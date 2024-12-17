@@ -1,0 +1,5 @@
+add_filter( 'gform_export_max_execution_time', 'change_export_time', 10, 2 );
+function change_export_time( $max_execution_time, $form ){
+        //change the execution time to 60 seconds
+    return 60;
+}
