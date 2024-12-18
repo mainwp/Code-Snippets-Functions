@@ -1,0 +1,11 @@
+add_action( 'astra_entry_before', function() {
+	add_filter( 'astra_get_option_enable-related-posts', '__return_false' );
+} );
+add_action( 'astra_primary_content_bottom', function() {
+	add_filter( 'astra_get_option_enable-related-posts', '__return_true' );
+} );
+add_action( 'astra_template_parts_content_top', 'action_to_update_related_post_markup', 1 );
+function action_to_update_related_post_markup() {
+	$related_post_markup_instance = new Astra_Related_Posts_Markup();
+	add_action( 'comment_form_after', array( $related_post_markup_instance, 'astra_get_related_posts' ), 10 );
+}
