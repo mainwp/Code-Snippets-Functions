@@ -1,0 +1,6 @@
+add_filter( 'relevanssi_post_content', function( $content, $post ) {
+  if ( 'custom_post_type' == $post->post_type ) {
+    $content = '';
+  }
+  return $content;
+}, 10, 2 );
