@@ -1,0 +1,33 @@
+// Add custom CSS and animation to wp-login.php
+function custom_login_logo() {
+    ?>
+    <style type="text/css">
+        /* Hide the default WordPress logo */
+        #login h1 a {
+            display: none;
+        }
+
+        /* Add the custom snowman */
+        #custom-snowman {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background-image: url('https://your-site.com/path-to-your-snowman.png'); /* Replace with your snowman image URL */
+            background-size: cover;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+
+    <div id="custom-snowman"></div>
+    <?php
+}
+add_action('login_enqueue_scripts', 'custom_login_logo');
