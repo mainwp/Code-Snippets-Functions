@@ -1,0 +1,4 @@
+function remove_payments_tab() {
+remove_menu_page("admin.php?page=wc-settings&tab=checkout");
+}
+add_action("admin_menu", "remove_payments_tab", 999);
