@@ -1,0 +1,24 @@
+/**
+ * Minimum order subtotal amount for checkout (excl shipping and taxes)
+ */
+add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
+add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
+ 
+function wc_minimum_order_amount() {
+    $minimum  = 15; // <=== Here specify the minimum order amount
+    $subtotal = WC()->cart->get_subtotal(); // Cart subtotal excl. shipping and taxes
+
+    if ( $subtotal < $minimum ) {
+        $message = sprintf( 
+            esc_html__('Your current order subtotal is %s. To place your order, you must have a minimum amount of %s (excl. shipping and VAT).', 'woocommerce'), 
+            wc_price( $subtotal ), 
+            wc_price( $minimum )
+        );
+
+        if( is_cart() ) {
+            wc_print_notice( $message, 'error' );
+        } else {
+            wc_add_notice( $message, 'error' );
+        }
+    }
+}
