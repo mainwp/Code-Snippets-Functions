@@ -1,0 +1,1 @@
+define( 'EWWW_IMAGE_OPTIMIZER_USE_PIIP', false );
