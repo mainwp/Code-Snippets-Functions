@@ -1,6 +1,6 @@
 ## WP-Optimize code snippets
 
-Tested version of WordPress 6.5.5, plugin version was WP-Optimize 3.4.2.
+Tested version of WordPress 6.7.1, plugin version was WP-Optimize 3.8.0.
 
 This file is a code snippet that is used for [WP-Optimize](https://wordpress.org/plugins/wp-optimize/) plugin. 
 
