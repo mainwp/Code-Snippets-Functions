@@ -1,0 +1,5 @@
+add_action( 'init', function() {
+	if ( function_exists( 'aioseo' ) ) {
+		aioseo()->preUpdates->createCacheTable();
+	}
+});
