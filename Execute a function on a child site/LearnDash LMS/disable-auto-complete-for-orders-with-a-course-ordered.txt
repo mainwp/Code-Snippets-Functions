@@ -1,0 +1,1 @@
+add_filter( 'learndash_woocommerce_auto_complete_order', '__return_false' );
