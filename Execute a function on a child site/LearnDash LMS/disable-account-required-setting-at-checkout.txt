@@ -1,0 +1,1 @@
+add_filter( 'learndash_woocommerce_registration_required', function() { return false; } );
