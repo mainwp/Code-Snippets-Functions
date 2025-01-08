@@ -1,0 +1,38 @@
+/* Action to add Courses to WooCommerce Thank-you page */
+add_action('woocommerce_thankyou', 'display_courses_on_thank_you_page');
+
+function display_courses_on_thank_you_page($order_id) {
+    if (!$order_id) return;
+
+    // Get the order
+    $order = wc_get_order($order_id);
+
+    if ($order) {
+        echo '<h2>Courses Included in Your Purchase</h2><ul>';
+
+        // Loop through each purchased item in the order
+        foreach ($order->get_items() as $item) {
+            $product_id = $item->get_product_id();
+
+            // Retrieve the associated LearnDash course ID(s) for the product
+            $course_ids = get_post_meta($product_id, '_related_course', true);
+
+            // Check if there are courses assigned to the product
+            if (!empty($course_ids)) {
+                // If a single course ID, convert it to an array
+                $course_ids = is_array($course_ids) ? $course_ids : array($course_ids);
+
+                foreach ($course_ids as $course_id) {
+                    // Display each course title with a link to the course page
+                    $course_title = get_the_title($course_id);
+                    $course_link = get_permalink($course_id);
+                    echo '<li><a href="' . esc_url($course_link) . '">' . esc_html($course_title) . '</a></li>';
+                }
+            } else {
+                echo '<li>No associated courses found for this product.</li>';
+            }
+        }
+
+        echo '</ul>';
+    }
+}
