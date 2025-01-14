@@ -1,0 +1,7 @@
+add_filter( 'http_request_args', 'aioseo_filter_analyzer_timeout', 1, 2 );
+function aioseo_filter_analyzer_timeout( $args, $url ) {
+if ( 'https://analyze.aioseo.com/v1/analyze/' === $url ) {
+$args['timeout'] = 120;
+}
+return $args;
+}
