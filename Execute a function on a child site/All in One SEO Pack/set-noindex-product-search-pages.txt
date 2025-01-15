@@ -1,0 +1,7 @@
+add_filter( 'aioseo_robots_meta', 'aioseo_filter_robots_meta' );
+function aioseo_filter_robots_meta( $attributes ) {
+	if ( is_search() && 'product' === get_query_var('post_type') ) {
+		$attributes['index'] = "noindex";
+	};
+	return $attributes;
+}
