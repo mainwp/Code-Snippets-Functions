@@ -1,0 +1,7 @@
+add_filter( 'aioseo_robots_meta', 'aioseo_filter_robots_meta' );
+function aioseo_filter_robots_meta( $attributes ) {
+	if ( has_term( 'CategoryName', 'product_cat' ) ) {
+		$attributes['noindex']  = 'noindex';
+	}
+	return $attributes;
+}
