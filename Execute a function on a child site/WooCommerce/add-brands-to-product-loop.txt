@@ -1,0 +1,13 @@
+if ( is_plugin_active( 'woocommerce-brands/woocommerce-brands.php' ) ) {
+	
+    add_action( 'woocommerce_shop_loop_item_title', 'add_brands_to_product_loop' );
+
+    // Add brands to product loop.
+    function add_brands_to_product_loop() {
+        $terms = get_the_terms( get_the_ID(), 'product_brand' );
+        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+            $term = join( ', ', wp_list_pluck( $terms, 'name' ) );
+            echo esc_html( $term );
+        }
+    }
+}
