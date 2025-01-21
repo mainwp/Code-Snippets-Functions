@@ -1,0 +1,19 @@
+function wc_custom_brands_breadcrumb( $crumbs, $breadcrumb ){
+
+   // The ID for the page that you want to act as the brands top archive
+   $page_url = get_the_permalink(14);
+
+   foreach( $crumbs as $key => $crumb ){
+      if( $crumb[0] === __('Brands') ) {
+         // If you have changed the slug with the snippet above
+         // The breadcrumb will still say Brand, so you will want to
+         // Replace 'Name' below with your desired breadcrumb text
+         // Otherwise, you'll want to remove the next line of code entirely
+         $crumbs[$key][0] = __( 'Name', 'woocommerce' );
+         $crumbs[$key][1] = $page_url;
+      }
+   }
+
+   return $crumbs;
+}
+add_filter( 'woocommerce_get_breadcrumb', 'wc_custom_brands_breadcrumb', 20, 2 );
