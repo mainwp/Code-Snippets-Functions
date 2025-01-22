@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_sortable_taxonomies','wt_sort_brands' );
+function wt_sort_brands( $sortable ) {
+	$sortable[] = 'product_brand';
+	return $sortable;
+}
