@@ -1,0 +1,5 @@
+function customise_product_brand_slug ( $tax ) {
+	$tax['rewrite']['slug'] = 'custom-slug'; // Replace 'custom-slug' with your desired slug.
+	return $tax;
+}
+add_filter( 'register_taxonomy_product_brand', 'customise_product_brand_slug' );
