@@ -1,0 +1,13 @@
+add_action( 'admin_menu', 'aioseo_hide_search_stats_menu', 99999 );
+function aioseo_hide_search_stats_menu() {
+	global $submenu;
+	if ( ! isset( $submenu['index.php'] ) ) {
+		return;
+	}
+	foreach ( $submenu['index.php'] as $index => $props ) {
+		if ( ! empty( $props[2] ) && admin_url( '/admin.php?page=aioseo-search-statistics' ) === $props[2] ) {
+			unset( $submenu['index.php'][ $index ] );
+			return;
+		}
+	}
+}
