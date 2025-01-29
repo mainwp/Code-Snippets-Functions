@@ -1,0 +1,6 @@
+add_action( 'init', function() {
+	if ( ! function_exists( 'aioseo' ) ) {
+		return;
+	}
+    remove_action( 'wp', [ aioseo()->standalone->seoPreview, 'init' ] );
+}, 100);
