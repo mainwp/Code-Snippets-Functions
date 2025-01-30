@@ -1,0 +1,14 @@
+add_filter( 'aioseo_schema_output', 'aioseo_filter_schema_output' );
+function aioseo_filter_schema_output( $graphs ) {
+	if ( is_singular( 'post' ) ) {
+ 	   foreach ( $graphs as $index => $graph ) {
+			if ( 'Article' === $graph['@type'] ) {
+				unset( $graphs[ $index ]['author'] );
+			}
+			if ( 'Person' === $graph['@type'] ) {
+				unset( $graphs[ $index ] );
+			}
+		}
+	}
+	return $graphs;
+}
