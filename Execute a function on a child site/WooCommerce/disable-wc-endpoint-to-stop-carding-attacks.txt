@@ -1,0 +1,8 @@
+function disable_wc_endpoint_v1() {
+    $current_url = $_SERVER['REQUEST_URI'];
+    if (strpos($current_url, '/wp-json/wc/store/v1/checkout') !== false) {
+        wp_redirect(home_url('/404.php'));
+        exit;
+    }
+}
+add_action('rest_api_init', 'disable_wc_endpoint_v1');
