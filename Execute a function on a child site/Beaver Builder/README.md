@@ -1,6 +1,6 @@
 ## Beaver Builder code snippets
 
-Tested version of WordPress 6.6.2, plugin version was Beaver Builder 2.8.4.1.
+Tested version of WordPress 6.7.1, plugin version was Beaver Builder 2.8.6.1.
 
 This file is a code snippet that is used for [Beaver Builder](https://www.wpbeaverbuilder.com/) plugin. 
 
