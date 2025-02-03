@@ -1,6 +1,6 @@
 ## Defender code snippets
 
-Tested version of WordPress 6.7.1, plugin version was Defender 4.12.0.
+Tested version of WordPress 6.7.1, plugin version was Defender 5.0.1.
 
 This file is a code snippet that is used for [Defender](https://wordpress.org/plugins/defender-security/) plugin. 
 
