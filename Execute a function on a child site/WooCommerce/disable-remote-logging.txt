@@ -1,0 +1,3 @@
+add_action( 'init', function() {
+    update_option( 'woocommerce_feature_remote_logging_enabled', 'no' );
+} );
