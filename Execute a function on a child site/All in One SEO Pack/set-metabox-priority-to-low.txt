@@ -1,0 +1,4 @@
+add_filter( 'aioseo_post_metabox_priority', 'aioseo_filter_metabox_priority' );
+function aioseo_filter_metabox_priority( $priority) {
+   return 'low';
+}
