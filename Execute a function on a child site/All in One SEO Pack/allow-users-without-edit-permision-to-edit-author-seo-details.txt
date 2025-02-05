@@ -1,0 +1,7 @@
+add_filter( 'aioseo_user_profile_tab_allowed_user_ids', 'aioseo_profile_tab_allowed_users', 10, 2 );
+function aioseo_profile_tab_allowed_users( $user_ids, $user_id ) {
+	if ( ! user_can( $user_id, 'edit_posts' ) ) {
+		$user_ids[] = $user_id;
+	}
+	return $user_ids;
+}
