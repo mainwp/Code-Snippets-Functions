@@ -1,0 +1,7 @@
+add_filter( 'aioseo_breadcrumbs_link_current_item', 'aioseo_breadcrumbs_link_current_item', 10 );
+function aioseo_breadcrumbs_link_current_item( $linkCurrentItem ) {
+	if ( is_singular( 'page' ) ) {
+		$linkCurrentItem = false;
+	}
+	return $linkCurrentItem;
+}
