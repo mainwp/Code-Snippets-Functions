@@ -1,0 +1,4 @@
+add_filter( 'aioseo_next_link', 'aioseo_filter_next_link' );
+function aioseo_filter_next_link( $next ) {
+   return '';
+}
