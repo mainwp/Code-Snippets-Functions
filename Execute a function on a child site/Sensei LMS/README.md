@@ -1,6 +1,6 @@
 ## Sensei LMS code snippets
 
-Tested version of WordPress 6.6.2, plugin version was Sensei LMS 4.24.3.
+Tested version of WordPress 6.7.1, plugin version was Sensei LMS 4.24.5.
 
 This file is a code snippet that is used for [Sensei LMS](https://wordpress.org/plugins/sensei-lms/) plugin. 
 
