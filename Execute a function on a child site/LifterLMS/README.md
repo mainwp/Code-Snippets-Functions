@@ -1,6 +1,6 @@
 ## LifterLMS code snippets
 
-Tested version of WordPress 6.7.1, plugin version was LifterLMS 8.0.0.
+Tested version of WordPress 6.7.1, plugin version was LifterLMS 8.0.1.
 
 This file is a code snippet that is used for [LifterLMS](https://wordpress.org/plugins/lifterlms/) plugin. 
 
