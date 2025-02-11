@@ -1,0 +1,6 @@
+add_filter('fluentform/nonce_error', function ($errorMessage) {
+     $errorMessage = [
+         '_fluentformnonce' => ['Nonce verification failed, please try again.']
+     ];
+     return $errorMessage;
+ }, 10, 1);
