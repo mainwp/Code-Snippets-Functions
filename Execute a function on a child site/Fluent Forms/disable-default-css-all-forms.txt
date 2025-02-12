@@ -1,0 +1,1 @@
+add_filter('fluentform/load_default_public', '__return_false');
