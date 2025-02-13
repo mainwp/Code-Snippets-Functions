@@ -1,0 +1,7 @@
+add_filter('fluentform/load_default_public', function($status, $form) {
+    $targetForms = [1,2,3]; // form ids that you want to disable default styles
+    if(in_array($form->id, $targetForms)) {
+        return false;
+    }
+    return $status;
+}, 10, 2);
