@@ -1,6 +1,6 @@
 ## Enable jQuery Migrate Helper code snippets
 
-Tested version of WordPress 5.8, plugin version was Enable jQuery Migrate Helper 1.3.0.
+Tested version of WordPress 6.7.2, plugin version was Enable jQuery Migrate Helper 1.4.1.
 
 This file is a code snippet that is used for [Enable jQuery Migrate Helper](https://wordpress.org/plugins/enable-jquery-migrate-helper/) plugin. 
 
