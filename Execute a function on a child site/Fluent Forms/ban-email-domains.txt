@@ -1,0 +1,21 @@
+add_filter('fluentform/validate_input_item_input_email', function ($error, $field, $formData, $fields, $form) {
+    /*
+     * add your not accepted domains here
+     * The mentioned domains will be failed to submit the form
+     */
+    $invalidDomains = ['gmail.com', 'hotmail.com', 'test.com']; // You may change here
+    $errorMessage = 'The provided email domain is not accepted'; // You may change here
+
+    $fieldName = $field['name'];
+    if (empty($formData[$fieldName])) {
+        return $error;
+    }
+
+    $valueArray = explode('@', $formData[$fieldName]);
+    $inputDomain = array_pop($valueArray);
+
+    if (in_array($inputDomain, $invalidDomains)) {
+        return [$errorMessage];
+    }
+    return $error;
+}, 10, 5);
