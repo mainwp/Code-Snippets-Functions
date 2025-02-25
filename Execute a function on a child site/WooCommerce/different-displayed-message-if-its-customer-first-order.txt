@@ -1,0 +1,24 @@
+function action_wpo_wcpdf_after_document_label( $document_type, $order ) { 
+    if ( 'packing-slip' !== $document_type ) return; // Target only Packing slip
+    
+    // Get customer ID or billing email
+    $customer = $order->get_user_id() ?: $order->get_billing_email();
+  
+    if ( ! $customer ) return; // Exit if no customer ID or billing email
+
+    // Get the previous customer payed order ID (array)
+    $previous_order_id = wc_get_orders( array(
+        'type'        => 'shop_order',
+        'status'      => wc_get_is_paid_statuses(),
+        'customer'    => $customer,
+        'exclude'     => array( $order->get_id() ),
+        'limit'       => 1, 
+        'return'      => 'ids'
+    ) );
+        
+    printf( "\n".'<p class="form-field form-field-wide" style="font-weight:bold;margin-top:-60px;border:1px solid;width:90px;padding:3px 10px 5px 10px;line-height:1;text-align:center;">%s</p>'."\n",
+        $previous_order_id ? esc_html__('Existing Customer') : esc_html__('New Customer') 
+    );
+}
+
+add_action( 'wpo_wcpdf_after_document_label', 'action_wpo_wcpdf_after_document_label', 10, 2 ); 
