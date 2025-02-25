@@ -1,0 +1,32 @@
+// Calculate and save transaction fee after order is created/paid
+add_action('woocommerce_order_status_changed', 'add_transaction_fee_to_order_meta', 10, 4 );
+function add_transaction_fee_to_order_meta( $order_id, $old_status, $new_status, $order ) {
+    $targeted_statuses = array('processing', 'completed');
+
+    if ( in_array( $new_status, $targeted_statuses) && ! $order->get_meta('_transaction_fee') && $order->get_total() > 0 ) {
+        $order->update_meta_data('_transaction_fee', ($order->get_total() * 0.015) + 0.25 );
+        $order->save();
+    }
+}
+
+
+// Display transaction fee in admin order details *after* "Paid" line
+add_action('woocommerce_admin_order_totals_after_total', 'display_transaction_fee_in_admin_order_details' );
+function display_transaction_fee_in_admin_order_details( $order_id ) {
+    $order = wc_get_order($order_id);
+    $args  = array( 'currency' => $order->get_currency() );
+
+    if ( $transaction_fee = $order->get_meta('_transaction_fee') ) {
+        printf('<tr>
+            <td class="label">%s</td>
+            <td width="%s"></td>
+            <td class="total">%s</td>
+        </tr>', esc_html__('Transaction Fee:'), '1%', wc_price($transaction_fee, $args ) );
+
+        printf('<tr>
+            <td class="label">%s</td>
+            <td width="%s"></td>
+            <td class="total">%s</td>
+        </tr>', esc_html__('Total (after fee):'), '1%', wc_price( $order->get_total() - $transaction_fee, $args ) );
+    }
+}
