@@ -1,0 +1,29 @@
+// Alter WooCommerce currency symbol for "SAR" currency
+add_filter( 'woocommerce_currency_symbol', 'sar_currency_symbol', 20, 2 );
+function sar_currency_symbol( $currency_symbol, $currency ) {
+    // NOT in Admin WooCommerce general settings
+    if ( is_admin() && isset($_GET['page']) && 'wc-settings' === $_GET['page'] 
+    && isset($_GET['tab']) && 'general' === $_GET['tab'] ) {
+        return $currency_symbol;
+    }
+
+    $sar_src = get_option('sar_svg_png_url');
+
+    if ( $currency === 'SAR' && $sar_src ) {
+        return sprintf('<img src="%s" alt="SAR Symbol" style="display:inline-block; width:20px; height:auto; vertical-align:middle;">', 
+        esc_url( $sar_src ) ); 
+    }
+    return $currency_symbol;
+}
+
+// Alter WooCommerce price HTML output for "SAR" currency (optional)
+add_filter( 'wc_price', 'sar_currency_symbol_price_html', 20, 3 );
+function sar_currency_symbol_price_html( $price_html, $price, $args ) {
+    $sar_src = get_option('sar_svg_png_url');
+
+    if ( $args['currency'] === 'SAR' && $sar_src ) {
+        // Replace WC default currency html "class" attribute for "SAR" currency
+        $price_html = str_replace('woocommerce-Price-currencySymbol', 'sar-svg-symbol', $price_html); 
+    }
+    return $price_html;
+}
