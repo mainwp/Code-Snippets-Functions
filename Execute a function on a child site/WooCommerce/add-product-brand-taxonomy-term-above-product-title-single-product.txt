@@ -1,0 +1,24 @@
+// Common utility function to get the product brand term object
+function get_the_brand_term() {
+    $terms = get_the_terms(get_the_ID(), 'product_brand');
+
+    return $terms && !is_wp_error($terms) ? reset($terms) : false;
+}
+
+// On loop product archives (just the term)
+function single_product_brand() {
+    if ( $term = get_the_brand_term() ) {
+        printf('<div class="product_brand %s"><a href="%s">%s</a></div>',
+        esc_attr($term->slug), esc_url( get_term_link($term) ), esc_html($term->name) );
+    }
+}
+add_action( 'woocommerce_single_product_summary', 'single_product_brand', 10 );
+
+// On single product pages (linked term)
+function loop_product_brand() {
+    if ( $term = get_the_brand_term() ) {
+        printf('<div class="product_brand %s">%s</div>',
+        esc_attr($term->slug), esc_html($term->name) );
+    }
+}
+add_action( 'woocommerce_shop_loop_item_title', 'loop_product_brand', 5 );
