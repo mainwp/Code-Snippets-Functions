@@ -1,0 +1,6 @@
+add_action('template_redirect', function() {
+    if (is_singular('product') && isset($_GET['review'])) {
+        wp_redirect(site_url('/custom-reviews-page/')); // Change URL accordingly
+        exit;
+    }
+});
