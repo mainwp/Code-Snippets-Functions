@@ -1,0 +1,3 @@
+add_filter( 'alm_after_container', function(){
+	return '<p><a href="/work">View All Work</a></p>';
+});
