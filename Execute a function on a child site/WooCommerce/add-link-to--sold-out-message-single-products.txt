@@ -1,0 +1,11 @@
+add_filter('woocommerce_get_availability', 'availability_filter_func');
+function availability_filter_func($availability)
+{
+    $page_link   = site_url('/customisation-page/'); // Define here the correct page link
+    $linked_text = sprintf('<a href="%s">%s</a>', $page_link, esc_html__('customization') );
+    $replacement = sprintf( __('Sold! Style available for %s using the bespoke code below'), $linked_text );
+
+    $availability['availability'] = str_ireplace('Out of stock', $replacement, $availability['availability']);
+    
+    return $availability;
+}
