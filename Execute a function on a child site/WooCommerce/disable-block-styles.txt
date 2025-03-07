@@ -1,0 +1,4 @@
+function dequeue_woocommerce_block_styles() {
+    wp_dequeue_style('wc-blocks-style'); // Dequeues WooCommerce block styles
+}
+add_action('wp_enqueue_scripts', 'dequeue_woocommerce_block_styles', 100)
