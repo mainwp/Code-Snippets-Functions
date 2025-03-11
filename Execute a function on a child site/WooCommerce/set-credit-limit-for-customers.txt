@@ -1,0 +1,22 @@
+function payment_gateway_disable_on_account( $available_gateways ) {
+    // Check that it's on checkout page and that the WC_Cart object is not null
+    if ( is_checkout() && isset(WC()->cart) && WC()->cart ) {
+
+        $credit_limit = get_user_meta( get_current_user_id(), 'credit_limit', true );
+
+        $amount = floatval( preg_replace( '#[^\d.]#', '', WC()->cart->subtotal ) );
+
+        if ( empty( $credit_limit ) ) {
+            $credit_limit = 500;
+        }
+    
+        $credit_remaining = $credit_limit - $amount;
+        
+        if ( isset($available_gateways['cod']) && ( !wc_current_user_has_role('credit_account') || $credit_remaining < 0 ) ) {
+            unset($available_gateways['cod']);
+        }
+    }
+    return $available_gateways;
+}
+
+add_filter( 'woocommerce_available_payment_gateways', 'payment_gateway_disable_on_account' );
