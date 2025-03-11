@@ -1,0 +1,7 @@
+// Send 'On Hold' email notification when order is manually set to 'On Hold'
+add_action( 'woocommerce_order_status_changed', 'send_on_hold_email_on_manual_status_change', 10, 4 );
+function send_on_hold_email_on_manual_status_change( $order_id, $old_status, $new_status, $order ) {
+    if ( 'on-hold' === $new_status && 'on-hold' !== $old_status ) {
+        WC()->mailer()->get_emails()['WC_Email_Customer_On_Hold_Order']->trigger( $order_id );
+    }
+}
