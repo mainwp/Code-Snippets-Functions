@@ -1,0 +1,1 @@
+add_filter( 'ssp_use_post_tags', '__return_false' );
