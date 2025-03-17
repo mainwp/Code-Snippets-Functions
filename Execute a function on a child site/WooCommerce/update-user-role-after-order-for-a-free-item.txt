@@ -1,0 +1,21 @@
+add_action( 'woocommerce_order_status_processing', 'change_role_on_purchase', 10, 2 );
+add_action( 'woocommerce_order_status_completed', 'change_role_on_purchase', 10, 2 );
+function change_role_on_purchase( $order_id, $order ) {
+    $user = $order->get_user(); // Get the WP_User Object
+
+    // Loop through order line items
+    foreach ( $order->get_items() as $item ) {
+        $product_id = $item->get_product_id();
+        $variation_id = $item->get_variation_id();
+
+        if ( $user && in_array('13874904', [$product_id , $variation_id]) ) {
+            // Set user as paying customer if not set yet
+            wc_paying_customer( $order_id );
+            // Check for "subscriber" user role and replace it
+            if ( wc_user_has_role( $user, 'subscriber' ) ) {
+                $user->set_role( 'special_subscriber' );
+            }
+            break; // Stop the loop
+        }
+    }
+}
