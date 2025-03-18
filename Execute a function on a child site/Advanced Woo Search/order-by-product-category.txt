@@ -1,0 +1,23 @@
+add_filter( 'aws_search_results_products_ids', 'my_aws_search_results_products_ids' );
+function my_aws_search_results_products_ids( $products ) {
+    usort($products, function ($item1, $item2) {
+        $category_name = 'Featured';
+        $terms1 = wp_get_object_terms( $item1, 'product_cat' );
+        $terms2 = wp_get_object_terms( $item2, 'product_cat' );
+        if ( is_wp_error( $terms1 ) || empty( $terms1 ) || is_wp_error( $terms2 ) || empty( $terms2 ) ) {
+            return 0;
+        }
+        foreach( $terms1 as $terms1_arr ) {
+            if ( $terms1_arr->name === $category_name ) {
+                return -1;
+            }
+        }
+        foreach( $terms2 as $terms2_arr ) {
+            if ( $terms2_arr->name === $category_name ) {
+                return 1;
+            }
+        }
+        return 0;
+    });
+    return $products;
+}
