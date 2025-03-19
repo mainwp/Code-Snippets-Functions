@@ -1,0 +1,127 @@
+function wc_customer_has_download_permissions($order_id, $product_id)
+{
+    global $wpdb;
+
+    // Check if the download permission already exists for the product and order.
+    $exists = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->prefix}woocommerce_downloadable_product_permissions 
+         WHERE order_id = %d AND product_id = %d",
+        $order_id,
+        $product_id
+    ));
+
+    return $exists > 0;
+}
+
+function add_missing_download_permissions($order_id, $product_id)
+{
+    global $wpdb;
+
+    $product = wc_get_product($product_id);
+    if (!$product || !$product->is_downloadable()) {
+        return;
+    }
+
+    $downloads = $product->get_downloads();
+    if (empty($downloads)) {
+        return;
+    }
+
+    $order = wc_get_order($order_id);
+    $user_id = $order->get_user_id();
+    $order_key = $order->get_order_key();
+    $user_email = $order->get_billing_email(); // Ensure email is stored
+
+    foreach ($downloads as $download_id => $download) {
+        $file_exists = $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM {$wpdb->prefix}woocommerce_downloadable_product_permissions 
+             WHERE order_id = %d AND product_id = %d AND download_id = %s",
+            $order_id,
+            $product_id,
+            $download_id
+        ));
+
+        if ($file_exists == 0) {
+            $wpdb->insert(
+                "{$wpdb->prefix}woocommerce_downloadable_product_permissions",
+                [
+                    'download_id' => $download_id,
+                    'product_id' => $product_id,
+                    'user_id' => $user_id,
+                    'order_id' => $order_id,
+                    'order_key' => $order_key,
+                    'user_email' => $user_email, // Ensure this field is included
+                    'downloads_remaining' => '',
+                    'access_granted' => current_time('mysql'),
+                    'download_count' => 0
+                ],
+                ['%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d']
+            );
+        }
+    }
+}
+
+function updates_past_order_pdf_permission()
+{
+    // Exclude cancelled, failed, and refunded statuses
+    $excluded_statuses = ['wc-cancelled', 'wc-failed', 'wc-refunded'];
+    $all_statuses = array_keys(wc_get_order_statuses());
+    $statuses_to_include = array_diff($all_statuses, $excluded_statuses);
+
+    // Query orders in the specified date range
+    $args = [
+        'limit' => -1,
+        'status' => $statuses_to_include,
+        'meta_query' => [
+            [
+                'key' => '_created_via',
+                'value' => 'direct',
+                'compare' => 'LIKE',
+            ],
+        ],
+        'date_query' => [
+            [
+                'after' => '2025-05-01',
+                'before' => '2025-12-31',
+                'inclusive' => true,
+            ],
+        ]
+    ];
+
+    $orders = wc_get_orders($args);
+
+    if (empty($orders)) {
+        return 'No orders found.';
+    }
+
+    foreach ($orders as $order) {
+        $order_id = $order->get_id();
+
+        foreach ($order->get_items() as $item_id => $item) {
+            $product_id = $item->get_product_id();
+            $product = wc_get_product($product_id);
+
+            // Process main product
+            if ($product && $product->is_downloadable()) {
+                add_missing_download_permissions($order_id, $product_id);
+            }
+
+            // Process bundled products
+            if ($product && $product->is_type('bundle')) {
+                $bundle_items = $product->get_bundled_items();
+
+                foreach ($bundle_items as $bundle_item) {
+                    $child_product_id = $bundle_item->get_product_id();
+                    $child_product = wc_get_product($child_product_id);
+
+                    if ($child_product && $child_product->is_downloadable()) {
+                        add_missing_download_permissions($order_id, $child_product_id);
+                    }
+                }
+            }
+        }
+    }
+
+    return 'Processed successfully.';
+}
+add_shortcode('updates_past_order_pdf_permission', 'updates_past_order_pdf_permission');
