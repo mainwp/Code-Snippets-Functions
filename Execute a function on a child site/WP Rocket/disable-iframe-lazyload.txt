@@ -1,0 +1,1 @@
+add_filter( 'do_rocket_lazyload_iframes', '__return_false' );
