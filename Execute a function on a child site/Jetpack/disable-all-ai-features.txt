@@ -1,0 +1,1 @@
+add_filter( 'jetpack_ai_enabled', '__return_false' );
