@@ -1,6 +1,6 @@
 ## WooCommerce PayPal Payments code snippets
 
-Tested version of WordPress 6.6.2, plugin version was WooCommerce PayPal Payments 2.9.2.
+Tested version of WordPress 6.7.2, plugin version was WooCommerce PayPal Payments 3.0.0.
 
 This file is a code snippet that is used for [WooCommerce PayPal Payments](https://wordpress.org/plugins/woocommerce-paypal-payments/) plugin. 
 
