@@ -1,0 +1,39 @@
+// Conditional function that check if there are cart items "on sale"
+function has_items_on_sale( $cart ) {
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) {
+        if ( $item['data']->is_on_sale() ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Progessive discount based on cart subtotal
+add_action( 'woocommerce_cart_calculate_fees', 'subtotal_based_progressive_discount' );
+function subtotal_based_progressive_discount( $cart ) {
+    if( is_admin() && !defined('DOING_AJAX') ) {
+        return;
+    }
+    // Exit if a cart item is on sale
+    if( has_items_on_sale( $cart ) ) {
+        return;
+    }
+    // Exit if a coupon has been applied to cart
+    if( $cart->get_applied_coupons() ) {
+        return;
+    }
+
+    $subtotal = $cart->subtotal;
+    $percent  = 0;
+
+    if( $subtotal >= 3000 && $subtotal < 10000 ) {
+        $percent = 2; // 2 %
+    } elseif( $subtotal >= 10000 ) {
+        $percent = 5; // 5 %
+    }
+
+    if( $percent > 0 ) {
+        $cart->add_fee( __('Sale') . " {$percent}%", -($subtotal * $percent / 100) );
+    }
+}
