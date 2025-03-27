@@ -1,0 +1,4 @@
+add_filter( 'aioseo_import_yoast_seo_posts_per_action', 'aioseo_increase_yoast_posts_import');
+function aioseo_increase_yoast_posts_import( $number ) {
+	return 250;
+}
