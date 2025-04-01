@@ -1,0 +1,24 @@
+// Add a custom checkout field (checkout blocks)
+add_action(
+    'woocommerce_init',
+    function() {
+        woocommerce_register_additional_checkout_field( array(
+            'id'          => 'namespace/newsletter-opt-in',
+            'label'       => 'Subscribe to newsletter?',
+            'location'    => 'order',
+            'type'        => 'checkbox',
+        ) );
+    }
+);
+
+// Save the custom checkout field value (when the checkbox ix checked)
+add_action(
+    'woocommerce_set_additional_field_value',
+    function ( $key, $value, $group, $wc_object ) {
+        if ( 'namespace/newsletter-opt-in' === $key ) {
+            $wc_object->update_meta_data( 'newsletter_opt_in', $value );
+        }
+    },
+    10,
+    4
+);
