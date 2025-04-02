@@ -1,0 +1,51 @@
+// Conditional function: Check cart items for specific shipping class
+function has_items_from_shipping_class( $cart_items, $shipping_class = 'my-custom-shipping-class' ) {
+    $item_has_class = $item_without_class = false; // Initializing variables
+
+    // Loop through cart items for the current shipping package
+    foreach( $cart_items as $item ) {
+        $shipping_classes = array( $item['data']->get_shipping_class() );
+        // Check the parent product for variations
+        if( $item['variation_id'] > 0 ) {
+            $product = wc_get_product( $item['product_id'] );
+            $shipping_classes[] = $product->get_shipping_class();
+        }
+        if ( in_array($shipping_class, $shipping_classes) ) {
+            $item_has_class = true;
+        } else {
+            $item_without_class = true;
+        }
+    }
+    return  $item_has_class && !$item_without_class;
+}
+
+// Set default shipping method conditionally in checkout page
+add_action( 'template_redirect', function() {
+    // only in checkout page
+    if ( is_checkout() && !is_wc_endpoint_url() ) {
+        if ( has_items_from_shipping_class( WC()->cart->get_cart() ) ) {
+            WC()->session->set('chosen_shipping_methods', array('flat_rate:11'));
+        } else {
+            WC()->session->set('chosen_shipping_methods', array('flat_rate:5'));
+        }
+    }
+});
+
+// Filter shipping methods package rates
+add_filter( 'woocommerce_package_rates', 'custom_shipping_costs', 20, 2 );
+function custom_shipping_costs( $rates, $package ) {
+    // Remove all rates except "flat_rate:11"
+    if ( has_items_from_shipping_class( $package['contents']) && isset($rates['flat_rate:11'])) {
+        foreach ( array(5, 4, 1) as $id ) {
+            if ( isset($rates["flat_rate:{$id}"]) ) {
+                unset($rates["flat_rate:{$id}"]);
+            }
+        }
+    // Remove "flat_rate:11" rate only
+    } else {
+        if ( isset($rates['flat_rate:11']) ) {
+            unset($rates['flat_rate:11']);
+        }
+    }
+    return $rates;
+}
