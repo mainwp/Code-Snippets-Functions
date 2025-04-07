@@ -1,0 +1,44 @@
+ add_action('wp_footer', function () {
+    ?>
+    <style>
+        #payment-processing {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 9999;
+            font-size: 20px; 
+            margin: 80px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            text-align: center; 
+        }
+    </style>
+    <script>
+        jQuery(document).ready(function($) {
+            $('#place_order').click(function() {
+                $('body').append('<div id="payment-processing"><b>PLEASE WAIT</b><br>Processing your payment ...</div>');
+                
+                var messages = [
+                    "<b>PLEASE WAIT</b><br>Processing your payment ...",
+                    "<b>PLEASE WAIT</b><br>Contacting card provider ...",
+                    "<b>PLEASE WAIT</b><br>Preparing emails ...",
+                    "<b>PLEASE WAIT</b><br>Preparing TXT messages ..."
+                ];
+
+                var currentMessageIndex = 0;
+
+                function updateMessage() {
+                    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+                    $('#payment-processing').html(messages[currentMessageIndex]);
+                }
+
+                // Change message every 3 seconds
+                setInterval(updateMessage, 3000);
+            });
+        });
+    </script>
+    <?php
+ });
