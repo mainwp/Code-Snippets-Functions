@@ -1,0 +1,8 @@
+add_filter( 'autoptimize_filter_main_pagecachepurgeactions', 
+  function( $clearcaches_array ) {
+    $clearcaches_array[] = 'nginx_cache_cleared';
+    return $clearcaches_array;
+  },
+  10,
+  1
+);
