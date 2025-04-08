@@ -1,0 +1,7 @@
+add_filter(
+    'wp_speculation_rules_href_exclude_paths',
+    function ( $href_exclude_paths ) {
+        $href_exclude_paths[] = '/cart/*';
+        return $href_exclude_paths;
+    }
+);
