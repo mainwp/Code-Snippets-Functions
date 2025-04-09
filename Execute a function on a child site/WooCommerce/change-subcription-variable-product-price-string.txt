@@ -1,0 +1,19 @@
+add_filter( 'woocommerce_subscriptions_product_price_string', 'custom_variable_subscription_price_string', 10, 2 );
+function custom_variable_subscription_price_string( $price_string, $product ) {
+    if ( ! is_a( $product, 'WC_Product' ) ) {
+        return $price_string;
+    }
+
+    if ( $product->is_type( 'variation' ) || $product->is_type( 'subscription_variation' ) ) {
+        $subscription_length = method_exists( $product, 'get_subscription_length' ) ? $product->get_subscription_length() : 0;
+        $subscription_period = method_exists( $product, 'get_subscription_period' ) ? $product->get_subscription_period() : '';
+
+        if ( $subscription_length && $subscription_period ) {
+            if ( intval( $subscription_length ) === 1 && strtolower( $subscription_period ) === 'month' ) {
+                $price_string = 'Pay in Full';
+            }
+        }
+    }
+
+    return $price_string;
+}
