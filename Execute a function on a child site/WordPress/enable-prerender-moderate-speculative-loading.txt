@@ -1,0 +1,10 @@
+add_filter(
+    'wp_speculation_rules_configuration',
+    function ( $config ) {
+        if ( is_array( $config ) ) {
+            $config['mode']      = 'prerender';
+            $config['eagerness'] = 'moderate';
+        }
+        return $config;
+    }
+);
