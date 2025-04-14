@@ -1,0 +1,6 @@
+add_filter( 'affwp_get_referring_affiliate_id', function( $affiliate_id, $reference, $context ) {
+   if ( 'woocommerce' === $context ) {
+      $affiliate_id = affiliate_wp()->tracking->get_affiliate_id();
+   }
+   return $affiliate_id;
+}, 10, 3 );
