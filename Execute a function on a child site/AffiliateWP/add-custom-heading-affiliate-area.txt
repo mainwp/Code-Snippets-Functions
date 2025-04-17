@@ -1,0 +1,5 @@
+// Add a custom heading to the Affiliate Area
+function custom_affiliate_area_heading() {
+    echo '<h2>Welcome to Your Affiliate Dashboard!</h2>';
+}
+add_action('affwp_affiliate_dashboard_top', 'custom_affiliate_area_heading');
