@@ -1,0 +1,4 @@
+add_filter( 'alm_settings', function( $options ) {
+	$options['_alm_btn_color'] = 'infinite';
+	return $options;
+});
