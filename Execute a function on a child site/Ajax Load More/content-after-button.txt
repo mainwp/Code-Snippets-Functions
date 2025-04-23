@@ -1,0 +1,3 @@
+add_filter( 'alm_after_button', function(){
+   return '<hr/>';
+});
