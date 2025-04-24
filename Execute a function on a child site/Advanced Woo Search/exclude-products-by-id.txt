@@ -1,0 +1,9 @@
+add_filter( 'aws_exclude_products', 'my_aws_exclude_products', 10, 3 );
+function my_aws_exclude_products( $products ) {
+    if ( ! is_user_logged_in() ) {
+        $products[] = 75;
+        $products[] = 78;
+        $products[] = 83;
+    }
+    return $products;
+}
