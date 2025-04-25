@@ -1,0 +1,10 @@
+add_action( 'init', function() {
+    // Unschedule the WooCommerce related products transient cleanup event
+    $timestamp = wp_next_scheduled( 'wc_delete_related_product_transients_async' );
+    if ( $timestamp ) {
+        wp_unschedule_event( $timestamp, 'wc_delete_related_product_transients_async' );
+    }
+
+    // Prevent WooCommerce from scheduling it again
+    remove_action( 'woocommerce_scheduled_delete_related_product_transients', 'wc_delete_related_product_transients' );
+}, 20 );
