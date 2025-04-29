@@ -1,0 +1,5 @@
+add_filter( 'aws_search_query_string', 'my_aws_search_query_string' );
+function my_aws_search_query_string( $sql ) {
+    $sql = str_replace( 'LIMIT 0, 10', 'LIMIT 0, 5', $sql );
+    return $sql;
+}

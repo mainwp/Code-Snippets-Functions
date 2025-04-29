@@ -1,4 +1,0 @@
-add_filter('aws_indexed_excerpt', 'my_aws_indexed_excerpt', 10, 3 );
-function my_aws_indexed_excerpt( $excerpt, $id, $product ) {
-    return '';
-}
