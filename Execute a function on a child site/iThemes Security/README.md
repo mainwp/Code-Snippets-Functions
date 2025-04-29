@@ -1,6 +1,6 @@
 ## Solid Security code snippets
 
-Tested version of WordPress 6.7, plugin version was Solid Security 9.3.5.
+Tested version of WordPress 6.8, plugin version was Solid Security 9.3.8.
 
 This file is a code snippet that is used for [Solid Security](https://wordpress.org/plugins/better-wp-security/) plugin. 
 
