@@ -1,0 +1,8 @@
+add_action( 'template_redirect', 'disable_my_account_page' );
+
+function disable_my_account_page() {
+    if ( is_account_page() ) {
+        wp_redirect( home_url() );
+        exit;
+    }
+}
