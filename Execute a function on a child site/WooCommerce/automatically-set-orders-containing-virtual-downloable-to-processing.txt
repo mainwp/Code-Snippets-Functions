@@ -1,0 +1,8 @@
+add_filter('woocommerce_order_item_needs_processing', 'force_processing_for_virtual_downloadables', 10, 3);
+
+function force_processing_for_virtual_downloadables($needs_processing, $product, $order) {
+    if ($product->is_virtual() && $product->is_downloadable()) {
+        return true; // Force it to require processing
+    }
+    return $needs_processing;
+}
