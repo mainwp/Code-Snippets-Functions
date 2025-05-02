@@ -1,0 +1,20 @@
+add_action('woocommerce_thankyou', 'auto_complete_virtual_downloadable_orders');
+
+function auto_complete_virtual_downloadable_orders($order_id) {
+    if (!$order_id) return;
+
+    $order = wc_get_order($order_id);
+    $only_virtual_downloadable = true;
+
+    foreach ($order->get_items() as $item) {
+        $product = $item->get_product();
+        if (!$product->is_virtual() || !$product->is_downloadable()) {
+            $only_virtual_downloadable = false;
+            break;
+        }
+    }
+
+    if ($only_virtual_downloadable && $order->get_status() === 'processing') {
+        $order->update_status('completed');
+    }
+}
