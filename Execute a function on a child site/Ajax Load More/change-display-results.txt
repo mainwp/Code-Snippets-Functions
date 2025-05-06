@@ -1,0 +1,4 @@
+// Default: Viewing {post_count} of {total_posts} results.
+add_filter('alm_display_results', function(){
+	return 'Now viewing {page} of {pages} total pages.';
+});
