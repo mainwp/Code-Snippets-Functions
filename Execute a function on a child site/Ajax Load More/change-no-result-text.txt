@@ -1,0 +1,4 @@
+// Default: No results found.
+add_filter('alm_no_results_text', function(){
+	return 'Unable to locate results.';
+});
