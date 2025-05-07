@@ -1,0 +1,6 @@
+add_action( 'init', function() {
+    $timestamp = wp_next_scheduled( 'fibosearch_rebuild_index_cron' );
+    if ( $timestamp ) {
+        wp_unschedule_event( $timestamp, 'fibosearch_rebuild_index_cron' );
+    }
+}, 30 );
