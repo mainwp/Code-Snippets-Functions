@@ -1,0 +1,3 @@
+add_filter( 'dgwt/wcas/settings/load_value/key=enable_mobile_overlay', function () {
+    return 'off';
+}, 15);
