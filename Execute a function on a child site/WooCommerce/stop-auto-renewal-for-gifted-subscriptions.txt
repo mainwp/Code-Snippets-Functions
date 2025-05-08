@@ -1,0 +1,39 @@
+// Hook into the subscription creation process
+add_action( 'woocommerce_checkout_subscription_created', 'set_gifted_subscription_to_manual_renewal', 10, 2 );
+
+function set_gifted_subscription_to_manual_renewal( $subscription, $order ) {
+    // Check if the subscription is gifted using the gifting plugin's functionality
+    if ( class_exists( 'WCS_Gifting' ) && WCS_Gifting::is_gifted_subscription( $subscription ) ) {
+        // Set the subscription to manual renewal
+        $subscription->set_requires_manual_renewal( true );
+
+        // Cancel any scheduled renewal actions
+        as_unschedule_all_actions( 'woocommerce_scheduled_subscription_payment', [ 'subscription_id' => $subscription->get_id() ] );
+
+        // Log the action for debugging
+        wc_get_logger()->info(
+            'Gifted subscription ID ' . $subscription->get_id() . ' renewals canceled and set to manual.',
+            [ 'source' => 'woocommerce' ]
+        );
+
+        // Save the subscription changes
+        $subscription->save();
+    }
+}
+
+// Additional safeguard: Ensure gifted subscriptions remain manual during payment
+add_action( 'woocommerce_subscription_payment_complete', 'cancel_gifted_subscription_renewals', 10, 1 );
+
+function cancel_gifted_subscription_renewals( $subscription ) {
+    // Verify gifted subscription using the gifting plugin
+    if ( class_exists( 'WCS_Gifting' ) && WCS_Gifting::is_gifted_subscription( $subscription ) ) {
+        // Cancel scheduled renewal actions
+        as_unschedule_all_actions( 'woocommerce_scheduled_subscription_payment', [ 'subscription_id' => $subscription->get_id() ] );
+
+        // Log the cancellation for confirmation
+        wc_get_logger()->info(
+            'Gifted subscription ID ' . $subscription->get_id() . ' scheduled renewals canceled post-payment.',
+            [ 'source' => 'woocommerce' ]
+        );
+    }
+}
