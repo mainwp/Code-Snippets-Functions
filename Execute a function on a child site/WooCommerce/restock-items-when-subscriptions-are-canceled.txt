@@ -1,0 +1,30 @@
+add_action('woocommerce_subscription_status_cancelled', 'adjust_inventory_on_subscription_cancel', 10, 1);
+
+function adjust_inventory_on_subscription_cancel($subscription) {
+    if (!$subscription) return;
+
+    foreach ($subscription->get_items() as $item) {
+        $product = $item->get_product();
+        $variation_id = $item->get_variation_id();
+
+        // Ensure the product is variable and has stock management enabled
+        if ($product && $product->managing_stock()) {
+            $current_stock = $product->get_stock_quantity();
+            $item_quantity = $item->get_quantity();
+
+            // Adjust stock for the specific variation or parent product
+            $new_stock = $current_stock + $item_quantity;
+
+            if ($variation_id) {
+                $variation = wc_get_product($variation_id);
+                if ($variation && $variation->managing_stock()) {
+                    $variation->set_stock_quantity($new_stock);
+                    $variation->save();
+                }
+            } else {
+                $product->set_stock_quantity($new_stock);
+                $product->save();
+            }
+        }
+    }
+}
