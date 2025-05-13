@@ -1,0 +1,19 @@
+add_action( 'woocommerce_subscription_status_updated', 'auto_cancel_pending_cancellations', 10, 3 );
+
+function auto_cancel_pending_cancellations( $subscription, $new_status, $old_status ) {
+    // Ensure we are dealing with a valid subscription object
+    if ( is_a( $subscription, 'WC_Subscription' ) ) {
+        // Check if the new status is 'pending-cancel'
+        if ( 'pending-cancel' === $new_status ) {
+            // Attempt to cancel the subscription
+            try {
+                $subscription->update_status( 'cancelled' );
+                // Optionally log the cancellation
+                error_log( 'Subscription ID ' . $subscription->get_id() . ' has been automatically cancelled.' );
+            } catch ( Exception $e ) {
+                // Log any errors
+                error_log( 'Error cancelling subscription ID ' . $subscription->get_id() . ': ' . $e->getMessage() );
+            }
+        }
+    }
+}
