@@ -1,0 +1,26 @@
+//Hide the Bundle When a product is Out of Stock
+add_filter( 'woocommerce_product_is_visible', 'hide_bundle_when_required_product_is_out_of_stock', 10, 2 );
+
+function hide_bundle_when_required_product_is_out_of_stock( $visible, $product_id ) {
+    $product = wc_get_product( $product_id );
+
+    // Check if the product is a bundle
+    if ( $product && $product->is_type( 'bundle' ) ) {
+        $bundled_items = $product->get_bundled_items();
+
+        // Loop through all bundled items
+        foreach ( $bundled_items as $bundled_item ) {
+            // Check if it's a required product
+            if ( ! $bundled_item->is_optional() ) {
+                $bundled_product = $bundled_item->get_product();
+
+                // If the required product is out of stock, hide the bundle
+                if ( $bundled_product && ! $bundled_product->is_in_stock() ) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return $visible;
+}
