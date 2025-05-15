@@ -1,0 +1,1 @@
+add_filter( 'woocommerce_order_get_items_cache_enabled', '__return_false' );
