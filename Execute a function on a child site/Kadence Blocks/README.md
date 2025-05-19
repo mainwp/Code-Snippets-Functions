@@ -1,6 +1,6 @@
 ## Kadence Blocks code snippets
 
-Tested version of WordPress 6.8, plugin version was Kadence Blocks 3.5.3.
+Tested version of WordPress 6.8.1, plugin version was Kadence Blocks 3.5.8.
 
 This file is a code snippet that is used for [Kadence Blocks](https://wordpress.org/plugins/kadence-blocks/) plugin. 
 
