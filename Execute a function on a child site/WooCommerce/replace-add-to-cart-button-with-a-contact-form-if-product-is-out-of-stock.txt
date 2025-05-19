@@ -1,0 +1,26 @@
+add_action( 'woocommerce_get_availability', 'filter_wc_product_availability', 20, 2 );
+function filter_wc_product_availability( $data, $product ) { 
+    switch( $product->get_stock_status() ) { 
+        case 'readytoship': 
+            $data = array( 'availability' => __( 'In Stock','woocommerce' ), 'class' => 'ready-to-ship' );
+        break; 
+        case 'outofstock': 
+            $data = array( 'availability' => __( 'Call for Quote', 'woocommerce' ), 'class' => 'out-of-stock' ); 
+        break; 
+        case 'onbackorder': 
+            $data = array( 'availability' => __( 'On Backorder', 'woocommerce' ), 'class' => 'onbackorder' ); 
+        break; 
+    } 
+    return $data;
+}
+
+add_filter( 'woocommerce_get_stock_html', 'filter_wc_get_stock_html', 10, 2 );
+function filter_wc_get_stock_html( $html, $product ) {
+    if (  $product->get_stock_status() === 'outofstock' ) {
+        $html .= sprintf('<div class="contact-outofstock">%s</div>', 
+        esc_html__('Please contact us for a quote and availability.') .
+        do_shortcode('[gravityform id="10" title="false" description="false" ajax="true"]') );
+        $html .= '<style>.woocommerce-variation-add-to-cart-disabled {display:none;}</style>';
+    }
+    return $html;
+}
