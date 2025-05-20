@@ -1,0 +1,5 @@
+add_action( 'gform_activate_user', 'after_user_activate', 10, 3 );
+function after_user_activate( $user_id, $user_data, $signup_meta ) {
+    // Add note to entry.
+    GFFormsModel::add_note( $signup_meta['entry_id'], $user_id, 'admin', 'The user signup has completed for ' . $user_data['display_name'] . '.');
+}
