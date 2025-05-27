@@ -1,0 +1,13 @@
+add_filter( 'woocommerce_variation_is_visible', 'hide_conditionally_product_variation', 10, 4 );
+function hide_conditionally_product_variation( $is_visible, $variation_id, $product_id, $variation ) {
+
+    $license = strtolower( $variation->get_attribute( 'pa_lizenz' ) );
+
+    if ( ( wc_current_user_has_role('mini')     && $license !== 'mini' )
+      || ( wc_current_user_has_role('pro')      && $license !== 'pro' )
+      || ( wc_current_user_has_role('business') && $license !== 'business' ) ) 
+    {
+        return false;
+    }
+    return $is_visible;
+}
