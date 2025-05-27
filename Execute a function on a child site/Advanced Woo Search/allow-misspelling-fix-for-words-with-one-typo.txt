@@ -1,0 +1,5 @@
+apply_filters( 'aws_fuzzy_params', 'my_aws_fuzzy_params' );
+function my_aws_fuzzy_params( $fuzzy_params ) {
+    $fuzzy_params['min_distance'] = 1;
+    return $fuzzy_params;
+}
