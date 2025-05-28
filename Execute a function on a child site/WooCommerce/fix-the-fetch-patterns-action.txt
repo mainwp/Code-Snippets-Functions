@@ -1,0 +1,8 @@
+add_action('init', function() {
+    if ( current_user_can('manage_woocommerce') ) {
+        update_option('woocommerce_blocks_did_fetch_patterns', true);
+        update_option('woocommerce_blocks_patterns_fetched', true);
+        update_option('woocommerce_blocks_show_pattern_banner', false);
+        update_option('woocommerce_admin_created_default_patterns', true);
+    }
+});
