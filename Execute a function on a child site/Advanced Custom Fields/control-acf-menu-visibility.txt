@@ -1,0 +1,15 @@
+add_filter( 'acf/settings/show_admin', function () {
+
+	// Get the current site url.
+	$site_url = get_bloginfo( 'url' );
+
+	// Define an array of protected site urls.  
+	$protected_urls = array(
+		'https://www.example.com',
+		'http://staging.example.com'
+	);
+
+	// If the current site URL is in the array of protected URLs, return FALSE
+	// to hide the menu.
+	return ! in_array( $site_url, $protected_urls );
+} );
