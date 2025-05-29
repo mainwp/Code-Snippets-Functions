@@ -1,6 +1,6 @@
 ## ShortPixel Image Optimizer code snippets
 
-Tested version of WordPress 6.7.2, plugin version was ShortPixel Image Optimizer 6.1.3.
+Tested version of WordPress 6.8.1, plugin version was ShortPixel Image Optimizer 6.2.1
 
 This file is a code snippet that is used for [ShortPixel Image Optimizer](https://wordpress.org/plugins/shortpixel-image-optimiser/) plugin. 
 
