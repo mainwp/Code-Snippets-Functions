@@ -1,0 +1,24 @@
+add_filter('woocommerce_cart_item_name', 'wc_checkout_product_thumbnail_and_name_linked', 10, 3);
+
+function wc_checkout_product_thumbnail_and_name_linked($product_name, $cart_item, $cart_item_key) {
+    if (!is_checkout() || !is_a($cart_item['data'], 'WC_Product')) {
+        return $product_name;
+    }
+
+    $product = $cart_item['data'];
+    $url     = $product->get_permalink();
+    $thumb_id = $product->get_image_id();
+
+    if ($thumb_id) {
+        $thumbnail = wp_get_attachment_image($thumb_id, [60, 60], false, [
+            'style' => 'width:60px;height:60px;object-fit:cover;vertical-align:middle;margin-right:10px;',
+        ]);
+    } else {
+        $thumbnail = '<span style="width:60px;height:60px;display:inline-block;margin-right:10px;background:#eee;"></span>';
+    }
+
+    $thumb_link = '<a href="' . esc_url($url) . '" class="wc-checkout-thumb">' . $thumbnail . '</a>';
+    $name_link  = '<a href="' . esc_url($url) . '" class="wc-checkout-name">' . $product_name . '</a>';
+
+    return '<span class="wc-checkout-product-wrap">' . $thumb_link . $name_link . '</span>';
+}
