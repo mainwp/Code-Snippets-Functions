@@ -1,0 +1,5 @@
+function wc_add_to_cart_message_html_custom_fun( $message, $products, $show_qty ) {
+    $button = '<a href="' . esc_url( wc_get_checkout_url() ) . '" tabindex="1" class="button wc-forward">' . esc_html__( 'Proceed to checkout', 'woocommerce' ) . '</a>';
+    return $message . ' ' . $button;
+}
+add_filter( 'wc_add_to_cart_message_html', 'wc_add_to_cart_message_html_custom_fun', 10, 3 );
