@@ -1,0 +1,67 @@
+// Utility function: Get the product brand term name(s) (from the product ID) 
+function wc_get_product_brands( $product_id ) {
+    $terms = get_the_terms($product_id, 'product_brand'); // Get Cached product brand terms
+    
+    if ( $terms && ! is_wp_error( $terms ) ) {
+        return implode( ', ', wp_list_pluck($terms, 'name') );
+    }
+}
+
+// Display product brand name(s) in admin edit order pages
+add_filter( 'woocommerce_order_item_get_name', 'display_admin_order_item_product_brands', 10, 2 );
+function display_admin_order_item_product_brands( $item_name, $item ) {
+    if ( ! ( is_admin() && $item->is_type('line_item') ) ) {
+        return $item_name;
+    }
+
+    global $pagenow, $typenow;
+
+    $page   = isset($_GET['page']) ? $_GET['page'] : '';
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+
+    if ( $action === 'edit' && ( ( $pagenow === 'post.php' && $typenow === 'shop_order' )
+    || ( $pagenow === 'admin.php' && $page === 'wc-orders' ) ) ) {
+        if ( $brands = wc_get_product_brands( $item->get_product_id() ) ) {
+            return $brands . ' <br>' . $item_name;
+        } 
+    }
+    return $item_name;
+}
+
+// Display brand name(s) on single product pages
+add_action( 'woocommerce_single_product_summary','display_single_product_brands', 4 );
+function display_single_product_brands() {
+    global $product;
+
+    if ( $brands = wc_get_product_brands( $product->get_id() ) ) {
+        printf( '<h3 class="brand">%s</h3>', $brands );
+    }
+}
+
+
+// Display product brand name(s) in Cart and checkout pages
+add_filter( 'woocommerce_cart_item_name','display_cart_item_product_brands', 10, 3 );
+function display_cart_item_product_brands( $product_name, $cart_item, $cart_item_key ) {
+    if( $brands = wc_get_product_brands( $cart_item['product_id'] ) ) {
+        if ( is_cart() ) {
+            return sprintf('<a href="%s">%s %s</a>', esc_url($cart_item['data']->get_permalink()), $brands, $product_name);
+        } else {
+            return  $brands . ' ' . $product_name;
+        }
+    }
+    return $product_name;
+}
+
+// Display product brand name(s) in order pages and email notification
+add_filter( 'woocommerce_order_item_name', 'display_order_item_product_brands', 10, 2 );
+function display_order_item_product_brands( $product_name, $item ) {
+    if( $brands = wc_get_product_brands( $item->get_product_id() ) ) {
+        if ( is_wc_endpoint_url() ) {
+            $product = $item->get_product(); // The WC_Product Object
+            return sprintf('<a href="%s">%s %s</a>', esc_url($product->get_permalink()), $brands, $product_name);
+        } else {
+            return  $brands . ' ' . $product_name;
+        }
+    }
+    return $product_name;
+} 
