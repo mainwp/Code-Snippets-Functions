@@ -1,0 +1,4 @@
+add_filter( 'bp_nouveau_feedback_messages', function ( $args ) {
+	$args['request-details']['message'] = 'My custom message goes here';
+	return $args;
+} );
