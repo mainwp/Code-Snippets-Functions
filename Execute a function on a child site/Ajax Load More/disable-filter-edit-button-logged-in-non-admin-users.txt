@@ -1,0 +1,1 @@
+add_filter( 'alm_filters_edit', '__return_false' );
