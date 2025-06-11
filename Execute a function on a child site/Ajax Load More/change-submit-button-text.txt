@@ -1,0 +1,3 @@
+add_filter( 'alm_filters_button_text', function() {
+   return __('Submit Filter', 'your-text-domain');
+});
