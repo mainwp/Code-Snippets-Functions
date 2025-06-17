@@ -1,0 +1,4 @@
+add_filter( 'dgwt/wcas/phrase', function( $phrase ) {
+	$phrase = str_ireplace( 'sku:', '', $phrase );
+	return $phrase;
+} );
