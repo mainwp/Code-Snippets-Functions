@@ -1,0 +1,12 @@
+add_filter( 'aws_excerpt_search_result', 'my_aws_excerpt_search_result', 10, 2 );
+function my_aws_excerpt_search_result( $excerpt, $post_id ) {
+    $brands = get_the_terms( $post_id, 'product_brand' );
+    $all_brands = array();
+    if ( ! is_wp_error( $brands ) && ! empty( $brands ) ) {
+        foreach ( $brands as $brand ) {
+            $all_brands[] = $brand->name;
+        }
+        $excerpt = $excerpt . '<br>' . '<span style="margin-top: 3px;display: block;color: #330ced;">Brands: ' . implode( ',', $all_brands ) . '</span>';
+    }
+    return $excerpt;
+}
