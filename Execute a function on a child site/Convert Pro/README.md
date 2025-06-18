@@ -1,6 +1,6 @@
 ## Convert Pro code snippets
 
-Tested version of WordPress 6.7.2, plugin version was Convert Pro 1.8.0.
+Tested version of WordPress 6.8.1, plugin version was Convert Pro 1.8.5.
 
 This file is a code snippet that is used for [Convert Pro](https://www.convertpro.net/) plugin. 
 
