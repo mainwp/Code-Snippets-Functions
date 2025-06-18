@@ -1,0 +1,1 @@
+add_filter('rocket_preconnect_external_domains_optimization', '__return_false'); 
