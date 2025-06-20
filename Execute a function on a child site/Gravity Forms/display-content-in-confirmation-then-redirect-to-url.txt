@@ -1,0 +1,22 @@
+add_filter( 'gform_confirmation_1', 'custom_delayed_redirect_confirmation', 10, 4 );
+function custom_delayed_redirect_confirmation( $confirmation, $form, $entry, $ajax ) {
+    // Custom message you want to show
+    $message = '<div style="padding: 20px; font-size: 18px; text-align: center;">
+                    <p>Thank you for your submission! You will be redirected shortly...</p>
+                </div>';
+
+    // Redirect URL after delay
+    $redirect_url = 'https://example.com/next-step'; // Replace with your destination URL
+
+    // JavaScript to redirect after 30 seconds (30000 ms)
+    $script = "<script>
+        setTimeout(function() {
+            window.location.href = '" . esc_url( $redirect_url ) . "';
+        }, 30000);
+    </script>";
+
+    // Return the combined message and script
+    $confirmation = $message . $script;
+
+    return $confirmation;
+}
