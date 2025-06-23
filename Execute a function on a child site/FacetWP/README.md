@@ -1,6 +1,6 @@
 ## FacetWP code snippets
 
-Tested version of WordPress 6.7.2, plugin version was FacetWP 4.3.6.
+Tested version of WordPress 6.8.1, plugin version was FacetWP 4.4.1.
 
 This file is a code snippet that is used for [FacetWP](https://facetwp.com/) plugin. 
 
