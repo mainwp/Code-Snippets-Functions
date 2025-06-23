@@ -1,0 +1,23 @@
+add_action( 'template_redirect', 'remove_oos_items_from_cart_on_cart_and_checkout' );
+
+function remove_oos_items_from_cart_on_cart_and_checkout() {
+    if ( is_admin() || ! WC()->cart || ( ! is_cart() && ! is_checkout() ) ) {
+        return;
+    }
+
+    $cart = WC()->cart;
+    $removed = false;
+
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        $product = $cart_item['data'];
+
+        if ( ! $product->is_in_stock() ) {
+            $cart->remove_cart_item( $cart_item_key );
+            $removed = true;
+        }
+    }
+
+    if ( $removed ) {
+        wc_add_notice( __( 'Some out-of-stock products have been removed from your cart.', 'woocommerce' ), 'notice' );
+    }
+}
