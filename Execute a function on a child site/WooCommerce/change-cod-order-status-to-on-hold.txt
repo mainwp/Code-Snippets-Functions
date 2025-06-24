@@ -1,0 +1,13 @@
+add_filter( 'woocommerce_checkout_order_processed', 'change_cod_order_status_to_on_hold', 10, 3 );
+
+function change_cod_order_status_to_on_hold( $order_id, $posted_data, $order ) {
+    if ( ! $order instanceof WC_Order ) {
+        return;
+    }
+
+    // Check if payment method is Cash on Delivery
+    if ( $order->get_payment_method() === 'cod' && $order->get_status() === 'processing' ) {
+        // Set order status to 'on-hold'
+        $order->update_status( 'on-hold', __( 'Order status changed to on-hold for COD payment method.', 'your-textdomain' ) );
+    }
+}
