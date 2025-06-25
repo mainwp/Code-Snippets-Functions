@@ -1,0 +1,10 @@
+// [ajax_load_more_filters id="movies"]
+function my_filters_actor_order( $args ){
+   // Adjust get_terms query $args.
+   $args['post_type'] = 'movie';
+   $args['order'] = 'ASC';
+   $args['orderby'] = 'slug';
+
+   return $args;	
+}
+add_filter( 'alm_filters_movies_actor_args', 'my_filters_actor_order' );
