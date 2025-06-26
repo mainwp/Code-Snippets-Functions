@@ -1,0 +1,12 @@
+add_filter( 'get_the_excerpt', function ( $excerpt, $post ) {
+	if ( ! empty( $excerpt ) ) {
+		return $excerpt;
+	}
+
+  	// On a specific post type, use an ACF field value as the excerpt.
+	if ( $post->post_type === 'my_custom_post_type' ) {
+		$excerpt = get_field( 'product_description', $post->ID );
+	}
+
+	return $excerpt;
+}, 10, 2 );
