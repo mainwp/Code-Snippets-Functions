@@ -1,0 +1,6 @@
+add_filter( 'send_email_change_email', function( $send, $user, $user_data ) {
+    if ( isset( $user->ID ) && $user->ID === 1200 ) {
+        return false; // Disable email for user ID 1243
+    }
+    return $send; // Default behavior for all other users
+}, 10, 3 );
