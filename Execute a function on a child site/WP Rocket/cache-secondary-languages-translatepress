@@ -1,0 +1,33 @@
+add_filter( 'rocket_disable_url_validation', function( $value ) {
+	if ( $valid ) {
+		return $valid;
+	}
+	if ( ! is_singular() ) {
+		return false;
+	}
+
+	$post_id = get_queried_object_id();
+	if ( empty( $post_id ) ) {
+		return false;
+	}
+
+	global $wp;
+
+	$post_link = get_permalink( $post_id );
+	if ( ! $post_link ) {
+		return false;
+	}
+
+	$current_link = home_url( add_query_arg( [], $wp->request ?? '' ) );
+	if ( is_paged() ) {
+		$post_link = trailingslashit( $post_link ) . 'page/' . get_query_var( 'paged' );
+	}
+
+	$translatepress = \TRP_Translate_Press::get_trp_instance();
+	$converter      = $translatepress->get_component( 'url_converter' );
+
+	$language     = $converter->get_lang_from_url_string( $current_link );
+	$current_link = str_replace( '#TRPLINKPROCESSED', '', $converter->get_url_for_language( $language, $current_link ) );
+
+	return urldecode( untrailingslashit( $post_link ) ) !== urldecode( untrailingslashit( $current_link ) );
+} );
