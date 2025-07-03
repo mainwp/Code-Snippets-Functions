@@ -1,0 +1,21 @@
+// Hide prices unless user is logged in
+add_filter('woocommerce_get_price_html', 'hide_price_for_guests', 10, 2);
+add_filter('woocommerce_cart_item_price', 'hide_price_for_guests', 10, 2);
+add_filter('woocommerce_cart_item_subtotal', 'hide_price_for_guests', 10, 2);
+
+function hide_price_for_guests($price, $product) {
+    if (!is_user_logged_in()) {
+        return '<span class="login-to-see-price">Login to see price</span>';
+    }
+    return $price;
+}
+
+// Optional: Hide add to cart buttons for guests
+add_filter('woocommerce_is_purchasable', 'disable_purchase_for_guests', 10, 2);
+
+function disable_purchase_for_guests($purchasable, $product) {
+    if (!is_user_logged_in()) {
+        return false;
+    }
+    return $purchasable;
+}
