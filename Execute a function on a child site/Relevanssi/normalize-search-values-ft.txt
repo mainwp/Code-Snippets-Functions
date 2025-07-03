@@ -1,0 +1,4 @@
+add_filter( 'relevanssi_remove_punctuation', function( $str ) {
+	$str = preg_replace( '/(\d+) ft/', '\1ft', $str );
+	return $str;
+} );
