@@ -50,7 +50,7 @@ foreach ( $lines as $index => $line ) {
 		$matched_line_number = $index + 1;
 
 		// Flag trailing content after the semicolon that is not a comment or a closing PHP tag.
-		// Safe trailing content: // comment, # comment, /* comment, ?>
+		// Safe trailing content: // comment, # comment, /* comment,
 		if ( preg_match( '/wp-settings\.php[\'"]?\s*\)?\s*;\s*(.+)$/i', $line, $m ) ) {
 			$trailing = trim( $m[1] );
 
